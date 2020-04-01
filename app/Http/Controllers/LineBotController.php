@@ -24,6 +24,11 @@ class LineBotController extends Controller
         $lineChannelSecret = env('LINE_BOT_CHANNEL_SECRET');
 
         $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
+
+        if ($signature == '') {
+        	return;
+        }
+
         if (!SignatureValidator::validateSignature($request->getContent(), $lineChannelSecret, $signature)) {
             return;
         }
