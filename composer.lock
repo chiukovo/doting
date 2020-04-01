@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "08a1207b3aea4665ef6c2504f42971cd",
+    "content-hash": "bfedc6722b4c4898607fa2694fd506c0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1160,16 +1160,16 @@
         },
         {
             "name": "linecorp/line-bot-sdk",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/line/line-bot-sdk-php.git",
-                "reference": "8f8031e19963568d1c4792d4dd428f26fba28295"
+                "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/8f8031e19963568d1c4792d4dd428f26fba28295",
-                "reference": "8f8031e19963568d1c4792d4dd428f26fba28295",
+                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/b861e344eec524d4a9b6824bcab765ca95e938c7",
+                "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7",
                 "shasum": ""
             },
             "require": {
@@ -1228,7 +1228,7 @@
                 "line",
                 "sdk"
             ],
-            "time": "2020-01-31T11:50:33+00:00"
+            "time": "2020-03-26T06:07:16+00:00"
         },
         {
             "name": "monolog/monolog",

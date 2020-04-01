@@ -15,7 +15,7 @@
         "ixudra/curl": "^6.19",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "linecorp/line-bot-sdk": "^4.2"
+        "linecorp/line-bot-sdk": "^4.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
