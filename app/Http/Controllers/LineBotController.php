@@ -49,9 +49,11 @@ class LineBotController extends Controller
                 if ($event instanceof MessageEvent) {
                     $messageType = $event->getMessageType();
 
-                    Log::info(print_r($messageType, true));
-                    $text = $event->getText();// 得到使用者輸入
-                    $lineBot->replyText($replyToken, $text);// 回復使用者輸入
+                    //文字
+                    if ($messageType == 'text') {
+                        $text = $event->getText();// 得到使用者輸入
+                        $lineBot->replyText($replyToken, $text);// 回復使用者輸入
+                    }
                 }
             }
         } catch (Exception $e) {
