@@ -9,7 +9,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Illuminate\Http\Request; 
-use Curl;
+use Curl, Log;
 
 class LineBotController extends Controller
 {
@@ -40,11 +40,15 @@ class LineBotController extends Controller
             $events = $lineBot->parseEventRequest($request->getContent(), $signature);
 
             foreach ($events as $event) {
+                Log::info(print_r($event, true));
+
                 $replyToken = $event->getReplyToken();
-                $text = $event->getText();// 得到使用者輸入
-           		$lineBot->replyText($replyToken, $text);// 回復使用者輸入
-                $textMessage = new TextMessageBuilder("你好");
-              	$lineBot->replyMessage($replyToken, $textMessage);
+
+                //訊息的話
+                if ($event->getType() == 'message') {
+                    $text = $event->getText();// 得到使用者輸入
+                    $lineBot->replyText($replyToken, $text);// 回復使用者輸入
+                }
             }
         } catch (Exception $e) {
             return;
