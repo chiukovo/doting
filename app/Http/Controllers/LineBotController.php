@@ -8,7 +8,8 @@ use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use Request, Curl;
+use Illuminate\Http\Request; 
+use Curl;
 
 class LineBotController extends Controller
 {

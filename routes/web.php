@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'LineBotController@index');
-Route::post('/message', 'LineBotController@message');
+Route::any('/message', 'LineBotController@message');
