@@ -41,20 +41,29 @@ class LineBotController extends Controller
             $events = $lineBot->parseEventRequest($request->getContent(), $signature);
 
             foreach ($events as $event) {
-                Log::info(print_r($event, true));
-
+                $getText = '';
+                $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
+                $messageType = $event->getMessageType();
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
-                    $messageType = $event->getMessageType();
-
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
+                        $getText = $text;
                         $lineBot->replyText($replyToken, $text);// 回復使用者輸入
                     }
                 }
+
+                //Log
+                $log = [
+                    'userId' => $userId,
+                    'text' => $getText,
+                    'type' => $messageType,
+                ];
+                
+                Log::info(json_encode($log));
             }
         } catch (Exception $e) {
             return;
