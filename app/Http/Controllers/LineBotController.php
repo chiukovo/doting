@@ -7,6 +7,7 @@ use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Illuminate\Http\Request; 
 use Curl, Log;
@@ -45,7 +46,10 @@ class LineBotController extends Controller
                 $replyToken = $event->getReplyToken();
 
                 //訊息的話
-                if ($event->getType() == 'message') {
+                if ($event instanceof MessageEvent) {
+                    $messageType = $event->getMessageType();
+
+                    Log::info(print_r($messageType, true));
                     $text = $event->getText();// 得到使用者輸入
                     $lineBot->replyText($replyToken, $text);// 回復使用者輸入
                 }
