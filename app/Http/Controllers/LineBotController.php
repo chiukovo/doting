@@ -21,7 +21,7 @@ class LineBotController extends Controller
 
     public function search(Request $request)
     {
-        echo 'search';
+        return view('search');
     }
 
     public function message(Request $request)
