@@ -5,6 +5,7 @@
   <body>
     <div id="result"></div>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
     <script>
       window.onload = function (e) {
         liff
@@ -15,9 +16,13 @@
             // start to use LIFF's api
             initializeApp();
           })
+
+        //debug
+        vConsole = new VConsole();
       };
 
-      function initializeApp() {
+      function initializeApp()
+      {
           var h = document.getElementById('result');
           h.innerHTML = 'success!!';
       }
