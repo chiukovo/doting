@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'LineBotController@index');
 Route::any('/message', 'LineBotController@message');
+Route::get('/search', 'LineBotController@search');

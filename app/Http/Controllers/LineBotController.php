@@ -19,6 +19,11 @@ class LineBotController extends Controller
     	echo 'hi';
     }
 
+    public function search(Request $request)
+    {
+        echo 'search';
+    }
+
     public function message(Request $request)
     {
         $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
@@ -41,7 +46,7 @@ class LineBotController extends Controller
             $events = $lineBot->parseEventRequest($request->getContent(), $signature);
 
             foreach ($events as $event) {
-                $getText = '';
+                $text = '';
                 $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
                 $messageType = $event->getMessageType();
@@ -51,7 +56,6 @@ class LineBotController extends Controller
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
-                        $getText = $text;
                         $lineBot->replyText($replyToken, $text);// 回復使用者輸入
                     }
                 }
@@ -59,7 +63,7 @@ class LineBotController extends Controller
                 //Log
                 $log = [
                     'userId' => $userId,
-                    'text' => $getText,
+                    'text' => $text,
                     'type' => $messageType,
                 ];
                 
@@ -69,5 +73,9 @@ class LineBotController extends Controller
             return;
         }
         return;
+    }
+
+    public function getApiByText($text)
+    {
     }
 }
