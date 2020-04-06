@@ -1,7 +1,9 @@
 <html>
   <head>
+    <title>doting</title>
   </head>
   <body>
+    <div id="result"></div>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
       window.onload = function (e) {
@@ -13,12 +15,12 @@
             // start to use LIFF's api
             initializeApp();
           })
-
-        liff.openWindow({
-          url: 'https://line.me',
-          external: true
-        });
       };
+
+      function initializeApp() {
+          var h = document.getElementById('result');
+          h.innerHTML = 'success!!';
+      }
     </script>
   </body>
 </html>
