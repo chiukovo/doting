@@ -26,6 +26,8 @@
       {
           var h = document.getElementById('result');
           h.innerHTML = 'success!!';
+
+          console.log('is success')
       }
     </script>
   </body>
