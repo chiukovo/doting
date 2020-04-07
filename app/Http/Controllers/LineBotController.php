@@ -14,6 +14,16 @@ use Curl, Log;
 
 class LineBotController extends Controller
 {
+
+    public function __construct()
+    {
+        $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
+        $lineChannelSecret = env('LINE_BOT_CHANNEL_SECRET');
+
+        $httpClient = new CurlHTTPClient ($lineAccessToken);
+        $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
+    }
+
     public function index(Request $request)
     {
     	echo 'hi';
@@ -39,11 +49,8 @@ class LineBotController extends Controller
             return;
         }
 
-        $httpClient = new CurlHTTPClient ($lineAccessToken);
-        $lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
-
         try {
-            $events = $lineBot->parseEventRequest($request->getContent(), $signature);
+            $events = $this->lineBot->parseEventRequest($request->getContent(), $signature);
 
             foreach ($events as $event) {
                 $text = '';
@@ -56,7 +63,7 @@ class LineBotController extends Controller
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
-                        $lineBot->replyText($replyToken, $text);// 回復使用者輸入
+                        $this->lineBot->replyText($replyToken, $text);// 回復使用者輸入
                     }
                 }
 
@@ -77,5 +84,11 @@ class LineBotController extends Controller
 
     public function getApiByText($text)
     {
+    }
+
+    public function sendMsg($msg)
+    {
+        $textMessageBuilder = new TextMessageBuilder($msg);
+        $this->lineBot->pushMessage('id', $textMessageBuilder);
     }
 }
