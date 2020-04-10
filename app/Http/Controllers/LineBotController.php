@@ -110,7 +110,7 @@ class LineBotController extends Controller
                 $historys = [];
 
                 $formatArray['date'] = $data['dealTwDate'];
-                $formatArray['address'] = $data['county'] . $data['address'];
+                $formatArray['address'] = $data['realAddress'];
                 $formatArray['mrt'] = $data['mrtTags'];
                 $formatArray['name'] = $data['communityName'];
                 $formatArray['type'] = $data['caseType'];

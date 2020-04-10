@@ -6,10 +6,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
   </head>
   <body>
-    <div id="app" class="col-12">
+    <div id="app" class="col-12" style="margin-top: 20px">
       <form>
         <div class="form-group">
-          <label for="zip">縣市: </label>
           <select class="form-control" v-model="city">
             <option value="台北市">台北市</option>
             <option value="台中市">台中市</option>
@@ -17,11 +16,20 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="zip">名稱: </label>
           <input type="text" class="form-control" v-model="kw" placeholder="請輸入社區名稱、路段或學校">
         </div>
-        <button @click="doSearch" type="button" class="btn btn-primary btn-block">查詢</button>
+        <button @click.prevent.stop="doSearch" type="button" class="btn btn-primary btn-block">查詢</button>
       </form>
+      <div class="card" v-for="list in lists" style="margin-bottom: 20px">
+        <div class="card-body">
+          <h5 class="card-title">@{{ list.date }} <span class="text-danger">@{{ list.price }}</span>萬 (<span class="text-danger">@{{ list.unit_price }}</span>/坪)</h5>
+          <h6 class="card-subtitle mb-2 text-muted">@{{ list.name }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">@{{ list.address }}</h6>
+          <p>@{{ list.car_price }}</p>
+          <p>@{{ list.age }}年</p>
+          <p>樓別 @{{ list.f_start }}樓 共 @{{ list.f_end }}樓</p>
+        </div>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
@@ -32,6 +40,7 @@
         data: {
           city: '台北市',
           kw: '',
+          lists: [],
         },
         mounted() {
           const _this = this
@@ -52,6 +61,8 @@
             console.log('is success')
           },
           doSearch() {
+            const _this = this
+
             $.ajax({
               url: "/getApi",
               data: {
@@ -59,7 +70,9 @@
                 kw: this.kw,
               },
               success: function(response) {
-                console.log(response)
+                if (response.code == 200) {
+                  _this.lists = response.data
+                }
               },
             });
           }
