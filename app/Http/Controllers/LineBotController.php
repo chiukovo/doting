@@ -91,6 +91,8 @@ class LineBotController extends Controller
 
         $city = $request->input('city', '');
         $kw = $request->input('kw', '');
+        $city = urlencode($city);
+        $kw = urlencode($kw);
 
         $url = 'https://price.houseprice.tw/ws/list/';
         $url .= $city . '_city/';
