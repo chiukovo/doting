@@ -69,6 +69,7 @@
           doSearch() {
             const _this = this
             this.disabled = true
+            _this.lists = []
 
             $.ajax({
               url: "/getApi",
