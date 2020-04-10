@@ -82,13 +82,69 @@ class LineBotController extends Controller
         return;
     }
 
-    public function getApiByText($text)
+    public function getApi(Request $request)
     {
+        $result = [
+            'code' => 200,
+            'data' => []
+        ];
+
+        $city = $request->input('city', '');
+        $kw = $request->input('kw', '');
+
+        $url = 'https://price.houseprice.tw/ws/list/';
+        $url .= $city . '_city/';
+
+        if ($kw != '') {
+            $url .= $kw . '_kw/';
+        }
+
+        $apiResult = Curl::to($url)->asJson(true)->get();
+
+        if ($apiResult['code'] == 200) {
+            $datas = $apiResult['priceInfo']['dealCases'];
+
+            //整理
+            foreach ($datas as $data) {
+                $formatArray = [];
+                $historys = [];
+
+                $formatArray['date'] = $data['dealTwDate'];
+                $formatArray['address'] = $data['county'] . $data['address'];
+                $formatArray['mrt'] = $data['mrtTags'];
+                $formatArray['name'] = $data['communityName'];
+                $formatArray['type'] = $data['caseType'];
+                $formatArray['price'] = $data['price'];
+                $formatArray['unit_price'] = $data['unitPrice'];
+                $formatArray['all_pin'] = $data['regPin'];
+                $formatArray['land_pin'] = $data['landPin'];
+                $formatArray['f_start'] = $data['floorStart'];
+                $formatArray['f_end'] = $data['floorEnd'];
+                $formatArray['age'] = $data['age'];
+                $formatArray['car_price'] = $data['carPrice'];
+
+                foreach ($data['historys'] as $dt) {
+                    $historys['date'] = $dt['dealTwDate'];
+                    $historys['price'] = $dt['price'];
+                    $historys['unit_price'] = $dt['unitPrice'];
+                    $historys['age'] = $dt['age'];
+                    $historys['rate'] = $dt['priceRateText'];
+                }
+
+                $formatArray['historys'] = $historys;
+                $result['data'][] = $formatArray;
+            }
+            
+        } else {
+            $result['code'] = $apiResult['code'];
+        }
+
+        return $result;
     }
 
-    public function sendMsg($msg)
+    public function sendMsg($id, $msg)
     {
         $textMessageBuilder = new TextMessageBuilder($msg);
-        $this->lineBot->pushMessage('id', $textMessageBuilder);
+        $this->lineBot->pushMessage($id, $textMessageBuilder);
     }
 }
