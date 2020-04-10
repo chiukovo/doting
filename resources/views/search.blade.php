@@ -18,7 +18,7 @@
         <div class="form-group">
           <input type="text" class="form-control" v-model="kw" placeholder="請輸入社區名稱、路段或學校">
         </div>
-        <button @click.prevent.stop="doSearch" type="button" class="btn btn-primary btn-block">查詢</button>
+        <button @click.prevent.stop="doSearch" type="button" class="btn btn-primary btn-block" :disabled="disabled">查詢</button>
       </form>
       <div class="card" v-for="list in lists" style="margin-bottom: 20px">
         <div class="card-body">
@@ -28,6 +28,11 @@
           <p>@{{ list.car_price }}</p>
           <p>@{{ list.age }}年</p>
           <p>樓別 @{{ list.f_start }}樓 共 @{{ list.f_end }}樓</p>
+        </div>
+      </div>
+      <div class="text-center" v-if="disabled">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
     </div>
@@ -41,6 +46,7 @@
           city: '台北市',
           kw: '',
           lists: [],
+          disabled: false
         },
         mounted() {
           const _this = this
@@ -62,6 +68,7 @@
           },
           doSearch() {
             const _this = this
+            this.disabled = true
 
             $.ajax({
               url: "/getApi",
@@ -73,6 +80,8 @@
                 if (response.code == 200) {
                   _this.lists = response.data
                 }
+
+                _this.disabled = false
               },
             });
           }
