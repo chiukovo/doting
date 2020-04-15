@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "ixudra/curl": "^6.19",
+        "jaeger/querylist": "^4.2",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "linecorp/line-bot-sdk": "^4.3"

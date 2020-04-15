@@ -42,7 +42,10 @@ return [
     */
 
     'disks' => [
-
+        'animal' => [
+            'driver' => 'local',
+            'root' => public_path('animal'),
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
