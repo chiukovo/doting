@@ -71,7 +71,7 @@ class AnimalCrossingController extends Controller
                                 //發圖片
                                 //發文
                                 $text = new MultiMessageBuilder();
-                                $text->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
+                                $text = $text->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
                                 $this->lineBot->replyText($replyToken, $text);
                             } else {
                                 $this->lineBot->replyText($replyToken, $replyText);
