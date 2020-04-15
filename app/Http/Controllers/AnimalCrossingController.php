@@ -74,7 +74,8 @@ class AnimalCrossingController extends Controller
                                 $message = $message->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
                                 $this->lineBot->replyMessage($replyToken, $message);
                             } else {
-                                $this->lineBot->replyText($replyToken, $replyText);
+                                $message = new TextMessageBuilder($replyText);
+                                $this->lineBot->replyMessage($replyToken, $replyText);
                             }
                         }
                     }
