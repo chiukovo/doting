@@ -71,14 +71,14 @@ class AnimalCrossingController extends Controller
                                 $target = $replyText[0];
 
                                 //發文字
-                                $returnText = $target->name . "\n";
+                                $returnText = '名稱: ' . $target->name . "\n";
                                 $returnText .= $target->personality . "\n";
                                 $returnText .= $target->race . "\n";
                                 $returnText .= $target->bd . "\n";
                                 $returnText .= $target->say . "\n";
 
                                 //發圖片
-                                $imgPath = 'https://' . request()->getHttpHost() . urlencode($target->img_path);
+                                $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($target->name) . '.png';
                                 $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
 
                                 $message = new TextMessageBuilder($returnText);
