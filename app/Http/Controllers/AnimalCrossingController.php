@@ -9,7 +9,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -69,7 +69,10 @@ class AnimalCrossingController extends Controller
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
                                 //發圖片
-                                $imgPath = new ImageMessageBuilder(request()->getHost() . $target->img_path);
+                                $imgBuilder = new ImageMessageBuilder(request()->getHost() . $target->img_path);
+                                $this->lineBot->replyMessage($replyToken, $imgBuilder);
+
+                                //發文字
                                 $returnText = $target->name . "\n";
                                 $returnText .= $target->personality . "\n";
                                 $returnText .= $target->race . "\n";
