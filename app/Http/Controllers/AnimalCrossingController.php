@@ -12,7 +12,7 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
-use Curl, Log, Storage, DB;
+use Curl, Log, Storage, DB, Url;
 
 class AnimalCrossingController extends Controller
 {
@@ -69,9 +69,14 @@ class AnimalCrossingController extends Controller
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
                                 //發圖片
-                                //發文
-                                $message = new MultiMessageBuilder();
-                                $message = $message->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
+                                $imgPath = new ImageMessageBuilder(request()->getHost() . $target->img_path);
+                                $returnText = $target->name . "\n";
+                                $returnText .= $target->personality . "\n";
+                                $returnText .= $target->race . "\n";
+                                $returnText .= $target->bd . "\n";
+                                $returnText .= $target->say . "\n";
+
+                                $message = new MultiMessageBuilder($returnText);
                                 $this->lineBot->replyMessage($replyToken, $message);
                             } else {
                                 $message = new TextMessageBuilder($replyText);
@@ -129,10 +134,10 @@ class AnimalCrossingController extends Controller
         }
 
         if (count($dbAnimal) > 1) {
-            $resultText = '你要找的是';
+            $resultText = '你要找的是' . "\n";
 
             foreach ($dbAnimal as $animal) {
-                $resultText .= $animal->name . '\n';
+                $resultText .= $animal->name . "\n";
             }
 
             $resultText .= '哪個阿 ( ・◇・)？';
