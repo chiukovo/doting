@@ -69,7 +69,8 @@ class AnimalCrossingController extends Controller
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
                                 //發圖片
-                                $imgBuilder = new ImageMessageBuilder(request()->getHost() . $target->img_path, '');
+                                $imgPath = request()->getHost() . $target->img_path;
+                                $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
                                 $this->lineBot->replyMessage($replyToken, $imgBuilder);
 
                                 //發文字
