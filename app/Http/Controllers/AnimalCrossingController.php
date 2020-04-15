@@ -83,7 +83,8 @@ class AnimalCrossingController extends Controller
                                 $message = new TextMessageBuilder($returnText);
 
                                 $multipleMessageBuilder = new MultiMessageBuilder();
-                                $multipleMessageBuilder = $multipleMessageBuilder->add(new TextMessageBuilder($message))
+                                $multipleMessageBuilder = $multipleMessageBuilder
+                                    ->add($message)
                                     ->add($imgBuilder);
 
                                 $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
