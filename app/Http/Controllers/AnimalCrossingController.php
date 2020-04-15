@@ -78,7 +78,7 @@ class AnimalCrossingController extends Controller
                                 $returnText .= $target->say . "\n";
 
                                 //發圖片
-                                $imgPath = 'https://' . request()->getHttpHost() . $target->img_path;
+                                $imgPath = urlencode('https://' . request()->getHttpHost() . $target->img_path);
                                 $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
 
                                 $message = new TextMessageBuilder($returnText);
