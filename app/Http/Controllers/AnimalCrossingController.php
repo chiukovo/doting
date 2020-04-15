@@ -79,7 +79,7 @@ class AnimalCrossingController extends Controller
                                 $returnText .= $target->bd . "\n";
                                 $returnText .= $target->say . "\n";
 
-                                $message = new MultiMessageBuilder($returnText);
+                                $message = new TextMessageBuilder($returnText);
                                 $this->lineBot->replyMessage($replyToken, $message);
                             } else {
                                 $message = new TextMessageBuilder($replyText);
