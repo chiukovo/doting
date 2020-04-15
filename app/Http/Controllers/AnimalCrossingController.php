@@ -69,9 +69,6 @@ class AnimalCrossingController extends Controller
                         } else {
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
-                                //發圖片
-                                $imgPath = request()->getHttpHost() . $target->img_path;
-                                $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
 
                                 //發文字
                                 $returnText = $target->name . "\n";
@@ -80,10 +77,14 @@ class AnimalCrossingController extends Controller
                                 $returnText .= $target->bd . "\n";
                                 $returnText .= $target->say . "\n";
 
+                                //發圖片
+                                $imgPath = request()->getHttpHost() . $target->img_path;
+                                $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
+
                                 $message = new TextMessageBuilder($returnText);
 
                                 $multipleMessageBuilder = new MultiMessageBuilder();
-                                $multipleMessageBuilder = $multipleMessageBuilder
+                                $multipleMessageBuilder
                                     ->add($message)
                                     ->add($imgBuilder);
 
