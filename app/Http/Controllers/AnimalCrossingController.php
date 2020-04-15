@@ -64,15 +64,15 @@ class AnimalCrossingController extends Controller
                         $replyText = $this->formatText($text);
 
                         if ($replyText == '') {
-                            return; 
+                            return;
                         } else {
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
                                 //發圖片
                                 //發文
-                                $text = new MultiMessageBuilder();
-                                $text = $text->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
-                                $this->lineBot->replyMessage($replyToken, $text);
+                                $message = new MultiMessageBuilder();
+                                $message = $message->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
+                                $this->lineBot->replyMessage($replyToken, $message);
                             } else {
                                 $this->lineBot->replyText($replyToken, $replyText);
                             }
@@ -86,7 +86,7 @@ class AnimalCrossingController extends Controller
                     'text' => $text,
                     'type' => $messageType,
                 ];
-                
+
                 Log::info(json_encode($log));
             }
         } catch (Exception $e) {
@@ -109,7 +109,7 @@ class AnimalCrossingController extends Controller
                     return $this->getDbAnimal($target);
                 }
                 break;
-            
+
             default:
                 return '';
                 break;
@@ -131,7 +131,7 @@ class AnimalCrossingController extends Controller
             $resultText = '你要找的是';
 
             foreach ($dbAnimal as $animal) {
-                $resultText .= $animal->name . '%0D%0A';
+                $resultText .= $animal->name . '\n';
             }
 
             $resultText .= '哪個阿 ( ・◇・)？';
@@ -146,7 +146,6 @@ class AnimalCrossingController extends Controller
 
     public function getAnimalApi(Request $request)
     {
-        dd($this->formatText('動物 小芹'));
         //採集
         $url = 'http://e0game.com/animalcrossing/%e5%8b%95%e7%89%a9%e6%9d%91%e6%b0%91-%e5%9c%96%e9%91%91/';
         $ql = QueryList::get($url);
@@ -184,13 +183,13 @@ class AnimalCrossingController extends Controller
                     $headers = get_headers($data['img']);
                     $code = substr($headers[0], 9, 3);
                     $imgUploadSuccess = 0;
-                    
+
                     if ($code == 200) {
                         $imgUploadSuccess = 1;
                         $content = file_get_contents($data['img']);
                         Storage::disk('animal')->put($data['name'] . '.png', $content);
                     }
-                    
+
                     $data['img_path'] = '/animal/' . $data['name'] . '.png';
 
                     //insert
