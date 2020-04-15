@@ -10,6 +10,7 @@ use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -69,9 +70,8 @@ class AnimalCrossingController extends Controller
                             if (is_array($replyText)) {
                                 $target = $replyText[0];
                                 //發圖片
-                                $imgPath = request()->getHost() . $target->img_path;
+                                $imgPath = request()->getHttpHost() . $target->img_path;
                                 $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
-                                $this->lineBot->replyMessage($replyToken, $imgBuilder);
 
                                 //發文字
                                 $returnText = $target->name . "\n";
@@ -81,7 +81,12 @@ class AnimalCrossingController extends Controller
                                 $returnText .= $target->say . "\n";
 
                                 $message = new TextMessageBuilder($returnText);
-                                $this->lineBot->replyMessage($replyToken, $message);
+
+                                $multipleMessageBuilder = new MultiMessageBuilder();
+                                $multipleMessageBuilder = $multipleMessageBuilder->add(new TextMessageBuilder($message))
+                                    ->add($imgBuilder);
+
+                                $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
                             } else {
                                 $message = new TextMessageBuilder($replyText);
                                 $this->lineBot->replyMessage($replyToken, $message);
