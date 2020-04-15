@@ -9,6 +9,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB;
@@ -69,11 +70,8 @@ class AnimalCrossingController extends Controller
                                 $target = $replyText[0];
                                 //發圖片
                                 //發文
-                                $text = $target->name . '%0D%0A';
-                                $text .= $target->personality . '%0D%0A';
-                                $text .= $target->race . '%0D%0A';
-                                $text .= $target->bd . '%0D%0A';
-                                $text .= $target->say . '%0D%0A';
+                                $text = new MultiMessageBuilder();
+                                $text->add(new TextMessageBuilder($target->name, $target->personality, $target->race, $target->bd, $target->say));
                                 $this->lineBot->replyText($replyToken, $text);
                             } else {
                                 $this->lineBot->replyText($replyToken, $replyText);
