@@ -78,15 +78,15 @@ class AnimalCrossingController extends Controller
                                 $returnText .= $target->say . "\n";
 
                                 //發圖片
-                                $imgPath = request()->getHttpHost() . $target->img_path;
+                                $imgPath = 'https://' . request()->getHttpHost() . $target->img_path;
                                 $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
 
                                 $message = new TextMessageBuilder($returnText);
 
                                 $multipleMessageBuilder = new MultiMessageBuilder();
                                 $multipleMessageBuilder
-                                    ->add($message)
-                                    ->add($imgBuilder);
+                                    ->add($imgBuilder)
+                                    ->add($message);
 
                                 $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
                             } else {
