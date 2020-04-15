@@ -145,6 +145,14 @@ class AnimalCrossingController extends Controller
         }
 
         if (count($dbAnimal) > 1) {
+
+            foreach ($dbAnimal as $animal) {
+                if ($animal->name == $target) {
+                    return [$animal];
+                }
+            }
+
+
             $resultText = '你要找的是' . "\n";
 
             foreach ($dbAnimal as $animal) {
