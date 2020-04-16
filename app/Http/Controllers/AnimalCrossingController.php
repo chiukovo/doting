@@ -123,8 +123,8 @@ class AnimalCrossingController extends Controller
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
-        $text .= '搜尋指令: 請輸入 "豆丁"' . "\n";
-        $text .= '搜尋動物範例: 請輸入 "動物 茶茶丸"' . "\n";
+        $text .= '找指令: 請輸入 "豆丁"' . "\n";
+        $text .= '找動物: 請輸入 "動物 茶茶丸"' . "\n";
 
         return $text;
     }
