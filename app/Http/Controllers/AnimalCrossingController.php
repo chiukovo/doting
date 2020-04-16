@@ -94,6 +94,10 @@ class AnimalCrossingController extends Controller
                                 $this->lineBot->replyMessage($replyToken, $message);
                             }
                         }
+                    } else if ($messageType == 'join') {
+                        $textExample = $this->instructionExample();
+                        $message = new TextMessageBuilder($textExample);
+                        $this->lineBot->replyMessage($replyToken, $message);
                     }
                 }
 
@@ -110,6 +114,12 @@ class AnimalCrossingController extends Controller
             return;
         }
         return;
+    }
+
+    public function instructionExample()
+    {
+        $text = '指令教學' . "\n";
+        $text .= '搜尋動物範例: 動物 茶茶丸' . "\n";
     }
 
     public function formatText($text)
@@ -156,7 +166,7 @@ class AnimalCrossingController extends Controller
             $resultText = '你要找的是' . "\n";
 
             foreach ($dbAnimal as $animal) {
-                $resultText .= $animal->name . "\n";
+                $resultText .= '動物 ' . $animal->name . "\n";
             }
 
             $resultText .= '哪個阿 ( ・◇・)？';
