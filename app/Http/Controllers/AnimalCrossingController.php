@@ -75,7 +75,7 @@ class AnimalCrossingController extends Controller
                                 $returnText .= '個性: ' . $target->personality . "\n";
                                 $returnText .= '種族: ' . $target->race . "\n";
                                 $returnText .= '生日: ' . $target->bd . "\n";
-                                $returnText .= '常說: ' . $target->say . "\n";
+                                $returnText .= '口頭禪: ' . $target->say . "\n";
 
                                 //發圖片
                                 $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($target->name) . '.png';
@@ -118,8 +118,9 @@ class AnimalCrossingController extends Controller
 
     public function instructionExample()
     {
-        $text = '指令教學' . "\n";
-        $text .= '搜尋指令: 請輸入 "豆丁指令"' . "\n";
+        $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text .= '以下教你如何使用指令~~' . "\n";
+        $text .= '搜尋指令: 請輸入 "豆丁"' . "\n";
         $text .= '搜尋動物範例: 請輸入 "動物 茶茶丸"' . "\n";
 
         return $text;
@@ -127,7 +128,7 @@ class AnimalCrossingController extends Controller
 
     public function formatText($text)
     {
-        if ($text == '豆丁指令') {
+        if ($text == '豆丁') {
             return $this->instructionExample();
         }
 
