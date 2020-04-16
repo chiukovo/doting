@@ -8,6 +8,7 @@ use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
+use LINE\LINEBot\Event\JoinEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -54,10 +55,10 @@ class AnimalCrossingController extends Controller
                 $text = '';
                 $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
-                $messageType = $event->getMessageType();
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
+                    $messageType = $event->getMessageType();
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
@@ -94,11 +95,13 @@ class AnimalCrossingController extends Controller
                                 $this->lineBot->replyMessage($replyToken, $message);
                             }
                         }
-                    } else if ($messageType == 'join') {
-                        $textExample = $this->instructionExample();
-                        $message = new TextMessageBuilder($textExample);
-                        $this->lineBot->replyMessage($replyToken, $message);
                     }
+                }
+
+                if ($event instanceof JoinEvent) {
+                   $textExample = $this->instructionExample();
+                   $message = new TextMessageBuilder($textExample);
+                   $this->lineBot->replyMessage($replyToken, $message);
                 }
 
                 //Log
