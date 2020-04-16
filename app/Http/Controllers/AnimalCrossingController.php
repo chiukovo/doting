@@ -75,7 +75,7 @@ class AnimalCrossingController extends Controller
                                 $returnText .= '個性: ' . $target->personality . "\n";
                                 $returnText .= '種族: ' . $target->race . "\n";
                                 $returnText .= '生日: ' . $target->bd . "\n";
-                                $returnText .= '口頭禪: ' . $target->say . "\n";
+                                $returnText .= '口頭禪: ' . $target->say;
 
                                 //發圖片
                                 $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($target->name) . '.png';
