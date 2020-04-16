@@ -121,6 +121,8 @@ class AnimalCrossingController extends Controller
         $text = '指令教學' . "\n";
         $text .= '搜尋指令: 請輸入 "豆丁指令"' . "\n";
         $text .= '搜尋動物範例: 請輸入 "動物 茶茶丸"' . "\n";
+
+        return $text;
     }
 
     public function formatText($text)
