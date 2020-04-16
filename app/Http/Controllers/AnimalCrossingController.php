@@ -169,6 +169,46 @@ class AnimalCrossingController extends Controller
         return $dbAnimal;
     }
 
+    public function getNewImg()
+    {
+        //DB DATA
+        $dbAnimal = DB::table('animal')->where('beautify_img', 0)->get()->toArray();
+
+        foreach ($dbAnimal as $data) {
+            $simplified = Curl::to('http://api.zhconvert.org/convert?converter=Simplified&text=' . $data->name)->asJson()->get();
+            $target = $simplified->data->text;
+
+            $url = 'https://wiki.biligame.com/dongsen/' . $target;
+            $ql = QueryList::get($url);
+            $result = $ql->rules([
+                'img' => ['.box-poke-right img', 'src'],
+            ])
+            ->range('.box-poke-big')
+            ->queryData();
+
+            if (!empty($result)) {
+                $img = $result[0]['img'];
+
+                //save img
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+                $imgUploadSuccess = 0;
+
+                if ($code == 200) {
+                    $imgUploadSuccess = 1;
+                    $content = file_get_contents($img);
+                    Storage::disk('animal')->put($data->name . '.png', $content);
+
+                    DB::table('animal')->where('id', $data->id)->update(['beautify_img' => 1]);
+
+                    echo 'update ' . $data->name . '</br>';
+                }
+            }
+        }
+
+        echo 'done';
+    }
+
     public function getAnimalApi(Request $request)
     {
         //採集

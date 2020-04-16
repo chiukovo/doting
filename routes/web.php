@@ -21,3 +21,4 @@ Route::get('/', 'LineBotController@index');
 Route::get('/', 'AnimalCrossingController@index');
 Route::post('/message', 'AnimalCrossingController@message');
 Route::get('/getAnimalApi', 'AnimalCrossingController@getAnimalApi');
+Route::get('/getNewImg', 'AnimalCrossingController@getNewImg');
