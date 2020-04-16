@@ -131,6 +131,10 @@ class AnimalCrossingController extends Controller
             return $this->instructionExample();
         }
 
+        if ($text == '豆丁笨蛋') {
+            return '你才笨蛋 (／‵Д′)／~ ╧╧';
+        }
+
         //切割
         $format = explode(" ", $text);
 
