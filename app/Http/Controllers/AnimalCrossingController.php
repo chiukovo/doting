@@ -164,7 +164,7 @@ class AnimalCrossingController extends Controller
             $returnText = '名稱: Quni' . "\n";
             $returnText .= '個性: 易怒' . "\n";
             $returnText .= '種族: 愛睏星人' . "\n";
-            $returnText .= '生日: ??' . "\n";
+            $returnText .= '生日: 0121' . "\n";
             $returnText .= '口頭禪: 想睡覺';
 
             return $returnText;
