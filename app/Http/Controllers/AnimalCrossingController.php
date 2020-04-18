@@ -147,7 +147,7 @@ class AnimalCrossingController extends Controller
             $returnText .= '生日: ??' . "\n";
             $returnText .= '口頭禪: 走了拉 夾';
 
-            return $returnText
+            return $returnText;
         }
 
         if ($text == '#ㄦㄦ') {
@@ -157,7 +157,7 @@ class AnimalCrossingController extends Controller
             $returnText .= '生日: ??' . "\n";
             $returnText .= '口頭禪: 想下班';
 
-            return $returnText
+            return $returnText;
         }
 
         if ($text == '#Quni') {
@@ -167,7 +167,7 @@ class AnimalCrossingController extends Controller
             $returnText .= '生日: ??' . "\n";
             $returnText .= '口頭禪: 想睡覺';
 
-            return $returnText
+            return $returnText;
         }
 
         $type = substr($text, 0, 1);
