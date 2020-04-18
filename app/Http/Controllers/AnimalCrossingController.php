@@ -112,7 +112,7 @@ class AnimalCrossingController extends Controller
                     'type' => $messageType,
                 ];
 
-                Log::info(json_encode($log));
+                Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
             }
         } catch (Exception $e) {
             return;
