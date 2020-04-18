@@ -30,7 +30,6 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
-        dd($this->formatText('#茶茶'));
     	echo 'hi';
     }
 
@@ -139,6 +138,36 @@ class AnimalCrossingController extends Controller
 
         if ($text == '豆丁笨蛋') {
             return '你才笨蛋 (／‵Д′)／~ ╧╧';
+        }
+
+        if ($text == '#軒哥') {
+            $returnText = '名稱: 軒哥' . "\n";
+            $returnText .= '個性: 火爆' . "\n";
+            $returnText .= '種族: 苦命星人' . "\n";
+            $returnText .= '生日: ??' . "\n";
+            $returnText .= '口頭禪: 走了拉 夾';
+
+            return $returnText
+        }
+
+        if ($text == '#ㄦㄦ') {
+            $returnText = '名稱: ㄦㄦ' . "\n";
+            $returnText .= '個性: 溫和' . "\n";
+            $returnText .= '種族: 不想上班星人' . "\n";
+            $returnText .= '生日: ??' . "\n";
+            $returnText .= '口頭禪: 想下班';
+
+            return $returnText
+        }
+
+        if ($text == '#Quni') {
+            $returnText = '名稱: Quni' . "\n";
+            $returnText .= '個性: 易怒' . "\n";
+            $returnText .= '種族: 愛睏星人' . "\n";
+            $returnText .= '生日: ??' . "\n";
+            $returnText .= '口頭禪: 想睡覺';
+
+            return $returnText
         }
 
         $type = substr($text, 0, 1);
