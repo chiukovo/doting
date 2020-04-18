@@ -54,6 +54,7 @@ class AnimalCrossingController extends Controller
             foreach ($events as $event) {
                 $text = '';
                 $messageType = '';
+                $isSend = false;
                 $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
@@ -91,9 +92,11 @@ class AnimalCrossingController extends Controller
                                     ->add($message);
 
                                 $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+                                $isSend = true;
                             } else {
                                 $message = new TextMessageBuilder($replyText);
                                 $this->lineBot->replyMessage($replyToken, $message);
+                                $isSend = true;
                             }
                         }
                     }
@@ -103,16 +106,19 @@ class AnimalCrossingController extends Controller
                    $textExample = $this->instructionExample();
                    $message = new TextMessageBuilder($textExample);
                    $this->lineBot->replyMessage($replyToken, $message);
+                   $isSend = true;
                 }
 
-                //Log
-                $log = [
-                    'userId' => $userId,
-                    'text' => $text,
-                    'type' => $messageType,
-                ];
+                if ($isSend) {
+                    //Log
+                    $log = [
+                        'userId' => $userId,
+                        'text' => $text,
+                        'type' => $messageType,
+                    ];
 
-                Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
+                    Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
+                }
             }
         } catch (Exception $e) {
             return;
