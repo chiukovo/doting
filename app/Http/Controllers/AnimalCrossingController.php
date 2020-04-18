@@ -54,6 +54,7 @@ class AnimalCrossingController extends Controller
 
             foreach ($events as $event) {
                 $text = '';
+                $messageType = '';
                 $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
