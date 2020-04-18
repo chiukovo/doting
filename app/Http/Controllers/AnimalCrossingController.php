@@ -30,6 +30,7 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
+        dd($this->formatText('#茶茶'));
     	echo 'hi';
     }
 
@@ -124,7 +125,7 @@ class AnimalCrossingController extends Controller
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "動物 茶茶丸"' . "\n";
+        $text .= '找動物: 請輸入 "#茶茶丸"' . "\n";
 
         return $text;
     }
@@ -139,14 +140,11 @@ class AnimalCrossingController extends Controller
             return '你才笨蛋 (／‵Д′)／~ ╧╧';
         }
 
-        //切割
-        $format = explode(" ", $text);
-
-        $type = isset($format[0]) ? $format[0] : '';
-        $target = isset($format[1]) ? $format[1] : '';
+        $type = substr($text, 0, 1);
+        $target = substr($text, 1);
 
         switch ($type) {
-            case '動物':
+            case '#':
                 if ($target != '') {
                     return $this->getDbAnimal($target);
                 }
@@ -181,7 +179,7 @@ class AnimalCrossingController extends Controller
             $resultText = '你要找的是' . "\n";
 
             foreach ($dbAnimal as $animal) {
-                $resultText .= '動物 ' . $animal->name . "\n";
+                $resultText .= '#' . $animal->name . "\n";
             }
 
             $resultText .= '哪個阿 ( ・◇・)？';
