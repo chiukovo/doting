@@ -12,6 +12,7 @@ use LINE\LINEBot\Event\JoinEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -64,6 +65,15 @@ class AnimalCrossingController extends Controller
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
+
+                        //測試用
+                        if ($text = '#testasdf') {
+                            $test = new FlexMessageBuilder('test', $this->testFlex());
+                            $this->lineBot->replyMessage($replyToken, $test);
+                            exit;
+                        }
+                        //結束
+
                         //取得須回傳資料
                         $replyText = $this->formatText($text);
 
@@ -126,6 +136,188 @@ class AnimalCrossingController extends Controller
             return;
         }
         return;
+    }
+
+    public function testFlex()
+    {
+                $target = array (
+          'type' => 'carousel',
+          'contents' => 
+          array (
+            0 => 
+            array (
+              'type' => 'bubble',
+              'size' => 'micro',
+              'hero' => 
+              array (
+                'type' => 'image',
+                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip10.jpg',
+                'size' => 'full',
+                'aspectMode' => 'cover',
+                'aspectRatio' => '320:213',
+              ),
+              'body' => 
+              array (
+                'type' => 'box',
+                'layout' => 'vertical',
+                'contents' => 
+                array (
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'text' => 'Brown Cafe',
+                    'weight' => 'bold',
+                    'size' => 'sm',
+                    'wrap' => true,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'box',
+                    'layout' => 'vertical',
+                    'contents' => 
+                    array (
+                      0 => 
+                      array (
+                        'type' => 'box',
+                        'layout' => 'baseline',
+                        'spacing' => 'sm',
+                        'contents' => 
+                        array (
+                          0 => 
+                          array (
+                            'type' => 'text',
+                            'text' => '東京旅行',
+                            'wrap' => true,
+                            'color' => '#8c8c8c',
+                            'size' => 'xs',
+                            'flex' => 5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                'spacing' => 'sm',
+                'paddingAll' => '13px',
+              ),
+            ),
+            1 => 
+            array (
+              'type' => 'bubble',
+              'size' => 'micro',
+              'hero' => 
+              array (
+                'type' => 'image',
+                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip11.jpg',
+                'size' => 'full',
+                'aspectMode' => 'cover',
+                'aspectRatio' => '320:213',
+              ),
+              'body' => 
+              array (
+                'type' => 'box',
+                'layout' => 'vertical',
+                'contents' => 
+                array (
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'text' => 'Brow&Cony\'s Restaurant',
+                    'weight' => 'bold',
+                    'size' => 'sm',
+                    'wrap' => true,
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'box',
+                    'layout' => 'vertical',
+                    'contents' => 
+                    array (
+                      0 => 
+                      array (
+                        'type' => 'box',
+                        'layout' => 'baseline',
+                        'spacing' => 'sm',
+                        'contents' => 
+                        array (
+                          0 => 
+                          array (
+                            'type' => 'text',
+                            'text' => '東京旅行',
+                            'wrap' => true,
+                            'color' => '#8c8c8c',
+                            'size' => 'xs',
+                            'flex' => 5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                'spacing' => 'sm',
+                'paddingAll' => '13px',
+              ),
+            ),
+            2 => 
+            array (
+              'type' => 'bubble',
+              'size' => 'micro',
+              'hero' => 
+              array (
+                'type' => 'image',
+                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip12.jpg',
+                'size' => 'full',
+                'aspectMode' => 'cover',
+                'aspectRatio' => '320:213',
+              ),
+              'body' => 
+              array (
+                'type' => 'box',
+                'layout' => 'vertical',
+                'contents' => 
+                array (
+                  0 => 
+                  array (
+                    'type' => 'text',
+                    'text' => 'Tata',
+                    'weight' => 'bold',
+                    'size' => 'sm',
+                  ),
+                  1 => 
+                  array (
+                    'type' => 'box',
+                    'layout' => 'vertical',
+                    'contents' => 
+                    array (
+                      0 => 
+                      array (
+                        'type' => 'box',
+                        'layout' => 'baseline',
+                        'spacing' => 'sm',
+                        'contents' => 
+                        array (
+                          0 => 
+                          array (
+                            'type' => 'text',
+                            'text' => '東京旅行',
+                            'wrap' => true,
+                            'color' => '#8c8c8c',
+                            'size' => 'xs',
+                            'flex' => 5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                'spacing' => 'sm',
+                'paddingAll' => '13px',
+              ),
+            ),
+          ),
+        );
+
+        return $target;
     }
 
     public function instructionExample()
