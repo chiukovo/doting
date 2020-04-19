@@ -439,6 +439,7 @@ class AnimalCrossingController extends Controller
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
             ->setSize(ComponentImageSize::XL)
+            ->setAspectRatio('9:12')
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
@@ -446,7 +447,7 @@ class AnimalCrossingController extends Controller
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . ' ' . $item->en_name . ' ' . $item->jp_name)
+            ->setText($item->name . ' ' . ucfirst($target->en_name) . ' ' . $item->jp_name)
             ->setWrap(true)
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
