@@ -227,7 +227,6 @@ class AnimalCrossingController extends Controller
             ->orWhere('en_name', 'like', '%' . $target . '%')
             ->orWhere('jp_name', 'like', '%' . $target . '%')
             ->orWhere('personality', 'like', '%' . $target . '%')
-            ->orWhere('bd', 'like', '%' . $target . '%')
             ->get()
             ->toArray();
 
