@@ -86,46 +86,6 @@ class AnimalCrossingController extends Controller
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
 
-                        //測試用
-                        if ($text == '#testasdf') {
-                            $dbAnimal = DB::table('animal')
-                                ->limit(50)
-                                ->get()
-                                ->toArray();
-
-                            $dbAnimals = array_chunk($dbAnimal, 10);
-                            $multipleMessageBuilder = new MultiMessageBuilder();
-
-                            foreach ($dbAnimals as $animals) {
-                                $result = [];
-
-                                foreach ($animals as $animal) {
-                                    $result[] = self::createItemBubble($animal);
-                                }
-
-                                $target = new CarouselContainerBuilder($result);
-
-                                $msg = FlexMessageBuilder::builder()
-                                    ->setAltText('動物圖鑑')
-                                    ->setContents($target);
-
-
-                                $multipleMessageBuilder->add($msg);
-                            }
-
-                            $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
-
-                            //Log
-                            $log = [
-                                'userId' => $userId,
-                                'text' => $response->getRawBody(),
-                                'type' => $messageType,
-                            ];
-
-                            Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
-                        }
-                        //結束
-
                         //取得須回傳資料
                         $replyText = $this->formatText($text);
 
@@ -133,29 +93,28 @@ class AnimalCrossingController extends Controller
                             return;
                         } else {
                             if (is_array($replyText)) {
-                                $target = $replyText[0];
-
-                                //發文字
-                                $returnText = '名稱: ' . $target->name . "\n";
-                                $returnText .= '名稱(英): ' . ucfirst($target->en_name) . "\n";
-                                $returnText .= '名稱(日): ' . $target->jp_name . "\n";
-                                $returnText .= '個性: ' . $target->personality . "\n";
-                                $returnText .= '種族: ' . $target->race . "\n";
-                                $returnText .= '生日: ' . $target->bd . "\n";
-                                $returnText .= '口頭禪: ' . $target->say;
-
-                                //發圖片
-                                $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($target->name) . '.png';
-                                $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
-
-                                $message = new TextMessageBuilder($returnText);
-
+                                $replyText = array_chunk($replyText, 10);
                                 $multipleMessageBuilder = new MultiMessageBuilder();
-                                $multipleMessageBuilder
-                                    ->add($imgBuilder)
-                                    ->add($message);
 
-                                $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+                                foreach ($replyText as $animals) {
+                                    $result = [];
+
+                                    foreach ($animals as $animal) {
+                                        $result[] = self::createItemBubble($animal);
+                                    }
+
+                                    $target = new CarouselContainerBuilder($result);
+
+                                    $msg = FlexMessageBuilder::builder()
+                                        ->setAltText('動物圖鑑')
+                                        ->setContents($target);
+
+
+                                    $multipleMessageBuilder->add($msg);
+                                }
+
+                                $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+
                                 $isSend = true;
                             } else {
                                 $message = new TextMessageBuilder($replyText);
@@ -193,9 +152,10 @@ class AnimalCrossingController extends Controller
     public function instructionExample()
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text .= '版本v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "#茶茶丸"' . "\n";
+        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢' . "\n";
 
         return $text;
     }
@@ -267,6 +227,7 @@ class AnimalCrossingController extends Controller
             ->orWhere('en_name', 'like', '%' . $target . '%')
             ->orWhere('jp_name', 'like', '%' . $target . '%')
             ->orWhere('personality', 'like', '%' . $target . '%')
+            ->orWhere('bd', 'like', '%' . $target . '%')
             ->get()
             ->toArray();
 
@@ -274,28 +235,6 @@ class AnimalCrossingController extends Controller
             return $notFound;
         }
 
-        if (count($dbAnimal) > 1) {
-
-            foreach ($dbAnimal as $animal) {
-                if ($animal->name == $target) {
-                    return [$animal];
-                }
-            }
-
-
-            $resultText = '你要找的是' . "\n";
-
-            foreach ($dbAnimal as $animal) {
-                $resultText .= '#' . $animal->name . "\n";
-            }
-
-            $resultText .= '哪個阿 ( ・◇・)？';
-
-            return $resultText;
-        }
-
-
-        //單一
         return $dbAnimal;
     }
 
