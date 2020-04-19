@@ -89,7 +89,7 @@ class AnimalCrossingController extends Controller
                         //測試用
                         if ($text == '#testasdf') {
                             $dbAnimal = DB::table('animal')
-                                ->limit(50)
+                                ->limit(10)
                                 ->get()
                                 ->toArray();
 
