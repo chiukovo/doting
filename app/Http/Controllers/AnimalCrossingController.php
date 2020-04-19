@@ -89,23 +89,31 @@ class AnimalCrossingController extends Controller
                         //測試用
                         if ($text == '#testasdf') {
                             $dbAnimal = DB::table('animal')
-                                ->limit(10)
+                                ->limit(50)
                                 ->get()
                                 ->toArray();
 
-                            $result = [];
+                            $dbAnimals = array_chunk($dbAnimal, 10);
+                            $multipleMessageBuilder = new MultiMessageBuilder();
 
-                            foreach ($dbAnimal as $animal) {
-                                $result[] = self::createItemBubble($animal);
+                            foreach ($dbAnimals as $animals) {
+                                $result = [];
+
+                                foreach ($animals as $animal) {
+                                    $result[] = self::createItemBubble($animal);
+                                }
+
+                                $target = new CarouselContainerBuilder($result);
+
+                                $msg = FlexMessageBuilder::builder()
+                                    ->setAltText('動物圖鑑')
+                                    ->setContents($target);
+
+
+                                $multipleMessageBuilder->add($msg);
                             }
 
-                            $target = new CarouselContainerBuilder($result);
-
-                            $msg = FlexMessageBuilder::builder()
-                                ->setAltText('動物圖鑑')
-                                ->setContents($target);
-
-                            $response = $this->lineBot->replyMessage($replyToken, $msg);
+                            $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
 
                             //Log
                             $log = [
