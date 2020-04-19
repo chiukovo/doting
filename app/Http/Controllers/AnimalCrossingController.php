@@ -13,6 +13,8 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
@@ -76,8 +78,14 @@ class AnimalCrossingController extends Controller
                             $imgBuilder2 = new ImageMessageBuilder('https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png', 'https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png');
 
                             $carouselTemplateBuilder = new CarouselTemplateBuilder([
-                                new CarouselColumnTemplateBuilder('foo', 'bar', $imgBuilder1, []),
-                                new CarouselColumnTemplateBuilder('buz', 'qux', $imgBuilder2, []),
+                                new CarouselColumnTemplateBuilder('foo', 'bar', $imgBuilder1, [
+                                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                                ]),
+                                new CarouselColumnTemplateBuilder('buz', 'qux', $imgBuilder2, [
+                                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                                ]),
                             ]);
 
                             $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
