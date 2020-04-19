@@ -115,6 +115,11 @@ class AnimalCrossingController extends Controller
 
                                 $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
 
+                                //error
+                                if (!$response->isSucceeded()) {
+                                    Log::debug($response->getRawBody());
+                                }
+
                                 $isSend = true;
                             } else {
                                 $message = new TextMessageBuilder($replyText);
