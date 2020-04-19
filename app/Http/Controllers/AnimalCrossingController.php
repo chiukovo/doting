@@ -9,6 +9,16 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
+use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
+use LINE\LINEBot\Constant\Flex\ComponentFontSize;
+use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
+use LINE\LINEBot\Constant\Flex\ComponentGravity;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectMode;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectRatio;
+use LINE\LINEBot\Constant\Flex\ComponentImageSize;
+use LINE\LINEBot\Constant\Flex\ComponentLayout;
+use LINE\LINEBot\Constant\Flex\ComponentMargin;
+use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -16,10 +26,12 @@ use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
-use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -39,6 +51,70 @@ class AnimalCrossingController extends Controller
     public function index(Request $request)
     {
     	echo 'hi';
+    }
+
+    public function createItemBubble($id)
+    {
+        $item = [
+            '111' => [
+                'photo' => 'https://example.com/photo1.png',
+                'name' => 'Arm Chair, White',
+                'price' => 49.99,
+                'stock' => true,
+            ],
+            '112' => [
+                'photo' => 'https://example.com/photo2.png',
+                'name' => 'Metal Desk Lamp',
+                'price' => 11.99,
+                'stock' => false,
+            ],
+        ];
+
+        return BubbleContainerBuilder::builder()
+            ->setBody(self::createItemBodyBlock($item[$id]));
+    }
+
+    private static function createItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item['name'])
+            ->setWrap(true)
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::XL);
+
+        $price = explode('.', number_format($item['price'], 2));
+        $components[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents([
+                TextComponentBuilder::builder()
+                    ->setText('$'.$price[0])
+                    ->setWrap(true)
+                    ->setWeight(ComponentFontWeight::BOLD)
+                    ->setSize(ComponentFontSize::XL)
+                    ->setFlex(0),
+                TextComponentBuilder::builder()
+                    ->setText('.'.$price[1])
+                    ->setWrap(true)
+                    ->setWeight(ComponentFontWeight::BOLD)
+                    ->setSize(ComponentFontSize::SM)
+                    ->setFlex(0)
+            ]);
+
+        if (!$item['stock']) {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('Temporarily out of stock')
+                ->setWrap(true)
+                ->setSize(ComponentFontSize::XXS)
+                ->setMargin(ComponentMargin::MD)
+                ->setColor('#ff5551')
+                ->setFlex(0);
+        }
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
     }
 
     public function message(Request $request)
@@ -75,20 +151,12 @@ class AnimalCrossingController extends Controller
 
                         //測試用
                         if ($text == '#testasdf') {
-                            $columns = [];
-                            $img_url = "https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png";
-
-                            for ($i=0;$i<10;$i++) {
-                                $column = new CarouselColumnTemplateBuilder('test title', $i . 'test', $img_url, [
-                                    new MessageTemplateActionBuilder("按鈕1","文字1"),
-                                    new UriTemplateActionBuilder("觀看食記","http://www.google.com")
-                                ]);
-                                $columns[] = $column;
-                            }
-
-
-                            $carousel = new CarouselTemplateBuilder($columns);
-                            $msg = new TemplateMessageBuilder("這訊息要用手機的賴才看的到哦", $carousel);
+                            $msg = FlexMessageBuilder::builder()
+                                ->setAltText('Shopping')
+                                ->setContents(new CarouselContainerBuilder([
+                                    self::createItemBubble(111),
+                                    self::createItemBubble(112)
+                            ]));
 
                             $response = $this->lineBot->replyMessage($replyToken, $msg);
 
@@ -165,188 +233,6 @@ class AnimalCrossingController extends Controller
             return;
         }
         return;
-    }
-
-    public function testFlex()
-    {
-                $target = array (
-          'type' => 'carousel',
-          'contents' => 
-          array (
-            0 => 
-            array (
-              'type' => 'bubble',
-              'size' => 'micro',
-              'hero' => 
-              array (
-                'type' => 'image',
-                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip10.jpg',
-                'size' => 'full',
-                'aspectMode' => 'cover',
-                'aspectRatio' => '320:213',
-              ),
-              'body' => 
-              array (
-                'type' => 'box',
-                'layout' => 'vertical',
-                'contents' => 
-                array (
-                  0 => 
-                  array (
-                    'type' => 'text',
-                    'text' => 'Brown Cafe',
-                    'weight' => 'bold',
-                    'size' => 'sm',
-                    'wrap' => true,
-                  ),
-                  1 => 
-                  array (
-                    'type' => 'box',
-                    'layout' => 'vertical',
-                    'contents' => 
-                    array (
-                      0 => 
-                      array (
-                        'type' => 'box',
-                        'layout' => 'baseline',
-                        'spacing' => 'sm',
-                        'contents' => 
-                        array (
-                          0 => 
-                          array (
-                            'type' => 'text',
-                            'text' => '東京旅行',
-                            'wrap' => true,
-                            'color' => '#8c8c8c',
-                            'size' => 'xs',
-                            'flex' => 5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                'spacing' => 'sm',
-                'paddingAll' => '13px',
-              ),
-            ),
-            1 => 
-            array (
-              'type' => 'bubble',
-              'size' => 'micro',
-              'hero' => 
-              array (
-                'type' => 'image',
-                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip11.jpg',
-                'size' => 'full',
-                'aspectMode' => 'cover',
-                'aspectRatio' => '320:213',
-              ),
-              'body' => 
-              array (
-                'type' => 'box',
-                'layout' => 'vertical',
-                'contents' => 
-                array (
-                  0 => 
-                  array (
-                    'type' => 'text',
-                    'text' => 'Brow&Cony\'s Restaurant',
-                    'weight' => 'bold',
-                    'size' => 'sm',
-                    'wrap' => true,
-                  ),
-                  1 => 
-                  array (
-                    'type' => 'box',
-                    'layout' => 'vertical',
-                    'contents' => 
-                    array (
-                      0 => 
-                      array (
-                        'type' => 'box',
-                        'layout' => 'baseline',
-                        'spacing' => 'sm',
-                        'contents' => 
-                        array (
-                          0 => 
-                          array (
-                            'type' => 'text',
-                            'text' => '東京旅行',
-                            'wrap' => true,
-                            'color' => '#8c8c8c',
-                            'size' => 'xs',
-                            'flex' => 5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                'spacing' => 'sm',
-                'paddingAll' => '13px',
-              ),
-            ),
-            2 => 
-            array (
-              'type' => 'bubble',
-              'size' => 'micro',
-              'hero' => 
-              array (
-                'type' => 'image',
-                'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip12.jpg',
-                'size' => 'full',
-                'aspectMode' => 'cover',
-                'aspectRatio' => '320:213',
-              ),
-              'body' => 
-              array (
-                'type' => 'box',
-                'layout' => 'vertical',
-                'contents' => 
-                array (
-                  0 => 
-                  array (
-                    'type' => 'text',
-                    'text' => 'Tata',
-                    'weight' => 'bold',
-                    'size' => 'sm',
-                  ),
-                  1 => 
-                  array (
-                    'type' => 'box',
-                    'layout' => 'vertical',
-                    'contents' => 
-                    array (
-                      0 => 
-                      array (
-                        'type' => 'box',
-                        'layout' => 'baseline',
-                        'spacing' => 'sm',
-                        'contents' => 
-                        array (
-                          0 => 
-                          array (
-                            'type' => 'text',
-                            'text' => '東京旅行',
-                            'wrap' => true,
-                            'color' => '#8c8c8c',
-                            'size' => 'xs',
-                            'flex' => 5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                'spacing' => 'sm',
-                'paddingAll' => '13px',
-              ),
-            ),
-          ),
-        );
-
-        return $target;
     }
 
     public function instructionExample()
