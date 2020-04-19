@@ -438,7 +438,7 @@ class AnimalCrossingController extends Controller
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
-            ->setSize(ComponentImageSize::XL)
+            ->setSize(ComponentImageSize::XXL)
             ->setAspectRatio('9:12')
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
@@ -455,6 +455,7 @@ class AnimalCrossingController extends Controller
         $components[] = TextComponentBuilder::builder()
             ->setText('個性: ' . $item->personality)
             ->setWrap(true)
+            ->setAlign('center')
             ->setSize(ComponentFontSize::SM)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
@@ -462,6 +463,7 @@ class AnimalCrossingController extends Controller
         $components[] = TextComponentBuilder::builder()
             ->setText('種族: ' . $item->race)
             ->setWrap(true)
+            ->setAlign('center')
             ->setSize(ComponentFontSize::SM)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
@@ -469,6 +471,7 @@ class AnimalCrossingController extends Controller
         $components[] = TextComponentBuilder::builder()
             ->setText('生日: ' . $item->bd)
             ->setWrap(true)
+            ->setAlign('center')
             ->setSize(ComponentFontSize::SM)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
@@ -476,6 +479,7 @@ class AnimalCrossingController extends Controller
         $components[] = TextComponentBuilder::builder()
             ->setText('口頭禪: ' . $item->say)
             ->setWrap(true)
+            ->setAlign('center')
             ->setSize(ComponentFontSize::SM)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
