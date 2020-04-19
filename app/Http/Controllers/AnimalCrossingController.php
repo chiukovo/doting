@@ -410,6 +410,14 @@ class AnimalCrossingController extends Controller
             ->setSize(ComponentFontSize::MD);
 
         $components[] = TextComponentBuilder::builder()
+            ->setText('性別: ' . $item->sex)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
             ->setText('個性: ' . $item->personality)
             ->setWrap(true)
             ->setAlign('center')
