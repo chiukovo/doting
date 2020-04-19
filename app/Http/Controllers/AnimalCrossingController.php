@@ -19,6 +19,7 @@ use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -74,22 +75,18 @@ class AnimalCrossingController extends Controller
 
                         //測試用
                         if ($text == '#testasdf') {
-                            $imgBuilder1 = new ImageMessageBuilder('https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png', 'https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png');
-                            $imgBuilder2 = new ImageMessageBuilder('https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png', 'https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png');
+                            $columns = [];
+                            $img_url = "https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png";
 
-                            $carouselTemplateBuilder = new CarouselTemplateBuilder([
-                                new CarouselColumnTemplateBuilder('foo', 'bar', $imgBuilder1, [
-                                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                                ]),
-                                new CarouselColumnTemplateBuilder('buz', 'qux', $imgBuilder2, [
-                                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                                ]),
-                            ]);
+                            for ($i=0;$i<10;$i++) {
+                                $column = new CarouselColumnTemplateBuilder('test title', $i . 'test', $img_url, []);
+                                $columns[] = $column;
+                            }
 
-                            $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
-                            $response = $this->lineBot->replyMessage($replyToken, $templateMessage);
+
+                            $carousel = new CarouselTemplateBuilder($columns);
+                            $msg = new TemplateMessageBuilder("這訊息要用手機的賴才看的到哦", $carousel);
+                            $response = $this->lineBot->replyMessage($replyToken, $msg);
 
                             //Log
                             $log = [
