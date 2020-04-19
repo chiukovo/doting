@@ -75,8 +75,8 @@ class AnimalCrossingController extends Controller
 
                                 //發文字
                                 $returnText = '名稱: ' . $target->name . "\n";
-                                $returnText = '名稱(英): ' . ucfirst($target->en_name) . "\n";
-                                $returnText = '名稱(日): ' . $target->jp_name . "\n";
+                                $returnText .= '名稱(英): ' . ucfirst($target->en_name) . "\n";
+                                $returnText .= '名稱(日): ' . $target->jp_name . "\n";
                                 $returnText .= '個性: ' . $target->personality . "\n";
                                 $returnText .= '種族: ' . $target->race . "\n";
                                 $returnText .= '生日: ' . $target->bd . "\n";
