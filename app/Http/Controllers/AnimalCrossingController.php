@@ -194,13 +194,20 @@ class AnimalCrossingController extends Controller
 
     public function getDbAnimal($target)
     {
+        $target = strtolower($target);
+        $notFound = '找不到捏...(¬_¬)';
+
         $dbAnimal = DB::table('animal')
             ->where('name', 'like', '%' . $target . '%')
+            ->orWhere('race', 'like', '%' . $target . '%')
+            ->orWhere('en_name', 'like', '%' . $target . '%')
+            ->orWhere('jp_name', 'like', '%' . $target . '%')
+            ->orWhere('personality', 'like', '%' . $target . '%')
             ->get()
             ->toArray();
 
         if (empty($dbAnimal)) {
-            return '找不到捏...(¬_¬)';
+            return $notFound;
         }
 
         if (count($dbAnimal) > 1) {
@@ -228,7 +235,7 @@ class AnimalCrossingController extends Controller
         return $dbAnimal;
     }
 
-    public function getNewImg()
+    public function getNewImgName()
     {
         //DB DATA
         $dbAnimal = DB::table('animal')->where('beautify_img', 0)->get()->toArray();
@@ -241,12 +248,14 @@ class AnimalCrossingController extends Controller
             $ql = QueryList::get($url);
             $result = $ql->rules([
                 'img' => ['.box-poke-right img', 'src'],
+                'other_name' => ['.box-poke-left .box-poke .box-font:eq(5)', 'text'],
             ])
             ->range('.box-poke-big')
             ->queryData();
 
             if (!empty($result)) {
                 $img = $result[0]['img'];
+                $otherName = $result[0]['other_name'];
 
                 //save img
                 $headers = get_headers($img);
@@ -257,8 +266,30 @@ class AnimalCrossingController extends Controller
                     $imgUploadSuccess = 1;
                     $content = file_get_contents($img);
                     Storage::disk('animal')->put($data->name . '.png', $content);
+                    $enName = '';
+                    $jpName = '';
 
-                    DB::table('animal')->where('id', $data->id)->update(['beautify_img' => 1]);
+                    //name
+                    if ($otherName != '') {
+                        $otherName = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", "", strip_tags($otherName));
+                        //英文
+                        $nameEx = explode('(英)', $otherName);
+                        $enName = $nameEx[0] ?? '';
+
+
+                        //日文
+                        if (isset($nameEx[1])) {
+                            $jpName = str_replace('(日)', '', $nameEx[1]);
+                        }
+                    }
+
+                    DB::table('animal')
+                        ->where('id', $data->id)
+                        ->update([
+                            'beautify_img' => 1,
+                            'en_name' => strtolower($enName),
+                            'jp_name' => $jpName,
+                        ]);
 
                     echo 'update ' . $data->name . '</br>';
                 }
