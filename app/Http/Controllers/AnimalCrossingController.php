@@ -72,9 +72,12 @@ class AnimalCrossingController extends Controller
 
                         //測試用
                         if ($text = '#testasdf') {
+                            $imgBuilder1 = new ImageMessageBuilder('https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png', 'https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png');
+                            $imgBuilder2 = new ImageMessageBuilder('https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png', 'https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png');
+
                             $carouselTemplateBuilder = new CarouselTemplateBuilder([
-                                new CarouselColumnTemplateBuilder('foo', 'bar', 'https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png', []),
-                                new CarouselColumnTemplateBuilder('buz', 'qux', 'https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png', []),
+                                new CarouselColumnTemplateBuilder('foo', 'bar', $imgBuilder1, []),
+                                new CarouselColumnTemplateBuilder('buz', 'qux', $imgBuilder2, []),
                             ]);
 
                             $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
