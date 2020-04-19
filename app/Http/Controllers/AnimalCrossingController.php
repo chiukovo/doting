@@ -81,8 +81,7 @@ class AnimalCrossingController extends Controller
         return ImageComponentBuilder::builder()
             ->setUrl($item['photo'])
             ->setSize(ComponentImageSize::FULL)
-            ->setAspectRatio(ComponentImageAspectRatio::R20TO13)
-            ->setAspectMode(ComponentImageAspectMode::COVER);
+            ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
     private static function createItemBodyBlock($item)
