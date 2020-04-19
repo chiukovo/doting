@@ -449,6 +449,7 @@ class AnimalCrossingController extends Controller
         $components[] = TextComponentBuilder::builder()
             ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
             ->setWrap(true)
+            ->setAlign('center')
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
