@@ -79,13 +79,17 @@ class AnimalCrossingController extends Controller
                             $img_url = "https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png";
 
                             for ($i=0;$i<10;$i++) {
-                                $column = new CarouselColumnTemplateBuilder('test title', $i . 'test', $img_url, []);
+                                $column = new CarouselColumnTemplateBuilder('test title', $i . 'test', $img_url, [
+                                    new MessageTemplateActionBuilder("按鈕1","文字1"),
+                                    new UriTemplateActionBuilder("觀看食記","http://www.google.com")
+                                ]);
                                 $columns[] = $column;
                             }
 
 
                             $carousel = new CarouselTemplateBuilder($columns);
                             $msg = new TemplateMessageBuilder("這訊息要用手機的賴才看的到哦", $carousel);
+
                             $response = $this->lineBot->replyMessage($replyToken, $msg);
 
                             //Log
