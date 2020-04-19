@@ -94,30 +94,35 @@ class AnimalCrossingController extends Controller
                         } else {
                             if (is_array($replyText)) {
                                 $replyText = array_chunk($replyText, 10);
-                                $multipleMessageBuilder = new MultiMessageBuilder();
+                                $replyText = array_chunk($replyText, 5);
 
-                                foreach ($replyText as $animals) {
-                                    $result = [];
+                                foreach ($replyText as $detail) {
+                                    $multipleMessageBuilder = new MultiMessageBuilder();
 
-                                    foreach ($animals as $animal) {
-                                        $result[] = self::createItemBubble($animal);
+                                    foreach ($detail as $animals) {
+                                        $result = [];
+
+                                        foreach ($animals as $animal) {
+                                            $result[] = self::createItemBubble($animal);
+                                        }
+
+                                        $target = new CarouselContainerBuilder($result);
+
+                                        $msg = FlexMessageBuilder::builder()
+                                            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+                                            ->setContents($target);
+
+
+                                        $multipleMessageBuilder->add($msg);
                                     }
 
-                                    $target = new CarouselContainerBuilder($result);
+                                    //send
+                                    $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
 
-                                    $msg = FlexMessageBuilder::builder()
-                                        ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
-                                        ->setContents($target);
-
-
-                                    $multipleMessageBuilder->add($msg);
-                                }
-
-                                $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
-
-                                //error
-                                if (!$response->isSucceeded()) {
-                                    Log::debug($response->getRawBody());
+                                    //error
+                                    if (!$response->isSucceeded()) {
+                                        Log::debug($response->getRawBody());
+                                    }
                                 }
 
                                 $isSend = true;
@@ -236,6 +241,7 @@ class AnimalCrossingController extends Controller
             ->orWhere('personality', 'like', '%' . $target . '%')
             ->orWhere('bd_m', $target)
             ->orWhere('bd', $target)
+            ->orderBy('bd', 'asc')
             ->get()
             ->toArray();
 
