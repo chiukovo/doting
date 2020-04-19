@@ -29,6 +29,7 @@ use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
@@ -57,13 +58,13 @@ class AnimalCrossingController extends Controller
     {
         $item = [
             '111' => [
-                'photo' => 'https://example.com/photo1.png',
+                'photo' => 'https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png',
                 'name' => 'Arm Chair, White',
                 'price' => 49.99,
                 'stock' => true,
             ],
             '112' => [
-                'photo' => 'https://example.com/photo2.png',
+                'photo' => 'https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png',
                 'name' => 'Metal Desk Lamp',
                 'price' => 11.99,
                 'stock' => false,
@@ -71,7 +72,17 @@ class AnimalCrossingController extends Controller
         ];
 
         return BubbleContainerBuilder::builder()
+            ->setHero(self::createItemHeroBlock($item[$id]))
             ->setBody(self::createItemBodyBlock($item[$id]));
+    }
+
+    private static function createItemHeroBlock($item)
+    {
+        return ImageComponentBuilder::builder()
+            ->setUrl($item['photo'])
+            ->setSize(ComponentImageSize::FULL)
+            ->setAspectRatio(ComponentImageAspectRatio::R20TO13)
+            ->setAspectMode(ComponentImageAspectMode::COVER);
     }
 
     private static function createItemBodyBlock($item)
