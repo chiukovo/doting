@@ -178,6 +178,10 @@ class AnimalCrossingController extends Controller
             return $this->instructionExample();
         }
 
+        if ($text == '540') {
+            return '487';
+        }
+
         if ($text == '豆丁笨蛋') {
             return '你才笨蛋 (／‵Д′)／~ ╧╧';
         }
