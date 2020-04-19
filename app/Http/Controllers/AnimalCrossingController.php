@@ -71,7 +71,7 @@ class AnimalCrossingController extends Controller
                         $text = $event->getText();// 得到使用者輸入
 
                         //測試用
-                        if ($text = '#testasdf') {
+                        if ($text == '#testasdf') {
                             $imgBuilder1 = new ImageMessageBuilder('https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png', 'https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png');
                             $imgBuilder2 = new ImageMessageBuilder('https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png', 'https://ithelp.ithome.com.tw/images/ironman/11th/event/kv_event/kv-bg-addfly.png');
 
