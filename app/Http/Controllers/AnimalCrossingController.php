@@ -487,7 +487,7 @@ class AnimalCrossingController extends Controller
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
-            ->setBackgroundColor('#f3f3f3')
+            ->setBackgroundColor('#f1f1f1')
             ->setSpacing(ComponentSpacing::SM)
             ->setContents($components);
     }
