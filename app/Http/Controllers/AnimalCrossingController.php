@@ -13,6 +13,10 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -68,8 +72,13 @@ class AnimalCrossingController extends Controller
 
                         //測試用
                         if ($text = '#testasdf') {
-                            $test = new FlexMessageBuilder('test', $this->testFlex());
-                            $this->lineBot->replyMessage($replyToken, $test);
+                            $carouselTemplateBuilder = new CarouselTemplateBuilder([
+                                new CarouselColumnTemplateBuilder('foo', 'bar', 'https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png', []),
+                                new CarouselColumnTemplateBuilder('buz', 'qux', 'https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png', []),
+                            ]);
+
+                            $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
+                            $this->lineBot->replyMessage($replyToken, $templateMessage);
                             exit;
                         }
                         //結束
