@@ -54,79 +54,6 @@ class AnimalCrossingController extends Controller
     	echo 'hi';
     }
 
-    public function createItemBubble($id)
-    {
-        $item = [
-            '111' => [
-                'photo' => 'https://doting.moneyroll.com.tw/animal/%E4%B8%83%E4%B8%83.png',
-                'name' => 'Arm Chair, White',
-                'price' => 49.99,
-                'stock' => true,
-            ],
-            '112' => [
-                'photo' => 'https://doting.moneyroll.com.tw/animal/%E8%8C%B6%E8%8C%B6%E4%B8%B8.png',
-                'name' => 'Metal Desk Lamp',
-                'price' => 11.99,
-                'stock' => false,
-            ],
-        ];
-
-        return BubbleContainerBuilder::builder()
-            ->setHero(self::createItemHeroBlock($item[$id]))
-            ->setBody(self::createItemBodyBlock($item[$id]));
-    }
-
-    private static function createItemHeroBlock($item)
-    {
-        return ImageComponentBuilder::builder()
-            ->setUrl($item['photo'])
-            ->setSize(ComponentImageSize::FULL)
-            ->setAspectMode(ComponentImageAspectMode::FIT);
-    }
-
-    private static function createItemBodyBlock($item)
-    {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item['name'])
-            ->setWrap(true)
-            ->setWeight(ComponentFontWeight::BOLD)
-            ->setSize(ComponentFontSize::XL);
-
-        $price = explode('.', number_format($item['price'], 2));
-        $components[] = BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::BASELINE)
-            ->setContents([
-                TextComponentBuilder::builder()
-                    ->setText('$'.$price[0])
-                    ->setWrap(true)
-                    ->setWeight(ComponentFontWeight::BOLD)
-                    ->setSize(ComponentFontSize::XL)
-                    ->setFlex(0),
-                TextComponentBuilder::builder()
-                    ->setText('.'.$price[1])
-                    ->setWrap(true)
-                    ->setWeight(ComponentFontWeight::BOLD)
-                    ->setSize(ComponentFontSize::SM)
-                    ->setFlex(0)
-            ]);
-
-        if (!$item['stock']) {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('Temporarily out of stock')
-                ->setWrap(true)
-                ->setSize(ComponentFontSize::XXS)
-                ->setMargin(ComponentMargin::MD)
-                ->setColor('#ff5551')
-                ->setFlex(0);
-        }
-
-        return BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::VERTICAL)
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
-    }
-
     public function message(Request $request)
     {
         $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
@@ -161,12 +88,22 @@ class AnimalCrossingController extends Controller
 
                         //測試用
                         if ($text == '#testasdf') {
+                            $dbAnimal = DB::table('animal')
+                                ->limit(50)
+                                ->get()
+                                ->toArray();
+
+                            $result = [];
+
+                            foreach ($dbAnimal as $animal) {
+                                $result[] = self::createItemBubble($animal);
+                            }
+
+                            $target = new CarouselContainerBuilder($result);
+
                             $msg = FlexMessageBuilder::builder()
-                                ->setAltText('Shopping')
-                                ->setContents(new CarouselContainerBuilder([
-                                    self::createItemBubble(111),
-                                    self::createItemBubble(112)
-                            ]));
+                                ->setAltText('動物圖鑑')
+                                ->setContents($target);
 
                             $response = $this->lineBot->replyMessage($replyToken, $msg);
 
@@ -486,5 +423,65 @@ class AnimalCrossingController extends Controller
         }
 
         echo 'done';
+    }
+
+    public function createItemBubble($animal)
+    {
+        return BubbleContainerBuilder::builder()
+            ->setHero(self::createItemHeroBlock($animal))
+            ->setBody(self::createItemBodyBlock($animal));
+    }
+
+    private static function createItemHeroBlock($item)
+    {
+        $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+
+        return ImageComponentBuilder::builder()
+            ->setUrl($imgPath)
+            ->setSize(ComponentImageSize::XL)
+            ->setAspectMode(ComponentImageAspectMode::FIT);
+    }
+
+    private static function createItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name . ' ' . $item->en_name . ' ' . $item->jp_name)
+            ->setWrap(true)
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('個性: ' . $item->personality)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('種族: ' . $item->race)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('生日: ' . $item->bd)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('口頭禪: ' . $item->say)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
     }
 }
