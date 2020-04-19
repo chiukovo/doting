@@ -89,7 +89,16 @@ class AnimalCrossingController extends Controller
                             ]);
 
                             $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
-                            $this->lineBot->replyMessage($replyToken, $templateMessage);
+                            $result = $this->lineBot->replyMessage($replyToken, $templateMessage);
+
+                            //Log
+                            $log = [
+                                'userId' => $userId,
+                                'text' => json_encode($result),
+                                'type' => $messageType,
+                            ];
+
+                            Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
                         }
                         //結束
 
