@@ -155,7 +155,7 @@ class AnimalCrossingController extends Controller
         $text .= '版本v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢' . "\n";
+        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢(月份)' . "\n";
         $text .= '使用英文查詢: 請輸入 "#joey"' . "\n";
         $text .= '使用日文查詢: 請輸入 "#チョコ"' . "\n";
 
@@ -229,7 +229,7 @@ class AnimalCrossingController extends Controller
             ->orWhere('en_name', 'like', '%' . $target . '%')
             ->orWhere('jp_name', 'like', '%' . $target . '%')
             ->orWhere('personality', 'like', '%' . $target . '%')
-            ->orWhere('bd', $target)
+            ->orWhere('bd_m', $target)
             ->get()
             ->toArray();
 
@@ -329,12 +329,14 @@ class AnimalCrossingController extends Controller
         foreach ($result as $key => $data) {
             //圖片名稱不得為空
             if ($data['img'] != '' && $data['name'] != '') {
+                $dbData = [];
                 $isset = false;
 
                 //檢查是否資料庫存在
                 foreach ($dbAnimal as $source) {
                     if ($source->name == $data['name']) {
                         $isset = true;
+                        $dbData = $source;
                     }
                 }
 
@@ -351,10 +353,15 @@ class AnimalCrossingController extends Controller
                     }
 
                     $data['img_path'] = '/animal/' . $data['name'] . '.png';
+                    $bd = explode('.', $data['bd']);
+                    $sex = $data['sex'];
 
                     //insert
                     DB::table('animal')->insert([
                         'name' => $data['name'],
+                        'sex' => $sex,
+                        'bd_m' => $bd[0],
+                        'bd_d' => $bd[1],
                         'img_source' => $data['img'],
                         'img_path' => $data['img_path'],
                         'img_upload_success' => $imgUploadSuccess,
