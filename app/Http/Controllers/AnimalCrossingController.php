@@ -106,7 +106,7 @@ class AnimalCrossingController extends Controller
                                     $target = new CarouselContainerBuilder($result);
 
                                     $msg = FlexMessageBuilder::builder()
-                                        ->setAltText('動物圖鑑')
+                                        ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
                                         ->setContents($target);
 
 
