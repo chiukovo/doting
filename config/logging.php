@@ -42,7 +42,7 @@ return [
         ],
 
         'single' => [
-            'driver' => 'single',
+            'driver' => 'daily',
             'path' => storage_path('logs/message.log'),
             'level' => 'debug',
         ],
