@@ -9,9 +9,30 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
+use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
+use LINE\LINEBot\Constant\Flex\ComponentFontSize;
+use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
+use LINE\LINEBot\Constant\Flex\ComponentGravity;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectMode;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectRatio;
+use LINE\LINEBot\Constant\Flex\ComponentImageSize;
+use LINE\LINEBot\Constant\Flex\ComponentLayout;
+use LINE\LINEBot\Constant\Flex\ComponentMargin;
+use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -64,6 +85,7 @@ class AnimalCrossingController extends Controller
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
+
                         //取得須回傳資料
                         $replyText = $this->formatText($text);
 
@@ -71,29 +93,28 @@ class AnimalCrossingController extends Controller
                             return;
                         } else {
                             if (is_array($replyText)) {
-                                $target = $replyText[0];
-
-                                //發文字
-                                $returnText = '名稱: ' . $target->name . "\n";
-                                $returnText .= '名稱(英): ' . ucfirst($target->en_name) . "\n";
-                                $returnText .= '名稱(日): ' . $target->jp_name . "\n";
-                                $returnText .= '個性: ' . $target->personality . "\n";
-                                $returnText .= '種族: ' . $target->race . "\n";
-                                $returnText .= '生日: ' . $target->bd . "\n";
-                                $returnText .= '口頭禪: ' . $target->say;
-
-                                //發圖片
-                                $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($target->name) . '.png';
-                                $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
-
-                                $message = new TextMessageBuilder($returnText);
-
+                                $replyText = array_chunk($replyText, 10);
                                 $multipleMessageBuilder = new MultiMessageBuilder();
-                                $multipleMessageBuilder
-                                    ->add($imgBuilder)
-                                    ->add($message);
 
-                                $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+                                foreach ($replyText as $animals) {
+                                    $result = [];
+
+                                    foreach ($animals as $animal) {
+                                        $result[] = self::createItemBubble($animal);
+                                    }
+
+                                    $target = new CarouselContainerBuilder($result);
+
+                                    $msg = FlexMessageBuilder::builder()
+                                        ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+                                        ->setContents($target);
+
+
+                                    $multipleMessageBuilder->add($msg);
+                                }
+
+                                $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+
                                 $isSend = true;
                             } else {
                                 $message = new TextMessageBuilder($replyText);
@@ -131,9 +152,10 @@ class AnimalCrossingController extends Controller
     public function instructionExample()
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text .= '版本v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "#茶茶丸"' . "\n";
+        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢' . "\n";
 
         return $text;
     }
@@ -212,28 +234,6 @@ class AnimalCrossingController extends Controller
             return $notFound;
         }
 
-        if (count($dbAnimal) > 1) {
-
-            foreach ($dbAnimal as $animal) {
-                if ($animal->name == $target) {
-                    return [$animal];
-                }
-            }
-
-
-            $resultText = '你要找的是' . "\n";
-
-            foreach ($dbAnimal as $animal) {
-                $resultText .= '#' . $animal->name . "\n";
-            }
-
-            $resultText .= '哪個阿 ( ・◇・)？';
-
-            return $resultText;
-        }
-
-
-        //單一
         return $dbAnimal;
     }
 
@@ -369,5 +369,72 @@ class AnimalCrossingController extends Controller
         }
 
         echo 'done';
+    }
+
+    public function createItemBubble($animal)
+    {
+        return BubbleContainerBuilder::builder()
+            ->setHero(self::createItemHeroBlock($animal))
+            ->setBody(self::createItemBodyBlock($animal));
+    }
+
+    private static function createItemHeroBlock($item)
+    {
+        $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+
+        return ImageComponentBuilder::builder()
+            ->setUrl($imgPath)
+            ->setSize(ComponentImageSize::XXL)
+            ->setAspectRatio('9:12')
+            ->setAspectMode(ComponentImageAspectMode::FIT);
+    }
+
+    private static function createItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('個性: ' . $item->personality)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('種族: ' . $item->race)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('生日: ' . $item->bd)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('口頭禪: ' . $item->say)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
     }
 }
