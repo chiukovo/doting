@@ -84,11 +84,11 @@ class AnimalCrossingController extends Controller
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
-                    $this->userId = $event->getUserId();
                     $messageType = $event->getMessageType();
                     //文字
                     if ($messageType == 'text') {
                         //get profile
+                        $this->userId = $event->getUserId();
                         if (!is_null($this->userId)) {
                             $response = $this->lineBot->getProfile($this->userId);
 
