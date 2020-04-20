@@ -545,7 +545,7 @@ class AnimalCrossingController extends Controller
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . '($' . $item->sell . ')')
+            ->setText($item->name . ' $' . $item->sell)
             ->setWrap(true)
             ->setAlign('center')
             ->setWeight(ComponentFontWeight::BOLD)
