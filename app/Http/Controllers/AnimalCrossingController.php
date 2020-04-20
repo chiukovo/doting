@@ -162,12 +162,13 @@ class AnimalCrossingController extends Controller
     public function instructionExample()
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
-        $text .= '版本v' . config('app.version') . "\n";
+        $text .= '版本 v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
         $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢(月份)' . "\n";
-        $text .= '使用英文查詢: 請輸入 "#joey"' . "\n";
-        $text .= '使用日文查詢: 請輸入 "#チョコ"' . "\n";
+        $text .= '英文查詢: 請輸入 "#joey"' . "\n";
+        $text .= '日文查詢: 請輸入 "#チョコ"' . "\n";
+        $text .= '動物戰隊: 請輸入 "#阿戰隊"' . "\n";
 
         return $text;
     }
