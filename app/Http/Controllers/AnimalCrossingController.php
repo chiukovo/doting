@@ -498,7 +498,7 @@ class AnimalCrossingController extends Controller
             ->setAction(
                 new PostbackTemplateActionBuilder(
                     '加入最愛',
-                    'id=test',
+                    "action=buy&itemid=111",
                     'test'
                 )
             );
