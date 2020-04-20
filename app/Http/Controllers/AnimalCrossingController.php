@@ -109,7 +109,7 @@ class AnimalCrossingController extends Controller
                                 ->toArray();
 
                             foreach ($animals as $animal) {
-                                $result[] = self::createTestItemBubble($animal);
+                                $result[] = $this->createTestItemBubble($animal);
                             }
 
                             $target = new CarouselContainerBuilder($result);
@@ -148,7 +148,7 @@ class AnimalCrossingController extends Controller
                                         $result = [];
 
                                         foreach ($animals as $animal) {
-                                            $result[] = self::createItemBubble($animal);
+                                            $result[] = $this->createItemBubble($animal);
                                         }
 
                                         $target = new CarouselContainerBuilder($result);
@@ -504,19 +504,19 @@ class AnimalCrossingController extends Controller
     public function createItemBubble($animal)
     {
         return BubbleContainerBuilder::builder()
-            ->setHero(self::createItemHeroBlock($animal))
-            ->setBody(self::createItemBodyBlock($animal));
+            ->setHero($this->createItemHeroBlock($animal))
+            ->setBody($this->createItemBodyBlock($animal));
     }
 
     public function createTestItemBubble($animal)
     {
         return BubbleContainerBuilder::builder()
-            ->setHero(self::createItemHeroBlock($animal))
-            ->setBody(self::createItemBodyBlock($animal))
-            ->setFooter(self::createItemFooterBlock($animal));
+            ->setHero($this->createItemHeroBlock($animal))
+            ->setBody($this->createItemBodyBlock($animal))
+            ->setFooter($this->createItemFooterBlock($animal));
     }
 
-    public static function createItemFooterBlock($item)
+    public function createItemFooterBlock($item)
     {
         $color = '#aaaaaa';
         $add = ButtonComponentBuilder::builder()
@@ -545,7 +545,7 @@ class AnimalCrossingController extends Controller
             ->setContents([$add, $remove]);
     }
 
-    public static function createItemHeroBlock($item)
+    public function createItemHeroBlock($item)
     {
         $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
 
@@ -556,7 +556,7 @@ class AnimalCrossingController extends Controller
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
-    public static function createItemBodyBlock($item)
+    public function createItemBodyBlock($item)
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
