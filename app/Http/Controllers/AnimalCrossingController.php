@@ -375,6 +375,7 @@ class AnimalCrossingController extends Controller
 
         $fish = DB::table('fish')
             ->where('name', 'like', '%' . $target . '%')
+            ->orderBy('sell', 'desc')
             ->get()
             ->toArray();
 
@@ -551,10 +552,11 @@ class AnimalCrossingController extends Controller
             ->setSize(ComponentFontSize::MD);
 
         $components[] = TextComponentBuilder::builder()
-            ->setText('賣價: ' . $item->sell)
+            ->setText('$' . $item->sell)
             ->setWrap(true)
+            ->setWeight('bold')
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XL)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -581,6 +583,9 @@ class AnimalCrossingController extends Controller
             ->setSize(ComponentFontSize::SM)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
+
+        $south = '';
+        $north = '';
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
