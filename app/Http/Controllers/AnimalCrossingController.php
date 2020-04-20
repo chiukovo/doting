@@ -23,12 +23,14 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
@@ -75,9 +77,20 @@ class AnimalCrossingController extends Controller
             foreach ($events as $event) {
                 $text = '';
                 $messageType = '';
+                $displayName = '';
                 $isSend = false;
                 $userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
+
+                //get profile
+                if (!is_null($userId)) {
+                    $response = $this->lineBot->getProfile($userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $displayName = $profile['displayName'];
+                    }
+                }
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
@@ -86,8 +99,42 @@ class AnimalCrossingController extends Controller
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
 
+                        //測試
+                        if ($text == '#testfav') {
+                            $multipleMessageBuilder = new MultiMessageBuilder();
+
+                            $result = [];
+
+                            $animals = DB::table('animal')
+                                ->take(5)
+                                ->get()
+                                ->toArray();
+
+                            foreach ($animals as $animal) {
+                                $result[] = self::createTestItemBubble($animal);
+                            }
+
+                            $target = new CarouselContainerBuilder($result);
+
+                            $msg = FlexMessageBuilder::builder()
+                                ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+                                ->setContents($target);
+
+                            $multipleMessageBuilder->add($msg);
+
+                            //send
+                            $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
+
+                            //error
+                            if (!$response->isSucceeded()) {
+                                Log::debug($response->getRawBody());
+                            }
+                        }
+
+                        //end
+
                         //取得須回傳資料
-                        $replyText = $this->formatText($text);
+                        $replyText = $this->formatText($text, $userId, $displayName);
 
                         if ($replyText == '') {
                             return;
@@ -136,7 +183,7 @@ class AnimalCrossingController extends Controller
                 }
 
                 if ($event instanceof JoinEvent) {
-                   $textExample = $this->instructionExample();
+                   $textExample = $this->instructionExample($displayName);
                    $message = new TextMessageBuilder($textExample);
                    $this->lineBot->replyMessage($replyToken, $message);
                    $isSend = true;
@@ -159,9 +206,9 @@ class AnimalCrossingController extends Controller
         return;
     }
 
-    public function instructionExample()
+    public function instructionExample($displayName)
     {
-        $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text = $displayName . ' 你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= '版本 v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
@@ -173,10 +220,10 @@ class AnimalCrossingController extends Controller
         return $text;
     }
 
-    public function formatText($text)
+    public function formatText($text, $userId, $displayName)
     {
         if ($text == '豆丁') {
-            return $this->instructionExample();
+            return $this->instructionExample($displayName);
         }
 
         if ($text == '540') {
@@ -223,7 +270,7 @@ class AnimalCrossingController extends Controller
         switch ($type) {
             case '#':
                 if ($target != '') {
-                    return $this->getDbAnimal($target);
+                    return $this->getDbAnimal($target, $userId, $displayName);
                 }
                 break;
 
@@ -233,11 +280,12 @@ class AnimalCrossingController extends Controller
         }
     }
 
-    public function getDbAnimal($target)
+    public function getDbAnimal($target, $userId, $displayName)
     {
         $target = strtolower($target);
         $notFound = '找不到捏...(¬_¬)';
 
+        //設定最愛
 
         //阿戰隊
         if ($target == '阿戰隊') {
@@ -416,6 +464,43 @@ class AnimalCrossingController extends Controller
         return BubbleContainerBuilder::builder()
             ->setHero(self::createItemHeroBlock($animal))
             ->setBody(self::createItemBodyBlock($animal));
+    }
+
+    public function createTestItemBubble($animal)
+    {
+        return BubbleContainerBuilder::builder()
+            ->setHero(self::createItemHeroBlock($animal))
+            ->setBody(self::createItemBodyBlock($animal))
+            ->setFooter(self::createItemFooterBlock($animal));
+    }
+
+    private static function createItemFooterBlock($item)
+    {
+        $color = '#aaaaaa';
+        $cartButton = ButtonComponentBuilder::builder()
+            ->setStyle(ComponentButtonStyle::PRIMARY)
+            ->setColor($color)
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'Add to Cart',
+                    'https://example.com',
+                    new AltUriBuilder('https://example.com#desktop')
+                )
+            );
+
+        $wishButton = ButtonComponentBuilder::builder()
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'Add to wishlist',
+                    'https://example.com',
+                    new AltUriBuilder('https://example.com#desktop')
+                )
+            );
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents([$cartButton, $wishButton]);
     }
 
     private static function createItemHeroBlock($item)
