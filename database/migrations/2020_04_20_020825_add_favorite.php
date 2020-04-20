@@ -18,7 +18,7 @@ class AddFavorite extends Migration
             $table->string('user_id', 200)->nullable()->comment('line id');
             $table->string('display_name', 200)->nullable()->comment('display_name');
             $table->string('table_name', 50)->nullable()->comment('table_name');
-            $table->json('table_ids')->nullable()->comment('table_ids');
+            $table->string('table_ids', 200)->nullable()->comment('table_ids');
             $table->index(['user_id', 'table_name']);
             $table->timestamps();
         });

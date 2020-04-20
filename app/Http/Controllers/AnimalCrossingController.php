@@ -24,8 +24,8 @@ use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
-use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
@@ -477,30 +477,21 @@ class AnimalCrossingController extends Controller
     private static function createItemFooterBlock($item)
     {
         $color = '#aaaaaa';
-        $cartButton = ButtonComponentBuilder::builder()
+        $button = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::PRIMARY)
             ->setColor($color)
             ->setAction(
-                new UriTemplateActionBuilder(
-                    'Add to Cart',
-                    'https://example.com',
-                    new AltUriBuilder('https://example.com#desktop')
-                )
-            );
-
-        $wishButton = ButtonComponentBuilder::builder()
-            ->setAction(
-                new UriTemplateActionBuilder(
-                    'Add to wishlist',
-                    'https://example.com',
-                    new AltUriBuilder('https://example.com#desktop')
+                new PostbackTemplateActionBuilder(
+                    '加入最愛',
+                    '/',
+                    '加入最愛note'
                 )
             );
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$cartButton, $wishButton]);
+            ->setContents([$button]);
     }
 
     private static function createItemHeroBlock($item)
