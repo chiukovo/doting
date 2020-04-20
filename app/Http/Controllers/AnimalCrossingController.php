@@ -80,11 +80,11 @@ class AnimalCrossingController extends Controller
                 $text = '';
                 $messageType = '';
                 $isSend = false;
-                $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
+                    $this->userId = $event->getUserId();
                     $messageType = $event->getMessageType();
                     //文字
                     if ($messageType == 'text') {
@@ -105,7 +105,7 @@ class AnimalCrossingController extends Controller
                                 Log::debug(json_encode($logs));
                             }
                         }
-                        
+
                         $text = $event->getText();// 得到使用者輸入
 
                         //測試
