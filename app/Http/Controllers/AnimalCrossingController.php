@@ -196,7 +196,7 @@ class AnimalCrossingController extends Controller
                 if ($isSend) {
                     //Log
                     $log = [
-                        'userId' => $userId,
+                        'userId' => $this->userId,
                         'text' => $text,
                         'type' => $messageType,
                     ];
