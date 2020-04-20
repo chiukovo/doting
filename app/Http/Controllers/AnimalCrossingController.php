@@ -91,7 +91,13 @@ class AnimalCrossingController extends Controller
                         $profile = $response->getJSONDecodedBody();
                         $this->displayName = $profile['displayName'];
                     } else {
-                        Log::debug($response->getRawBody());
+                        $logs = [
+                            'body' => $response->getRawBody(),
+                            'user_id' => $this->userId,
+                            'status' => $response->getHTTPStatus(),
+                        ];
+
+                        Log::debug(json_encode($logs));
                     }
                 }
 
