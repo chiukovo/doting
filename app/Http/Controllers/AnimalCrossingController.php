@@ -9,6 +9,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
+use LINE\LINEBot\Event\BaseEvent;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
 use LINE\LINEBot\Constant\Flex\ComponentFontSize;
@@ -49,7 +50,10 @@ class AnimalCrossingController extends Controller
 
         $httpClient = new CurlHTTPClient ($lineAccessToken);
         $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
+
         $this->userId = '';
+        $this->groupId = '';
+        $this->roomId = '';
         $this->displayName = '';
     }
 
@@ -80,15 +84,13 @@ class AnimalCrossingController extends Controller
                 $text = '';
                 $messageType = '';
                 $isSend = false;
+                $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
-                //訊息的話
-                if ($event instanceof MessageEvent) {
-                    $messageType = $event->getMessageType();
-                    //文字
-                    if ($messageType == 'text') {
-                        //get profile
-                        $this->userId = $event->getUserId();
+                //base
+                if ($event instanceof BaseEvent) {
+                    //user
+                    if ($event->isUserEvent()) {
                         if (!is_null($this->userId)) {
                             $response = $this->lineBot->getProfile($this->userId);
 
@@ -96,16 +98,74 @@ class AnimalCrossingController extends Controller
                                 $profile = $response->getJSONDecodedBody();
                                 $this->displayName = $profile['displayName'];
                             } else {
-                                $logs = [
-                                    'body' => $response->getRawBody(),
-                                    'user_id' => $this->userId,
-                                    'status' => $response->getHTTPStatus(),
-                                ];
-
-                                Log::debug(json_encode($logs));
+                                Log::debug($response->getRawBody());
                             }
                         }
 
+                        $logs = [
+                            'user_id' => $this->userId,
+                            'display_name' => $this->displayName,
+                        ];
+
+                        Log::debug(json_encode($logs));
+                    }
+
+                    //group
+                    if ($event->isGroupEvent()) {
+                        $this->groupId = $event->getGroupId();
+
+                        if (!is_null($this->userId) && !is_null($this->groupId)) {
+                            $response = $this->lineBot->getGroupMemberProfile($this->groupId, $this->userId);
+
+                            if ($response->isSucceeded()) {
+                                $profile = $response->getJSONDecodedBody();
+                                $this->displayName = $profile['displayName'];
+                            } else {
+                                Log::debug($response->getRawBody());
+                            }
+                        }
+
+                        $logs = [
+                            'user_id' => $this->userId,
+                            'group_id' => $this->groupId,
+                            'display_name' => $this->displayName,
+                        ];
+
+                        Log::debug(json_encode($logs));
+                    }
+
+
+                    //group
+                    if ($event->isRoomEvent()) {
+                        $this->roomId = $event->getRoomId();
+
+                        if (!is_null($this->userId) && !is_null($this->roomId)) {
+                            $response = $this->lineBot->getRoomMemberProfile($this->roomId, $this->userId);
+
+                            if ($response->isSucceeded()) {
+                                $profile = $response->getJSONDecodedBody();
+                                $this->displayName = $profile['displayName'];
+                            } else {
+                                Log::debug($response->getRawBody());
+                            }
+                        }
+
+                        $logs = [
+                            'user_id' => $this->userId,
+                            'room_id' => $this->roomId,
+                            'display_name' => $this->displayName,
+                        ];
+
+                        Log::debug(json_encode($logs));
+                    }
+                }
+
+                //訊息的話
+                if ($event instanceof MessageEvent) {
+                    $messageType = $event->getMessageType();
+
+                    //文字
+                    if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
 
                         //測試
