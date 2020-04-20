@@ -192,6 +192,17 @@ class AnimalCrossingController extends Controller
 
                    $this->doFavorite($postbackData, $replyToken);
                 }
+
+                if ($isSend) {
+                    //Log
+                    $log = [
+                        'userId' => $userId,
+                        'text' => $text,
+                        'type' => $messageType,
+                    ];
+
+                    Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
+                }
             }
         } catch (Exception $e) {
             Log::error($e);
