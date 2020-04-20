@@ -14,6 +14,7 @@ class ApiController extends Controller
         $url = 'http://e0game.com/animalcrossing/%e9%ad%9a-%e5%9c%96%e9%91%91/';
         $ql = QueryList::get($url);
         $result = $ql->rules([
+            'img' => ['.column-1 img', 'src'],
             'name' => ['.column-3', 'text'],
             'shadow' => ['.column-4', 'text'],
             'position' => ['.column-5', 'text'],
@@ -53,6 +54,17 @@ class ApiController extends Controller
                 }
 
                 if (!$isset) {
+                    //save img
+                    $headers = get_headers($data['img']);
+                    $code = substr($headers[0], 9, 3);
+                    $imgUploadSuccess = 0;
+
+                    if ($code == 200) {
+                        $imgUploadSuccess = 1;
+                        $content = file_get_contents($data['img']);
+                        Storage::disk('fish')->put($data['name'] . '.png', $content);
+                    }
+
                     //insert
                     DB::table('fish')->insert([
                         'name' => $data['name'],
