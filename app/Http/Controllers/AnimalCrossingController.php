@@ -499,7 +499,7 @@ class AnimalCrossingController extends Controller
                 new PostbackTemplateActionBuilder(
                     '加入最愛',
                     'id=test',
-                    ''
+                    'test'
                 )
             );
 
