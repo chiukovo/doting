@@ -55,6 +55,7 @@ class AnimalCrossingController extends Controller
         $this->groupId = '';
         $this->roomId = '';
         $this->displayName = '';
+        $this->dbType = '';
     }
 
     public function index(Request $request)
@@ -352,14 +353,38 @@ class AnimalCrossingController extends Controller
         switch ($type) {
             case '#':
                 if ($target != '') {
+                    $this->dbType = 'animal';
+
                     return $this->getDbAnimal($target);
                 }
                 break;
+            case '$':
+                if ($target != '') {
+                    $this->dbType = 'fish';
 
+                    return $this->getDbFish($target);
+                }
+                break;
             default:
                 return '';
                 break;
         }
+    }
+
+    public function getDbFish($target)
+    {
+        $notFound = '找不到捏...(¬_¬)';
+
+        $fish = DB::table('fish')
+            ->where('name', 'like', '%' . $target . '%')
+            ->get()
+            ->toArray();
+
+        if (empty($fish)) {
+            return $notFound;
+        }
+
+        return $fish;
     }
 
     public function getDbAnimal($target)
@@ -398,147 +423,6 @@ class AnimalCrossingController extends Controller
         }
 
         return $dbAnimal;
-    }
-
-    public function getNewImgName()
-    {
-        //DB DATA
-        $dbAnimal = DB::table('animal')->where('beautify_img', 0)->get()->toArray();
-
-        foreach ($dbAnimal as $data) {
-            $simplified = Curl::to('http://api.zhconvert.org/convert?converter=Simplified&text=' . $data->name)->asJson()->get();
-            $target = $simplified->data->text;
-
-            $url = 'https://wiki.biligame.com/dongsen/' . $target;
-            $ql = QueryList::get($url);
-            $result = $ql->rules([
-                'img' => ['.box-poke-right img', 'src'],
-                'other_name' => ['.box-poke-left .box-poke .box-font:eq(5)', 'text'],
-            ])
-            ->range('.box-poke-big')
-            ->queryData();
-
-            if (!empty($result)) {
-                $img = $result[0]['img'];
-                $otherName = $result[0]['other_name'];
-
-                //save img
-                $headers = get_headers($img);
-                $code = substr($headers[0], 9, 3);
-                $imgUploadSuccess = 0;
-
-                if ($code == 200) {
-                    $imgUploadSuccess = 1;
-                    $content = file_get_contents($img);
-                    Storage::disk('animal')->put($data->name . '.png', $content);
-                    $enName = '';
-                    $jpName = '';
-
-                    //name
-                    if ($otherName != '') {
-                        $otherName = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", "", strip_tags($otherName));
-                        //英文
-                        $nameEx = explode('(英)', $otherName);
-                        $enName = $nameEx[0] ?? '';
-
-
-                        //日文
-                        if (isset($nameEx[1])) {
-                            $jpName = str_replace('(日)', '', $nameEx[1]);
-                        }
-                    }
-
-                    DB::table('animal')
-                        ->where('id', $data->id)
-                        ->update([
-                            'beautify_img' => 1,
-                            'en_name' => strtolower($enName),
-                            'jp_name' => $jpName,
-                        ]);
-
-                    echo 'update ' . $data->name . '</br>';
-                }
-            }
-        }
-
-        echo 'done';
-    }
-
-    public function getAnimalApi(Request $request)
-    {
-        //採集
-        $url = 'http://e0game.com/animalcrossing/%e5%8b%95%e7%89%a9%e6%9d%91%e6%b0%91-%e5%9c%96%e9%91%91/';
-        $ql = QueryList::get($url);
-        $result = $ql->rules([
-            'img' => ['.column-1 img', 'src'],
-            'name' => ['.column-2', 'text'],
-            'sex' => ['.column-3', 'text'],
-            'personality' => ['.column-4', 'text'],
-            'race' => ['.column-5', 'text'],
-            'bd' => ['.column-6', 'text'],
-            'say' => ['.column-7', 'text'],
-
-        ])
-        ->range('#tablepress-29 tr')
-        ->queryData();
-
-        //DB DATA
-        $dbAnimal = DB::table('animal')->get()->toArray();
-
-        //save api result
-        foreach ($result as $key => $data) {
-            //圖片名稱不得為空
-            if ($data['img'] != '' && $data['name'] != '') {
-                $dbData = [];
-                $isset = false;
-
-                //檢查是否資料庫存在
-                foreach ($dbAnimal as $source) {
-                    if ($source->name == $data['name']) {
-                        $isset = true;
-                        $dbData = $source;
-                    }
-                }
-
-                if (!$isset) {
-                    //save img
-                    $headers = get_headers($data['img']);
-                    $code = substr($headers[0], 9, 3);
-                    $imgUploadSuccess = 0;
-
-                    if ($code == 200) {
-                        $imgUploadSuccess = 1;
-                        $content = file_get_contents($data['img']);
-                        Storage::disk('animal')->put($data['name'] . '.png', $content);
-                    }
-
-                    $data['img_path'] = '/animal/' . $data['name'] . '.png';
-                    $bd = explode('.', $data['bd']);
-                    $sex = $data['sex'];
-
-                    //insert
-                    DB::table('animal')->insert([
-                        'name' => $data['name'],
-                        'sex' => $sex,
-                        'bd_m' => $bd[0],
-                        'bd_d' => $bd[1],
-                        'img_source' => $data['img'],
-                        'img_path' => $data['img_path'],
-                        'img_upload_success' => $imgUploadSuccess,
-                        'personality' => $data['personality'],
-                        'race' => $data['race'],
-                        'bd' => $data['bd'],
-                        'say' => $data['say'],
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    ]);
-
-                    echo 'insert: ' . $data['name'] . '<br>';
-                }
-            }
-        }
-
-        echo 'done';
     }
 
     public function createItemBubble($animal)
@@ -587,7 +471,7 @@ class AnimalCrossingController extends Controller
 
     public function createItemHeroBlock($item)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+        $imgPath = 'https://' . request()->getHttpHost() . '/' . $this->dbType . '/' . urlencode($item->name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

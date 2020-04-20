@@ -46,6 +46,10 @@ return [
             'driver' => 'local',
             'root' => public_path('animal'),
         ],
+        'fish' => [
+            'driver' => 'local',
+            'root' => public_path('fish'),
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
