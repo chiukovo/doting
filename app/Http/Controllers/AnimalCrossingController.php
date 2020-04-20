@@ -545,26 +545,17 @@ class AnimalCrossingController extends Controller
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
-            ->setText($item->name)
+            ->setText($item->name . '($' . $item->sell . ')')
             ->setWrap(true)
             ->setAlign('center')
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
         $components[] = TextComponentBuilder::builder()
-            ->setText('$' . $item->sell)
-            ->setWrap(true)
-            ->setWeight('bold')
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XL)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $components[] = TextComponentBuilder::builder()
             ->setText('影子: ' . $item->shadow)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -572,7 +563,7 @@ class AnimalCrossingController extends Controller
             ->setText('位置: ' . $item->position)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -580,7 +571,7 @@ class AnimalCrossingController extends Controller
             ->setText('時間: ' . $item->time)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
