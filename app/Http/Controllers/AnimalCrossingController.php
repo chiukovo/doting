@@ -9,6 +9,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
+use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
 use LINE\LINEBot\Constant\Flex\ComponentFontSize;
 use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
@@ -187,6 +188,20 @@ class AnimalCrossingController extends Controller
                    $message = new TextMessageBuilder($textExample);
                    $this->lineBot->replyMessage($replyToken, $message);
                    $isSend = true;
+                }
+
+                if ($event instanceof PostbackEvent) {
+                   $data = $event->getPostbackData();
+                   $params = $event->getPostbackParams();
+
+                   //Log
+                   $log = [
+                       'userId' => $userId,
+                       'data' => $data,
+                       'params' => $params,
+                   ];
+
+                   Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
                 }
 
                 if ($isSend) {
