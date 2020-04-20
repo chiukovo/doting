@@ -87,78 +87,7 @@ class AnimalCrossingController extends Controller
                 $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
-                //base
-                if ($event instanceof BaseEvent) {
-                    //user
-                    if ($event->isUserEvent()) {
-                        if (!is_null($this->userId)) {
-                            $response = $this->lineBot->getProfile($this->userId);
-
-                            if ($response->isSucceeded()) {
-                                $profile = $response->getJSONDecodedBody();
-                                $this->displayName = $profile['displayName'];
-                            } else {
-                                Log::debug($response->getRawBody());
-                            }
-                        }
-
-                        $logs = [
-                            'user_id' => $this->userId,
-                            'display_name' => $this->displayName,
-                        ];
-
-                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
-                    }
-
-                    //group
-                    if ($event->isGroupEvent()) {
-                        $this->groupId = $event->getGroupId();
-
-                        if (!is_null($this->userId) && !is_null($this->groupId)) {
-                            $response = $this->lineBot->getGroupMemberProfile($this->groupId, $this->userId);
-
-                            if ($response->isSucceeded()) {
-                                $profile = $response->getJSONDecodedBody();
-                                $this->displayName = $profile['displayName'];
-                            } else {
-                                Log::debug($response->getRawBody());
-                            }
-                        }
-
-                        $logs = [
-                            'user_id' => $this->userId,
-                            'group_id' => $this->groupId,
-                            'display_name' => $this->displayName,
-                        ];
-
-                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
-                    }
-
-
-                    //group
-                    if ($event->isRoomEvent()) {
-                        $this->roomId = $event->getRoomId();
-
-                        if (!is_null($this->userId) && !is_null($this->roomId)) {
-                            $response = $this->lineBot->getRoomMemberProfile($this->roomId, $this->userId);
-
-                            if ($response->isSucceeded()) {
-                                $profile = $response->getJSONDecodedBody();
-                                $this->displayName = $profile['displayName'];
-                            } else {
-                                Log::debug($response->getRawBody());
-                            }
-                        }
-
-                        $logs = [
-                            'user_id' => $this->userId,
-                            'room_id' => $this->roomId,
-                            'display_name' => $this->displayName,
-                        ];
-
-                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
-                    }
-                }
+                $this->getUserProfile($event);
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
@@ -262,23 +191,65 @@ class AnimalCrossingController extends Controller
                    $data = $event->getPostbackData();
                    $params = $event->getPostbackParams();
                 }
-
-                if ($isSend) {
-                    //Log
-                    $log = [
-                        'userId' => $this->userId,
-                        'text' => $text,
-                        'type' => $messageType,
-                    ];
-
-                    Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
-                }
             }
         } catch (Exception $e) {
             Log::error($e);
             return;
         }
         return;
+    }
+
+    public function getUserProfile($event)
+    {
+        //base
+        if ($event instanceof BaseEvent) {
+            //user
+            if ($event->isUserEvent()) {
+                if (!is_null($this->userId)) {
+                    $response = $this->lineBot->getProfile($this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+
+            //group
+            if ($event->isGroupEvent()) {
+                $this->groupId = $event->getGroupId();
+
+                if (!is_null($this->userId) && !is_null($this->groupId)) {
+                    $response = $this->lineBot->getGroupMemberProfile($this->groupId, $this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+
+
+            //group
+            if ($event->isRoomEvent()) {
+                $this->roomId = $event->getRoomId();
+
+                if (!is_null($this->userId) && !is_null($this->roomId)) {
+                    $response = $this->lineBot->getRoomMemberProfile($this->roomId, $this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+        }
     }
 
     public function instructionExample()
