@@ -188,8 +188,10 @@ class AnimalCrossingController extends Controller
                 }
 
                 if ($event instanceof PostbackEvent) {
-                   $data = $event->getPostbackData();
+                   $postbackData = $event->getPostbackData();
                    $params = $event->getPostbackParams();
+
+                   $this->doFavorite($postbackData, $replyToken);
                 }
             }
         } catch (Exception $e) {
@@ -197,6 +199,44 @@ class AnimalCrossingController extends Controller
             return;
         }
         return;
+    }
+
+    public function doFavorite($postbackData, $replyToken)
+    {
+        parse_str($postbackData, $targetArray);
+
+        $action = $targetArray['action'] ?? '';
+        $pbUserId = $targetArray['user_id'] ?? '';
+        $pbDisplayName = $targetArray['display_name'] ?? '';
+        $tableId = $targetArray['table_id'] ?? '';
+
+        if ($action != '' && $pbUserId != '' && $tableId != '') {
+            if ($action == 'add') {
+                $favorite = DB::table('favorite')
+                    ->where('user_id', $pbUserId)
+                    ->where('table_id', $tableId)
+                    ->get('id')
+                    ->toArray();
+
+                if (empty($favorite)) {
+                    DB::table('favorite')->insert([
+                        'user_id' => $pbUserId,
+                        'table_id' => $tableId,
+                        'display_name' => $pbDisplayName,
+                        'table_name' => 'animal',
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+            } else if ($action == 'remove') {
+                //remove
+                DB::table('favorite')
+                    ->where('user_id', $pbUserId)
+                    ->where('table_id', $tableId)
+                    ->where('table_name', 'animal')
+                    ->delete();
+            }
+        }
     }
 
     public function getUserProfile($event)
