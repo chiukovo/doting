@@ -97,6 +97,8 @@ class AnimalCrossingController extends Controller
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
+                        //取得須回傳資料
+                        $replyText = $this->formatText($text);
 
                         //測試
                         if ($text == '#testfav') {
@@ -129,11 +131,7 @@ class AnimalCrossingController extends Controller
                                 Log::debug($response->getRawBody());
                             }
                         }
-
                         //end
-
-                        //取得須回傳資料
-                        $replyText = $this->formatText($text);
 
                         if ($replyText == '') {
                             return;
