@@ -425,19 +425,24 @@ class AnimalCrossingController extends Controller
         return $dbAnimal;
     }
 
-    public function createItemBubble($animal)
+    public function createItemBubble($item)
     {
-        return BubbleContainerBuilder::builder()
-            ->setHero($this->createItemHeroBlock($animal))
-            ->setBody($this->createItemBodyBlock($animal));
+        $target = BubbleContainerBuilder::builder()
+            ->setHero($this->createItemHeroBlock($item));
+
+        if ($this->dbType == 'animal') {
+            return $target->setBody($this->createAnimalItemBodyBlock($item));
+        } else if ($this->dbType == 'fish') {
+            return $target->setBody($this->createFishItemBodyBlock($item));
+        }
     }
 
-    public function createTestItemBubble($animal)
+    public function createTestItemBubble($item)
     {
         return BubbleContainerBuilder::builder()
-            ->setHero($this->createItemHeroBlock($animal))
-            ->setBody($this->createItemBodyBlock($animal))
-            ->setFooter($this->createItemFooterBlock($animal));
+            ->setHero($this->createItemHeroBlock($item))
+            ->setBody($this->createAnimalItemBodyBlock($item))
+            ->setFooter($this->createItemFooterBlock($item));
     }
 
     public function createItemFooterBlock($item)
@@ -480,7 +485,7 @@ class AnimalCrossingController extends Controller
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
-    public function createItemBodyBlock($item)
+    public function createAnimalItemBodyBlock($item)
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
@@ -524,6 +529,55 @@ class AnimalCrossingController extends Controller
 
         $components[] = TextComponentBuilder::builder()
             ->setText('口頭禪: ' . $item->say)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
+    }
+
+    public function createFishItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('賣價: ' . $item->sell)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('影子: ' . $item->shadow)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('位置: ' . $item->position)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::SM)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('時間: ' . $item->time)
             ->setWrap(true)
             ->setAlign('center')
             ->setSize(ComponentFontSize::SM)
