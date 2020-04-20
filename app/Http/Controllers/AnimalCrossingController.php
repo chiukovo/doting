@@ -107,7 +107,7 @@ class AnimalCrossingController extends Controller
                             'display_name' => $this->displayName,
                         ];
 
-                        Log::debug(json_encode($logs));
+                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
                     }
 
                     //group
@@ -131,7 +131,7 @@ class AnimalCrossingController extends Controller
                             'display_name' => $this->displayName,
                         ];
 
-                        Log::debug(json_encode($logs));
+                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
                     }
 
 
@@ -156,7 +156,7 @@ class AnimalCrossingController extends Controller
                             'display_name' => $this->displayName,
                         ];
 
-                        Log::debug(json_encode($logs));
+                        Log::debug(json_encode($logs, JSON_UNESCAPED_UNICODE));
                     }
                 }
 
