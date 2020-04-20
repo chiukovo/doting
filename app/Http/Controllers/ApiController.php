@@ -98,7 +98,7 @@ class ApiController extends Controller
         foreach ($result as $data) {
             if ($data['name'] != '' && $data['img'] != '') {
 
-                $fish = DB::table('animal')
+                $fish = DB::table('fish')
                     ->where('name', $data['name'])
                     ->where('beautify_img', 0)
                     ->get()
@@ -116,7 +116,7 @@ class ApiController extends Controller
                 if ($code == 200) {
                     $imgUploadSuccess = 1;
                     $content = file_get_contents($data['img']);
-                    Storage::disk('fish')->put($data['name'] . '.png', $content);
+                    Storage::disk('fish')->put($data['name'] . '.webp', $content);
 
                     DB::table('fish')
                         ->where('name', $data['name'])
