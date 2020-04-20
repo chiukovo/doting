@@ -80,8 +80,28 @@ body {
   padding: 6px 12px;
   margin-bottom: 10px;
 }
+.media-list {
+  list-style: none;
+  line-height: 1.6;
+  padding-left: 20px;
+}
+.media-list a {
+  color: #608089;
+  text-decoration: underline;
+}
+.media-list li + li {
+  margin-top: 10px;
+}
+.media-list li::before {
+  content: "\2022";
+  display: inline-block;
+  font-weight: bold;
+  width: 1em;
+  color: #9fbec7;
+  margin-left: -1em;
+}
 .media-tag {
-  padding: 0 10px;
+  padding: 0 24px;
 }
 .media-tag label {
   color: #9fbec7;
@@ -124,7 +144,14 @@ body {
   color: #9fbec7;
   padding-left: 8px;
 }
-
+.animals-info-audio {
+  text-align: center;
+}
+.animals-info-small {
+  text-align: center;
+  font-size: 10px;
+  color: #b9b9b9;
+}
 
 
 .table {
@@ -164,14 +191,6 @@ body {
 }
 
 
-
-.bestlink a {
-  display: block;
-  line-height: 2.6;
-  color: #608089;
-  text-decoration: underline;
-}
-
 .search {
   margin-bottom: 1rem;
 }
@@ -198,7 +217,7 @@ body {
   border: 1px solid rgba(195, 220, 227, 0.65);
   border-radius: 4px;
   padding: 6px 12px;
-  margin: 2px;
+  margin: 2px 1px;
 }
 .btn.current {
   background-color: rgba(195, 220, 227, 0.65);
