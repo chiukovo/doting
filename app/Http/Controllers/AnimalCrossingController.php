@@ -237,6 +237,19 @@ class AnimalCrossingController extends Controller
         $target = strtolower($target);
         $notFound = '找不到捏...(¬_¬)';
 
+
+        //阿戰隊
+        if ($target == '阿戰隊') {
+            $name = ['阿一', '阿二', '阿三', '阿四'];
+            $dbAnimal = DB::table('animal')
+                ->whereIn('name', $name)
+                ->orderBy('jp_name', 'asc')
+                ->get()
+                ->toArray();
+
+            return $dbAnimal;
+        }
+
         $dbAnimal = DB::table('animal')
             ->where('name', 'like', '%' . $target . '%')
             ->orWhere('race', 'like', '%' . $target . '%')
