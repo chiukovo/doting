@@ -498,7 +498,7 @@ class AnimalCrossingController extends Controller
             ->setText('性別: ' . $item->sex)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -506,7 +506,7 @@ class AnimalCrossingController extends Controller
             ->setText('個性: ' . $item->personality)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -514,7 +514,7 @@ class AnimalCrossingController extends Controller
             ->setText('種族: ' . $item->race)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -522,7 +522,7 @@ class AnimalCrossingController extends Controller
             ->setText('生日: ' . $item->bd)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -530,7 +530,7 @@ class AnimalCrossingController extends Controller
             ->setText('口頭禪: ' . $item->say)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
