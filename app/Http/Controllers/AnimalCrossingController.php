@@ -301,6 +301,7 @@ class AnimalCrossingController extends Controller
         $text .= '英文查詢: 請輸入 "#joey"' . "\n";
         $text .= '日文查詢: 請輸入 "#チョコ"' . "\n";
         $text .= '動物戰隊: 請輸入 "#阿戰隊"' . "\n";
+        $text .= '找魚類: 請輸入 "$鯊魚"' . "\n";
 
         return $text;
     }
