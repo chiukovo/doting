@@ -83,26 +83,26 @@ class AnimalCrossingController extends Controller
                 $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
-                //get profile
-                if (!is_null($this->userId)) {
-                    $response = $this->lineBot->getProfile($this->userId);
-
-                    if ($response->isSucceeded()) {
-                        $profile = $response->getJSONDecodedBody();
-                        $this->displayName = $profile['displayName'];
-                    } else {
-                        $logs = [
-                            'body' => $response->getRawBody(),
-                            'user_id' => $this->userId,
-                            'status' => $response->getHTTPStatus(),
-                        ];
-
-                        Log::debug(json_encode($logs));
-                    }
-                }
-
                 //訊息的話
                 if ($event instanceof MessageEvent) {
+                    //get profile
+                    if (!is_null($this->userId)) {
+                        $response = $this->lineBot->getProfile($this->userId);
+
+                        if ($response->isSucceeded()) {
+                            $profile = $response->getJSONDecodedBody();
+                            $this->displayName = $profile['displayName'];
+                        } else {
+                            $logs = [
+                                'body' => $response->getRawBody(),
+                                'user_id' => $this->userId,
+                                'status' => $response->getHTTPStatus(),
+                            ];
+
+                            Log::debug(json_encode($logs));
+                        }
+                    }
+
                     $messageType = $event->getMessageType();
                     //文字
                     if ($messageType == 'text') {
