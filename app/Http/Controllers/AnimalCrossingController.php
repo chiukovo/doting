@@ -234,7 +234,7 @@ class AnimalCrossingController extends Controller
             }
 
 
-            //group
+            //room
             if ($event->isRoomEvent()) {
                 $this->roomId = $event->getRoomId();
 
@@ -516,7 +516,7 @@ class AnimalCrossingController extends Controller
             ->setFooter(self::createItemFooterBlock($animal));
     }
 
-    private static function createItemFooterBlock($item)
+    public static function createItemFooterBlock($item)
     {
         $color = '#aaaaaa';
         $add = ButtonComponentBuilder::builder()
@@ -545,7 +545,7 @@ class AnimalCrossingController extends Controller
             ->setContents([$add, $remove]);
     }
 
-    private static function createItemHeroBlock($item)
+    public static function createItemHeroBlock($item)
     {
         $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
 
@@ -556,7 +556,7 @@ class AnimalCrossingController extends Controller
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
-    private static function createItemBodyBlock($item)
+    public static function createItemBodyBlock($item)
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
