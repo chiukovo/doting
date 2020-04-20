@@ -42,7 +42,6 @@ use Curl, Log, Storage, DB, Url;
 
 class AnimalCrossingController extends Controller
 {
-
     public function __construct()
     {
         $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
@@ -50,6 +49,8 @@ class AnimalCrossingController extends Controller
 
         $httpClient = new CurlHTTPClient ($lineAccessToken);
         $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
+        $this->userId = '';
+        $this->displayName = '';
     }
 
     public function index(Request $request)
@@ -78,18 +79,19 @@ class AnimalCrossingController extends Controller
             foreach ($events as $event) {
                 $text = '';
                 $messageType = '';
-                $displayName = '';
                 $isSend = false;
-                $userId = $event->getUserId();
+                $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
                 //get profile
-                if (!is_null($userId)) {
-                    $response = $this->lineBot->getProfile($userId);
+                if (!is_null($this->userId)) {
+                    $response = $this->lineBot->getProfile($this->userId);
 
                     if ($response->isSucceeded()) {
                         $profile = $response->getJSONDecodedBody();
-                        $displayName = $profile['displayName'];
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
                     }
                 }
 
@@ -135,7 +137,7 @@ class AnimalCrossingController extends Controller
                         //end
 
                         //取得須回傳資料
-                        $replyText = $this->formatText($text, $userId, $displayName);
+                        $replyText = $this->formatText($text);
 
                         if ($replyText == '') {
                             return;
@@ -184,7 +186,7 @@ class AnimalCrossingController extends Controller
                 }
 
                 if ($event instanceof JoinEvent) {
-                   $textExample = $this->instructionExample($displayName);
+                   $textExample = $this->instructionExample();
                    $message = new TextMessageBuilder($textExample);
                    $this->lineBot->replyMessage($replyToken, $message);
                    $isSend = true;
@@ -193,21 +195,12 @@ class AnimalCrossingController extends Controller
                 if ($event instanceof PostbackEvent) {
                    $data = $event->getPostbackData();
                    $params = $event->getPostbackParams();
-
-                   //Log
-                   $log = [
-                       'userId' => $userId,
-                       'data' => $data,
-                       'params' => $params,
-                   ];
-
-                   Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
                 }
 
                 if ($isSend) {
                     //Log
                     $log = [
-                        'userId' => $userId,
+                        'userId' => $this->userId,
                         'text' => $text,
                         'type' => $messageType,
                     ];
@@ -216,14 +209,15 @@ class AnimalCrossingController extends Controller
                 }
             }
         } catch (Exception $e) {
+            Log::error($e);
             return;
         }
         return;
     }
 
-    public function instructionExample($displayName)
+    public function instructionExample()
     {
-        $text = $displayName . ' 你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text = $this->displayName . ' 你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= '版本 v' . config('app.version') . "\n";
         $text .= '以下教你如何使用指令~~' . "\n";
         $text .= '找指令: 請輸入 "豆丁"' . "\n";
@@ -235,14 +229,10 @@ class AnimalCrossingController extends Controller
         return $text;
     }
 
-    public function formatText($text, $userId, $displayName)
+    public function formatText($text)
     {
         if ($text == '豆丁') {
-            return $this->instructionExample($displayName);
-        }
-
-        if ($text == '540') {
-            return '487';
+            return $this->instructionExample();
         }
 
         if ($text == '豆丁笨蛋') {
@@ -285,7 +275,7 @@ class AnimalCrossingController extends Controller
         switch ($type) {
             case '#':
                 if ($target != '') {
-                    return $this->getDbAnimal($target, $userId, $displayName);
+                    return $this->getDbAnimal($target);
                 }
                 break;
 
@@ -295,7 +285,7 @@ class AnimalCrossingController extends Controller
         }
     }
 
-    public function getDbAnimal($target, $userId, $displayName)
+    public function getDbAnimal($target)
     {
         $target = strtolower($target);
         $notFound = '找不到捏...(¬_¬)';
@@ -492,21 +482,30 @@ class AnimalCrossingController extends Controller
     private static function createItemFooterBlock($item)
     {
         $color = '#aaaaaa';
-        $button = ButtonComponentBuilder::builder()
+        $add = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::PRIMARY)
             ->setColor($color)
             ->setAction(
                 new PostbackTemplateActionBuilder(
                     '加入最愛',
-                    "action=buy&itemid=111",
-                    'test'
+                    'action=add&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
+                    $item->name . '加入最愛'
                 )
             );
 
+        $remove = ButtonComponentBuilder::builder()
+            ->setStyle(ComponentButtonStyle::LINK)
+            ->setAction(
+                new PostbackTemplateActionBuilder(
+                    '移除最愛',
+                    'action=remove&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
+                    $item->name . '移除最愛'
+                )
+            );
         return BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::VERTICAL)
+            ->setLayout(ComponentLayout::HORIZONTAL)
             ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$button]);
+            ->setContents([$add, $remove]);
     }
 
     private static function createItemHeroBlock($item)
