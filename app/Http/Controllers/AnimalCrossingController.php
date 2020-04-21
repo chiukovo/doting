@@ -439,6 +439,10 @@ class AnimalCrossingController extends Controller
             ->get()
             ->toArray();
 
+        if (!empty($other)) {
+            return $other;
+        }
+
         //找魚
         $other = DB::table('fish')
             ->where('name', 'like', '%' . $target . '%')
@@ -618,13 +622,15 @@ class AnimalCrossingController extends Controller
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('影子: ' . $item->shadow)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if (isset($item->shadow)) {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('影子: ' . $item->shadow)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         $components[] = TextComponentBuilder::builder()
             ->setText('位置: ' . $item->position)
