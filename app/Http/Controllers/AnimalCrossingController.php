@@ -289,7 +289,7 @@ class AnimalCrossingController extends Controller
         $text .= '4.輸入【做釣竿】，查詢DIY方程式配方 (尚未完成)' . "\n";
         $text .= '範例：做石斧頭、做櫻花' . "\n";
         $text .= "\n";
-        $text .= '【#】查詢島民' . "\n";
+        $text .= '【#】查詢島民、NPC相關資訊' . "\n";
         $text .= '【$】查詢魚、昆蟲圖鑑' . "\n";
         $text .= '【做】查詢DIY圖鑑 (尚未完成)' . "\n";
         $text .= "\n";
@@ -531,13 +531,15 @@ class AnimalCrossingController extends Controller
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('個性: ' . $item->personality)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->personality != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('個性: ' . $item->personality)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         $components[] = TextComponentBuilder::builder()
             ->setText('種族: ' . $item->race)
@@ -547,21 +549,35 @@ class AnimalCrossingController extends Controller
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('生日: ' . $item->bd)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->bd != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('生日: ' . $item->bd)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('口頭禪: ' . $item->say)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->say != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('口頭禪: ' . $item->say)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
+
+        if ($item->info != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('介紹: ' . $item->info)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
