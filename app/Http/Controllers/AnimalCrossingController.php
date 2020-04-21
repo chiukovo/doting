@@ -317,6 +317,16 @@ class AnimalCrossingController extends Controller
             return '你才笨蛋 (／‵Д′)／~ ╧╧';
         }
 
+        if ($text == '#豬力力') {
+            $returnText = '名稱: 豬力力' . "\n";
+            $returnText .= '個性: 好吃懶做' . "\n";
+            $returnText .= '種族: 耍廢星人' . "\n";
+            $returnText .= '生日: 0112' . "\n";
+            $returnText .= '口頭禪: 賊賊給我錢';
+
+            return $returnText;
+        }
+
         if ($text == '#軒哥') {
             $returnText = '名稱: 軒哥' . "\n";
             $returnText .= '個性: 火爆' . "\n";
