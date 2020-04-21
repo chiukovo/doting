@@ -306,6 +306,9 @@ class AnimalCrossingController extends Controller
 
     public function formatText($text)
     {
+        //去除前後空白
+        $text = trim($text);
+
         if ($text == '豆丁') {
             return $this->instructionExample();
         }
