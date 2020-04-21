@@ -72,6 +72,15 @@ body {
   text-align: center;
   padding: 0 1rem;
 }
+.media-title-small {
+  position: relative;
+  top: -10px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #608089;
+  margin-bottom: 10px;
+}
 .media-photo {
   text-align: center;
   height: 260px;
@@ -128,7 +137,10 @@ body {
   border: 0;
   margin-bottom: 6px;
 }
-
+.media-text {
+  line-height: 1.6;
+  padding: 0 10px;
+}
 
 
 .animals-info-list {
