@@ -385,6 +385,26 @@ class AnimalCrossingController extends Controller
     {
         $notFound = '找不到捏...(¬_¬)';
 
+        //first
+        $first = mb_substr($target, 0, 1);
+
+        if ($first == '南' || $first == '北' || $first == '全') {
+            $number = mb_substr($target, 1, 1);
+            $dateRange = range(1, 12);
+
+            if (in_array($number, $dateRange)) {
+                $fish = DB::table('fish')
+                    ->where('m' . $number, $first)
+                    ->orderBy('sell', 'desc')
+                    ->get()
+                    ->toArray();
+
+                if (!empty($fish)) {
+                    return $fish;
+                }
+            }
+        }
+
         $fish = DB::table('fish')
             ->where('name', 'like', '%' . $target . '%')
             ->orderBy('sell', 'desc')
