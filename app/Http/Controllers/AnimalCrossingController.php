@@ -518,10 +518,10 @@ class AnimalCrossingController extends Controller
     public function createItemFooterBlock($item)
     {
         $add = ButtonComponentBuilder::builder()
-            ->setStyle(ComponentButtonStyle::PRIMARY)
+            ->setStyle(ComponentButtonStyle::LINK)
             ->setAction(
                 new PostbackTemplateActionBuilder(
-                    '加入最愛',
+                    '❤',
                     'action=add&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
                     $item->name . '加入最愛'
                 )
@@ -531,7 +531,7 @@ class AnimalCrossingController extends Controller
             ->setStyle(ComponentButtonStyle::LINK)
             ->setAction(
                 new PostbackTemplateActionBuilder(
-                    '移除最愛',
+                    '🤍',
                     'action=remove&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
                     $item->name . '移除最愛'
                 )
