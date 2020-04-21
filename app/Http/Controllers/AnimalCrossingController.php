@@ -378,11 +378,11 @@ class AnimalCrossingController extends Controller
 
     public function sendDiy($dataArray, $replyToken)
     {
-        $str = '找不到此家具捏...(¬_¬)';
+        $str = '';
 
         if (is_array($dataArray)) {
             foreach ($dataArray as $data) {
-                $str = $data->name;
+                $str .= $data->name;
 
                 if ($data->type != '') {
                     $str .= ' (' . $data->type . ')';
@@ -399,6 +399,8 @@ class AnimalCrossingController extends Controller
                 $str .= "\n";
                 $str .= "\n";
             }
+        } else {
+            $str = '找不到此家具捏...(¬_¬)';
         }
 
         //send
