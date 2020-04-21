@@ -88,8 +88,6 @@ class AnimalCrossingController extends Controller
                 $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
-                $this->getUserProfile($event);
-
                 //訊息的話
                 if ($event instanceof MessageEvent) {
                     $messageType = $event->getMessageType();
@@ -99,39 +97,6 @@ class AnimalCrossingController extends Controller
                         $text = $event->getText();// 得到使用者輸入
                         //取得須回傳資料
                         $replyText = $this->formatText($text);
-
-                        //測試
-                        if ($text == '#testfav') {
-                            $multipleMessageBuilder = new MultiMessageBuilder();
-
-                            $result = [];
-
-                            $animals = DB::table('animal')
-                                ->take(5)
-                                ->get()
-                                ->toArray();
-
-                            foreach ($animals as $animal) {
-                                $result[] = $this->createTestItemBubble($animal);
-                            }
-
-                            $target = new CarouselContainerBuilder($result);
-
-                            $msg = FlexMessageBuilder::builder()
-                                ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
-                                ->setContents($target);
-
-                            $multipleMessageBuilder->add($msg);
-
-                            //send
-                            $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
-
-                            //error
-                            if (!$response->isSucceeded()) {
-                                Log::debug($response->getRawBody());
-                            }
-                        }
-                        //end
 
                         if ($replyText == '') {
                             return;
@@ -307,8 +272,7 @@ class AnimalCrossingController extends Controller
 
     public function instructionExample()
     {
-        $text = $this->displayName . "\n";
-        $text .= '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= 'version 2.0.5' . "\n";
         $text .= "\n";
         $text .= '👇以下教您如何使用指令👇' . "\n";
@@ -508,14 +472,6 @@ class AnimalCrossingController extends Controller
         } else if ($this->dbType == 'other') {
             return $target->setBody($this->createFishItemBodyBlock($item));
         }
-    }
-
-    public function createTestItemBubble($item)
-    {
-        return BubbleContainerBuilder::builder()
-            ->setHero($this->createItemHeroBlock($item))
-            ->setBody($this->createAnimalItemBodyBlock($item))
-            ->setFooter($this->createItemFooterBlock($item));
     }
 
     public function createItemFooterBlock($item)
