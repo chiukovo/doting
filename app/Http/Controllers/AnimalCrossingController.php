@@ -9,6 +9,8 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
+use LINE\LINEBot\Event\BaseEvent;
+use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
 use LINE\LINEBot\Constant\Flex\ComponentFontSize;
 use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
@@ -23,12 +25,14 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
-use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
@@ -39,7 +43,6 @@ use Curl, Log, Storage, DB, Url;
 
 class AnimalCrossingController extends Controller
 {
-
     public function __construct()
     {
         $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
@@ -47,6 +50,12 @@ class AnimalCrossingController extends Controller
 
         $httpClient = new CurlHTTPClient ($lineAccessToken);
         $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
+
+        $this->userId = '';
+        $this->groupId = '';
+        $this->roomId = '';
+        $this->displayName = '';
+        $this->dbType = '';
     }
 
     public function index(Request $request)
@@ -76,16 +85,16 @@ class AnimalCrossingController extends Controller
                 $text = '';
                 $messageType = '';
                 $isSend = false;
-                $userId = $event->getUserId();
+                $this->userId = $event->getUserId();
                 $replyToken = $event->getReplyToken();
 
                 //訊息的話
                 if ($event instanceof MessageEvent) {
                     $messageType = $event->getMessageType();
+
                     //文字
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
-
                         //取得須回傳資料
                         $replyText = $this->formatText($text);
 
@@ -103,7 +112,7 @@ class AnimalCrossingController extends Controller
                                         $result = [];
 
                                         foreach ($animals as $animal) {
-                                            $result[] = self::createItemBubble($animal);
+                                            $result[] = $this->createItemBubble($animal);
                                         }
 
                                         $target = new CarouselContainerBuilder($result);
@@ -142,10 +151,17 @@ class AnimalCrossingController extends Controller
                    $isSend = true;
                 }
 
+                if ($event instanceof PostbackEvent) {
+                   $postbackData = $event->getPostbackData();
+                   $params = $event->getPostbackParams();
+
+                   $this->doFavorite($postbackData, $replyToken);
+                }
+
                 if ($isSend) {
                     //Log
                     $log = [
-                        'userId' => $userId,
+                        'userId' => $this->userId,
                         'text' => $text,
                         'type' => $messageType,
                     ];
@@ -154,21 +170,131 @@ class AnimalCrossingController extends Controller
                 }
             }
         } catch (Exception $e) {
+            Log::error($e);
             return;
         }
         return;
     }
 
+    public function doFavorite($postbackData, $replyToken)
+    {
+        parse_str($postbackData, $targetArray);
+
+        $action = $targetArray['action'] ?? '';
+        $pbUserId = $targetArray['user_id'] ?? '';
+        $pbDisplayName = $targetArray['display_name'] ?? '';
+        $tableId = $targetArray['table_id'] ?? '';
+
+        if ($action != '' && $pbUserId != '' && $tableId != '') {
+            if ($action == 'add') {
+                $favorite = DB::table('favorite')
+                    ->where('user_id', $pbUserId)
+                    ->where('table_id', $tableId)
+                    ->get('id')
+                    ->toArray();
+
+                if (empty($favorite)) {
+                    DB::table('favorite')->insert([
+                        'user_id' => $pbUserId,
+                        'table_id' => $tableId,
+                        'display_name' => $pbDisplayName,
+                        'table_name' => 'animal',
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+            } else if ($action == 'remove') {
+                //remove
+                DB::table('favorite')
+                    ->where('user_id', $pbUserId)
+                    ->where('table_id', $tableId)
+                    ->where('table_name', 'animal')
+                    ->delete();
+            }
+        }
+    }
+
+    public function getUserProfile($event)
+    {
+        //base
+        if ($event instanceof BaseEvent) {
+            //user
+            if ($event->isUserEvent()) {
+                $this->userId = $event->getUserId();
+                if (!is_null($this->userId)) {
+                    $response = $this->lineBot->getProfile($this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+
+            //group
+            if ($event->isGroupEvent()) {
+                $this->userId = $event->getUserId();
+                $this->groupId = $event->getGroupId();
+
+                if (!is_null($this->userId) && !is_null($this->groupId)) {
+                    $response = $this->lineBot->getGroupMemberProfile($this->groupId, $this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+
+
+            //room
+            if ($event->isRoomEvent()) {
+                $this->userId = $event->getUserId();
+                $this->roomId = $event->getRoomId();
+
+                if (!is_null($this->userId) && !is_null($this->roomId)) {
+                    $response = $this->lineBot->getRoomMemberProfile($this->roomId, $this->userId);
+
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        $this->displayName = $profile['displayName'];
+                    } else {
+                        Log::debug($response->getRawBody());
+                    }
+                }
+            }
+        }
+    }
+
     public function instructionExample()
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
-        $text .= '版本 v' . config('app.version') . "\n";
-        $text .= '以下教你如何使用指令~~' . "\n";
-        $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢(月份)' . "\n";
-        $text .= '英文查詢: 請輸入 "#joey"' . "\n";
-        $text .= '日文查詢: 請輸入 "#チョコ"' . "\n";
-        $text .= '動物戰隊: 請輸入 "#阿戰隊"' . "\n";
+        $text .= 'version 2.0.5' . "\n";
+        $text .= "\n";
+        $text .= '👇以下教您如何使用指令👇' . "\n";
+        $text .= '1.輸入【豆丁】，重新查詢教學指令' . "\n";
+        $text .= "\n";
+        $text .= '2.輸入【#茶茶丸】，可查詢島民資訊' . "\n";
+        $text .= '→ 同時可以使用外語名稱、個性、種族、生日月份查詢哦！' . "\n";
+        $text .= '範例：#茶茶丸、#Dom、#ちゃちゃまる、#運動、#綿羊、#3、#阿戰隊' . "\n";
+        $text .= "\n";
+        $text .= '3.輸入【$鯊魚】，查詢魚、昆蟲圖鑑' . "\n";
+        $text .= '→ 同時可以單獨只查詢南、北、全半球月份魚、昆蟲' . "\n";
+        $text .= '範例：$南4月 魚、$北5月 蟲、$全5月 魚' . "\n";
+        $text .= "\n";
+        $text .= '4.輸入【做釣竿】，查詢DIY方程式配方 (尚未完成)' . "\n";
+        $text .= '範例：做石斧頭、做櫻花' . "\n";
+        $text .= "\n";
+        $text .= '【#】查詢島民' . "\n";
+        $text .= '【$】查詢魚、昆蟲圖鑑' . "\n";
+        $text .= '【做】查詢DIY圖鑑 (尚未完成)' . "\n";
+        $text .= "\n";
+        $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
+        $text .= 'https://ppt.cc/fiZIDx';
 
         return $text;
     }
@@ -177,10 +303,6 @@ class AnimalCrossingController extends Controller
     {
         if ($text == '豆丁') {
             return $this->instructionExample();
-        }
-
-        if ($text == '540') {
-            return '487';
         }
 
         if ($text == '豆丁笨蛋') {
@@ -223,14 +345,83 @@ class AnimalCrossingController extends Controller
         switch ($type) {
             case '#':
                 if ($target != '') {
+                    $this->dbType = 'animal';
+
                     return $this->getDbAnimal($target);
                 }
                 break;
+            case '$':
+                if ($target != '') {
+                    $this->dbType = 'other';
 
+                    return $this->getDbOther($target);
+                }
+                break;
             default:
                 return '';
                 break;
         }
+    }
+
+    public function getDbOther($target)
+    {
+        $other = [];
+        $notFound = '找不到捏...(¬_¬)';
+
+        //first
+        $first = mb_substr($target, 0, 1);
+
+        if ($first == '南' || $first == '北' || $first == '全') {
+            $number = mb_substr($target, 1, 1);
+            $dateRange = range(1, 12);
+            //type
+            $type = mb_substr($target, -1, 1);
+            $table = '';
+
+            if (in_array($number, $dateRange)) {
+                if ($type == '魚') {
+                    $table = 'fish';
+                } else if ($type == '蟲') {
+                    $table = 'insect';
+                }
+
+                if ($table != '') {
+                    $other = DB::table($table)
+                        ->where('m' . $number, $first)
+                        ->orderBy('sell', 'desc')
+                        ->get()
+                        ->toArray();
+                }
+
+                if (!empty($other)) {
+                    return $other;
+                }
+            }
+        }
+
+        //找蟲
+        $other = DB::table('insect')
+            ->where('name', 'like', '%' . $target . '%')
+            ->orderBy('sell', 'desc')
+            ->get()
+            ->toArray();
+
+        if (!empty($other)) {
+            return $other;
+        }
+
+        //找魚
+        $other = DB::table('fish')
+            ->where('name', 'like', '%' . $target . '%')
+            ->orderBy('sell', 'desc')
+            ->get()
+            ->toArray();
+
+        if (empty($other)) {
+            return $notFound;
+        }
+
+        return $other;
     }
 
     public function getDbAnimal($target)
@@ -238,6 +429,7 @@ class AnimalCrossingController extends Controller
         $target = strtolower($target);
         $notFound = '找不到捏...(¬_¬)';
 
+        //設定最愛
 
         //阿戰隊
         if ($target == '阿戰隊') {
@@ -270,157 +462,49 @@ class AnimalCrossingController extends Controller
         return $dbAnimal;
     }
 
-    public function getNewImgName()
+    public function createItemBubble($item)
     {
-        //DB DATA
-        $dbAnimal = DB::table('animal')->where('beautify_img', 0)->get()->toArray();
+        $target = BubbleContainerBuilder::builder()
+            ->setHero($this->createItemHeroBlock($item));
 
-        foreach ($dbAnimal as $data) {
-            $simplified = Curl::to('http://api.zhconvert.org/convert?converter=Simplified&text=' . $data->name)->asJson()->get();
-            $target = $simplified->data->text;
-
-            $url = 'https://wiki.biligame.com/dongsen/' . $target;
-            $ql = QueryList::get($url);
-            $result = $ql->rules([
-                'img' => ['.box-poke-right img', 'src'],
-                'other_name' => ['.box-poke-left .box-poke .box-font:eq(5)', 'text'],
-            ])
-            ->range('.box-poke-big')
-            ->queryData();
-
-            if (!empty($result)) {
-                $img = $result[0]['img'];
-                $otherName = $result[0]['other_name'];
-
-                //save img
-                $headers = get_headers($img);
-                $code = substr($headers[0], 9, 3);
-                $imgUploadSuccess = 0;
-
-                if ($code == 200) {
-                    $imgUploadSuccess = 1;
-                    $content = file_get_contents($img);
-                    Storage::disk('animal')->put($data->name . '.png', $content);
-                    $enName = '';
-                    $jpName = '';
-
-                    //name
-                    if ($otherName != '') {
-                        $otherName = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", "", strip_tags($otherName));
-                        //英文
-                        $nameEx = explode('(英)', $otherName);
-                        $enName = $nameEx[0] ?? '';
-
-
-                        //日文
-                        if (isset($nameEx[1])) {
-                            $jpName = str_replace('(日)', '', $nameEx[1]);
-                        }
-                    }
-
-                    DB::table('animal')
-                        ->where('id', $data->id)
-                        ->update([
-                            'beautify_img' => 1,
-                            'en_name' => strtolower($enName),
-                            'jp_name' => $jpName,
-                        ]);
-
-                    echo 'update ' . $data->name . '</br>';
-                }
-            }
+        if ($this->dbType == 'animal') {
+            return $target->setBody($this->createAnimalItemBodyBlock($item));
+        } else if ($this->dbType == 'other') {
+            return $target->setBody($this->createFishItemBodyBlock($item));
         }
-
-        echo 'done';
     }
 
-    public function getAnimalApi(Request $request)
+    public function createItemFooterBlock($item)
     {
-        //採集
-        $url = 'http://e0game.com/animalcrossing/%e5%8b%95%e7%89%a9%e6%9d%91%e6%b0%91-%e5%9c%96%e9%91%91/';
-        $ql = QueryList::get($url);
-        $result = $ql->rules([
-            'img' => ['.column-1 img', 'src'],
-            'name' => ['.column-2', 'text'],
-            'sex' => ['.column-3', 'text'],
-            'personality' => ['.column-4', 'text'],
-            'race' => ['.column-5', 'text'],
-            'bd' => ['.column-6', 'text'],
-            'say' => ['.column-7', 'text'],
+        $add = ButtonComponentBuilder::builder()
+            ->setStyle(ComponentButtonStyle::LINK)
+            ->setAction(
+                new PostbackTemplateActionBuilder(
+                    '❤',
+                    'action=add&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
+                    $item->name . '加入最愛'
+                )
+            );
 
-        ])
-        ->range('#tablepress-29 tr')
-        ->queryData();
+        $remove = ButtonComponentBuilder::builder()
+            ->setStyle(ComponentButtonStyle::LINK)
+            ->setAction(
+                new PostbackTemplateActionBuilder(
+                    '🤍',
+                    'action=remove&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
+                    $item->name . '移除最愛'
+                )
+            );
 
-        //DB DATA
-        $dbAnimal = DB::table('animal')->get()->toArray();
-
-        //save api result
-        foreach ($result as $key => $data) {
-            //圖片名稱不得為空
-            if ($data['img'] != '' && $data['name'] != '') {
-                $dbData = [];
-                $isset = false;
-
-                //檢查是否資料庫存在
-                foreach ($dbAnimal as $source) {
-                    if ($source->name == $data['name']) {
-                        $isset = true;
-                        $dbData = $source;
-                    }
-                }
-
-                if (!$isset) {
-                    //save img
-                    $headers = get_headers($data['img']);
-                    $code = substr($headers[0], 9, 3);
-                    $imgUploadSuccess = 0;
-
-                    if ($code == 200) {
-                        $imgUploadSuccess = 1;
-                        $content = file_get_contents($data['img']);
-                        Storage::disk('animal')->put($data['name'] . '.png', $content);
-                    }
-
-                    $data['img_path'] = '/animal/' . $data['name'] . '.png';
-                    $bd = explode('.', $data['bd']);
-                    $sex = $data['sex'];
-
-                    //insert
-                    DB::table('animal')->insert([
-                        'name' => $data['name'],
-                        'sex' => $sex,
-                        'bd_m' => $bd[0],
-                        'bd_d' => $bd[1],
-                        'img_source' => $data['img'],
-                        'img_path' => $data['img_path'],
-                        'img_upload_success' => $imgUploadSuccess,
-                        'personality' => $data['personality'],
-                        'race' => $data['race'],
-                        'bd' => $data['bd'],
-                        'say' => $data['say'],
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    ]);
-
-                    echo 'insert: ' . $data['name'] . '<br>';
-                }
-            }
-        }
-
-        echo 'done';
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::HORIZONTAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents([$add, $remove]);
     }
 
-    public function createItemBubble($animal)
+    public function createItemHeroBlock($item)
     {
-        return BubbleContainerBuilder::builder()
-            ->setHero(self::createItemHeroBlock($animal))
-            ->setBody(self::createItemBodyBlock($animal));
-    }
-
-    private static function createItemHeroBlock($item)
-    {
-        $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+        $imgPath = 'https://' . request()->getHttpHost() . '/' . $this->dbType . '/' . urlencode($item->name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
@@ -429,7 +513,7 @@ class AnimalCrossingController extends Controller
             ->setAspectMode(ComponentImageAspectMode::FIT);
     }
 
-    private static function createItemBodyBlock($item)
+    public function createAnimalItemBodyBlock($item)
     {
         $components = [];
         $components[] = TextComponentBuilder::builder()
@@ -443,7 +527,7 @@ class AnimalCrossingController extends Controller
             ->setText('性別: ' . $item->sex)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -451,7 +535,7 @@ class AnimalCrossingController extends Controller
             ->setText('個性: ' . $item->personality)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -459,7 +543,7 @@ class AnimalCrossingController extends Controller
             ->setText('種族: ' . $item->race)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -467,7 +551,7 @@ class AnimalCrossingController extends Controller
             ->setText('生日: ' . $item->bd)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -475,7 +559,7 @@ class AnimalCrossingController extends Controller
             ->setText('口頭禪: ' . $item->say)
             ->setWrap(true)
             ->setAlign('center')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
@@ -484,5 +568,125 @@ class AnimalCrossingController extends Controller
             ->setBackgroundColor('#f1f1f1')
             ->setSpacing(ComponentSpacing::SM)
             ->setContents($components);
+    }
+
+    public function createFishItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name . ' $' . $item->sell)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        if (isset($item->shadow)) {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('影子: ' . $item->shadow)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('位置: ' . $item->position)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('時間: ' . $item->time)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $south = $this->getFishMonth($item, '南');
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('南半球月份: ' . $south)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $north = $this->getFishMonth($item, '北');
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('北半球月份: ' . $north)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
+    }
+
+    public function getFishMonth($item, $type)
+    {
+        $target = [];
+
+        if ($item->m1 == $type || $item->m1 == '全') {
+            $target[] = 1;
+        }
+
+        if ($item->m2 == $type || $item->m2 == '全') {
+            $target[] = 2;
+        }
+
+        if ($item->m3 == $type || $item->m3 == '全') {
+            $target[] = 3;
+        }
+
+        if ($item->m4 == $type || $item->m4 == '全') {
+            $target[] = 4;
+        }
+
+        if ($item->m5 == $type || $item->m5 == '全') {
+            $target[] = 5;
+        }
+
+        if ($item->m6 == $type || $item->m6 == '全') {
+            $target[] = 6;
+        }
+
+        if ($item->m7 == $type || $item->m7 == '全') {
+            $target[] = 7;
+        }
+
+        if ($item->m8 == $type || $item->m8 == '全') {
+            $target[] = 8;
+        }
+
+        if ($item->m9 == $type || $item->m9 == '全') {
+            $target[] = 9;
+        }
+
+        if ($item->m10 == $type || $item->m10 == '全') {
+            $target[] = 10;
+        }
+
+        if ($item->m11 == $type || $item->m11 == '全') {
+            $target[] = 11;
+        }
+
+        if ($item->m12 == $type || $item->m12 == '全') {
+            $target[] = 12;
+        }
+
+        $string = implode(",", $target);
+
+        return $string;
     }
 }

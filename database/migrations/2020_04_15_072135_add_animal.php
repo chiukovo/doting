@@ -35,4 +35,5 @@ class AddAnimal extends Migration
     public function down()
     {
         Schema::dropIfExists('animal');
-    }}
+    }
+}

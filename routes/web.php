@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'LineBotController@index');
 //Route::get('/search', 'LineBotController@search');
 //Route::get('/getApi', 'LineBotController@getApi');
 
 //動森
 Route::get('/', 'AnimalCrossingController@index');
 Route::post('/message', 'AnimalCrossingController@message');
-Route::get('/getAnimalApi', 'AnimalCrossingController@getAnimalApi');
-Route::get('/getNewImg', 'AnimalCrossingController@getNewImg');
+
+//爬蟲
+Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
+Route::get('/getFishApi', 'ApiController@getFishApi');
+Route::get('/getInsectApi', 'ApiController@getInsectApi');
+Route::get('/getNewImg', 'ApiController@getNewImg');
