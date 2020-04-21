@@ -291,12 +291,12 @@ class AnimalCrossingController extends Controller
         $text .= '→ 同時可以單獨只查詢南、北、全半球月份魚、昆蟲' . "\n";
         $text .= '範例：$南4月 魚、$北5月 蟲、$全5月 魚' . "\n";
         $text .= "\n";
-        $text .= '4.輸入【做釣竿】，查詢DIY方程式配方 (尚未完成)' . "\n";
+        $text .= '4.輸入【做釣竿】，查詢DIY方程式配方' . "\n";
         $text .= '範例：做石斧頭、做櫻花' . "\n";
         $text .= "\n";
         $text .= '【#】查詢島民、NPC相關資訊' . "\n";
         $text .= '【$】查詢魚、昆蟲圖鑑' . "\n";
-        $text .= '【做】查詢DIY圖鑑 (尚未完成)' . "\n";
+        $text .= '【做】查詢DIY圖鑑' . "\n";
         $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= 'https://ppt.cc/fiZIDx';
