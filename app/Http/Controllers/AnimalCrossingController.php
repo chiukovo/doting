@@ -255,6 +255,7 @@ class AnimalCrossingController extends Controller
         if ($event instanceof BaseEvent) {
             //user
             if ($event->isUserEvent()) {
+                $this->userId = $event->getUserId();
                 if (!is_null($this->userId)) {
                     $response = $this->lineBot->getProfile($this->userId);
 
@@ -269,6 +270,7 @@ class AnimalCrossingController extends Controller
 
             //group
             if ($event->isGroupEvent()) {
+                $this->userId = $event->getUserId();
                 $this->groupId = $event->getGroupId();
 
                 if (!is_null($this->userId) && !is_null($this->groupId)) {
@@ -286,6 +288,7 @@ class AnimalCrossingController extends Controller
 
             //room
             if ($event->isRoomEvent()) {
+                $this->userId = $event->getUserId();
                 $this->roomId = $event->getRoomId();
 
                 if (!is_null($this->userId) && !is_null($this->roomId)) {
@@ -537,19 +540,10 @@ class AnimalCrossingController extends Controller
                 )
             );
 
-        $detail = ButtonComponentBuilder::builder()
-            ->setStyle(ComponentButtonStyle::PRIMARY)
-            ->setAction(
-                new UriTemplateActionBuilder(
-                    '詳情',
-                    'https://example.com',
-                    new AltUriBuilder('https://example.com')
-                )
-            );
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::HORIZONTAL)
             ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$add, $remove, $detail]);
+            ->setContents([$add, $remove]);
     }
 
     public function createItemHeroBlock($item)
