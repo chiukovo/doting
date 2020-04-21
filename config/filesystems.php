@@ -42,13 +42,13 @@ return [
     */
 
     'disks' => [
+        'other' => [
+            'driver' => 'local',
+            'root' => public_path('other'),
+        ],
         'animal' => [
             'driver' => 'local',
             'root' => public_path('animal'),
-        ],
-        'fish' => [
-            'driver' => 'local',
-            'root' => public_path('fish'),
         ],
         'local' => [
             'driver' => 'local',

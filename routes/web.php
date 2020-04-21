@@ -23,5 +23,5 @@ Route::post('/message', 'AnimalCrossingController@message');
 //爬蟲
 Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
 Route::get('/getFishApi', 'ApiController@getFishApi');
-Route::get('/getNewFishImg', 'ApiController@getNewFishImg');
+Route::get('/getInsectApi', 'ApiController@getInsectApi');
 Route::get('/getNewImg', 'ApiController@getNewImg');

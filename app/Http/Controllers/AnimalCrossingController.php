@@ -305,14 +305,28 @@ class AnimalCrossingController extends Controller
     public function instructionExample()
     {
         $text = $this->displayName . ' 你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
-        $text .= '版本 v' . config('app.version') . "\n";
-        $text .= '以下教你如何使用指令~~' . "\n";
-        $text .= '找指令: 請輸入 "豆丁"' . "\n";
-        $text .= '找動物: 請輸入 "#茶茶丸" 也可以使用 個性 種族 生日查詢(月份)' . "\n";
-        $text .= '英文查詢: 請輸入 "#joey"' . "\n";
-        $text .= '日文查詢: 請輸入 "#チョコ"' . "\n";
-        $text .= '動物戰隊: 請輸入 "#阿戰隊"' . "\n";
-        $text .= '找魚類: 請輸入 "$鯊魚"' . "\n";
+        $text .= 'version 2.0.5' . "\n";
+        $text .= "\n";
+        $text .= '👇以下教您如何使用指令👇' . "\n";
+        $text .= '1.輸入【豆丁】，重新查詢教學指令' . "\n";
+        $text .= "\n";
+        $text .= '2.輸入【#茶茶丸】，可查詢島民資訊' . "\n";
+        $text .= '→ 同時可以使用外語名稱、個性、種族、生日月份查詢哦！' . "\n";
+        $text .= '範例：#茶茶丸、#Dom、#ちゃちゃまる、#運動、#綿羊、#3、#阿戰隊' . "\n";
+        $text .= "\n";
+        $text .= '3.輸入【$鯊魚】，查詢魚、昆蟲圖鑑' . "\n";
+        $text .= '→ 同時可以單獨只查詢南、北、全半球月份魚、昆蟲' . "\n";
+        $text .= '範例：$南4月 魚、$北5月 蟲、$全5月 魚' . "\n";
+        $text .= "\n";
+        $text .= '4.輸入【做釣竿】，查詢DIY方程式配方 (尚未完成)' . "\n";
+        $text .= '範例：做石斧頭、做櫻花' . "\n";
+        $text .= "\n";
+        $text .= '【#】查詢島民' . "\n";
+        $text .= '【$】查詢魚、昆蟲圖鑑' . "\n";
+        $text .= '【做】查詢DIY圖鑑 (尚未完成)' . "\n";
+        $text .= "\n";
+        $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
+        $text .= 'https://ppt.cc/fiZIDx';
 
         return $text;
     }
@@ -370,9 +384,9 @@ class AnimalCrossingController extends Controller
                 break;
             case '$':
                 if ($target != '') {
-                    $this->dbType = 'fish';
+                    $this->dbType = 'other';
 
-                    return $this->getDbFish($target);
+                    return $this->getDbOther($target);
                 }
                 break;
             default:
@@ -381,8 +395,9 @@ class AnimalCrossingController extends Controller
         }
     }
 
-    public function getDbFish($target)
+    public function getDbOther($target)
     {
+        $other = [];
         $notFound = '找不到捏...(¬_¬)';
 
         //first
@@ -391,31 +406,52 @@ class AnimalCrossingController extends Controller
         if ($first == '南' || $first == '北' || $first == '全') {
             $number = mb_substr($target, 1, 1);
             $dateRange = range(1, 12);
+            //type
+            $type = mb_substr($target, -1, 1);
+            $table = '';
 
             if (in_array($number, $dateRange)) {
-                $fish = DB::table('fish')
-                    ->where('m' . $number, $first)
-                    ->orderBy('sell', 'desc')
-                    ->get()
-                    ->toArray();
+                if ($type == '魚') {
+                    $table = 'fish';
+                } else if ($type == '蟲') {
+                    $table = 'insect';
+                }
 
-                if (!empty($fish)) {
-                    return $fish;
+                if ($table != '') {
+                    $other = DB::table($table)
+                        ->where('m' . $number, $first)
+                        ->orderBy('sell', 'desc')
+                        ->get()
+                        ->toArray();
+                }
+
+                if (!empty($other)) {
+                    return $other;
                 }
             }
         }
 
-        $fish = DB::table('fish')
+        //找蟲
+        $other = DB::table('insect')
             ->where('name', 'like', '%' . $target . '%')
             ->orderBy('sell', 'desc')
             ->get()
             ->toArray();
 
-        if (empty($fish)) {
+        //找魚
+        $other = DB::table('fish')
+            ->where('name', 'like', '%' . $target . '%')
+            ->orderBy('sell', 'desc')
+            ->get()
+            ->toArray();
+
+        dd();
+
+        if (empty($other)) {
             return $notFound;
         }
 
-        return $fish;
+        return $other;
     }
 
     public function getDbAnimal($target)
@@ -463,7 +499,7 @@ class AnimalCrossingController extends Controller
 
         if ($this->dbType == 'animal') {
             return $target->setBody($this->createAnimalItemBodyBlock($item));
-        } else if ($this->dbType == 'fish') {
+        } else if ($this->dbType == 'other') {
             return $target->setBody($this->createFishItemBodyBlock($item));
         }
     }
