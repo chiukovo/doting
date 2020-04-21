@@ -400,7 +400,7 @@ class AnimalCrossingController extends Controller
                 $str .= "\n";
             }
         } else {
-            $str = '找不到此家具捏...(¬_¬)';
+            $str = '找不到此Diy捏...(¬_¬)';
         }
 
         //send
