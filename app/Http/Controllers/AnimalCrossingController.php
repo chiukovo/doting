@@ -304,7 +304,8 @@ class AnimalCrossingController extends Controller
 
     public function instructionExample()
     {
-        $text = $this->displayName . ' 你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text = $this->displayName . "\n";
+        $text .= '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
         $text .= 'version 2.0.5' . "\n";
         $text .= "\n";
         $text .= '👇以下教您如何使用指令👇' . "\n";
@@ -444,8 +445,6 @@ class AnimalCrossingController extends Controller
             ->orderBy('sell', 'desc')
             ->get()
             ->toArray();
-
-        dd();
 
         if (empty($other)) {
             return $notFound;
