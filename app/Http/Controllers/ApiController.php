@@ -9,6 +9,62 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getDiy()
+    {
+        $url = 'https://wiki.biligame.com/dongsen/DIY%E9%85%8D%E6%96%B9';
+        $ql = QueryList::get($url);
+        $result = $ql->rules([
+            'name' => ['td:eq(0) a', 'text'],
+            'type' => ['td:eq(1)', 'text'],
+            'get' => ['td:eq(2)', 'text'],
+            'diy' => ['td:eq(4)', 'text'],
+        ])
+        ->range('#CardSelectTr tr')
+        ->queryData();
+
+        //DB DATA
+        $dbData = DB::table('diy')->get()->toArray();
+
+        foreach ($result as $data) {
+            if ($data['name'] != '') {
+                $isset = false;
+
+                $name = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['name'])->asJson()->get();
+                $name = $name->data->text;
+
+                //檢查是否資料庫存在
+                foreach ($dbData as $source) {
+                    if ($source->name == $name) {
+                        $isset = true;
+                    }
+                }
+
+                if ($isset) {
+                    continue;
+                }
+
+                $type = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['type'])->asJson()->get();
+                $type = $type->data->text;
+
+                $get = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['get'])->asJson()->get();
+                $get = $get->data->text;
+
+                $diy = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['diy'])->asJson()->get();
+                $diy = $diy->data->text;
+
+                //insert
+                DB::table('diy')->insert([
+                    'name' => $name,
+                    'type' => $type,
+                    'get' => $get,
+                    'diy' => $diy,
+                ]);
+
+                echo 'insert: ' . $data['name'] . '<br>';
+            }
+        }
+    }
+
     public function getInsectApi()
     {
         $url = 'http://e0game.com/animalcrossing/%e6%98%86%e8%9f%b2-%e5%9c%96%e9%91%91/';

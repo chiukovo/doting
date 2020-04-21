@@ -96,49 +96,54 @@ class AnimalCrossingController extends Controller
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
                         //取得須回傳資料
-                        $replyText = $this->formatText($text);
-
-                        if ($replyText == '') {
-                            return;
+                        $dataArray = $this->formatText($text);
+                        //Diy另外寫
+                        if ($this->dbType == 'diy') {
+                            $this->sendDiy($dataArray, $replyToken);
+                            $isSend = true;
                         } else {
-                            if (is_array($replyText)) {
-                                $replyText = array_chunk($replyText, 10);
-                                $replyText = array_chunk($replyText, 5);
+                            if ($dataArray == '') {
+                                return;
+                            } else {
+                                if (is_array($dataArray)) {
+                                    $dataArray = array_chunk($dataArray, 10);
+                                    $dataArray = array_chunk($dataArray, 5);
 
-                                foreach ($replyText as $detail) {
-                                    $multipleMessageBuilder = new MultiMessageBuilder();
+                                    foreach ($dataArray as $detail) {
+                                        $multipleMessageBuilder = new MultiMessageBuilder();
 
-                                    foreach ($detail as $animals) {
-                                        $result = [];
+                                        foreach ($detail as $animals) {
+                                            $result = [];
 
-                                        foreach ($animals as $animal) {
-                                            $result[] = $this->createItemBubble($animal);
+                                            foreach ($animals as $animal) {
+                                                $result[] = $this->createItemBubble($animal);
+                                            }
+
+                                            $target = new CarouselContainerBuilder($result);
+
+                                            $msg = FlexMessageBuilder::builder()
+                                                ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+                                                ->setContents($target);
+
+
+                                            $multipleMessageBuilder->add($msg);
                                         }
 
-                                        $target = new CarouselContainerBuilder($result);
+                                        //send
+                                        $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
 
-                                        $msg = FlexMessageBuilder::builder()
-                                            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
-                                            ->setContents($target);
-
-
-                                        $multipleMessageBuilder->add($msg);
+                                        //error
+                                        if (!$response->isSucceeded()) {
+                                            Log::debug($response->getRawBody());
+                                        }
                                     }
 
-                                    //send
-                                    $response = $this->lineBot->replyMessage($replyToken, $multipleMessageBuilder);
-
-                                    //error
-                                    if (!$response->isSucceeded()) {
-                                        Log::debug($response->getRawBody());
-                                    }
+                                    $isSend = true;
+                                } else {
+                                    $message = new TextMessageBuilder($dataArray);
+                                    $this->lineBot->replyMessage($replyToken, $message);
+                                    $isSend = true;
                                 }
-
-                                $isSend = true;
-                            } else {
-                                $message = new TextMessageBuilder($replyText);
-                                $this->lineBot->replyMessage($replyToken, $message);
-                                $isSend = true;
                             }
                         }
                     }
@@ -273,7 +278,7 @@ class AnimalCrossingController extends Controller
     public function instructionExample()
     {
         $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
-        $text .= 'version 2.0.5' . "\n";
+        $text .= 'version ' . config('app.version') . "\n";
         $text .= "\n";
         $text .= '👇以下教您如何使用指令👇' . "\n";
         $text .= '1.輸入【豆丁】，重新查詢教學指令' . "\n";
@@ -339,8 +344,8 @@ class AnimalCrossingController extends Controller
             return $returnText;
         }
 
-        $type = substr($text, 0, 1);
-        $target = substr($text, 1);
+        $type = mb_substr($text, 0, 1);
+        $target = mb_substr($text, 1);
 
         switch ($type) {
             case '#':
@@ -357,10 +362,63 @@ class AnimalCrossingController extends Controller
                     return $this->getDbOther($target);
                 }
                 break;
+
+            case '做':
+                if ($target != '') {
+                    $this->dbType = 'diy';
+
+                    return $this->getDbDiy($target);
+                }
+                break;
             default:
                 return '';
                 break;
         }
+    }
+
+    public function sendDiy($dataArray, $replyToken)
+    {
+        $str = '';
+
+        foreach ($dataArray as $data) {
+            $str .= $data->name;
+
+            if ($data->type != '') {
+                $str .= ' (' . $data->type . ')';
+            }
+
+            $str .= "\n";
+
+            if ($data->get != '') {
+                $str .= $data->get;
+                $str .= "\n";
+            }
+
+            $str .= $data->diy;
+            $str .= "\n";
+            $str .= "\n";
+        }
+
+        //send
+        $message = new TextMessageBuilder($str);
+        $this->lineBot->replyMessage($replyToken, $message);
+    }
+
+    public function getDbDiy($target)
+    {
+        $target = strtolower($target);
+        $notFound = '找不到捏...(¬_¬)';
+
+        $dbAnimal = DB::table('diy')
+            ->where('name', 'like', '%' . $target . '%')
+            ->get()
+            ->toArray();
+
+        if (empty($dbAnimal)) {
+            return $notFound;
+        }
+
+        return $dbAnimal;
     }
 
     public function getDbOther($target)
@@ -428,8 +486,6 @@ class AnimalCrossingController extends Controller
     {
         $target = strtolower($target);
         $notFound = '找不到捏...(¬_¬)';
-
-        //設定最愛
 
         //阿戰隊
         if ($target == '阿戰隊') {

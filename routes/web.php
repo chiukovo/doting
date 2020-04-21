@@ -25,3 +25,4 @@ Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
 Route::get('/getFishApi', 'ApiController@getFishApi');
 Route::get('/getInsectApi', 'ApiController@getInsectApi');
 Route::get('/getNewImg', 'ApiController@getNewImg');
+Route::get('/getDiy', 'ApiController@getDiy');
