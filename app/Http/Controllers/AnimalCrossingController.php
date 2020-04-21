@@ -378,25 +378,27 @@ class AnimalCrossingController extends Controller
 
     public function sendDiy($dataArray, $replyToken)
     {
-        $str = '';
+        $str = '找不到此家具捏...(¬_¬)';
 
-        foreach ($dataArray as $data) {
-            $str .= $data->name;
+        if (is_array($dataArray)) {
+            foreach ($dataArray as $data) {
+                $str = $data->name;
 
-            if ($data->type != '') {
-                $str .= ' (' . $data->type . ')';
-            }
+                if ($data->type != '') {
+                    $str .= ' (' . $data->type . ')';
+                }
 
-            $str .= "\n";
+                $str .= "\n";
 
-            if ($data->get != '') {
-                $str .= $data->get;
+                if ($data->get != '') {
+                    $str .= $data->get;
+                    $str .= "\n";
+                }
+
+                $str .= $data->diy;
+                $str .= "\n";
                 $str .= "\n";
             }
-
-            $str .= $data->diy;
-            $str .= "\n";
-            $str .= "\n";
         }
 
         //send
