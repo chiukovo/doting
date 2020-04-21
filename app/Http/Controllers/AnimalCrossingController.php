@@ -517,10 +517,8 @@ class AnimalCrossingController extends Controller
 
     public function createItemFooterBlock($item)
     {
-        $color = '#aaaaaa';
         $add = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::PRIMARY)
-            ->setColor($color)
             ->setAction(
                 new PostbackTemplateActionBuilder(
                     '加入最愛',
@@ -538,10 +536,20 @@ class AnimalCrossingController extends Controller
                     $item->name . '移除最愛'
                 )
             );
+
+        $detail = ButtonComponentBuilder::builder()
+            ->setStyle(ComponentButtonStyle::PRIMARY)
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    '詳情',
+                    'https://example.com',
+                    new AltUriBuilder('https://example.com')
+                )
+            );
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::HORIZONTAL)
             ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$add, $remove]);
+            ->setContents([$add, $remove, $detail]);
     }
 
     public function createItemHeroBlock($item)
