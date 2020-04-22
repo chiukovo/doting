@@ -10,32 +10,10 @@ use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
 use LINE\LINEBot\Event\BaseEvent;
-use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
-use LINE\LINEBot\Constant\Flex\ComponentFontSize;
-use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
-use LINE\LINEBot\Constant\Flex\ComponentGravity;
-use LINE\LINEBot\Constant\Flex\ComponentImageAspectMode;
-use LINE\LINEBot\Constant\Flex\ComponentImageAspectRatio;
-use LINE\LINEBot\Constant\Flex\ComponentImageSize;
-use LINE\LINEBot\Constant\Flex\ComponentLayout;
-use LINE\LINEBot\Constant\Flex\ComponentMargin;
-use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
-use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
-use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
-use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
-use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
-use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
-use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
-use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
 use App\Services\AnimalServices;
 use App\Services\DiyServices;
 use App\Services\OtherServices;
@@ -98,12 +76,14 @@ class AnimalCrossingController extends Controller
 
                         $sendBuilder = $this->getSendBuilder($text);
 
+                        //卡片型態
                         if (is_array($sendBuilder)) {
                             foreach ($sendBuilder as $builder) {
                                 $this->doSendMessage($replyToken, $builder);
                             }
                         }
 
+                        //文字型態
                         if ($sendBuilder != '' && !is_array($sendBuilder)) {
                             $this->doSendMessage($replyToken, $sendBuilder);
                         }
@@ -162,14 +142,21 @@ class AnimalCrossingController extends Controller
             $dataArray = array_chunk($dataArray, 10);
             $dataArray = array_chunk($dataArray, 5);
 
-            foreach ($dataArray as $detail) {
+            foreach ($dataArray as $data) {
                 $multipleMessageBuilder = new MultiMessageBuilder();
 
-                foreach ($detail as $animals) {
+                foreach ($data as $details) {
                     $result = [];
 
-                    foreach ($animals as $animal) {
-                        $result[] = $this->createItemBubble($animal);
+                    foreach ($details as $detail) {
+                        switch ($this->dbType) {
+                            case 'animal':
+                                $result[] = AnimalServices::createItemBubble($detail);
+                                break;
+                            case 'other':
+                                $result[] = OtherServices::createItemBubble($detail);
+                                break;
+                        }
                     }
 
                     $target = new CarouselContainerBuilder($result);
@@ -387,249 +374,5 @@ class AnimalCrossingController extends Controller
                 return '';
                 break;
         }
-    }
-
-    public function createItemBubble($item)
-    {
-        $target = BubbleContainerBuilder::builder()
-            ->setHero($this->createItemHeroBlock($item));
-
-        if ($this->dbType == 'animal') {
-            return $target->setBody($this->createAnimalItemBodyBlock($item));
-        } else if ($this->dbType == 'other') {
-            return $target->setBody($this->createFishItemBodyBlock($item));
-        }
-    }
-
-    public function createItemFooterBlock($item)
-    {
-        $add = ButtonComponentBuilder::builder()
-            ->setStyle(ComponentButtonStyle::LINK)
-            ->setAction(
-                new PostbackTemplateActionBuilder(
-                    '❤',
-                    'action=add&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
-                    $item->name . '加入最愛'
-                )
-            );
-
-        $remove = ButtonComponentBuilder::builder()
-            ->setStyle(ComponentButtonStyle::LINK)
-            ->setAction(
-                new PostbackTemplateActionBuilder(
-                    '🤍',
-                    'action=remove&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
-                    $item->name . '移除最愛'
-                )
-            );
-
-        return BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::HORIZONTAL)
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$add, $remove]);
-    }
-
-    public function createItemHeroBlock($item)
-    {
-        $imgPath = 'https://' . request()->getHttpHost() . '/' . $this->dbType . '/' . urlencode($item->name) . '.png';
-
-        return ImageComponentBuilder::builder()
-            ->setUrl($imgPath)
-            ->setSize(ComponentImageSize::XXL)
-            ->setAspectRatio('9:12')
-            ->setAspectMode(ComponentImageAspectMode::FIT);
-    }
-
-    public function createAnimalItemBodyBlock($item)
-    {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setWeight(ComponentFontWeight::BOLD)
-            ->setSize(ComponentFontSize::MD);
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('性別: ' . $item->sex)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        if ($item->personality != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('個性: ' . $item->personality)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('種族: ' . $item->race)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        if ($item->bd != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('生日: ' . $item->bd)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->say != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('口頭禪: ' . $item->say)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->info != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('介紹: ' . $item->info)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        return BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::VERTICAL)
-            ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
-    }
-
-    public function createFishItemBodyBlock($item)
-    {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . ' $' . $item->sell)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setWeight(ComponentFontWeight::BOLD)
-            ->setSize(ComponentFontSize::MD);
-
-        if (isset($item->shadow)) {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('影子: ' . $item->shadow)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('位置: ' . $item->position)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('時間: ' . $item->time)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $south = $this->getFishMonth($item, '南');
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('南半球月份: ' . $south)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $north = $this->getFishMonth($item, '北');
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('北半球月份: ' . $north)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        return BoxComponentBuilder::builder()
-            ->setLayout(ComponentLayout::VERTICAL)
-            ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
-    }
-
-    public function getFishMonth($item, $type)
-    {
-        $target = [];
-
-        if ($item->m1 == $type || $item->m1 == '全') {
-            $target[] = 1;
-        }
-
-        if ($item->m2 == $type || $item->m2 == '全') {
-            $target[] = 2;
-        }
-
-        if ($item->m3 == $type || $item->m3 == '全') {
-            $target[] = 3;
-        }
-
-        if ($item->m4 == $type || $item->m4 == '全') {
-            $target[] = 4;
-        }
-
-        if ($item->m5 == $type || $item->m5 == '全') {
-            $target[] = 5;
-        }
-
-        if ($item->m6 == $type || $item->m6 == '全') {
-            $target[] = 6;
-        }
-
-        if ($item->m7 == $type || $item->m7 == '全') {
-            $target[] = 7;
-        }
-
-        if ($item->m8 == $type || $item->m8 == '全') {
-            $target[] = 8;
-        }
-
-        if ($item->m9 == $type || $item->m9 == '全') {
-            $target[] = 9;
-        }
-
-        if ($item->m10 == $type || $item->m10 == '全') {
-            $target[] = 10;
-        }
-
-        if ($item->m11 == $type || $item->m11 == '全') {
-            $target[] = 11;
-        }
-
-        if ($item->m12 == $type || $item->m12 == '全') {
-            $target[] = 12;
-        }
-
-        $string = implode(",", $target);
-
-        return $string;
     }
 }
