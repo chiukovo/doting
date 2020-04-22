@@ -17,6 +17,7 @@ use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use App\Services\AnimalServices;
 use App\Services\DiyServices;
 use App\Services\OtherServices;
+use App\Services\ItemsServices;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -156,6 +157,9 @@ class AnimalCrossingController extends Controller
                             case 'other':
                                 $result[] = OtherServices::createItemBubble($detail);
                                 break;
+                            case 'items':
+                                $result[] = ItemsServices::createItemBubble($detail);
+                                break;
                         }
                     }
 
@@ -267,9 +271,13 @@ class AnimalCrossingController extends Controller
         $text .= '4.輸入【做釣竿】，查詢DIY方程式配方' . "\n";
         $text .= '範例：做石斧頭、做櫻花' . "\n";
         $text .= "\n";
+        $text .= '5.輸入【找貓跳台】，查詢家具' . "\n";
+        $text .= '範例：找貓跳台、找咖啡杯' . "\n";
+        $text .= "\n";
         $text .= '【#】查詢島民、NPC相關資訊' . "\n";
         $text .= '【$】查詢魚、昆蟲圖鑑' . "\n";
         $text .= '【做】查詢DIY圖鑑' . "\n";
+        $text .= '【找】查詢家具' . "\n";
         $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= 'https://ppt.cc/fiZIDx';
@@ -368,6 +376,14 @@ class AnimalCrossingController extends Controller
                     $this->dbType = 'diy';
 
                     return DiyServices::getDataByMessage($target);
+                }
+                break;
+
+            case '找':
+                if ($target != '') {
+                    $this->dbType = 'items';
+
+                    return ItemsServices::getDataByMessage($target);
                 }
                 break;
             default:

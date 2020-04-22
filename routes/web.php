@@ -21,8 +21,10 @@ Route::get('/', 'AnimalCrossingController@index');
 Route::post('/message', 'AnimalCrossingController@message');
 
 //爬蟲
-Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
+/*Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
 Route::get('/getFishApi', 'ApiController@getFishApi');
 Route::get('/getInsectApi', 'ApiController@getInsectApi');
 Route::get('/getNewImg', 'ApiController@getNewImg');
 Route::get('/getDiy', 'ApiController@getDiy');
+Route::get('/getItems', 'ApiController@getItems');
+Route::get('/itemsToZh', 'ApiController@itemsToZh');*/

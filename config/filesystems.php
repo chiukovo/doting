@@ -42,6 +42,10 @@ return [
     */
 
     'disks' => [
+        'items' => [
+            'driver' => 'local',
+            'root' => public_path('items'),
+        ],
         'other' => [
             'driver' => 'local',
             'root' => public_path('other'),

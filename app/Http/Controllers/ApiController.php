@@ -9,6 +9,124 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getItems()
+    {
+        //訂購
+        $url1 = 'https://wiki.biligame.com/dongsen/%E5%AE%B6%E5%85%B7%E5%9B%BE%E9%89%B4';
+        //非賣品
+        $url2 = 'https://wiki.biligame.com/dongsen/%E9%9D%9E%E5%8D%96%E5%93%81%E5%AE%B6%E5%85%B7';
+        //不可訂購
+        $url3 = 'https://wiki.biligame.com/dongsen/%E4%B8%8D%E5%8F%AF%E8%AE%A2%E8%B4%AD%E5%AE%B6%E5%85%B7';
+
+        $url = $url3;
+        $ql = QueryList::get($url);
+        $result = $ql->rules([
+            'img' => ['td:eq(0) img', 'srcset'],
+            'type' => ['td:eq(1)', 'text'],
+            'name' => ['td:eq(2)', 'text'],
+            'source_sell' => ['td:eq(3)', 'text'],
+            'sell' => ['td:eq(4)', 'text'],
+            'sample_sell' => ['td:eq(5)', 'text'],
+            'buy_type' => ['td:eq(6)', 'text'],
+            'detail_type' => ['td:eq(7)', 'text'],
+            'size' => ['td:eq(8)', 'text'],
+        ])
+        ->range('.CardSelect tr')
+        ->queryData();
+
+        $dbData = DB::table('items')->get()->toArray();
+
+        foreach ($result as $key => $data) {
+            $isset = false;
+
+            if ($data['img'] == '' && $data['name'] == '') {
+                continue;
+            }
+
+            //檢查是否資料庫存在
+            foreach ($dbData as $source) {
+                if ($source->cn_name == $data['name']) {
+                    $isset = true;
+                }
+            }
+
+            if ($isset) {
+                continue;
+            }
+
+            $imgExplode = explode(',', $data['img']);
+            $img = trim(substr($imgExplode[1], 0, -2));
+
+            //save img
+            $headers = get_headers($img);
+            $code = substr($headers[0], 9, 3);
+            $imgName = '';
+
+            if ($code == 200) {
+                $imgName = md5(rand(0, 1000) . $key . $url3);
+                $content = file_get_contents($img);
+                Storage::disk('items')->put($imgName . '.png', $content);
+            }
+
+            //insert
+            DB::table('items')->insert([
+                'cn_name' => $data['name'],
+                'type' => $data['type'],
+                'img_name' => $imgName,
+                'source_sell' => $data['source_sell'],
+                'sell' => $data['sell'],
+                'sample_sell' => $data['sample_sell'],
+                'buy_type' => $data['buy_type'],
+                'detail_type' => $data['detail_type'],
+                'size' => $data['size'],
+            ]);
+
+            echo 'insert: ' . $data['name'] . '<br>';
+        }
+
+        echo 'done';
+    }
+
+    /*
+        UPDATE `doting`.`items` SET `type` = '多顏色' WHERE (`type` = '多颜色');
+        UPDATE `doting`.`items` SET `buy_type` = '非賣品' WHERE (`buy_type` = '非卖品');
+        UPDATE `doting`.`items` SET `buy_type` = '無法訂購' WHERE (`buy_type` = '无法订购');
+        UPDATE `doting`.`items` SET `buy_type` = '訂購' WHERE (`buy_type` = '订购');
+    */
+    public function itemsToZh()
+    {
+        set_time_limit(0);
+
+        //DB DATA
+        $dbData = DB::table('items')->get()->toArray();
+        $dbData = array_chunk($dbData, 1000);
+
+        foreach ($dbData as $data) {
+            $nameData = [];
+            foreach ($data as $detail) {
+                $nameData[$detail->id] = $detail->cn_name;
+            }
+
+            //get
+            $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . json_encode($nameData, JSON_UNESCAPED_UNICODE))->asJson()->get();
+            $target = $target->data->text;
+
+            $decodes = json_decode($target, true);
+
+            foreach ($decodes as $id => $decode) {
+                DB::table('items')
+                    ->where('id', $id)
+                    ->update([
+                        'name' => $decode,
+                    ]);
+
+                echo 'update ' . $decode . '</br>';
+            }
+        }
+
+        echo 'done';
+    }
+
     public function getDiy()
     {
         $url = 'https://wiki.biligame.com/dongsen/DIY%E9%85%8D%E6%96%B9';
