@@ -133,6 +133,10 @@ class AnimalCrossingController extends Controller
             return $message;
         }
 
+        if ($text == '#testnewimg') {
+            $dataArray = AnimalServices::getDataByMessage('阿戰隊');
+        }
+
         if ($dataArray == '') {
             return '';
         }
@@ -151,7 +155,11 @@ class AnimalCrossingController extends Controller
                     foreach ($details as $detail) {
                         switch ($this->dbType) {
                             case 'animal':
-                                $result[] = AnimalServices::createItemBubble($detail);
+                                if ($text == '#testnewimg') {
+                                    $result[] = AnimalServices::createTestItemBubble($detail);
+                                } else {
+                                    $result[] = AnimalServices::createItemBubble($detail);
+                                }
                                 break;
                             case 'other':
                                 $result[] = OtherServices::createItemBubble($detail);

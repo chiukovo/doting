@@ -67,6 +67,13 @@ class AnimalServices
             ->setBody(self::createItemBodyBlock($item));
     }
 
+    public static function createTestItemBubble($item)
+    {
+        return BubbleContainerBuilder::builder()
+            ->setHero(self::createItemHeroBlock($item))
+            ->setBody(self::createTestItemBodyBlock($item));
+    }
+
     public static function createItemHeroBlock($item)
     {
         $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
@@ -76,6 +83,121 @@ class AnimalServices
             ->setSize(ComponentImageSize::XXL)
             ->setAspectRatio('9:12')
             ->setAspectMode(ComponentImageAspectMode::FIT);
+    }
+
+    public static function createTestItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $components[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::NONE)
+            ->setContents([
+                TextComponentBuilder::builder()
+                    ->setText('性別')
+                    ->setSize(ComponentFontSize::XS)
+                    ->setFlex(1),
+                TextComponentBuilder::builder()
+                    ->setText($item->sex)
+                    ->setWrap(true)
+                    ->setSize(ComponentFontSize::XS)
+                    ->setFlex(5)
+            ]);
+
+        if ($item->personality != '') {
+            $components[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setSpacing(ComponentSpacing::NONE)
+                ->setContents([
+                    TextComponentBuilder::builder()
+                        ->setText('個性')
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(1),
+                    TextComponentBuilder::builder()
+                        ->setText($item->personality)
+                        ->setWrap(true)
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(5)
+                ]);
+        }
+
+        $components[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::NONE)
+            ->setContents([
+                TextComponentBuilder::builder()
+                    ->setText('種族')
+                    ->setSize(ComponentFontSize::XS)
+                    ->setFlex(1),
+                TextComponentBuilder::builder()
+                    ->setText($item->race)
+                    ->setWrap(true)
+                    ->setSize(ComponentFontSize::XS)
+                    ->setFlex(5)
+            ]);
+
+        if ($item->bd != '') {
+            $components[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setSpacing(ComponentSpacing::NONE)
+                ->setContents([
+                    TextComponentBuilder::builder()
+                        ->setText('生日')
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(1),
+                    TextComponentBuilder::builder()
+                        ->setText($item->bd)
+                        ->setWrap(true)
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(5)
+                ]);
+        }
+
+        if ($item->say != '') {
+            $components[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setSpacing(ComponentSpacing::NONE)
+                ->setContents([
+                    TextComponentBuilder::builder()
+                        ->setText('口頭禪')
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(1),
+                    TextComponentBuilder::builder()
+                        ->setText($item->say)
+                        ->setWrap(true)
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(5)
+                ]);
+        }
+
+        if ($item->info != '') {
+            $components[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setSpacing(ComponentSpacing::NONE)
+                ->setContents([
+                    TextComponentBuilder::builder()
+                        ->setText('介紹')
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(1),
+                    TextComponentBuilder::builder()
+                        ->setText($item->info)
+                        ->setWrap(true)
+                        ->setSize(ComponentFontSize::XS)
+                        ->setFlex(5)
+                ]);
+        }
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
     }
 
     public static function createItemBodyBlock($item)
