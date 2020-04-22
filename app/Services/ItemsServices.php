@@ -36,7 +36,7 @@ class ItemsServices
 
         //> 50
         if (count($dbAnimal) > 50) {
-            return '搜尋結果有 ' . count($dbAnimal) . ' 個, 請試著縮小範圍 (⋟﹏⋞)';
+            return '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個, 請試著縮小範圍 (⋟﹏⋞)';
         }
 
     	if (empty($dbAnimal)) {
