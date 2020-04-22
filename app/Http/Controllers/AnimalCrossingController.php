@@ -32,11 +32,11 @@ class AnimalCrossingController extends Controller
 
     public function __construct()
     {
-        $lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
-        $lineChannelSecret = env('LINE_BOT_CHANNEL_SECRET');
+        $this->lineAccessToken = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
+        $this->lineChannelSecret = env('LINE_BOT_CHANNEL_SECRET');
 
-        $httpClient = new CurlHTTPClient ($lineAccessToken);
-        $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $lineChannelSecret]);
+        $httpClient = new CurlHTTPClient($this->lineAccessToken);
+        $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $this->lineChannelSecret]);
     }
 
     public function index(Request $request)
@@ -52,7 +52,7 @@ class AnimalCrossingController extends Controller
         	return;
         }
 
-        if (!SignatureValidator::validateSignature($request->getContent(), $lineChannelSecret, $signature)) {
+        if (!SignatureValidator::validateSignature($request->getContent(), $this->lineChannelSecret, $signature)) {
             return;
         }
 
