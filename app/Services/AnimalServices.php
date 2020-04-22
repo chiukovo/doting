@@ -63,6 +63,7 @@ class AnimalServices
     public static function createItemBubble($item)
     {
         return BubbleContainerBuilder::builder()
+            ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item))
             ->setBody(self::createItemBodyBlock($item));
     }

@@ -88,6 +88,7 @@ class OtherServices
     public static function createItemBubble($item)
     {
         return $target = BubbleContainerBuilder::builder()
+            ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item))
             ->setBody(self::createItemBodyBlock($item));
     }
