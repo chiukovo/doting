@@ -75,7 +75,7 @@ class ItemsServices
             ->setSize(ComponentFontSize::MD);
 
         $components[] = TextComponentBuilder::builder()
-            ->setText('價格: $' . $item->source_sell)
+            ->setText('價格: $' . number_format($item->source_sell))
             ->setWrap(true)
             ->setAlign('center')
             ->setSize(ComponentFontSize::XS)
@@ -83,7 +83,7 @@ class ItemsServices
             ->setFlex(0);
 
         $components[] = TextComponentBuilder::builder()
-            ->setText('賣出: $' . $item->sell)
+            ->setText('賣出: $' . number_format($item->sell))
             ->setWrap(true)
             ->setAlign('center')
             ->setSize(ComponentFontSize::XS)
@@ -91,7 +91,7 @@ class ItemsServices
             ->setFlex(0);
 
         $components[] = TextComponentBuilder::builder()
-            ->setText('回收: $' . $item->sample_sell)
+            ->setText('回收: $' . number_format($item->sample_sell))
             ->setWrap(true)
             ->setAlign('center')
             ->setSize(ComponentFontSize::XS)
