@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/search', 'LineBotController@search');
 //Route::get('/getApi', 'LineBotController@getApi');
 
+//web
+Route::get('/animals/list', 'AnimalWebCrossingController@list');
 //動森
-Route::get('/', 'AnimalCrossingController@index');
 Route::post('/message', 'AnimalCrossingController@message');
+
 
 //爬蟲
 /*Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
