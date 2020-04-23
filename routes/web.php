@@ -26,5 +26,6 @@ Route::get('/getFishApi', 'ApiController@getFishApi');
 Route::get('/getInsectApi', 'ApiController@getInsectApi');
 Route::get('/getNewImg', 'ApiController@getNewImg');
 Route::get('/getDiy', 'ApiController@getDiy');
-Route::get('/getItems', 'ApiController@getItems');
+Route::get('/apiItems', 'ApiController@getItems');
+Route::get('/getClothes', 'ApiController@getClothes');
 Route::get('/itemsToZh', 'ApiController@itemsToZh');*/

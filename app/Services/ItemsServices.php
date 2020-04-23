@@ -107,13 +107,16 @@ class ItemsServices
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('訂購: ' . $item->buy_type)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->buy_type != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('訂購: ' . $item->buy_type)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
+
 
         $components[] = TextComponentBuilder::builder()
             ->setText('分類: ' . $item->detail_type)
@@ -123,13 +126,15 @@ class ItemsServices
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('尺寸: ' . $item->size)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->size != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('尺寸: ' . $item->size)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
