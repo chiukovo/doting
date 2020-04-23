@@ -5,10 +5,51 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use QL\QueryList;
+use App\Services\AnimalServices;
 use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getAnimalHome()
+    {
+        $urls = AnimalServices::getHomeImgUrls();
+
+        foreach ($urls as $url) {
+            
+            $ql = QueryList::get($url);
+            $result = $ql->rules([
+                'name' => ['td:eq(0)', 'text'],
+                'img' => ['td:eq(1) img', 'src'],
+            ])
+            ->range('#arcbody table tr')
+            ->queryData();
+
+            foreach ($result as $data) {
+                if ($data['name'] != '' && $data['img'] != '') {
+                    //get
+                    $name = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['name'])->asJson()->get();
+                    $name = $name->data->text;
+                    $headers = get_headers($data['img']);
+                    $code = substr($headers[0], 9, 3);
+
+                    //save img
+                    $headers = get_headers($data['img']);
+                    $code = substr($headers[0], 9, 3);
+
+                    $fileIsset = is_file(public_path('animal/' .  $name . '_home.png'));
+
+                    if (!$fileIsset) {
+                        $content = file_get_contents($data['img']);
+                        Storage::disk('animal')->put($name . '_home.png', $content);
+                        echo 'insert: ' . $name . '<br>';
+                    }
+                }
+            }
+        }
+
+        echo 'done';
+    }
+
     public function getClothes()
     {
         $urls = [
