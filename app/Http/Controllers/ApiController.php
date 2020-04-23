@@ -15,7 +15,6 @@ class ApiController extends Controller
         $urls = AnimalServices::getHomeImgUrls();
 
         foreach ($urls as $url) {
-            
             $ql = QueryList::get($url);
             $result = $ql->rules([
                 'name' => ['td:eq(0)', 'text'],
