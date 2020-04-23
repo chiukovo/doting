@@ -61,22 +61,20 @@ class OtherServices
     	}
 
     	//找蟲
-    	$other = DB::table('insect')
+        $insect = DB::table('insect')
     	    ->where('name', 'like', '%' . $message . '%')
     	    ->orderBy('sell', 'desc')
     	    ->get()
     	    ->toArray();
-
-    	if (!empty($other)) {
-    	    return $other;
-    	}
 
     	//找魚
-    	$other = DB::table('fish')
+        $fish = DB::table('fish')
     	    ->where('name', 'like', '%' . $message . '%')
     	    ->orderBy('sell', 'desc')
     	    ->get()
     	    ->toArray();
+
+        $other = array_merge($fish, $insect);
 
     	if (empty($other)) {
     	    return $notFound;
