@@ -103,7 +103,7 @@ class ApiController extends Controller
 
                 //檢查是否資料庫存在
                 foreach ($dbData as $source) {
-                    if ($source->cn_name == $data['name']) {
+                    if ($source->cn_name == $data['name'] && $source->detail_type == $data['detail_type']) {
                         $isset = true;
                     }
                 }
@@ -121,7 +121,7 @@ class ApiController extends Controller
                 $imgName = '';
 
                 if ($code == 200) {
-                    $imgName = md5(rand(0, 1000) . $url);
+                    $imgName = md5(rand(0, 10000) . $key . $url);
                     $content = file_get_contents($img);
                     Storage::disk('items')->put($imgName . '.png', $content);
                 }
@@ -247,7 +247,7 @@ class ApiController extends Controller
         foreach ($dbData as $data) {
             $nameData = [];
             foreach ($data as $detail) {
-                $nameData[$detail->id] = $detail->type;
+                $nameData[$detail->id] = $detail->cn_name;
             }
 
             //get
@@ -260,7 +260,7 @@ class ApiController extends Controller
                 DB::table('items')
                     ->where('id', $id)
                     ->update([
-                        'type' => $decode,
+                        'name' => $decode,
                     ]);
 
                 echo 'update ' . $decode . '</br>';

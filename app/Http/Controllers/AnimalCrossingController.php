@@ -339,6 +339,8 @@ class AnimalCrossingController extends Controller
 
     public function formatMessage($text)
     {
+        //去頭尾空白
+        $text = trim($text);
         //去除前後空白
         $text = preg_replace('/\s+/', '', $text);
 
