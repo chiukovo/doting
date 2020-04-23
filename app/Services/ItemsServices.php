@@ -29,6 +29,10 @@ class ItemsServices
     	$message = strtolower($message);
     	$notFound = '找不到捏...(¬_¬)';
 
+        if ($message == '豆丁') {
+            return '(*´∀`)~♥';
+        }
+
     	$dbAnimal = DB::table('items')
     	    ->where('name', 'like', '%' . $message . '%')
     	    ->get()
