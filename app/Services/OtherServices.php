@@ -34,6 +34,8 @@ class OtherServices
 
     	if ($first == '南' || $first == '北' || $first == '全') {
     	    $number = mb_substr($message, 1, 1);
+            $number = self::chStringToNumber($number);
+            //判斷number是否為中文
     	    $dateRange = range(1, 12);
     	    //type
     	    $type = mb_substr($message, -1, 1);
@@ -81,6 +83,20 @@ class OtherServices
     	}
 
     	return $other;
+    }
+
+    public static function chStringToNumber($string)
+    {
+        //判斷是否有國字
+        $targetArray = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
+
+        foreach ($targetArray as $key => $target) {
+            if ($string == $target) {
+                return $key + 1;
+            }
+        }
+
+        return $string;
     }
 
     public static function createItemBubble($item)
