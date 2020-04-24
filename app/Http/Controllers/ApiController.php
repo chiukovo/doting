@@ -31,7 +31,7 @@ class ApiController extends Controller
             ->queryData();
 
             foreach ($result as $data) {
-                $name = str_replace('.png', '', $data['name']);
+                $name = md5(str_replace('.png', '', $data['name']));
 
                 $isset = false;
 

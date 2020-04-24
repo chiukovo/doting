@@ -42,6 +42,7 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
+        dd($this->getSendBuilder('抽'));
     	echo 'hi';
     }
 
