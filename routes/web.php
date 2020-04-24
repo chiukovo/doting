@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/search', 'LineBotController@search');
 //Route::get('/getApi', 'LineBotController@getApi');
 
+Route::post('/message', 'AnimalCrossingController@message');
+
 //web
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
