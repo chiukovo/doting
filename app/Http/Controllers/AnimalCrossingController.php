@@ -123,6 +123,10 @@ class AnimalCrossingController extends Controller
         //取得須回傳資料
         $dataArray = $this->formatMessage($text);
 
+        if ($text == '抽') {
+            return $dataArray;
+        }
+
         //Diy另外寫
         if ($this->dbType == 'diy') {
             $diyString = DiyServices::getSendData($dataArray);
