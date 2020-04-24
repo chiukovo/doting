@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 //web
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
-//動森
-Route::post('/message', 'AnimalCrossingController@message');
+Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
+Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
 
 //爬蟲

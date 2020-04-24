@@ -24,6 +24,55 @@ use DB;
 
 class AnimalServices
 {
+
+    public static function getAllType()
+    {
+        $animal = DB::table('animal')
+            ->get(['race', 'personality'])
+            ->toArray();
+
+        //race
+        $race = collect($animal)->unique('race');
+        $personality = collect($animal)->unique('personality');
+
+        $formatPersonality = [];
+
+        foreach ($personality as $data) {
+            $explode = explode("、", $data->personality);
+
+            if ($data->personality != '' && $explode != '') {
+                if (isset($explode[0])) {
+                    $formatPersonality[] = $explode[0];
+                }
+
+                if (isset($explode[1])) {
+                    $formatPersonality[] = $explode[1];
+                }
+            }
+        }
+
+        $formatPersonality = collect($formatPersonality)->unique();
+
+        return [
+            'race' => $race,
+            'personality' => $formatPersonality,
+            'bd' => [
+                '一月',
+                '二月',
+                '三月',
+                '四月',
+                '五月',
+                '六月',
+                '七月',
+                '八月',
+                '九月',
+                '十月',
+                '十一月',
+                '十二月'
+            ]
+        ];
+    }
+
     public static function getDataByMessage($message)
     {
     	$message = strtolower($message);

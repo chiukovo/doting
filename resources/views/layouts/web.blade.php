@@ -6,6 +6,9 @@
   <title>豆丁森友會</title>
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script src="/js/vue-infinite-loading.js"></script>
 </head>
 <body>
   <div id="root">

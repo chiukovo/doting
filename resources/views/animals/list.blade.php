@@ -6,42 +6,35 @@
   <span class="sep">/</span>
   <a href="#">動物島民</a>
 </div>
-<div class="media">
+<div id="app" class="media" v-cloak>
   <div class="search">
     <table class="table">
       <tr>
         <th>查看全部</th>
-        <td><button class="btn current">查看全部</button></td>
+        <td><button class="btn current" @click="clearAll">查看全部</button></td>
       </tr>
       <tr>
         <th>種族</th>
         <td>
-          <button class="btn">綿羊</button>
-          <button class="btn">鴨</button>
+          <button class="btn" :class="searchData.race.indexOf(data.race) == '-1' ? '' : 'current'" v-for="data in race"  v-if="data.race != ''" @click="addRace(data.race)">
+            @{{ data.race }}
+          </button>
         </td>
       </tr>
       <tr>
         <th>個性</th>
         <td>
-          <button class="btn">運動</button>
-          <button class="btn">悠閒</button>
+          <button class="btn" :class="searchData.personality.indexOf(data) == '-1' ? '' : 'current'" v-for="data in personality" @click="addPersonality(data)">
+            @{{ data }}
+          </button>
         </td>
       </tr>
       <tr>
         <th>生日</th>
         <td>
-          <button class="btn">一月</button>
-          <button class="btn">二月</button>
-          <button class="btn">三月</button>
-          <button class="btn">四月</button>
-          <button class="btn">五月</button>
-          <button class="btn">六月</button>
-          <button class="btn">七月</button>
-          <button class="btn">八月</button>
-          <button class="btn">九月</button>
-          <button class="btn">十月</button>
-          <button class="btn">十一月</button>
-          <button class="btn">十二月</button>
+          <button class="btn" :class="searchData.bd.indexOf(data) == '-1' ? '' : 'current'" v-for="data in bd" @click="addBd(data)">
+            @{{ data }}
+          </button>
         </td>
       </tr>
     </table>
@@ -53,22 +46,24 @@
       <th>個性</th>
       <th>生日</th>
     </tr>
-    @foreach($lists as $list)
-    <tr>
+    <tr v-for="list in lists">
       <td>
-        <a href="detail.html">
-          <span>{{ $list->name }}</span>
+        <a :href="'/animals/detail?name=' + list.name">
+          <span>@{{ list.name }}</span>
           <div class="table-img">
-            <img src="/animal/{{ $list->name }}.png" alt="茶茶丸">
+            <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
           </div>
         </a>
       </td>
-      <td>{{ $list->race }}</td>
-      <td>{{ $list->personality }}</td>
-      <td>{{ $list->bd }}</td>
+      <td>@{{ list.race }}</td>
+      <td>@{{ list.personality }}</td>
+      <td>@{{ list.bd }}</td>
     </tr>
-    @endforeach
   </table>
+  <infinite-loading @infinite="search">
+    <div slot="no-more"></div>
+    <div slot="no-results"></div>
+  </infinite-loading>
   <div class="media-card">
     <div class="media-card-title">島民說明</div>
     <ul class="media-list">
@@ -89,4 +84,91 @@
     </ul>
   </div>
 </div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      lists: [],
+      page: 1,
+      race: [],
+      personality: [],
+      bd: [],
+      searchData: {
+        race: [],
+        personality: [],
+        bd: [],
+      }
+    },
+    mounted() {
+      this.getAllType()
+    },
+    methods: {
+      getAllType() {
+        axios.get('/animals/getAllType', {
+         }).then((response) => {
+           this.race = response.data.race
+           this.personality = response.data.personality
+           this.bd = response.data.bd
+         })
+      },
+      search($state) {
+        axios.post('/animals/search', {
+           page: this.page,
+           race: this.searchData.race,
+           personality: this.searchData.personality,
+           bd: this.searchData.bd,
+         }).then((response) => {
+           if (response.data.length) {
+             this.page += 1;
+             this.lists.push(...response.data);
+             $state.loaded();
+           } else {
+             $state.complete();
+           }
+         })
+      },
+      clearAll() {
+        this.searchData = {
+          race: [],
+          personality: [],
+          bd: [],
+        }
+      },
+      addPersonality(personality) {
+        const key = this.searchData.personality.indexOf(personality)
+
+        if (key == '-1') {
+          //push
+          this.searchData.personality.push(personality)
+        } else {
+          //add
+          this.searchData.personality.splice(key, 1);
+        }
+      },
+      addRace(race) {
+        const key = this.searchData.race.indexOf(race)
+
+        if (key == '-1') {
+          //push
+          this.searchData.race.push(race)
+        } else {
+          //add
+          this.searchData.race.splice(key, 1);
+        }
+      },
+      addBd(bd) {
+        const key = this.searchData.bd.indexOf(bd)
+
+        if (key == '-1') {
+          //push
+          this.searchData.bd.push(bd)
+        } else {
+          //add
+          this.searchData.bd.splice(key, 1);
+        }
+      },
+    }
+  })
+</script>
 @endsection
