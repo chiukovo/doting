@@ -284,7 +284,7 @@ class AnimalCrossingController extends Controller
         $text .= '範例 查名稱：找貓跳台、找咖啡杯' . "\n";
         $text .= '範例 查名稱：找熱狗、找黃金' . "\n";
         $text .= "\n";
-        $text .= '5.打抽試試運氣' . "\n";
+        $text .= '6.打抽試試運氣' . "\n";
         $text .= '範例 抽' . "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= 'https://forms.gle/Q7StMmonyGdL4rCFA';
