@@ -97,7 +97,6 @@ class AnimalCrossingController extends Controller
                    $message = new TextMessageBuilder($textExample);
 
                    $this->doSendMessage($replyToken, $message);
-                   $this->isSend = true;
                 }
 
                 if ($this->isSend) {
@@ -193,6 +192,7 @@ class AnimalCrossingController extends Controller
     public function doSendMessage($replyToken, $messageObj)
     {
         $response = $this->lineBot->replyMessage($replyToken, $messageObj);
+        $this->isSend = true;
 
         //error
         if (!$response->isSucceeded()) {
