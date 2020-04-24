@@ -30,7 +30,7 @@ class AnimalServices
         $card = DB::table('animal_card')
             ->inRandomOrder()
             ->first();
-dd($card->name);
+
         $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($card->name) . '.png';
         $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
 
