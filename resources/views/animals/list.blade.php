@@ -60,7 +60,7 @@
       <td>@{{ list.bd }}</td>
     </tr>
   </table>
-  <infinite-loading @infinite="search">
+  <infinite-loading :identifier="infiniteId" @infinite="search">
     <div slot="no-more"></div>
     <div slot="no-results"></div>
   </infinite-loading>
@@ -91,6 +91,7 @@
     data: {
       lists: [],
       page: 1,
+      infiniteId: +new Date(),
       race: [],
       personality: [],
       bd: [],
@@ -134,6 +135,8 @@
           personality: [],
           bd: [],
         }
+
+        this.searchDefault()
       },
       addPersonality(personality) {
         const key = this.searchData.personality.indexOf(personality)
@@ -145,6 +148,8 @@
           //add
           this.searchData.personality.splice(key, 1);
         }
+
+        this.searchDefault()
       },
       addRace(race) {
         const key = this.searchData.race.indexOf(race)
@@ -156,6 +161,8 @@
           //add
           this.searchData.race.splice(key, 1);
         }
+
+        this.searchDefault()
       },
       addBd(bd) {
         const key = this.searchData.bd.indexOf(bd)
@@ -167,7 +174,14 @@
           //add
           this.searchData.bd.splice(key, 1);
         }
+
+        this.searchDefault()
       },
+      searchDefault() {
+        this.page = 1;
+        this.lists = [];
+        this.infiniteId += 1;
+      }
     }
   })
 </script>

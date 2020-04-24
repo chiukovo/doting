@@ -16,14 +16,30 @@ class AnimalWebCrossingController extends Controller
 
     public function getAnimalSearch(Request $request)
     {
-        $race = $request->input('race', '');
-        $personality = $request->input('personality', '');
-        $bd = $request->input('bd', '');
+        $race = $request->input('race', []);
+        $personality = $request->input('personality', []);
+        $bd = $request->input('bd', []);
 
-        $lists = DB::table('animal')
-            ->select()
+        $lists = DB::table('animal');
+
+        if (!empty($race) && is_array($race)) {
+            $lists->whereIn('race', $race);
+        }
+
+        if (!empty($personality) && is_array($personality)) {
+            foreach ($personality as $data) {
+                $lists->where('personality', 'like', '%' . $data . '%');
+            }
+        }
+
+        if (!empty($bd) && is_array($bd)) {
+            $lists->where('bd_m', $bd);
+        }
+
+        $lists = $lists->select()
             ->paginate(30)
             ->toArray();
+
 
         return $lists['data'];
     }

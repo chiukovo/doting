@@ -334,6 +334,11 @@ class AnimalCrossingController extends Controller
             return $returnText;
         }
 
+        //抽卡
+        if ($text == '抽') {
+            return AnimalServices::getRandomCard();
+        }
+
         return $returnText;
     }
 

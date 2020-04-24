@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/search', 'LineBotController@search');
 //Route::get('/getApi', 'LineBotController@getApi');
 
+//main
 Route::post('/message', 'AnimalCrossingController@message');
 
 //web
@@ -23,6 +24,8 @@ Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
+//test
+//Route::get('/test', 'AnimalCrossingController@index');
 
 //爬蟲
 /*Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
@@ -33,4 +36,5 @@ Route::get('/getDiy', 'ApiController@getDiy');
 Route::get('/apiItems', 'ApiController@getItems');
 Route::get('/getClothes', 'ApiController@getClothes');
 Route::get('/itemsToZh', 'ApiController@itemsToZh');
-Route::get('/getAnimalHome', 'ApiController@getAnimalHome');*/
+Route::get('/getAnimalHome', 'ApiController@getAnimalHome');
+Route::get('/getAnimalCard', 'ApiController@getAnimalCard');*/

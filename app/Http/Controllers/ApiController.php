@@ -10,6 +10,68 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getAnimalCard()
+    {
+        $urls = [
+            'https://wiki.biligame.com/dongsen/%E7%AC%AC%E4%B8%80%E5%BC%B9',
+            'https://wiki.biligame.com/dongsen/%E7%AC%AC%E4%BA%8C%E5%BC%B9',
+            'https://wiki.biligame.com/dongsen/%E7%AC%AC%E4%B8%89%E5%BC%B9',
+            'https://wiki.biligame.com/dongsen/%E7%AC%AC%E5%9B%9B%E5%BC%B9',
+        ];
+
+        $dbData = DB::table('animal_card')->get()->toArray();
+
+        foreach ($urls as $url) {
+            $ql = QueryList::get($url);
+            $result = $ql->rules([
+                'name' => ['img', 'alt'],
+                'img' => ['img', 'srcset'],
+            ])
+            ->range('.gallery li')
+            ->queryData();
+
+            foreach ($result as $data) {
+                $name = str_replace('.png', '', $data['name']);
+
+                $isset = false;
+
+                if ($data['img'] == '' && $data['name'] == '') {
+                    continue;
+                }
+
+                //檢查是否資料庫存在
+                foreach ($dbData as $source) {
+                    if ($source->name == $name) {
+                        $isset = true;
+                    }
+                }
+
+                $imgExplode = explode(',', $data['img']);
+                $img = trim(substr($imgExplode[1], 0, -2));
+
+                //save img
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                $fileIsset = is_file(public_path('animal/card/' .  $name . '.png'));
+
+                if (!$fileIsset) {
+                    $content = file_get_contents($img);
+                    Storage::disk('animalCard')->put($name . '.png', $content);
+
+                    //insert
+                    DB::table('animal_card')->insert([
+                        'name' => $name,
+                    ]);
+
+                    echo 'insert: ' . $name . '<br>';
+                }
+            }
+        }
+
+        echo 'done';
+    }
+
     public function getAnimalHome()
     {
         $urls = AnimalServices::getHomeImgUrls();

@@ -50,6 +50,10 @@ return [
             'driver' => 'local',
             'root' => public_path('other'),
         ],
+        'animalCard' => [
+            'driver' => 'local',
+            'root' => public_path('animal/card'),
+        ],
         'animal' => [
             'driver' => 'local',
             'root' => public_path('animal'),

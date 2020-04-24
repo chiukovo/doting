@@ -12,6 +12,7 @@ use LINE\LINEBot\Constant\Flex\ComponentImageSize;
 use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
@@ -24,7 +25,17 @@ use DB;
 
 class AnimalServices
 {
+    public static function getRandomCard()
+    {
+        $card = DB::table('animal_card')
+            ->inRandomOrder()
+            ->first();
 
+        $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($card->name) . '.png';
+        $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
+
+        return $imgBuilder;
+    }
     public static function getAllType()
     {
         $animal = DB::table('animal')
