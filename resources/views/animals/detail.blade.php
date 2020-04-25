@@ -81,10 +81,9 @@
                 <span>{{ $detail->kk }}</span>
                 <div class="animals-info-audio">
                   <audio controls name="media">
-                    <source src="/animal/kk/{{ $detail->kk }}.ogg" type="application/ogg">
+                    <source src="/animal/kk/{{ $detail->kk }}.mp3" type="audio/mpeg">
                   </audio>
                 </div>
-                <div class="animals-info-small">目前僅限使用電腦Chrome瀏覽器試聽</div>
               </div>
             </div>
           </div>
