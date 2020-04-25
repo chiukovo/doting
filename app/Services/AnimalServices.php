@@ -125,8 +125,8 @@ class AnimalServices
             $dbAnimal = $dbAnimal['data'];
         } else {
             $dbAnimal = $dbAnimal
-                ->select()
                 ->orderBy('bd', 'asc')
+                ->get()
                 ->toArray();
         }
 
