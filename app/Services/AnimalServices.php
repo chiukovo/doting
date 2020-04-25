@@ -27,9 +27,10 @@ class AnimalServices
 {
     public static function getRandomCard()
     {
-        $card = DB::table('animal_card')
+        $card = DB::table('animal')
+            ->where('amiibo', '!=', '')
             ->inRandomOrder()
-            ->first();
+            ->first('amiibo as name');
 
         $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($card->name) . '.png';
         $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
