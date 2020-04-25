@@ -85,7 +85,7 @@ class AnimalServices
         ];
     }
 
-    public static function getDataByMessage($message)
+    public static function getDataByMessage($message, $page = '')
     {
     	$message = strtolower($message);
     	$notFound = '找不到捏...(¬_¬)';
@@ -99,6 +99,10 @@ class AnimalServices
     	        ->get()
     	        ->toArray();
 
+            if ($page != '' && $page > 1) {
+                return [];
+            }
+
     	    return $dbAnimal;
     	}
 
@@ -109,10 +113,22 @@ class AnimalServices
     	    ->orWhere('jp_name', 'like', '%' . $message . '%')
     	    ->orWhere('personality', 'like', '%' . $message . '%')
     	    ->orWhere('bd_m', $message)
-    	    ->orWhere('bd', $message)
-    	    ->orderBy('bd', 'asc')
-    	    ->get()
-    	    ->toArray();
+    	    ->orWhere('bd', $message);
+
+        if ($page != '') {
+            $dbAnimal = $dbAnimal
+                ->orderBy('bd', 'asc')
+                ->select()
+                ->paginate(30)
+                ->toArray();
+
+            $dbAnimal = $dbAnimal['data'];
+        } else {
+            $dbAnimal = $dbAnimal
+                ->select()
+                ->orderBy('bd', 'asc')
+                ->toArray();
+        }
 
     	if (empty($dbAnimal)) {
     	    return $notFound;

@@ -9,11 +9,11 @@
 <div id="app" class="media" v-cloak>
   <div class="search">
     <table class="table">
-      <tr>
+      <tr v-if="moreSearch">
         <th>查看全部</th>
         <td><button class="btn current" @click="clearAll">查看全部</button></td>
       </tr>
-      <tr>
+      <tr v-if="moreSearch">
         <th>種族</th>
         <td>
           <button class="btn" :class="searchData.race.indexOf(data.race) == '-1' ? '' : 'current'" v-for="data in race"  v-if="data.race != ''" @click="addRace(data.race)">
@@ -21,7 +21,7 @@
           </button>
         </td>
       </tr>
-      <tr>
+      <tr v-if="moreSearch">
         <th>個性</th>
         <td>
           <button class="btn" :class="searchData.personality.indexOf(data) == '-1' ? '' : 'current'" v-for="data in personality" @click="addPersonality(data)">
@@ -29,12 +29,20 @@
           </button>
         </td>
       </tr>
-      <tr>
+      <tr v-if="moreSearch">
         <th>生日</th>
         <td>
           <button class="btn" :class="searchData.bd.indexOf(key + 1) == '-1' ? '' : 'current'" v-for="(data, key) in bd" @click="addBd(key + 1)">
             @{{ data }}
           </button>
+        </td>
+      </tr>
+      <tr>
+        <th>搜尋</th>
+        <td>
+          <input type="text" v-model="searchData.text">
+          <button @click="searchDefault">搜尋</button>
+          <button @click="moreSearch = !moreSearch">進階搜尋</button>
         </td>
       </tr>
     </table>
@@ -95,10 +103,12 @@
       race: [],
       personality: [],
       bd: [],
+      moreSearch: false,
       searchData: {
         race: [],
         personality: [],
         bd: [],
+        text: '',
       }
     },
     mounted() {
@@ -119,6 +129,7 @@
            race: this.searchData.race,
            personality: this.searchData.personality,
            bd: this.searchData.bd,
+           text: this.searchData.text,
          }).then((response) => {
            if (response.data.length) {
              this.page += 1;
@@ -134,6 +145,7 @@
           race: [],
           personality: [],
           bd: [],
+          text: '',
         }
 
         this.searchDefault()

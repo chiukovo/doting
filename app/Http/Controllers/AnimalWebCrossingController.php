@@ -26,6 +26,11 @@ class AnimalWebCrossingController extends Controller
             ->where('name', $name)
             ->first();
 
+        //format
+        $detail->kk = str_replace(".", "", $detail->kk);
+        $detail->kk = str_replace(" ", "_", $detail->kk);
+        $detail->kk = $detail->kk . '_live.ogg';
+
         if (is_null($detail)) {
             return redirect('animals/list');
         }
@@ -40,6 +45,18 @@ class AnimalWebCrossingController extends Controller
         $race = $request->input('race', []);
         $personality = $request->input('personality', []);
         $bd = $request->input('bd', []);
+        $text = $request->input('text', '');
+        $page = $request->input('page', 1);
+
+        if ($text != '') {
+            $result = AnimalServices::getDataByMessage($text, $page);
+
+            if (is_array($result)) {
+                return $result;
+            }
+
+            return [];
+        }
 
         $lists = DB::table('animal');
 

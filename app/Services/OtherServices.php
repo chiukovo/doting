@@ -49,9 +49,12 @@ class OtherServices
     	        }
 
     	        if ($table != '') {
-    	            $other = DB::table($table)
-    	                ->where('m' . $number, $first)
-    	                ->orderBy('sell', 'desc')
+    	            $other = DB::table($table)->where('m' . $number, $first);
+
+                    if ($first != '全') {
+                        $other->orWhere('m' . $number, '全');
+                    }
+    	            $other = $other->orderBy('sell', 'desc')
     	                ->get()
     	                ->toArray();
     	        }
