@@ -33,7 +33,7 @@ class AnimalWebCrossingController extends Controller
         }
 
         if (!empty($bd) && is_array($bd)) {
-            $lists->where('bd_m', $bd);
+            $lists->whereIn('bd_m', $bd);
         }
 
         $lists = $lists->select()
