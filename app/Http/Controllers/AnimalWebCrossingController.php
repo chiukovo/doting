@@ -29,7 +29,7 @@ class AnimalWebCrossingController extends Controller
         //format
         $detail->kk = str_replace(".", "", $detail->kk);
         $detail->kk = str_replace(" ", "_", $detail->kk);
-        $detail->kk = $detail->kk . '_live.ogg';
+        $detail->kk = $detail->kk . '_live';
 
         if (is_null($detail)) {
             return redirect('animals/list');
