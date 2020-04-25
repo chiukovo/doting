@@ -14,6 +14,27 @@ class AnimalWebCrossingController extends Controller
         return view('animals.list');
     }
 
+    public function detail(Request $request)
+    {
+        $name = $request->input('name');
+
+        if ($name == '') {
+            return redirect('animals/list');
+        }
+
+        $detail = DB::table('animal')
+            ->where('name', $name)
+            ->first();
+
+        if (is_null($detail)) {
+            return redirect('animals/list');
+        }
+
+        return view('animals.detail', [
+            'detail' => $detail
+        ]);
+    }
+
     public function getAnimalSearch(Request $request)
     {
         $race = $request->input('race', []);

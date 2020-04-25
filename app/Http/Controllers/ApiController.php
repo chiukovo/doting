@@ -678,65 +678,109 @@ class ApiController extends Controller
         echo 'done';
     }
 
-    public function getNewImgName()
+    public function getAnimalDetail()
     {
         //DB DATA
-        $dbAnimal = DB::table('animal')->where('beautify_img', 0)->get()->toArray();
+        $dbAnimal = DB::table('animal')->where('target', '')->get()->toArray();
 
         foreach ($dbAnimal as $data) {
             $simplified = Curl::to('http://api.zhconvert.org/convert?converter=Simplified&text=' . $data->name)->asJson()->get();
-            $target = $simplified->data->text;
+            $name = $simplified->data->text;
 
-            $url = 'https://wiki.biligame.com/dongsen/' . $target;
+            $url = 'https://wiki.biligame.com/dongsen/' . $name;
             $ql = QueryList::get($url);
             $result = $ql->rules([
-                'img' => ['.box-poke-right img', 'src'],
-                'other_name' => ['.box-poke-left .box-poke .box-font:eq(5)', 'text'],
+                'target' => ['.box-poke-left .box-poke .box-font:eq(3)', 'text'],
             ])
             ->range('.box-poke-big')
             ->queryData();
 
             if (!empty($result)) {
-                $img = $result[0]['img'];
-                $otherName = $result[0]['other_name'];
+                $target = $result[0]['target'];
+                //get
+                $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $target)->asJson()->get();
+                $target = $target->data->text;
+
+                DB::table('animal')
+                    ->where('id', $data->id)
+                    ->update([
+                        'motto' => $target,
+                    ]);
+
+                echo 'update ' . $data->name . '</br>';
+            }
+        }
+
+        echo 'done';
+    }
+
+    public function getAnimalEnWeb()
+    {
+        //DB DATA
+        $dbAnimal = DB::table('animal')
+            ->whereNull('amiibo')
+            ->get()
+            ->toArray();
+
+        foreach ($dbAnimal as $data) {
+            $url = 'https://animalcrossing.fandom.com/wiki/' . $data->en_name;
+            $ql = QueryList::get($url);
+
+            $detail = $ql->rules([
+                'name' => ['.pi-item[data-source=Song] .pi-font a', 'text'],
+            ])
+            ->range('.portable-infobox')
+            ->queryData();
+
+            if (empty($detail)) {
+                continue;
+            }
+
+            $amiibo = $ql->rules([
+                'name' => ['tr:eq(0) td', 'text'],
+            ])
+            ->range('.roundytop')
+            ->queryData();
+
+            $amiiboImg = $ql->rules([
+                'name' => ['noscript img:eq(1)', 'src'],
+            ])
+            ->range('center .roundy')
+            ->queryData();
+
+            if (!empty($amiibo)) {
+                $amiiboName = $amiibo[0]['name'];
+                //分解
+                $explode = explode(" ", $amiiboName);
+                $num = str_replace("#", "", $explode[0]);
+                $imgName = $num . '_' . $explode[1];
+            }
+
+            $kk = $detail[0]['name'];
+
+            if (!empty($amiiboImg)) {
+                $imgUrl = $amiiboImg[0]['name'];
 
                 //save img
-                $headers = get_headers($img);
+                $headers = get_headers($imgUrl);
                 $code = substr($headers[0], 9, 3);
-                $imgUploadSuccess = 0;
 
                 if ($code == 200) {
-                    $imgUploadSuccess = 1;
-                    $content = file_get_contents($img);
-                    Storage::disk('animal')->put($data->name . '.png', $content);
-                    $enName = '';
-                    $jpName = '';
-
-                    //name
-                    if ($otherName != '') {
-                        $otherName = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", "", strip_tags($otherName));
-                        //英文
-                        $nameEx = explode('(英)', $otherName);
-                        $enName = $nameEx[0] ?? '';
-
-
-                        //日文
-                        if (isset($nameEx[1])) {
-                            $jpName = str_replace('(日)', '', $nameEx[1]);
-                        }
-                    }
-
-                    DB::table('animal')
-                        ->where('id', $data->id)
-                        ->update([
-                            'beautify_img' => 1,
-                            'en_name' => strtolower($enName),
-                            'jp_name' => $jpName,
-                        ]);
-
-                    echo 'update ' . $data->name . '</br>';
+                    $content = file_get_contents($imgUrl);
+                    Storage::disk('animalCard')->put($imgName . '.png', $content);
                 }
+            } else {
+                $imgName = '';
             }
+
+            DB::table('animal')
+                ->where('id', $data->id)
+                ->update([
+                    'kk' => $kk,
+                    'amiibo' => $imgName,
+                ]);
+
+            echo 'update ' . $data->name . '</br>';
         }
 
         echo 'done';

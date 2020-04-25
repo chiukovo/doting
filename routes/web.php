@@ -21,6 +21,7 @@ Route::post('/message', 'AnimalCrossingController@message');
 
 //web
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
+Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
@@ -31,7 +32,8 @@ Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 /*Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
 Route::get('/getFishApi', 'ApiController@getFishApi');
 Route::get('/getInsectApi', 'ApiController@getInsectApi');
-Route::get('/getNewImg', 'ApiController@getNewImg');
+Route::get('/getAnimalDetail', 'ApiController@getAnimalDetail');
+Route::get('/getAnimalEnWeb', 'ApiController@getAnimalEnWeb');
 Route::get('/getDiy', 'ApiController@getDiy');
 Route::get('/apiItems', 'ApiController@getItems');
 Route::get('/getClothes', 'ApiController@getClothes');
