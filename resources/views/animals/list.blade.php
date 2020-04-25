@@ -32,7 +32,7 @@
       <tr>
         <th>生日</th>
         <td>
-          <button class="btn" :class="searchData.bd.indexOf(data) == '-1' ? '' : 'current'" v-for="data in bd" @click="addBd(data)">
+          <button class="btn" :class="searchData.bd.indexOf(key + 1) == '-1' ? '' : 'current'" v-for="(data, key) in bd" @click="addBd(key + 1)">
             @{{ data }}
           </button>
         </td>
