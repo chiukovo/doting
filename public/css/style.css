@@ -1,3 +1,7 @@
+[v-cloak] {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -93,7 +97,7 @@ body {
   margin-top: 2rem;
 }
 .media-card img {
-  width: 100%;
+  max-width: 100%;
 }
 .media-card-title {
   font-size: 14px;
