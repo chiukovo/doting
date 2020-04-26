@@ -48,7 +48,6 @@
     <div slot="no-results"></div>
   </infinite-loading>
   @include('layouts.goodUrl')
-  <go-top></go-top>
 </div>
 
 <script>

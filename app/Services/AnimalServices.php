@@ -37,10 +37,16 @@ class AnimalServices
 
         return $imgBuilder;
     }
-    public static function getAllType()
+
+    public static function getAllType($type)
     {
-        $animal = DB::table('animal')
-            ->get(['race', 'personality'])
+        $animal = DB::table('animal');
+
+        if ($type == 'npc') {
+            $animal = $animal->where('info', '!=', '');
+        }
+
+        $animal = $animal->get(['race', 'personality'])
             ->toArray();
 
         //race
@@ -85,13 +91,13 @@ class AnimalServices
         ];
     }
 
-    public static function getDataByMessage($message, $page = '')
+    public static function getDataByMessage($message, $page = '', $type = '')
     {
     	$message = strtolower($message);
     	$notFound = '找不到捏...(¬_¬)';
 
     	//阿戰隊
-    	if ($message == '阿戰隊') {
+    	if ($message == '阿戰隊' && $type == '') {
     	    $name = ['阿一', '阿二', '阿三', '阿四'];
     	    $dbAnimal = DB::table('animal')
     	        ->whereIn('name', $name)
@@ -114,6 +120,10 @@ class AnimalServices
     	    ->orWhere('personality', 'like', '%' . $message . '%')
     	    ->orWhere('bd_m', $message)
     	    ->orWhere('bd', $message);
+
+        if ($type == 'npc') {
+            $dbAnimal = $dbAnimal->where('info', '!=', '');
+        }
 
         if ($page != '') {
             $dbAnimal = $dbAnimal

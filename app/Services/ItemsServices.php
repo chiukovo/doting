@@ -24,7 +24,48 @@ use DB;
 
 class ItemsServices
 {
-    public static function getDataByMessage($message)
+    public static function getAllType($type)
+    {
+        $items = DB::table('items');
+
+        //家具
+        if ($type == 'furniture') {
+            $items = $items->whereIn('type', self::getFurnitureAllType());
+        } else {
+            $items = $items->whereNotIn('type', self::getFurnitureAllType());
+        }
+
+        $items = $items->get(['type as items_type', 'buy_type', 'detail_type'])
+            ->toArray();
+
+        //race
+        $itemsType = collect($items)->unique('items_type');
+        $buyType = collect($items)->unique('buy_type');
+        $detailType = collect($items)->unique('detail_type');
+
+        return [
+            'itemsType' => $itemsType,
+            'buyType' => $buyType,
+            'detailType' => $detailType,
+        ];
+    }
+
+    public static function getFurnitureAllType()
+    {
+        return [
+            '鞋',
+            '包',
+            '飾品',
+            '頭盔',
+            '帽子',
+            '襪子',
+            '連衣裙',
+            '下裝',
+            '上裝',
+        ];
+    }
+
+    public static function getDataByMessage($message, $page = '', $type = '')
     {
     	$message = strtolower($message);
     	$notFound = '找不到捏...(¬_¬)';
@@ -34,12 +75,29 @@ class ItemsServices
         }
 
     	$dbAnimal = DB::table('items')
-    	    ->where('name', 'like', '%' . $message . '%')
-    	    ->get()
-    	    ->toArray();
+    	    ->where('name', 'like', '%' . $message . '%');
+
+        //家具
+        if ($type == 'furniture') {
+            $dbAnimal = $dbAnimal->whereIn('type', self::getFurnitureAllType());
+        } else if ($type == 'apparel') {
+            $dbAnimal = $dbAnimal->whereNotIn('type', self::getFurnitureAllType());
+        }
+
+        if ($page != '') {
+            $dbAnimal = $dbAnimal
+                ->select()
+                ->paginate(30)
+                ->toArray();
+
+            $dbAnimal = $dbAnimal['data'];
+        } else {
+            $dbAnimal = $dbAnimal->get()
+                ->toArray();
+        }
 
         //> 50
-        if (count($dbAnimal) > 50) {
+        if (count($dbAnimal) > 50 && $page == '') {
             return '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個, 請試著縮小範圍 (⋟﹏⋞)';
         }
 

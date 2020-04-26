@@ -17,9 +17,15 @@
       </div>
       <div class="media-body">
         <div class="media-tag">
+          @if($detail->race != '')
           <button class="tag">{{ $detail->race }}</button>
+          @endif
+          @if($detail->personality != '')
           <button class="tag">{{ $detail->personality }}</button>
+          @endif
+          @if($detail->bd != '')
           <button class="tag">{{ $detail->bd }}</button>
+          @endif
         </div>
         <div class="media-card">
           <div class="animals-info-list">
@@ -75,6 +81,7 @@
                 <span></span>
               </div>
             </div>
+            @if($detail->kk != '')
             <div class="animals-info-group">
               <div class="animals-info-item">
                 <label style="width: 100px;">最喜歡的歌曲</label>
@@ -86,16 +93,29 @@
                 </div>
               </div>
             </div>
+            @endif
+            @if($detail->name == 'KK')
+            <div class="animals-info-group">
+              <div class="animals-info-item">
+                <label style="width: 100px;">最喜歡的歌曲</label>
+                <span>每一首都喜歡 (￣▽￣)~*</span>
+              </div>
+            </div>
+            @endif
           </div>
         </div>
+        @if($detail->info == '')
         <div class="media-card">
           <div class="media-card-title">室內裝修</div>
           <img src="/animal/{{ $detail->name }}_home.png" alt="{{ $detail->name }}家">
         </div>
+        @endif
+        @if($detail->amiibo != '')
         <div class="media-card">
           <div class="media-card-title">Amiibo Card</div>
           <img src="/animal/card/{{ $detail->amiibo }}.png" alt="{{ $detail->name }}卡">
         </div>
+        @endif
       </div>
       <div class="media-footer">
         <ul>

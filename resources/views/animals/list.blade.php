@@ -4,7 +4,11 @@
 <div class="breadcrumbs">
   <a href="/">首頁</a>
   <span class="sep">/</span>
-  <a href="/animals/list">動物島民</a>
+  @if ($type == 'npc')
+    <a href="/npc/list">npc</a>
+  @else
+    <a href="/animals/list">動物島民</a>
+  @endif
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
@@ -16,7 +20,7 @@
       </tr>
       <tr v-if="moreSearch">
         <th>查看全部</th>
-        <td><button class="btn current" @click="clearAll">查看全部</button></td>
+        <td><button class="btn" :class="checkAllCurrent()" @click="clearAll">查看全部</button></td>
       </tr>
       <tr v-if="moreSearch">
         <th>種族</th>
@@ -48,6 +52,7 @@
             <div class="form-search">
               <input type="text" class="input" v-model="searchData.text">
               <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
+              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
             </div>
           </form>
         </td>
@@ -92,9 +97,6 @@
     </ul>
   </div>
   @include('layouts.goodUrl')
-  <go-top :max-width="0">
-    TOP3
-  </go-top>
 </div>
 
 <script>
@@ -108,6 +110,7 @@
       race: [],
       personality: [],
       bd: [],
+      type: "{{ $type }}",
       moreSearch: false,
       searchData: {
         race: [],
@@ -121,7 +124,7 @@
     },
     methods: {
       getAllType() {
-        axios.get('/animals/getAllType', {
+        axios.get('/animals/getAllType?type=' + this.type, {
          }).then((response) => {
            this.race = response.data.race
            this.personality = response.data.personality
@@ -135,6 +138,7 @@
            personality: this.searchData.personality,
            bd: this.searchData.bd,
            text: this.searchData.text,
+           type: this.type
          }).then((response) => {
            if (response.data.length) {
              this.page += 1;
@@ -198,6 +202,11 @@
         this.page = 1;
         this.lists = [];
         this.infiniteId += 1;
+      },
+      checkAllCurrent() {
+        if (this.searchData.race.length == 0 && this.searchData.personality.length == 0 && this.searchData.bd.length == 0) {
+          return 'current'
+        }
       }
     }
   })

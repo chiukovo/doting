@@ -15,6 +15,7 @@
           <td>
             <input type="text" v-model="searchData.text">
             <button native-type="submit" @click.prevent="searchDefault">搜尋</button>
+            <button class="btn" @click.prevent="searchData.text = ''">清除搜尋</button>
           </td>
         </tr>
       </table>
@@ -41,7 +42,6 @@
     <div slot="no-results"></div>
   </infinite-loading>
   @include('layouts.goodUrl')
-  <go-top></go-top>
 </div>
 
 <script>
@@ -75,6 +75,16 @@
              $state.complete();
            }
          })
+      },
+      clearAll() {
+        this.searchData = {
+          race: [],
+          personality: [],
+          bd: [],
+          text: '',
+        }
+
+        this.searchDefault()
       },
       searchDefault() {
         this.page = 1;

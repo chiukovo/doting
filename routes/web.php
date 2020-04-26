@@ -24,11 +24,24 @@ Route::get('/', function () {
   return view('index');
 });
 
-//web
+//家具服飾api
+Route::post('/items/search', 'ItemsController@getItemsSearch');
+Route::get('/items/getAllType', 'ItemsController@getAllType');
+
+//家具
+Route::get('/furniture/list', 'ItemsController@list')->name('furniture');
+
+//服飾
+Route::get('/apparel/list', 'ItemsController@list');
+
+//動物
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
+
+//npc
+Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
 
 //魚
 Route::get('/fish/list', 'FishController@list');

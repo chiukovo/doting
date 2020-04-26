@@ -11,7 +11,12 @@ class AnimalWebCrossingController extends Controller
 {
     public function list(Request $request)
     {
-        return view('animals.list');
+        $type = $request->route()->getName();
+        $type = is_null($type) ? '' : $type;
+
+        return view('animals.list', [
+            'type' => $type
+        ]);
     }
 
     public function detail(Request $request)
@@ -26,10 +31,12 @@ class AnimalWebCrossingController extends Controller
             ->where('name', $name)
             ->first();
 
-        //format
-        $detail->kk = str_replace(".", "", $detail->kk);
-        $detail->kk = str_replace(" ", "_", $detail->kk);
-        $detail->kk = $detail->kk . '_Live';
+        if ($detail->kk != '') {
+            //format
+            $detail->kk = str_replace(".", "", $detail->kk);
+            $detail->kk = str_replace(" ", "_", $detail->kk);
+            $detail->kk = $detail->kk . '_Live';
+        }
 
         if (is_null($detail)) {
             return redirect('animals/list');
@@ -47,9 +54,10 @@ class AnimalWebCrossingController extends Controller
         $bd = $request->input('bd', []);
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
+        $type = $request->input('type', '');
 
         if ($text != '') {
-            $result = AnimalServices::getDataByMessage($text, $page);
+            $result = AnimalServices::getDataByMessage($text, $page, $type);
 
             if (is_array($result)) {
                 return $result;
@@ -59,6 +67,10 @@ class AnimalWebCrossingController extends Controller
         }
 
         $lists = DB::table('animal');
+
+        if ($type == 'npc') {
+            $lists = $lists->where('info', '!=', '');
+        }
 
         if (!empty($race) && is_array($race)) {
             $lists->whereIn('race', $race);
@@ -86,8 +98,10 @@ class AnimalWebCrossingController extends Controller
         return $lists['data'];
     }
 
-    public function getAllType()
+    public function getAllType(Request $request)
     {
-        return AnimalServices::getAllType();
+        $type = $request->input('type', '');
+
+        return AnimalServices::getAllType($type);
     }
 }
