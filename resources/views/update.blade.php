@@ -6,7 +6,10 @@
   <span class="sep">/</span>
   <a href="#">更新資訊</a>
 </div>
-<div class="media">
+<div id="app" class="media">
+  <div class="media-banner">
+    <img class="w100" src="/image/info.jpg" style="border-radius: 16px;">
+  </div>
   <div class="media-card">
     <div class="media-card-title">問題回復專區</div>
     <div class="update-card">
@@ -47,6 +50,13 @@
         </div>
       </div>
     </div>
+    @include('layouts.goTop')
   </div>
 </div>
+<script>
+  Vue.use(GoTop);
+  new Vue({
+    el: '#app',
+  })
+</script>
 @endsection

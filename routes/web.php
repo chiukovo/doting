@@ -29,6 +29,11 @@ Route::get('/update/version', function () {
   return view('update');
 });
 
+//update
+Route::get('/instructions', function () {
+  return view('instructions');
+});
+
 //家具服飾api
 Route::post('/items/search', 'ItemsController@getItemsSearch');
 Route::get('/items/getAllType', 'ItemsController@getAllType');
