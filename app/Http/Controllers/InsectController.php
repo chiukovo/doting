@@ -7,37 +7,35 @@ use App\Services\OtherServices;
 use Illuminate\Http\Request;
 use Curl, Log, DB;
 
-class FishController extends Controller
+class InsectController extends Controller
 {
     public function list(Request $request)
     {
-        return view('fish.list');
+        return view('insect.list');
     }
 
-    public function getFishSearch(Request $request)
+    public function getInsectSearch(Request $request)
     {
         $result = [];
         $text = $request->input('text', '');
 
-        $fish = DB::table('fish');
+        $insect = DB::table('insect');
 
         if ($text != '') {
-           $fish->where('name', 'like', '%' . $text . '%');
+           $insect->where('name', 'like', '%' . $text . '%');
         }
 
-        $fish = $fish->select()
+        $insect = $insect->select()
             ->orderBy('sell', 'desc')
             ->paginate(30)
             ->toArray();
 
-
-        foreach ($fish['data'] as $key => $data) {
+        foreach ($insect['data'] as $key => $data) {
             $data->north = OtherServices::getMonthFormat($data, '北');
             $data->south = OtherServices::getMonthFormat($data, '南');
 
             $result[] = $data;
         }
-
 
         return $result;
     }

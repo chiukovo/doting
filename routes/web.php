@@ -34,6 +34,10 @@ Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 Route::get('/fish/list', 'FishController@list');
 Route::post('/fish/search', 'FishController@getFishSearch');
 
+//昆蟲
+Route::get('/insect/list', 'InsectController@list');
+Route::post('/insect/search', 'InsectController@getInsectSearch');
+
 //test
 //Route::get('/test', 'AnimalCrossingController@index');
 

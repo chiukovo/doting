@@ -158,7 +158,7 @@ class OtherServices
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $south = self::getFishMonth($item, '南');
+        $south = self::getMonthFormat($item, '南');
 
         $components[] = TextComponentBuilder::builder()
             ->setText('南半球月份: ' . $south)
@@ -168,7 +168,7 @@ class OtherServices
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
-        $north = self::getFishMonth($item, '北');
+        $north = self::getMonthFormat($item, '北');
 
         $components[] = TextComponentBuilder::builder()
             ->setText('北半球月份: ' . $north)
@@ -185,7 +185,7 @@ class OtherServices
             ->setContents($components);
     }
 
-    public static function getFishMonth($item, $type)
+    public static function getMonthFormat($item, $type)
     {
         $target = [];
 
