@@ -298,12 +298,13 @@ body {
 
 
 /* first */
-.first #root {
+.first .first-banner {
+  min-height: 680px;
   background: url('../image/first_bg.png') top no-repeat;
 }
 .first-logo {
   width: 80%;
-  height: 80vh;
+  height: 560px;
   margin: 0 auto;
 }
 .first-logo .logo {
@@ -311,4 +312,31 @@ body {
 }
 .first-logo img {
   max-width: 100%;
+}
+.first-list-warp {
+  position: relative;
+}
+.first-list {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 auto;
+}
+.first-list + .first-list {
+  padding-top: 10px;
+}
+.first-list li {
+  flex: 0 0 33.33%;
+}
+.first-list img {
+  max-width: 100%;
+  padding: 4px 10px;
+}
+.first-list span {
+  display: block;
+  text-align: center;
+}
+.first-list a {
+  color: #608089;
+  text-decoration: underline;
 }

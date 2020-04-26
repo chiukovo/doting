@@ -18,15 +18,31 @@
       </div>
     </header> -->
     <div class="container">
-      <div class="first-logo">
-        <div class="logo">
-          <img src="../image/logo.png" alt="動物森友會">
+      <div class="first-banner">
+        <div class="first-logo">
+          <div class="logo">
+            <img src="../image/logo.png" alt="動物森友會">
+          </div>
         </div>
+        <article>
+          <section class="first-list-warp">
+            <ul class="first-list">
+              <li>
+                <a href="animals/list">
+                  <img src="../image/icon_animal.png" alt="">
+                  <span>動物居民</span>
+                </a>
+              </li>
+              <li>
+                <a href="animals/list">
+                  <img src="../image/icon_npc.png" alt="">
+                  <span>動物NPC</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </article>
       </div>
-      <article>
-        <section>
-        </section>
-      </article>
     </div>
     <footer class="footer">copyright © doting</footer>
   </div>
