@@ -1,5 +1,5 @@
 @extends('layouts.web')
-
+@section('title', '魚圖鑑')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
