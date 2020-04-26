@@ -197,7 +197,9 @@ class AnimalCrossingController extends Controller
                 $msg = $this->getMoreText();
 
                 $message = new TextMessageBuilder($msg);
-                $returnArray[] = $message;
+                $multipleMessageBuilder = new MultiMessageBuilder();
+                $multipleMessageBuilder->add($message);
+                $returnArray[] = $multipleMessageBuilder;
             }
 
             return $returnArray;
