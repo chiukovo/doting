@@ -30,7 +30,7 @@ class DiyServices
         //> 30
         if (count($dataArray) > 30) {
             $text = '挖哩勒...搜尋結果有 ' . count($dataArray) . ' 個' . "\n";
-            $text .= '👇👇 查看搜尋結果 👇👇' . "\n";
+            $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
             $text .= 'https://' . request()->getHttpHost() . '/diy/list?text=' . urlencode($message);
 
             return $text;
