@@ -6,8 +6,10 @@
   <span class="sep">/</span>
   @if ($type == 'furniture')
     <a href="/furniture/list">服飾圖鑑</a>
-  @else
+  @elseif ($type == 'apparel')
     <a href="/apparel/list">家具圖鑑</a>
+  @else
+    <a href="/items/all/list">家具服飾圖鑑</a>
   @endif
 </div>
 <div id="app" class="media" v-cloak>

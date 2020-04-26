@@ -29,6 +29,7 @@ class AnimalCrossingController extends Controller
     public $roomId = '';
     public $displayName = '';
     public $dbType = '';
+    public $realText = '';
     public $isSend = false;
 
     public function __construct()
@@ -142,11 +143,24 @@ class AnimalCrossingController extends Controller
         }
 
         if (is_array($dataArray)) {
-            $returnArray = [];
-            $dataArray = array_chunk($dataArray, 10);
-            $dataArray = array_chunk($dataArray, 5);
+            $more = count($dataArray) > 20 ? true : false;
+            $formatData = [];
 
-            foreach ($dataArray as $data) {
+            if ($more) {
+                foreach ($dataArray as $key => $value) {
+                    if ($key <= 19) {
+                        $formatData[] = $value;
+                    }
+                }
+            } else {
+                $formatData = $dataArray;
+            }
+
+            $returnArray = [];
+            $formatData = array_chunk($formatData, 10);
+            $formatData = array_chunk($formatData, 5);
+
+            foreach ($formatData as $data) {
                 $multipleMessageBuilder = new MultiMessageBuilder();
 
                 foreach ($data as $details) {
@@ -178,6 +192,14 @@ class AnimalCrossingController extends Controller
                 $returnArray[] = $multipleMessageBuilder;
             }
 
+            if ($more) {
+                $moreString = '';
+                $msg = $this->getMoreText();
+
+                $message = new TextMessageBuilder($msg);
+                $returnArray[] = $message;
+            }
+
             return $returnArray;
 
             $this->isSend = true;
@@ -187,6 +209,34 @@ class AnimalCrossingController extends Controller
 
             return $message;
         }
+    }
+
+    public function getMoreText()
+    {
+        $type = $this->dbType;
+        $realText = $this->realText;
+
+        $text = '👇👇 查看其他搜尋結果 👇👇' . "\n";
+        $url = 'https://' . request()->getHttpHost();
+
+        switch ($type) {
+            case 'animal':
+                $url .= '/animals/list';
+                break;
+            case 'other':
+                $url .= '/museum/list';
+                break;
+            case 'items':
+                $url .= '/items/all/list';
+                break;
+            case 'diy':
+                $url .= '/items/list';
+                break;
+        }
+
+        $text .= $url . '?text=' . $realText;
+
+        return $text;
     }
 
     public function doSendMessage($replyToken, $messageObj)
@@ -372,6 +422,7 @@ class AnimalCrossingController extends Controller
             case '#':
                 if ($target != '') {
                     $this->dbType = 'animal';
+                    $this->realText = $target;
 
                     return AnimalServices::getDataByMessage($target);
                 }
@@ -379,6 +430,7 @@ class AnimalCrossingController extends Controller
             case '$':
                 if ($target != '') {
                     $this->dbType = 'other';
+                    $this->realText = $target;
 
                     return OtherServices::getDataByMessage($target);
                 }
@@ -387,6 +439,7 @@ class AnimalCrossingController extends Controller
             case '做':
                 if ($target != '') {
                     $this->dbType = 'diy';
+                    $this->realText = $target;
 
                     return DiyServices::getDataByMessage($target);
                 }
@@ -395,6 +448,7 @@ class AnimalCrossingController extends Controller
             case '找':
                 if ($target != '') {
                     $this->dbType = 'items';
+                    $this->realText = $target;
 
                     return ItemsServices::getDataByMessage($target);
                 }

@@ -24,7 +24,7 @@ use DB;
 
 class OtherServices
 {
-    public static function getDataByMessage($message)
+    public static function getDataByMessage($message, $page = '')
     {
     	$other = [];
     	$notFound = '找不到捏...(¬_¬)';
@@ -40,6 +40,10 @@ class OtherServices
     	    //type
     	    $type = mb_substr($message, -1, 1);
     	    $table = '';
+
+            if ($page != '' && $page > 1) {
+                return [];
+            }
 
     	    if (in_array($number, $dateRange)) {
     	        if ($type == '魚') {
@@ -66,18 +70,40 @@ class OtherServices
     	}
 
     	//找蟲
-        $insect = DB::table('insect')
-    	    ->where('name', 'like', '%' . $message . '%')
-    	    ->orderBy('sell', 'desc')
-    	    ->get()
-    	    ->toArray();
+        $insect = DB::table('insect')->where('name', 'like', '%' . $message . '%');
 
-    	//找魚
-        $fish = DB::table('fish')
-    	    ->where('name', 'like', '%' . $message . '%')
-    	    ->orderBy('sell', 'desc')
-    	    ->get()
-    	    ->toArray();
+        if ($page != '') {
+            $insect = $insect
+                ->orderBy('sell', 'desc')
+                ->select()
+                ->paginate(30)
+                ->toArray();
+
+            $insect = $insect['data'];
+        } else {
+            $insect = $insect
+                ->orderBy('sell', 'desc')
+                ->get()
+                ->toArray();
+        }
+
+        //找魚
+        $fish = DB::table('fish')->where('name', 'like', '%' . $message . '%');
+
+        if ($page != '') {
+            $fish = $fish
+                ->orderBy('sell', 'desc')
+                ->select()
+                ->paginate(30)
+                ->toArray();
+
+            $fish = $fish['data'];
+        } else {
+            $fish = $fish
+                ->orderBy('sell', 'desc')
+                ->get()
+                ->toArray();
+        }
 
         $other = array_merge($fish, $insect);
 

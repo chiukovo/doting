@@ -52,7 +52,7 @@
                 </a>
               </li>
               <li>
-                <a href="/fish/list">
+                <a href="/museum/list">
                   <img src="/image/icon_museum.png" alt="博物館">
                   <span>博物館</span>
                 </a>
