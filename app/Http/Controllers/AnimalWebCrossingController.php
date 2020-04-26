@@ -65,8 +65,12 @@ class AnimalWebCrossingController extends Controller
         }
 
         if (!empty($personality) && is_array($personality)) {
-            foreach ($personality as $data) {
+            foreach ($personality as $key => $data) {
                 $lists->where('personality', 'like', '%' . $data . '%');
+
+                if ($key != 0) {
+                    $lists->orWhere('personality', 'like', '%' . $data . '%');
+                }
             }
         }
 
