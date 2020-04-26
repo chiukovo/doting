@@ -24,8 +24,8 @@
             <img src="../image/logo.png" alt="動物森友會">
           </div>
         </div>
-        <article>
-          <section class="first-list-warp">
+        <article class="media">
+          <section class="media-card first-list-warp">
             <ul class="first-list">
               <li>
                 <a href="animals/list">
@@ -66,6 +66,17 @@
                 </a>
               </li>
             </ul>
+          </section>
+          <section class="media-card">
+            <div class="media-card-title">更新資訊</div>
+            <div class="first-update">
+              <a href="news">
+                <button class="btn w100">
+                  <div class="update-title">Version 2.4.0</div>
+                  <div class="update-data">2020/4/26</div>
+                </button>
+              </a>
+            </div>
           </section>
         </article>
       </div>

@@ -15,6 +15,9 @@ body {
   margin: 0;
 }
 
+.w100 {
+  width: 100%;
+}
 
 .header {
   /* position: fixed;
@@ -304,7 +307,7 @@ body {
 }
 .first-logo {
   width: 80%;
-  height: 560px;
+  height: 520px;
   margin: 0 auto;
 }
 .first-logo .logo {
@@ -339,4 +342,9 @@ body {
 .first-list a {
   color: #608089;
   text-decoration: underline;
+}
+
+
+.update-data {
+  color: #9fbec7;
 }
