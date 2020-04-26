@@ -20,6 +20,19 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.0.0</div>
+          <div class="data">2020/4/26</div>
+        </div>
+        <div class="content">
+          <pre>
+1. 豆丁森友會 網頁版上線拉 ｡:.ﾟヽ(*´∀`)ﾉﾟ.:｡
+2. 新增動物細節 (居家照片, 喜愛唱片)
+3. 優化搜尋
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v2.0.0</div>
           <div class="data">2020/4/20</div>
         </div>

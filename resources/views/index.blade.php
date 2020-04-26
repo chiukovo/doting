@@ -40,7 +40,7 @@
             </ul>
             <ul class="first-list">
               <li>
-                <a href="animals/list">
+                <a href="/animals/list">
                   <img src="image/icon_animal.png" alt="動物居民">
                   <span>動物居民</span>
                 </a>
