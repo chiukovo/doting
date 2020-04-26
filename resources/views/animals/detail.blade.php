@@ -16,6 +16,14 @@
         <img src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
       </div>
       <div class="media-body">
+        @if($detail->info != '')
+        <div class="media-card">
+          <div class="media-card-title">NPC說明</div>
+          <div class="media-text">
+            {{ $detail->info }}
+          </div>
+        </div>
+        @endif
         <div class="media-card">
           <div class="animals-info-list">
             <div class="animals-info-group">
