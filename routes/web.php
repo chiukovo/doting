@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 //update
-Route::get('/update', function () {
+Route::get('/update/version', function () {
   return view('update');
 });
 

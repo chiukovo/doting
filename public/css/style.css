@@ -10,11 +10,11 @@ a {
   text-decoration: none;
 }
 body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: 13px;
   background-image: url('../image/bgtrees2.png');
   margin: 0;
 }
-
 .w100 {
   width: 100%;
 }
@@ -196,6 +196,7 @@ body {
   width: 100%;
   line-height: 1.6;
   background: #fff;
+  box-shadow: 0 0 8px 3px rgba(185, 208, 213, 0.25);
   border-spacing: 0;
 }
 .table th,
@@ -253,6 +254,7 @@ body {
   border-radius: 4px;
   padding: 6px 12px;
   margin: 2px 1px;
+  cursor: pointer;
 }
 .btn.current {
   background-color: rgba(195, 220, 227, 0.65);
@@ -307,7 +309,7 @@ body {
 }
 .first-logo {
   width: 80%;
-  height: 520px;
+  height: 480px;
   margin: 0 auto;
 }
 .first-logo .logo {
@@ -326,7 +328,7 @@ body {
   margin: 0 auto;
 }
 .first-list + .first-list {
-  padding-top: 10px;
+  padding-top: 1rem;
 }
 .first-list li {
   flex: 0 0 33.33%;
@@ -341,10 +343,35 @@ body {
 }
 .first-list a {
   color: #608089;
-  text-decoration: underline;
 }
 
 
 .update-data {
   color: #9fbec7;
+}
+
+.update-card {
+  background: #fff;
+  padding: 14px;
+  border-radius: 20px;
+  box-shadow: 0 0 8px 3px rgba(185, 208, 213, 0.25);
+}
+.update-card pre {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
+.update-card .content img {
+  max-width: 100%;
+  padding: 4px 0;
+}
+.update-card .update-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #608089;
+  border-bottom: 1px solid rgba(195, 220, 227, 0.65);
+  padding-bottom: 4px;
+  margin-bottom: 10px;
 }

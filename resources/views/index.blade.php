@@ -2,10 +2,10 @@
 <html lang="en" class="first">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/css/normalize.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>豆丁森友會</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="root">
@@ -20,8 +20,28 @@
           <section class="media-card first-list-warp">
             <ul class="first-list">
               <li>
-                <a href="/animals/list">
-                  <img src="/image/icon_animal.png" alt="動物居民">
+                <a href="/instructions">
+                  <img src="image/icon_instructions.png" alt="豆丁指令">
+                  <span>豆丁指令</span>
+                </a>
+              </li>
+              <li>
+                <a href="/update/version">
+                  <img src="image/icon_update.png" alt="更新資訊">
+                  <span>更新資訊</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">
+                  <img src="image/icon_feedback.png" alt="意見回饋">
+                  <span>意見回饋</span>
+                </a>
+              </li>
+            </ul>
+            <ul class="first-list">
+              <li>
+                <a href="animals/list">
+                  <img src="image/icon_animal.png" alt="動物居民">
                   <span>動物居民</span>
                 </a>
               </li>
@@ -58,17 +78,6 @@
                 </a>
               </li>
             </ul>
-          </section>
-          <section class="media-card">
-            <div class="media-card-title">更新資訊</div>
-            <div class="first-update">
-              <a href="news">
-                <button class="btn w100">
-                  <div class="update-title">Version 2.4.0</div>
-                  <div class="update-data">2020/4/26</div>
-                </button>
-              </a>
-            </div>
           </section>
         </article>
       </div>
