@@ -245,7 +245,7 @@ class AnimalServices
 
     public static function createItemFooterBlock($item)
     {
-        $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . $item->name;
+        $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . urlencode($item->name);
         $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
             ->setAction(
