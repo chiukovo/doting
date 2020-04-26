@@ -78,10 +78,12 @@
     </tr>
     <tr v-for="list in lists">
       <td>
-        <span>@{{ list.name }}</span>
-        <div class="table-img">
-          <img :src="'/items/' + list.img_name + '.png'" :alt="list.name">
-        </div>
+        <a :href="'/items/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+          <span>@{{ list.name }}</span>
+          <div class="table-img">
+            <img :src="'/items/' + list.img_name + '.png'" :alt="list.name">
+          </div>
+        </a>
       </td>
       <td>@{{ list.source_sell }}</td>
       <td>@{{ list.sell }}</td>

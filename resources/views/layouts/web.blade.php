@@ -6,10 +6,13 @@
   <title>豆丁森友會</title>
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/lightbox.min.css">
   <script src="/js/vue.min.js"></script>
   <script src="/js/axios.min.js"></script>
   <script src="/js/vue-infinite-loading.js"></script>
   <script src="/js/vue-go-top.min.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/lightbox.min.js"></script>
 </head>
 <body>
   <div id="root">

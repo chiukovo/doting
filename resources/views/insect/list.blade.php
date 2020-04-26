@@ -43,10 +43,12 @@
     </tr>
     <tr v-for="list in lists">
       <td>
-        <span>@{{ list.name }} $ @{{ list.sell }}</span>
-        <div class="table-img">
-          <img :src="'/other/' + list.name + '.png'" :alt="list.name">
-        </div>
+        <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+          <span>@{{ list.name }} $ @{{ list.sell }}</span>
+          <div class="table-img">
+            <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+          </div>
+        </a>
       </td>
       <td>@{{ list.shadow }}</td>
       <td>@{{ list.position }}</td>
