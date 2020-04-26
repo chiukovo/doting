@@ -33,16 +33,16 @@
   <table class="media-card table">
     <tr>
       <th>名稱</th>
-      <th>陰影</th>
+      <th width="50">陰影</th>
       <th>位置</th>
-      <th>時間</th>
-      <th>南半球月份</th>
-      <th>北半球月份</th>
+      <th width="60">時間</th>
+      <th width="50">南半球月份</th>
+      <th width="50">北半球月份</th>
     </tr>
     <tr v-for="list in lists">
       <td>
         <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
-          <span>@{{ list.name }} $ @{{ list.sell }}</span>
+          <span>@{{ list.name }}<br>$@{{ list.sell }}</span>
           <div class="table-img">
             <img :src="'/other/' + list.name + '.png'" :alt="list.name">
           </div>
