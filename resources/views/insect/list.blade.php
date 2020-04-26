@@ -59,15 +59,6 @@
       lists: [],
       page: 1,
       infiniteId: +new Date(),
-      race: [],
-      personality: [],
-      bd: [],
-      searchData: {
-        race: [],
-        personality: [],
-        bd: [],
-        text: '',
-      }
     },
     mounted() {
     },

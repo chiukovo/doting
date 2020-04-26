@@ -4,7 +4,7 @@
 <div class="breadcrumbs">
   <a href="#">首頁</a>
   <span class="sep">/</span>
-  <a href="#">魚圖鑑</a>
+  <a href="#">Diy圖鑑</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
@@ -23,24 +23,17 @@
   <table class="media-card table">
     <tr>
       <th>名稱</th>
-      <th>陰影</th>
-      <th>位置</th>
-      <th>時間</th>
-      <th>南半球月份</th>
-      <th>北半球月份</th>
+      <th>類型</th>
+      <th>取得</th>
+      <th>Diy</th>
     </tr>
     <tr v-for="list in lists">
       <td>
-        <span>@{{ list.name }} $ @{{ list.sell }}</span>
-        <div class="table-img">
-          <img :src="'/other/' + list.name + '.png'" :alt="list.name">
-        </div>
+        <span>@{{ list.name }}</span>
       </td>
-      <td>@{{ list.shadow }}</td>
-      <td>@{{ list.position }}</td>
-      <td>@{{ list.time }}</td>
-      <td>@{{ list.south }}</td>
-      <td>@{{ list.north }}</td>
+      <td>@{{ list.type }}</td>
+      <td>@{{ list.get }}</td>
+      <td>@{{ list.diy }}</td>
     </tr>
   </table>
   <infinite-loading :identifier="infiniteId" @infinite="search">
@@ -59,12 +52,15 @@
       lists: [],
       page: 1,
       infiniteId: +new Date(),
+      searchData: {
+        text: '',
+      }
     },
     mounted() {
     },
     methods: {
       search($state) {
-        axios.post('/fish/search', {
+        axios.post('/diy/search', {
            page: this.page,
            race: this.searchData.race,
            personality: this.searchData.personality,

@@ -38,6 +38,10 @@ Route::post('/fish/search', 'FishController@getFishSearch');
 Route::get('/insect/list', 'InsectController@list');
 Route::post('/insect/search', 'InsectController@getInsectSearch');
 
+//Diy
+Route::get('/diy/list', 'DiyController@list');
+Route::post('/diy/search', 'DiyController@getDiySearch');
+
 //test
 //Route::get('/test', 'AnimalCrossingController@index');
 
