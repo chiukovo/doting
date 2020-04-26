@@ -160,7 +160,7 @@ class AnimalCrossingController extends Controller
             $formatData = array_chunk($formatData, 10);
             $formatData = array_chunk($formatData, 5);
 
-            foreach ($formatData as $data) {
+            foreach ($formatData as $key => $data) {
                 $multipleMessageBuilder = new MultiMessageBuilder();
 
                 foreach ($data as $details) {
@@ -192,14 +192,16 @@ class AnimalCrossingController extends Controller
                 $returnArray[] = $multipleMessageBuilder;
             }
 
-            if ($more) {
-                $moreString = '';
-                $msg = $this->getMoreText();
+            foreach ($returnArray as $key => $info) {
+                if (count($returnArray) == $key + 1) {
+                    if ($more) {
+                        $moreString = '';
+                        $msg = $this->getMoreText();
 
-                $message = new TextMessageBuilder($msg);
-                $multipleMessageBuilder = new MultiMessageBuilder();
-                $multipleMessageBuilder->add($message);
-                $returnArray[] = $multipleMessageBuilder;
+                        $message = new TextMessageBuilder($msg);
+                        $multipleMessageBuilder->add($message);
+                    }
+                }
             }
 
             return $returnArray;
