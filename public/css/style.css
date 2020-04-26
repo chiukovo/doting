@@ -4,6 +4,7 @@
 
 * {
   box-sizing: border-box;
+  outline: none;
 }
 a {
   text-decoration: none;
@@ -92,6 +93,9 @@ body {
 }
 .media-photo img {
   height: 100%;
+}
+.media-card {
+  margin-top: 1rem;
 }
 .media-card + .media-card {
   margin-top: 2rem;
@@ -212,7 +216,7 @@ body {
   text-decoration: underline;
 }
 .table-img {
-  width: 60px;
+  width: 30px;
   text-align: center;
   margin: auto;
 }
@@ -222,10 +226,6 @@ body {
   padding: 4px 0 0 0;
 }
 
-
-.search {
-  margin-bottom: 1rem;
-}
 .search td {
   text-align: left;
   padding: 2px 4px;
@@ -254,6 +254,47 @@ body {
 .btn.current {
   background-color: rgba(195, 220, 227, 0.65);
 }
+.btn-senior {
+  position: relative;
+  width: 100%;
+  background-color: rgba(195, 220, 227, 0.65);
+  border: 0;
+}
+.btn-senior::before {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 34px;
+  background: url('../image/chevron-down-solid.svg') center no-repeat;
+  background-size: 36%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: .3;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.6;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(195, 220, 227, 0.65);
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 2px 1px;
+}
+.form-search {
+  display: flex;
+}
+
+.vue-go-top {
+  width: 44px !important;
+  height: 44px !important;
+  background-color: rgba(101, 144, 155, 0.4) !important;
+  box-shadow: none !important;
+}
 
 
 /* first */
@@ -261,10 +302,12 @@ body {
   background: url('../image/first_bg.png') top no-repeat;
 }
 .first-logo {
-  height: 100vh;
+  width: 80%;
+  height: 80vh;
+  margin: 0 auto;
 }
 .first-logo .logo {
-  padding-top: 10vh;
+  padding-top: 4vh;
 }
 .first-logo img {
   max-width: 100%;

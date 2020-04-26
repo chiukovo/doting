@@ -15,7 +15,7 @@
   <div id="root">
     <header class="header">
       <div class="logo">
-        <img src="/image/logo.png" alt="動物森友會">
+        <a href="/"><img src="/image/logo.png" alt="動物森友會"></a>
       </div>
       <div class="help">
         <a href="#">問題回報</a>

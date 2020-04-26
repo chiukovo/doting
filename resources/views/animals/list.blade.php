@@ -2,13 +2,18 @@
 
 @section('content')
 <div class="breadcrumbs">
-  <a href="#">首頁</a>
+  <a href="/">首頁</a>
   <span class="sep">/</span>
-  <a href="#">動物島民</a>
+  <a href="/animals/list">動物島民</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
     <table class="table">
+      <tr>
+        <td colspan="2">
+          <button type="button" class="btn btn-senior" @click.preven="moreSearch = !moreSearch">進階搜尋</button>
+        </td>
+      </tr>
       <tr v-if="moreSearch">
         <th>查看全部</th>
         <td><button class="btn current" @click="clearAll">查看全部</button></td>
@@ -38,12 +43,12 @@
         </td>
       </tr>
       <tr>
-        <th>搜尋</th>
-        <td>
+        <td colspan="2">
           <form>
-            <input type="text" v-model="searchData.text">
-            <button native-type="submit" @click.prevent="searchDefault">搜尋</button>
-            <button type="button" @click.preven="moreSearch = !moreSearch">進階搜尋</button>
+            <div class="form-search">
+              <input type="text" class="input" v-model="searchData.text">
+              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
+            </div>
           </form>
         </td>
       </tr>
