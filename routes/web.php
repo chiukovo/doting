@@ -24,6 +24,11 @@ Route::get('/', function () {
   return view('index');
 });
 
+//update
+Route::get('/update', function () {
+  return view('update');
+});
+
 //家具服飾api
 Route::post('/items/search', 'ItemsController@getItemsSearch');
 Route::get('/items/getAllType', 'ItemsController@getAllType');
