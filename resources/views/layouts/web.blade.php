@@ -34,7 +34,6 @@
     <footer class="footer">copyright © doting</footer>
   </div>
 </body>
-<!-- Global site tag (gtag.js) - Google Analytics -->
 <script>
   new Vue({
     el: '#out',
@@ -43,6 +42,7 @@
     },
   })
 </script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136875596-3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
