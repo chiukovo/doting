@@ -11,7 +11,11 @@ class DiyController extends Controller
 {
     public function list(Request $request)
     {
-        return view('diy.list');
+        $text = $request->input('text', '');
+
+        return view('diy.list', [
+            'text' => $text,
+        ]);
     }
 
     public function getDiySearch(Request $request)

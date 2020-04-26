@@ -11,11 +11,13 @@ class ItemsController extends Controller
 {
     public function list(Request $request)
     {
+        $text = $request->input('text', '');
         $type = $request->route()->getName();
         $type = is_null($type) ? 'apparel' : $type;
 
         return view('items.list', [
-            'type' => $type
+            'type' => $type,
+            'text' => $text,
         ]);
     }
 

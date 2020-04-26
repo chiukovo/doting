@@ -71,7 +71,7 @@
       page: 1,
       infiniteId: +new Date(),
       searchData: {
-        text: '',
+        text: "{{ $text }}",
       }
     },
     mounted() {

@@ -55,7 +55,7 @@
       page: 1,
       infiniteId: +new Date(),
       searchData: {
-        text: '',
+        text: "{{ $text }}",
       }
     },
     mounted() {
@@ -64,9 +64,6 @@
       search($state) {
         axios.post('/diy/search', {
            page: this.page,
-           race: this.searchData.race,
-           personality: this.searchData.personality,
-           bd: this.searchData.bd,
            text: this.searchData.text,
          }).then((response) => {
            if (response.data.length) {

@@ -116,7 +116,7 @@
         race: [],
         personality: [],
         bd: [],
-        text: '',
+        text: "{{ $text }}",
       }
     },
     mounted() {

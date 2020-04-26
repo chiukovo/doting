@@ -11,8 +11,10 @@ class InsectController extends Controller
 {
     public function list(Request $request)
     {
+        $text = $request->input('text', '');
+
         return view('insect.list', [
-            'type', 'insect'
+            'text' => $text,
         ]);
     }
 

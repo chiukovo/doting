@@ -118,7 +118,7 @@
         itemsType: [],
         buyType: [],
         detailType: [],
-        text: '',
+        text: "{{ $text }}",
       }
     },
     mounted() {

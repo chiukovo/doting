@@ -11,7 +11,11 @@ class FishController extends Controller
 {
     public function list(Request $request)
     {
-        return view('fish.list');
+        $text = $request->input('text', '');
+
+        return view('fish.list', [
+            'text' => $text,
+        ]);
     }
 
     public function getFishSearch(Request $request)
