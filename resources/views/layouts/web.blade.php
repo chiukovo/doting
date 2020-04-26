@@ -13,6 +13,7 @@
   <script src="/js/vue-go-top.min.js"></script>
   <script src="/js/jquery-2.2.4.min.js"></script>
   <script src="/js/lightbox.min.js"></script>
+  <script data-ad-client="ca-pub-2560043137442562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
   <div id="root">
