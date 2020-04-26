@@ -66,13 +66,13 @@
                 </a>
               </li>
               <li>
-                <a href="/furniture/list">
+                <a href="/apparel/list">
                   <img src="/image/icon_furniture.png" alt="家具">
                   <span>家具</span>
                 </a>
               </li>
               <li>
-                <a href="/apparel/list">
+                <a href="/furniture/list">
                   <img src="/image/icon_clothing.png" alt="服飾">
                   <span>服飾</span>
                 </a>
