@@ -21,12 +21,27 @@
         <div class="logo">
           <a href="/"><img src="/image/logo.png" alt="動物森友會"></a>
         </div>
-        <div class="help">
-          <a href="#">問題回報</a>
+        <div class="header-right">
+          <button @click="menuShow = !menuShow" class="btn-menu">
+            <div class="menu-icon"></div>
+          </button>
         </div>
-        <button @click="menuShow = !menuShow">toggle</button>
       </header>
-      <div id="menu" class="menu" v-if="menuShow"></div>
+      <div id="menu" class="menu" v-if="menuShow">
+        <div class="menu-list">
+          <ul>
+            <li><a href="">豆丁指令</a></li>
+            <li><a href="">更新資訊</a></li>
+            <li><a href="">意見回饋</a></li>
+            <li><a href="">動物居民</a></li>
+            <li><a href="">動物NPC</a></li>
+            <li><a href="">博物館</a></li>
+            <li><a href="">DIY方程式</a></li>
+            <li><a href="">家具</a></li>
+            <li><a href="">服飾</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="container">
       @yield('content')
