@@ -27,16 +27,16 @@ class DiyServices
     {
     	$str = '';
 
-        //> 30
-        if (count($dataArray) > 30) {
-            $text = '挖哩勒...搜尋結果有 ' . count($dataArray) . ' 個' . "\n";
-            $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
-            $text .= 'https://' . request()->getHttpHost() . '/diy/list?text=' . urlencode($message);
-
-            return $text;
-        }
-
     	if (is_array($dataArray) && !empty($dataArray)) {
+            //> 30
+            if (count($dataArray) > 30) {
+                $text = '挖哩勒...搜尋結果有 ' . count($dataArray) . ' 個' . "\n";
+                $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
+                $text .= 'https://' . request()->getHttpHost() . '/diy/list?text=' . urlencode($message);
+
+                return $text;
+            }
+
     	    foreach ($dataArray as $data) {
     	        $str .= $data->name;
 
