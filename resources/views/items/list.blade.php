@@ -66,11 +66,11 @@
   <table class="media-card table">
     <tr>
       <th>名稱</th>
-      <th>價格</th>
-      <th>賣出</th>
-      <th>回收</th>
-      <th>類型</th>
-      <th>分類</th>
+      <th width="60">價格</th>
+      <th width="60">賣出</th>
+      <th width="60">回收</th>
+      <th width="60">類型</th>
+      <th width="70">分類</th>
       @if($type != 'furniture')
       <th>訂購</th>
       <th>尺寸</th>

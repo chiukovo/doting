@@ -25,8 +25,8 @@
   </div>
   <table class="media-card table">
     <tr>
-      <th>名稱</th>
-      <th>類型</th>
+      <th width="100">名稱</th>
+      <th width="60">類型</th>
       <th>取得</th>
       <th>Diy</th>
     </tr>

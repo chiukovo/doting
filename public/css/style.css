@@ -256,7 +256,8 @@ body {
 }
 .table th,
 .table td {
-  padding: 4px 2px;
+  padding: 4px 10px;
+  word-break: break-all;
 }
 .table th {
   background: rgba(195, 220, 227, 0.65);
@@ -274,8 +275,11 @@ body {
   color: #608089;
   text-decoration: underline;
 }
+.table a span {
+  word-break: break-all;
+}
 .table-img {
-  width: 30px;
+  width: 50px;
   text-align: center;
   margin: auto;
 }
@@ -286,6 +290,7 @@ body {
 }
 
 .search td {
+  word-break: break-word;
   text-align: left;
   padding: 2px 4px;
 }
@@ -429,4 +434,17 @@ body {
   border-bottom: 1px solid rgba(195, 220, 227, 0.65);
   padding-bottom: 4px;
   margin-bottom: 10px;
+}
+
+
+/* lightbox */
+.lb-data {
+  position: relative;
+}
+.lb-data .lb-number {
+  display: none !important;
+}
+.lb-close {
+  position: absolute;
+  right: 0;
 }
