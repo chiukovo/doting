@@ -234,7 +234,7 @@ class AnimalCrossingController extends Controller
                 break;
         }
 
-        $text .= $url . '?text=' . $realText;
+        $text .= $url . '?text=' . urlencode($realText);
 
         return $text;
     }

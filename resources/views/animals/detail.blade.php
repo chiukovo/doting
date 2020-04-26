@@ -16,17 +16,6 @@
         <img src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
       </div>
       <div class="media-body">
-        <div class="media-tag">
-          @if($detail->race != '')
-          <button class="tag">{{ $detail->race }}</button>
-          @endif
-          @if($detail->personality != '')
-          <button class="tag">{{ $detail->personality }}</button>
-          @endif
-          @if($detail->bd != '')
-          <button class="tag">{{ $detail->bd }}</button>
-          @endif
-        </div>
         <div class="media-card">
           <div class="animals-info-list">
             <div class="animals-info-group">

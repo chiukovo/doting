@@ -100,7 +100,7 @@ class ItemsServices
         if (count($dbAnimal) > 30 && $page == '') {
             $text = '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個' . "\n";
             $text .= '👇👇 查看搜尋結果 👇👇' . "\n";
-            $text .= 'https://' . request()->getHttpHost() . '/items/all/text=' . $message;
+            $text .= 'https://' . request()->getHttpHost() . '/items/all/text=' . urlencode($message);
         }
 
     	if (empty($dbAnimal)) {
