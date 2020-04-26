@@ -13,6 +13,7 @@ use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
@@ -152,7 +153,8 @@ class AnimalServices
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item))
-            ->setBody(self::createItemBodyBlock($item));
+            ->setBody(self::createItemBodyBlock($item))
+            ->setFooter(self::createItemFooterBlock($item));
     }
 
     public static function createItemHeroBlock($item)
@@ -242,30 +244,20 @@ class AnimalServices
 
     public static function createItemFooterBlock($item)
     {
-        $add = ButtonComponentBuilder::builder()
+        $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
             ->setAction(
-                new PostbackTemplateActionBuilder(
-                    '❤',
-                    'action=add&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
-                    $item->name . '加入最愛'
-                )
-            );
-
-        $remove = ButtonComponentBuilder::builder()
-            ->setStyle(ComponentButtonStyle::LINK)
-            ->setAction(
-                new PostbackTemplateActionBuilder(
-                    '🤍',
-                    'action=remove&table_id=' . $item->id . '&user_id=' . $this->userId . '&dispay_name=' . $this->displayName,
-                    $item->name . '移除最愛'
+                new UriTemplateActionBuilder(
+                    '查看詳情',
+                    'https://' . request()->getHttpHost() . '/animals/detail?name=' . $item->name,
+                    null
                 )
             );
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::HORIZONTAL)
             ->setSpacing(ComponentSpacing::SM)
-            ->setContents([$add, $remove]);
+            ->setContents([$link]);
     }
 
     public static function getHomeImgUrls()

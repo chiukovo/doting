@@ -97,8 +97,10 @@ class ItemsServices
         }
 
         //> 50
-        if (count($dbAnimal) > 50 && $page == '') {
-            return '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個, 請試著縮小範圍 (⋟﹏⋞)';
+        if (count($dbAnimal) > 30 && $page == '') {
+            $text = '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個' . "\n";
+            $text .= '👇👇 查看搜尋結果 👇👇' . "\n";
+            $text .= 'https://' . request()->getHttpHost() . '/items/all/text=' . $message;
         }
 
     	if (empty($dbAnimal)) {

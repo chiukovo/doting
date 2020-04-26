@@ -37,8 +37,8 @@
             <li><a href="/npc/list">動物NPC</a></li>
             <li><a href="/museum/list">博物館</a></li>
             <li><a href="/diy/list">DIY方程式</a></li>
-            <li><a href="/furniture/list">家具</a></li>
-            <li><a href="/apparel/list">服飾</a></li>
+            <li><a href="/apparel/list">家具</a></li>
+            <li><a href="/furniture/list">服飾</a></li>
           </ul>
         </div>
       </div>
