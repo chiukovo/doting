@@ -40,9 +40,11 @@
       <tr>
         <th>搜尋</th>
         <td>
-          <input type="text" v-model="searchData.text">
-          <button @click="searchDefault">搜尋</button>
-          <button @click="moreSearch = !moreSearch">進階搜尋</button>
+          <form>
+            <input type="text" v-model="searchData.text">
+            <button native-type="submit" @click.prevent="searchDefault">搜尋</button>
+            <button type="button" @click.preven="moreSearch = !moreSearch">進階搜尋</button>
+          </form>
         </td>
       </tr>
     </table>
@@ -84,16 +86,12 @@
       <li>親密度提昇至親友：會被主動對話，可獲得動物照片、可裝飾，能知道生日、星座、座右銘</li>
     </ul>
   </div>
-  <div class="media-card">
-    <div class="media-card-title">好用網址</div>
-    <ul class="media-list">
-      <li><a href="https://forum.gamer.com.tw/A.php?bsn=7287" target="_blank">巴哈姆特 動物森友會 哈啦區</a></li>
-      <li><a href="https://ac-turnip.com/" target="_blank">動物森友會大頭菜計算機</a></li>
-    </ul>
-  </div>
+  @include('layouts.goodUrl')
+  <go-top></go-top>
 </div>
 
 <script>
+  Vue.use(GoTop);
   new Vue({
     el: '#app',
     data: {

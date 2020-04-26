@@ -9,6 +9,7 @@
   <script src="/js/vue.min.js"></script>
   <script src="/js/axios.min.js"></script>
   <script src="/js/vue-infinite-loading.js"></script>
+  <script src="/js/vue-go-top.min.js"></script>
 </head>
 <body>
   <div id="root">

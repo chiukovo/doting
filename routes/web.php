@@ -19,11 +19,20 @@ use Illuminate\Support\Facades\Route;
 //main
 Route::post('/message', 'AnimalCrossingController@message');
 
+//index
+Route::get('/', function () {
+  return view('index');
+});
+
 //web
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
+
+//魚
+Route::get('/fish/list', 'FishController@list');
+Route::post('/fish/search', 'FishController@getFishSearch');
 
 //test
 //Route::get('/test', 'AnimalCrossingController@index');
