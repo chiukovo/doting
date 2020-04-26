@@ -56,6 +56,7 @@
             <div class="form-search">
               <input type="text" class="input" v-model="searchData.text">
               <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
+              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
             </div>
           </form>
         </td>

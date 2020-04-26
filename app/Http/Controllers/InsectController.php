@@ -11,7 +11,9 @@ class InsectController extends Controller
 {
     public function list(Request $request)
     {
-        return view('insect.list');
+        return view('insect.list', [
+            'type', 'insect'
+        ]);
     }
 
     public function getInsectSearch(Request $request)

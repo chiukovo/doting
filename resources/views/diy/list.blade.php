@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="breadcrumbs">
-  <a href="#">首頁</a>
+  <a href="/">首頁</a>
   <span class="sep">/</span>
   <a href="#">Diy圖鑑</a>
 </div>
@@ -13,9 +13,11 @@
         <tr>
           <th>搜尋</th>
           <td>
-            <input type="text" v-model="searchData.text">
-            <button native-type="submit" @click.prevent="searchDefault">搜尋</button>
-            <button class="btn" @click.prevent="searchData.text = ''">清除搜尋</button>
+            <div class="form-search">
+              <input type="text" class="input" v-model="searchData.text">
+              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
+              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
+            </div>
           </td>
         </tr>
       </table>
@@ -78,9 +80,6 @@
       },
       clearAll() {
         this.searchData = {
-          race: [],
-          personality: [],
-          bd: [],
           text: '',
         }
 

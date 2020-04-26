@@ -2,19 +2,31 @@
 
 @section('content')
 <div class="breadcrumbs">
-  <a href="#">首頁</a>
+  <a href="/">首頁</a>
   <span class="sep">/</span>
-  <a href="#">昆蟲圖鑑</a>
+  <a href="#">博物館</a>
+  <span class="sep">/</span>
+  <a href="/insect/list">昆蟲圖鑑</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
     <form>
       <table class="table">
         <tr>
+          <th>類型</th>
+          <td>
+            <a href="/fish/list"><button type="button" class="btn">魚</button></a>
+            <a href="/insect/list"><button type="button" class="btn current">昆蟲</button></a>
+          </td>
+        </tr>
+        <tr>
           <th>搜尋</th>
           <td>
-            <input type="text" v-model="searchData.text">
-            <button native-type="submit" @click.prevent="searchDefault">搜尋</button>
+            <div class="form-search">
+              <input type="text" class="input" v-model="searchData.text">
+              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
+              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
+            </div>
           </td>
         </tr>
       </table>
@@ -58,6 +70,9 @@
       lists: [],
       page: 1,
       infiniteId: +new Date(),
+      searchData: {
+        text: '',
+      }
     },
     mounted() {
     },
@@ -65,9 +80,6 @@
       search($state) {
         axios.post('/insect/search', {
            page: this.page,
-           race: this.searchData.race,
-           personality: this.searchData.personality,
-           bd: this.searchData.bd,
            text: this.searchData.text,
          }).then((response) => {
            if (response.data.length) {
@@ -78,6 +90,13 @@
              $state.complete();
            }
          })
+      },
+      clearAll() {
+        this.searchData = {
+          text: '',
+        }
+
+        this.searchDefault()
       },
       searchDefault() {
         this.page = 1;
