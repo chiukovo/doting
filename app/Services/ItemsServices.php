@@ -96,7 +96,7 @@ class ItemsServices
                 ->toArray();
         }
 
-        //> 50
+        //> 30
         if (count($dbAnimal) > 30 && $page == '') {
             $text = '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個' . "\n";
             $text .= '👇👇 查看搜尋結果 👇👇' . "\n";

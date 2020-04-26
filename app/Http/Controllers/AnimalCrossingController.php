@@ -129,7 +129,7 @@ class AnimalCrossingController extends Controller
 
         //Diy另外寫
         if ($this->dbType == 'diy') {
-            $diyString = DiyServices::getSendData($dataArray);
+            $diyString = DiyServices::getSendData($dataArray, $this->realText);
 
             //send
             $message = new TextMessageBuilder($diyString);

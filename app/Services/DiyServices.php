@@ -23,9 +23,18 @@ class DiyServices
     	return $dbAnimal;
     }
 
-    public static function getSendData($dataArray)
+    public static function getSendData($dataArray, $message)
     {
     	$str = '';
+
+        //> 30
+        if (count($dataArray) > 30) {
+            $text = '挖哩勒...搜尋結果有 ' . count($dataArray) . ' 個' . "\n";
+            $text .= '👇👇 查看搜尋結果 👇👇' . "\n";
+            $text .= 'https://' . request()->getHttpHost() . '/diy/list?text=' . urlencode($message);
+
+            return $text;
+        }
 
     	if (is_array($dataArray) && !empty($dataArray)) {
     	    foreach ($dataArray as $data) {
