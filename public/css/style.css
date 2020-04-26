@@ -28,11 +28,11 @@ body {
   box-shadow: 0 0 11px rgba(0, 0, 0, 0.1);
   padding: 0 1rem;
 }
-.logo {
+.header .logo {
   height: 42px;
   margin-top: 2px;
 }
-.logo img {
+.header .logo img {
   height: 100%;
 }
 .header a {
@@ -253,4 +253,19 @@ body {
 }
 .btn.current {
   background-color: rgba(195, 220, 227, 0.65);
+}
+
+
+/* first */
+.first #root {
+  background: url('../image/first_bg.png') top no-repeat;
+}
+.first-logo {
+  height: 100vh;
+}
+.first-logo .logo {
+  padding-top: 10vh;
+}
+.first-logo img {
+  max-width: 100%;
 }
