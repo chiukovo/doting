@@ -14,6 +14,7 @@ use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
@@ -244,13 +245,14 @@ class AnimalServices
 
     public static function createItemFooterBlock($item)
     {
+        $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . $item->name;
         $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
             ->setAction(
                 new UriTemplateActionBuilder(
                     '查看詳情',
-                    'https://' . request()->getHttpHost() . '/animals/detail?name=' . $item->name,
-                    null
+                    $url,
+                    new AltUriBuilder($url)
                 )
             );
 
