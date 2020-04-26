@@ -416,6 +416,9 @@ body {
   border-radius: 20px;
   box-shadow: 0 0 8px 3px rgba(185, 208, 213, 0.25);
 }
+.update-card + .update-card {
+  margin-top: 1rem;
+}
 .update-card pre {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: 14px;
