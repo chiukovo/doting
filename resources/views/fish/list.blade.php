@@ -4,7 +4,7 @@
 <div class="breadcrumbs">
   <a href="/">首頁</a>
   <span class="sep">/</span>
-  <a href="#">博物館</a>
+  <a href="/museum/list">博物館</a>
   <span class="sep">/</span>
   <a href="/fish/list">魚圖鑑</a>
 </div>

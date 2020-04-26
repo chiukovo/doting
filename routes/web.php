@@ -38,11 +38,15 @@ Route::get('/instructions', function () {
 Route::post('/items/search', 'ItemsController@getItemsSearch');
 Route::get('/items/getAllType', 'ItemsController@getAllType');
 
+
+//家具服飾all
+Route::get('/items/all/list', 'ItemsController@list')->name('all');
+
 //家具
 Route::get('/furniture/list', 'ItemsController@list')->name('furniture');
 
 //服飾
-Route::get('/apparel/list', 'ItemsController@list');
+Route::get('/apparel/list', 'ItemsController@list')->name('apparel');
 
 //動物
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
@@ -52,6 +56,10 @@ Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
 //npc
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
+
+//博物館
+Route::get('/museum/list', 'MuseumController@list');
+Route::post('/museum/search', 'MuseumController@getMuseumSearch');
 
 //魚
 Route::get('/fish/list', 'FishController@list');

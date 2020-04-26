@@ -5,8 +5,6 @@
   <a href="/">首頁</a>
   <span class="sep">/</span>
   <a href="/museum/list">博物館</a>
-  <span class="sep">/</span>
-  <a href="/insect/list">昆蟲圖鑑</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
@@ -16,7 +14,7 @@
           <th>類型</th>
           <td>
             <a href="/fish/list"><button type="button" class="btn">魚</button></a>
-            <a href="/insect/list"><button type="button" class="btn current">昆蟲</button></a>
+            <a href="/insect/list"><button type="button" class="btn">昆蟲</button></a>
           </td>
         </tr>
         <tr>
@@ -35,22 +33,22 @@
   <table class="media-card table">
     <tr>
       <th>名稱</th>
-      <!-- <th>陰影</th> -->
+      <th>陰影</th>
       <th>位置</th>
-      <th width="60">時間</th>
-      <th width="60">南半球月份</th>
-      <th width="60">北半球月份</th>
+      <th>時間</th>
+      <th>南半球月份</th>
+      <th>北半球月份</th>
     </tr>
     <tr v-for="list in lists">
       <td>
         <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
-          <span>@{{ list.name }}<br>$@{{ list.sell }}</span>
+          <span>@{{ list.name }} $ @{{ list.sell }}</span>
           <div class="table-img">
             <img :src="'/other/' + list.name + '.png'" :alt="list.name">
           </div>
         </a>
       </td>
-      <!-- <td>@ { { list.shadow } } </td> -->
+      <td>@{{ list.shadow }}</td>
       <td>@{{ list.position }}</td>
       <td>@{{ list.time }}</td>
       <td>@{{ list.south }}</td>
@@ -80,7 +78,7 @@
     },
     methods: {
       search($state) {
-        axios.post('/insect/search', {
+        axios.post('/museum/search', {
            page: this.page,
            text: this.searchData.text,
          }).then((response) => {
