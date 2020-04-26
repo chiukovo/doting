@@ -269,7 +269,6 @@ class AnimalCrossingController extends Controller
         $text .= '範例 查名稱：#茶茶丸、#Dom、#ちゃちゃまる、#曹賣' . "\n";
         $text .= '範例 查個性：#運動' . "\n";
         $text .= '範例 查種族：#小熊' . "\n";
-        $text .= '範例 查種族：#小熊' . "\n";
         $text .= '範例 查生日：#6、#1.21' . "\n";
         $text .= '範例 查戰隊：#阿戰隊' . "\n";
         $text .= "\n";
