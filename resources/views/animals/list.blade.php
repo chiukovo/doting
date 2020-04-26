@@ -87,7 +87,9 @@
     </ul>
   </div>
   @include('layouts.goodUrl')
-  <go-top></go-top>
+  <go-top :max-width="0">
+    TOP3
+  </go-top>
 </div>
 
 <script>
