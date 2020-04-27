@@ -13,7 +13,7 @@
   <div class="media-card">
     <div class="media-card-title">問題回復專區</div>
     <div class="update-card">
-      <a href="https://reurl.cc/9ER9ya">https://reurl.cc/9ER9ya</a>
+      <a href="https://reurl.cc/9ER9ya" target="_blank">https://reurl.cc/9ER9ya</a>
     </div>
   </div>
   <div class="media-card">
