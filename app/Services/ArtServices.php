@@ -61,9 +61,9 @@ class ArtServices
             
             $text = "\n";
             $text .= '哪個呢 ( ・◇・)？';
-            $text = "\n";
-            $text = "\n";
-            $text = '或看全部 >> https://' . request()->getHttpHost() . '/art/list';
+            $text .= "\n";
+            $text .= "\n";
+            $text .= '或看全部 >> https://' . request()->getHttpHost() . '/art/list';
 
             return $text;
         }
