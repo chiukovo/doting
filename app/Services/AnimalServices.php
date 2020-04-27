@@ -13,6 +13,8 @@ use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
@@ -29,15 +31,22 @@ class AnimalServices
 {
     public static function getRandomCard()
     {
-        $card = DB::table('animal')
+        $item = DB::table('animal')
             ->where('amiibo', '!=', '')
             ->inRandomOrder()
-            ->first('amiibo as name');
+            ->first();
 
-        $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($card->name) . '.png';
-        $imgBuilder = new ImageMessageBuilder($imgPath, $imgPath);
+        $multipleMessageBuilder = new MultiMessageBuilder();
 
-        return $imgBuilder;
+        $result = self::createItemBubble($item, true);
+
+        $target = new CarouselContainerBuilder($result);
+        $msg = FlexMessageBuilder::builder()
+            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+            ->setContents($target);
+        $multipleMessageBuilder->add($msg);
+
+        return $multipleMessageBuilder;
     }
 
     public static function getAllType($type)
@@ -149,18 +158,22 @@ class AnimalServices
     	return $dbAnimal;
     }
 
-    public static function createItemBubble($item)
+    public static function createItemBubble($item, $amiibo = false)
     {
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
-            ->setHero(self::createItemHeroBlock($item))
+            ->setHero(self::createItemHeroBlock($item, $amiibo))
             ->setBody(self::createItemBodyBlock($item))
             ->setFooter(self::createItemFooterBlock($item));
     }
 
-    public static function createItemHeroBlock($item)
+    public static function createItemHeroBlock($item, $amiibo)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+        if ($amiibo) {
+            $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($item->amiibo) . '.png';
+        } else {
+            $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+        }
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
