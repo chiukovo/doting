@@ -69,8 +69,6 @@
     <tr>
       <th>名稱</th>
       <th width="60">價格</th>
-      <th width="60">賣出</th>
-      <th width="60">回收</th>
       <th width="60">類型</th>
       <th width="70">分類</th>
       @if($type != 'furniture')
@@ -88,8 +86,6 @@
         </a>
       </td>
       <td>@{{ list.source_sell }}</td>
-      <td>@{{ list.sell }}</td>
-      <td>@{{ list.sample_sell }}</td>
       <td>@{{ list.type }}</td>
       <td>@{{ list.detail_type }}</td>
       @if($type != 'furniture')
