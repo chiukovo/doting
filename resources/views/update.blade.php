@@ -25,7 +25,8 @@
         </div>
         <div class="content">
           <pre>
-新增博物館 (藝術品查詢)
+1.新增博物館 (藝術品查詢)
+2.新增DIY 圖片
 範例: 查充滿母愛的雕塑
 <img src="/update/20200427-1.jpg">
 
