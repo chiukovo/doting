@@ -20,6 +20,26 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.1.0</div>
+          <div class="data">2020/4/26</div>
+        </div>
+        <div class="content">
+          <pre>
+新增博物館 (藝術品查詢)
+範例: 查充滿母愛的雕塑
+<img src="/update/20200427-1.jpg">
+
+範例: 查畫
+<img src="/update/20200427-2.jpg">
+
+點選查看詳情
+<img src="/update/20200427-3.jpg">
+
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.0.0</div>
           <div class="data">2020/4/26</div>
         </div>

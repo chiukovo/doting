@@ -28,7 +28,7 @@
           </div>
         </div>
         @if($detail->img1 != '')
-        <div class="media-card">
+        <div class="media-card art-card">
           <div class="media-card-title">圖片一</div>
           <a href="/art/{{ $detail->img1 }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
             <img src="/art/{{ $detail->img1 }}.png" alt="{{ $detail->name }}">
@@ -36,7 +36,7 @@
         </div>
         @endif
         @if($detail->img2 != '')
-        <div class="media-card">
+        <div class="media-card art-card">
           <div class="media-card-title">圖片二</div>
           <a href="/art/{{ $detail->img2 }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
             <img src="/art/{{ $detail->img2 }}.png" alt="{{ $detail->name }}">
@@ -44,7 +44,7 @@
         </div>
         @endif
         @if($detail->img3 != '')
-        <div class="media-card">
+        <div class="media-card art-card">
           <div class="media-card-title">圖片三</div>
           <a href="/art/{{ $detail->img3 }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
             <img src="/art/{{ $detail->img3 }}.png" alt="{{ $detail->name }}">

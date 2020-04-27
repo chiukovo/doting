@@ -152,9 +152,12 @@ body {
 .media-photo img {
   height: 100%;
 }
-.media-card {
+.art-card {
   margin-top: 1rem;
   text-align: center;
+}
+.media-card {
+  margin-top: 1rem;
 }
 .media-card + .media-card {
   margin-top: 2rem;
