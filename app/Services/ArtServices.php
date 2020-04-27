@@ -51,11 +51,13 @@ class ArtServices
         //太多就給關鍵字
         if (count($art) > 1) {
             $text = '請問是要找 (´･ω･`)？' . "\n";
+            $text = "\n";
 
             foreach ($art as $data) {
                 $text .= $data->name . "\n";
             }
             
+            $text = "\n";
             $text .= '哪個呢 ( ・◇・)？';
 
             return $text;

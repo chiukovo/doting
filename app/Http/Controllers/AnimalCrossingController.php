@@ -356,6 +356,10 @@ class AnimalCrossingController extends Controller
         $text .= "\n";
         $text .= '6.打抽試試運氣' . "\n";
         $text .= '範例 抽' . "\n";
+        $text .= '7.【查】查詢真假畫' . "\n";
+        $text .= '範例 查充滿母愛的雕塑' . "\n";
+        $text .= '範例 查名畫' . "\n";
+        $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= 'https://www.doting.tw';
 
