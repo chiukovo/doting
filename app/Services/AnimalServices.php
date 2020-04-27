@@ -46,7 +46,7 @@ class AnimalServices
             ->setContents($target);
         $multipleMessageBuilder->add($msg);
 
-        return $multipleMessageBuilder;
+        return [$multipleMessageBuilder];
     }
 
     public static function getAllType($type)
