@@ -1,10 +1,12 @@
 @extends('layouts.web')
-@section('title', '博物館')
+@section('title', '藝術品')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
   <span class="sep">/</span>
   <a href="/museum/list">博物館</a>
+  <span class="sep">/</span>
+  <a href="/art/list">藝術品圖鑑</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
@@ -15,7 +17,7 @@
           <td>
             <a href="/fish/list"><button type="button" class="btn">魚</button></a>
             <a href="/insect/list"><button type="button" class="btn">昆蟲</button></a>
-            <a href="/art/list"><button type="button" class="btn">藝術品</button></a>
+            <a href="/art/list"><button type="button" class="btn current">藝術品</button></a>
           </td>
         </tr>
         <tr>
@@ -33,27 +35,22 @@
   </div>
   <table class="media-card table">
     <tr>
-      <th>名稱</th>
-      <th width="50">陰影</th>
-      <th>位置</th>
-      <th width="60">時間</th>
-      <th width="50">南半球月份</th>
-      <th width="50">北半球月份</th>
+      <th width="100">名稱</th>
+      <th>照片</th>
+      <th>介紹</th>
     </tr>
     <tr v-for="list in lists">
       <td>
-        <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
-          <span>@{{ list.name }}<br>$@{{ list.sell }}</span>
-          <div class="table-img">
-            <img :src="'/other/' + list.name + '.png'" :alt="list.name">
-          </div>
+        <a :href="'/art/detail?name=' + list.name">
+          <span>@{{ list.name }}</span>
         </a>
       </td>
-      <td>@{{ list.shadow }}</td>
-      <td>@{{ list.position }}</td>
-      <td>@{{ list.time }}</td>
-      <td>@{{ list.south }}</td>
-      <td>@{{ list.north }}</td>
+      <td>
+        <a :href="'/art/detail?name=' + list.name">
+          <img :src="'/art/' + list.img1 + '.png'" :alt="list.name" v-if="list.img1 != ''">
+        </a>
+      </td>
+      <td>@{{ list.info }}</td>
     </tr>
   </table>
   <infinite-loading :identifier="infiniteId" @infinite="search">
@@ -79,7 +76,7 @@
     },
     methods: {
       search($state) {
-        axios.post('/museum/search', {
+        axios.post('/art/search', {
            page: this.page,
            text: this.searchData.text,
          }).then((response) => {

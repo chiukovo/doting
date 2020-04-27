@@ -255,7 +255,6 @@ class AnimalServices
             ->setContents($components);
     }
 
-
     public static function createItemFooterBlock($item)
     {
         $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . urlencode($item->name);

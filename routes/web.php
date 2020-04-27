@@ -61,6 +61,11 @@ Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
 Route::get('/museum/list', 'MuseumController@list');
 Route::post('/museum/search', 'MuseumController@getMuseumSearch');
 
+//畫
+Route::get('/art/list', 'ArtController@list');
+Route::get('/art/detail', 'ArtController@detail');
+Route::post('/art/search', 'ArtController@getArtSearch');
+
 //魚
 Route::get('/fish/list', 'FishController@list');
 Route::post('/fish/search', 'FishController@getFishSearch');

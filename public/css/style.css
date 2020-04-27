@@ -154,6 +154,7 @@ body {
 }
 .media-card {
   margin-top: 1rem;
+  text-align: center;
 }
 .media-card + .media-card {
   margin-top: 2rem;

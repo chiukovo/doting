@@ -17,6 +17,7 @@
           <td>
             <a href="/fish/list"><button type="button" class="btn">魚</button></a>
             <a href="/insect/list"><button type="button" class="btn current">昆蟲</button></a>
+            <a href="/art/list"><button type="button" class="btn">藝術品</button></a>
           </td>
         </tr>
         <tr>
