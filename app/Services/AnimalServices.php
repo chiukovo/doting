@@ -261,6 +261,7 @@ class AnimalServices
         $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . urlencode($item->name);
         $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
+            ->setHeight('sm')
             ->setAction(
                 new UriTemplateActionBuilder(
                     '查看詳情',
