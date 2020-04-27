@@ -59,7 +59,7 @@ class ArtServices
                 $text .= $data->name . "\n";
             }
             
-            $text = "\n";
+            $text .= "\n";
             $text .= '哪個呢 ( ・◇・)？';
             $text .= "\n";
             $text .= "\n";
