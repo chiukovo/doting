@@ -10,6 +10,105 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getArtwork()
+    {
+        $ql = QueryList::get('https://wiki.biligame.com/dongsen/%E8%89%BA%E6%9C%AF%E5%93%81%E9%89%B4%E4%BC%AA');
+        $result = $ql->rules([
+            'name' => ['td:eq(0)', 'text'],
+            'img1' => ['td:eq(1) a img', 'srcset'],
+            'img2' => ['td:eq(2) a img', 'srcset'],
+            'img3' => ['td:eq(3) a img', 'srcset'],
+            'info' => ['td:eq(4)', 'text'],
+        ])
+        ->range('#mw-content-text .wikitable tr')
+        ->queryData();
+
+        $dbData = DB::table('art')->get()->toArray();
+
+        foreach ($result as $data) {
+            $isset = false;
+
+            if ($data['img1'] == '' && $data['img2'] == '' && $data['img3'] == '') {
+                continue;
+            }
+
+            //檢查是否資料庫存在
+            foreach ($dbData as $source) {
+                if ($source->cn_name == $data['name']) {
+                    $isset = true;
+                }
+            }
+
+            if ($isset) {
+                continue;
+            }
+
+            //name
+            $name = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['name'])->asJson()->get();
+            $name = $name->data->text;
+
+            //info
+            $info = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['info'])->asJson()->get();
+            $info = $info->data->text;
+            $img1 = '';
+            $img2 = '';
+            $img3 = '';
+
+            //save img1
+            if ($data['img1'] != '') {
+                $img = trim(substr($data['img1'], 0, -5));
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('art')->put($name . '1.png', $content);
+                    $img1 = $name . '1';
+                }
+            }
+
+            //save img2
+            if ($data['img2'] != '') {
+                $img = trim(substr($data['img2'], 0, -5));
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('art')->put($name . '2.png', $content);
+                    $img2 = $name . '2';
+                }
+            }
+
+            //save img1
+            if ($data['img3'] != '') {
+                $img = trim(substr($data['img3'], 0, -5));
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('art')->put($name . '3.png', $content);
+                    $img3 = $name . '3';
+                }
+            }
+
+            //insert
+            DB::table('art')->insert([
+                'name' => $name,
+                'cn_name' => $data['name'],
+                'img1' => $img1,
+                'img2' => $img2,
+                'img3' => $img3,
+                'info' => $info,
+            ]);
+
+            echo 'insert: ' . $name . '<br>';
+        }
+
+        echo 'done';
+    }
+
     public function getAnimalCard()
     {
         $urls = [
