@@ -436,6 +436,7 @@ class ApiController extends Controller
         $url = 'https://wiki.biligame.com/dongsen/DIY%E9%85%8D%E6%96%B9';
         $ql = QueryList::get($url);
         $result = $ql->rules([
+            'img' => ['td:eq(0) img', 'srcset'],
             'name' => ['td:eq(0) a', 'text'],
             'type' => ['td:eq(1)', 'text'],
             'get' => ['td:eq(2)', 'text'],
@@ -445,7 +446,10 @@ class ApiController extends Controller
         ->queryData();
 
         //DB DATA
-        $dbData = DB::table('diy')->get()->toArray();
+        $dbData = DB::table('diy')
+            ->where('img_name', '!=', '')
+            ->get()
+            ->toArray();
 
         foreach ($result as $data) {
             if ($data['name'] != '') {
@@ -465,24 +469,45 @@ class ApiController extends Controller
                     continue;
                 }
 
-                $type = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['type'])->asJson()->get();
+                //save img
+                $imgExplode = explode(',', $data['img']);
+                $img = trim(substr($imgExplode[1], 0, -2));
+
+                //save img
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('diy')->put($name . '.png', $content);
+
+                    DB::table('diy')
+                        ->where('name', $name)
+                        ->update([
+                            'img_name' => $name,
+                        ]);
+
+                    echo 'update: ' . $name . '<br>';
+                }
+
+                /*$type = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['type'])->asJson()->get();
                 $type = $type->data->text;
 
                 $get = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['get'])->asJson()->get();
                 $get = $get->data->text;
 
                 $diy = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['diy'])->asJson()->get();
-                $diy = $diy->data->text;
+                $diy = $diy->data->text;*/
 
                 //insert
-                DB::table('diy')->insert([
+                /*DB::table('diy')->insert([
                     'name' => $name,
                     'type' => $type,
                     'get' => $get,
                     'diy' => $diy,
                 ]);
 
-                echo 'insert: ' . $data['name'] . '<br>';
+                echo 'insert: ' . $data['name'] . '<br>';*/
             }
         }
     }

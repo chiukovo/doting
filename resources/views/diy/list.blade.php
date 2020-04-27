@@ -32,7 +32,12 @@
     </tr>
     <tr v-for="list in lists">
       <td>
-        <span>@{{ list.name }}</span>
+        <a :href="'/diy/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+          <span>@{{ list.name }}</span>
+          <div class="table-img">
+            <img :src="'/diy/' + list.name + '.png'" :alt="list.name">
+          </div>
+        </a>
       </td>
       <td>@{{ list.type }}</td>
       <td>@{{ list.get }}</td>

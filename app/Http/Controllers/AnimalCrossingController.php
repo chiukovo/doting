@@ -128,17 +128,6 @@ class AnimalCrossingController extends Controller
             return $dataArray;
         }
 
-        //Diy另外寫
-        if ($this->dbType == 'diy') {
-            $diyString = DiyServices::getSendData($dataArray, $this->realText);
-
-            //send
-            $message = new TextMessageBuilder($diyString);
-            $this->isSend = true;
-
-            return $message;
-        }
-
         if ($dataArray == '') {
             return '';
         }
@@ -177,6 +166,9 @@ class AnimalCrossingController extends Controller
                                 break;
                             case 'items':
                                 $result[] = ItemsServices::createItemBubble($detail);
+                                break;
+                            case 'diy':
+                                $result[] = DiyServices::createItemBubble($detail);
                                 break;
                             case 'art':
                                 //img1
@@ -251,7 +243,7 @@ class AnimalCrossingController extends Controller
                 $url .= '/items/all/list';
                 break;
             case 'diy':
-                $url .= '/items/list';
+                $url .= '/diy/list';
                 break;
         }
 

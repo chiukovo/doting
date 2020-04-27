@@ -2,6 +2,29 @@
 
 namespace App\Services;
 
+use LINE\LINEBot\Constant\Flex\ComponentButtonStyle;
+use LINE\LINEBot\Constant\Flex\ComponentFontSize;
+use LINE\LINEBot\Constant\Flex\ComponentFontWeight;
+use LINE\LINEBot\Constant\Flex\ComponentGravity;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectMode;
+use LINE\LINEBot\Constant\Flex\ComponentImageAspectRatio;
+use LINE\LINEBot\Constant\Flex\ComponentImageSize;
+use LINE\LINEBot\Constant\Flex\ComponentLayout;
+use LINE\LINEBot\Constant\Flex\ComponentMargin;
+use LINE\LINEBot\Constant\Flex\ComponentSpacing;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
+
 use DB;
 
 class DiyServices
@@ -60,5 +83,65 @@ class DiyServices
     	}
 
     	return $str;
+    }
+
+    public static function createItemBubble($item)
+    {
+        return BubbleContainerBuilder::builder()
+            ->setSize('kilo')
+            ->setHero(self::createItemHeroBlock($item))
+            ->setBody(self::createItemBodyBlock($item));
+    }
+
+    public static function createItemHeroBlock($item)
+    {
+        $imgPath = 'https://' . request()->getHttpHost() . '/diy/' . urlencode($item->name) . '.png';
+
+        return ImageComponentBuilder::builder()
+            ->setUrl($imgPath)
+            ->setSize(ComponentImageSize::XXL)
+            ->setAspectRatio('9:12')
+            ->setAspectMode(ComponentImageAspectMode::FIT);
+    }
+
+    public static function createItemBodyBlock($item)
+    {
+        $components = [];
+        $components[] = TextComponentBuilder::builder()
+            ->setText($item->name)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('類型: ' . $item->type)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('取得: ' . $item->get)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        $components[] = TextComponentBuilder::builder()
+            ->setText('diy: ' . $item->diy)
+            ->setWrap(true)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS)
+            ->setMargin(ComponentMargin::MD)
+            ->setFlex(0);
+
+        return BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($components);
     }
 }
