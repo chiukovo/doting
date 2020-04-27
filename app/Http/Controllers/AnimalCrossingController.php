@@ -18,6 +18,7 @@ use App\Services\AnimalServices;
 use App\Services\DiyServices;
 use App\Services\OtherServices;
 use App\Services\ItemsServices;
+use App\Services\ArtServices;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -176,6 +177,22 @@ class AnimalCrossingController extends Controller
                                 break;
                             case 'items':
                                 $result[] = ItemsServices::createItemBubble($detail);
+                                break;
+                            case 'art':
+                                //img1
+                                if ($detail->img1 != '') {
+                                    $result[] = ArtServices::createItemBubble($detail, $detail->img1);
+                                }
+
+                                //img2
+                                if ($detail->img2 != '') {
+                                    $result[] = ArtServices::createItemBubble($detail, $detail->img2);
+                                }
+
+                                //img1
+                                if ($detail->img3 != '') {
+                                    $result[] = ArtServices::createItemBubble($detail, $detail->img3);
+                                }
                                 break;
                         }
                     }
@@ -455,6 +472,15 @@ class AnimalCrossingController extends Controller
                     $this->realText = $target;
 
                     return ItemsServices::getDataByMessage($target);
+                }
+                break;
+
+            case '查':
+                if ($target != '') {
+                    $this->dbType = 'art';
+                    $this->realText = $target;
+
+                    return ArtServices::getDataByMessage($target);
                 }
                 break;
             default:
