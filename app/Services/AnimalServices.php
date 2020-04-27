@@ -38,7 +38,7 @@ class AnimalServices
 
         $multipleMessageBuilder = new MultiMessageBuilder();
 
-        $result = self::createItemBubble($item, true);
+        $result[] = self::createItemBubble($item, true);
 
         $target = new CarouselContainerBuilder($result);
         $msg = FlexMessageBuilder::builder()
