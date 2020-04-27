@@ -355,8 +355,8 @@ class AnimalCrossingController extends Controller
         $text .= '範例 查名稱：找熱狗、找黃金' . "\n";
         $text .= "\n";
         $text .= '6.【查】查詢真假畫' . "\n";
-        $text .= '範例 查充滿母愛的雕塑' . "\n";
-        $text .= '範例 查名畫' . "\n";
+        $text .= '範例 查名稱：查充滿母愛的雕塑' . "\n";
+        $text .= '範例 查名稱：查名畫' . "\n";
         $text .= "\n";
         $text .= '7.打抽試試運氣' . "\n";
         $text .= '範例 抽' . "\n";
