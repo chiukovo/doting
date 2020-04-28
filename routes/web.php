@@ -93,4 +93,5 @@ Route::get('/getClothes', 'ApiController@getClothes');
 Route::get('/itemsToZh', 'ApiController@itemsToZh');
 Route::get('/getAnimalHome', 'ApiController@getAnimalHome');
 Route::get('/getAnimalCard', 'ApiController@getAnimalCard');
-Route::get('/getArtwork', 'ApiController@getArtwork');*/
+Route::get('/getArtwork', 'ApiController@getArtwork');
+Route::get('/getFossil', 'ApiController@getFossil');*/

@@ -10,6 +10,63 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getFossil()
+    {
+        $ql = QueryList::get('https://wiki.biligame.com/dongsen/%E5%8C%96%E7%9F%B3%E5%9B%BE%E9%89%B4');
+        $result = $ql->rules([
+            'name' => ['td:eq(0) a', 'text'],
+            'img' => ['td:eq(0) .floatnone a img', 'srcset'],
+            'en_name' => ['td:eq(1)', 'text'],
+            'jp_name' => ['td:eq(2)', 'text'],
+            'sell' => ['td:eq(3)', 'text'],
+            'info' => ['td:eq(4)', 'text'],
+        ])
+        ->range('#CardSelectTr tr')
+        ->queryData();
+
+        foreach ($result as $data) {
+            if ($data['name'] == '') {
+                continue;
+            }
+        
+            //name
+            $name = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['name'])->asJson()->get();
+            $name = $name->data->text;
+            //info
+            $info = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['info'])->asJson()->get();
+            $info = $info->data->text;
+            $imgName = '';
+
+            //save img
+            if ($data['img'] != '' && !is_null($data['img'])) {
+                $imgExplode = explode(',', $data['img']);
+                $img = trim(substr($imgExplode[1], 0, -2));
+
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('fossil')->put($name . '.png', $content);
+                    $imgName = $name;
+                }
+            }
+
+            //insert
+            DB::table('fossil')->insert([
+                'name' => $name,
+                'cn_name' => $data['name'],
+                'en_name' => $data['en_name'],
+                'jp_name' => $data['jp_name'],
+                'sell' => $data['sell'],
+                'img_name' => $imgName,
+                'info' => $info
+            ]);
+
+            echo 'insert: ' . $name . '<br>';
+        }
+    }
+
     public function getArtwork()
     {
         $ql = QueryList::get('https://wiki.biligame.com/dongsen/%E8%89%BA%E6%9C%AF%E5%93%81%E9%89%B4%E4%BC%AA');
