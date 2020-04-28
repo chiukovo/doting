@@ -82,7 +82,7 @@ class ArtServices
 
     public static function createItemHeroBlock($item, $img)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/art/' . urlencode($img) . '.png';
+        $imgPath = env('APP_URL') . '/art/' . urlencode($img) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
@@ -122,7 +122,7 @@ class ArtServices
     
     public static function createItemFooterBlock($item)
     {
-        $url = 'https://' . request()->getHttpHost() . '/art/detail?name=' . urlencode($item->name);
+        $url = env('APP_URL') . '/art/detail?name=' . urlencode($item->name);
         $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
             ->setHeight('sm')

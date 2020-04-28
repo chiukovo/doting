@@ -138,7 +138,7 @@ class OtherServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/other/' . urlencode($item->name) . '.png';
+        $imgPath = env('APP_URL') . '/other/' . urlencode($item->name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

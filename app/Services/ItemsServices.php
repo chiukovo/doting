@@ -100,7 +100,7 @@ class ItemsServices
         if (count($dbAnimal) > 30 && $page == '') {
             $text = '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個' . "\n";
             $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
-            $text .= 'https://' . request()->getHttpHost() . '/items/all/text=' . urlencode($message);
+            $text .= env('APP_URL') . '/items/all/text=' . urlencode($message);
         }
 
     	if (empty($dbAnimal)) {
@@ -120,7 +120,7 @@ class ItemsServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/items/' . urlencode($item->img_name) . '.png';
+        $imgPath = env('APP_URL') . '/items/' . urlencode($item->img_name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

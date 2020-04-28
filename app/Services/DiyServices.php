@@ -55,7 +55,7 @@ class DiyServices
             if (count($dataArray) > 30) {
                 $text = '挖哩勒...搜尋結果有 ' . count($dataArray) . ' 個' . "\n";
                 $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
-                $text .= 'https://' . request()->getHttpHost() . '/diy/list?text=' . urlencode($message);
+                $text .= env('APP_URL') . '/diy/list?text=' . urlencode($message);
 
                 return $text;
             }
@@ -95,7 +95,7 @@ class DiyServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = 'https://' . request()->getHttpHost() . '/diy/' . urlencode($item->name) . '.png';
+        $imgPath = env('APP_URL') . '/diy/' . urlencode($item->name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

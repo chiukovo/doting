@@ -170,9 +170,9 @@ class AnimalServices
     public static function createItemHeroBlock($item, $amiibo)
     {
         if ($amiibo) {
-            $imgPath = 'https://' . request()->getHttpHost() . '/animal/card/' . urlencode($item->amiibo) . '.png';
+            $imgPath = env('APP_URL') . '/animal/card/' . urlencode($item->amiibo) . '.png';
         } else {
-            $imgPath = 'https://' . request()->getHttpHost() . '/animal/' . urlencode($item->name) . '.png';
+            $imgPath = env('APP_URL') . '/animal/' . urlencode($item->name) . '.png';
         }
 
         return ImageComponentBuilder::builder()
@@ -257,7 +257,7 @@ class AnimalServices
 
     public static function createItemFooterBlock($item)
     {
-        $url = 'https://' . request()->getHttpHost() . '/animals/detail?name=' . urlencode($item->name);
+        $url = env('APP_URL') . '/animals/detail?name=' . urlencode($item->name);
         $link = ButtonComponentBuilder::builder()
             ->setStyle(ComponentButtonStyle::LINK)
             ->setHeight('sm')
