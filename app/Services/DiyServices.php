@@ -32,7 +32,7 @@ class DiyServices
     public static function getDataByMessage($message)
     {
     	$message = strtolower($message);
-    	$notFound = '找不到捏...(¬_¬)';
+    	$notFound = '找不到捏 哇耶...(¬_¬)';
 
     	$dbAnimal = DB::table('diy')
     	    ->where('name', 'like', '%' . $message . '%')
