@@ -58,21 +58,25 @@ Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
 
 //博物館
-Route::get('/museum/list', 'MuseumController@list');
+Route::get('/museum/list', 'MuseumController@list')->name('museum');
 Route::post('/museum/search', 'MuseumController@getMuseumSearch');
 
 //畫
-Route::get('/art/list', 'ArtController@list');
+Route::get('/art/list', 'ArtController@list')->name('art');
 Route::get('/art/detail', 'ArtController@detail');
 Route::post('/art/search', 'ArtController@getArtSearch');
 
 //魚
-Route::get('/fish/list', 'FishController@list');
+Route::get('/fish/list', 'FishController@list')->name('fish');
 Route::post('/fish/search', 'FishController@getFishSearch');
 
 //昆蟲
-Route::get('/insect/list', 'InsectController@list');
+Route::get('/insect/list', 'InsectController@list')->name('insect');
 Route::post('/insect/search', 'InsectController@getInsectSearch');
+
+//化石
+Route::get('/fossil/list', 'FossilController@list')->name('fossil');
+Route::post('/fossil/search', 'FossilController@getFossilSearch');
 
 //Diy
 Route::get('/diy/list', 'DiyController@list');

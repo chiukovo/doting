@@ -1,12 +1,12 @@
 @extends('layouts.web')
-@section('title', '魚圖鑑')
+@section('title', '化石圖鑑')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
   <span class="sep">/</span>
   <a href="/museum/list">博物館</a>
   <span class="sep">/</span>
-  <a href="/fish/list">魚圖鑑</a>
+  <a href="/fossil/list">化石圖鑑</a>
 </div>
 <div id="app" class="media" v-cloak>
   <div class="search">
@@ -33,27 +33,19 @@
   </div>
   <table class="media-card table">
     <tr>
-      <th>名稱</th>
-      <th width="50">陰影</th>
-      <th>位置</th>
-      <th width="60">時間</th>
-      <th width="50">南半球月份</th>
-      <th width="50">北半球月份</th>
+      <th width="120">名稱</th>
+      <th>介紹</th>
     </tr>
     <tr v-for="list in lists">
       <td>
-        <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+        <a :href="'/fossil/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name">
           <span>@{{ list.name }}<br>$@{{ list.sell }}</span>
           <div class="table-img">
-            <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+            <img :src="'/fossil/' + list.img_name + '.png'" :alt="list.name">
           </div>
         </a>
       </td>
-      <td>@{{ list.shadow }}</td>
-      <td>@{{ list.position }}</td>
-      <td>@{{ list.time }}</td>
-      <td>@{{ list.south }}</td>
-      <td>@{{ list.north }}</td>
+      <td>@{{ list.info }}</td>
     </tr>
   </table>
   <infinite-loading :identifier="infiniteId" @infinite="search">
@@ -79,7 +71,7 @@
     },
     methods: {
       search($state) {
-        axios.post('/fish/search', {
+        axios.post('/fossil/search', {
            page: this.page,
            text: this.searchData.text,
          }).then((response) => {

@@ -20,6 +20,17 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.2.0</div>
+          <div class="data">2020/4/28</div>
+        </div>
+        <div class="content">
+          <pre>
+新增博物館 > 化石
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.1.0</div>
           <div class="data">2020/4/26</div>
         </div>

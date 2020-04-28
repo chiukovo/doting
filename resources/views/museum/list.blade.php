@@ -13,9 +13,7 @@
         <tr>
           <th>類型</th>
           <td>
-            <a href="/fish/list"><button type="button" class="btn">魚</button></a>
-            <a href="/insect/list"><button type="button" class="btn">昆蟲</button></a>
-            <a href="/art/list"><button type="button" class="btn">藝術品</button></a>
+            @include('layouts.museum-tabs')
           </td>
         </tr>
         <tr>

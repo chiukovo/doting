@@ -19,6 +19,7 @@ use App\Services\DiyServices;
 use App\Services\OtherServices;
 use App\Services\ItemsServices;
 use App\Services\ArtServices;
+use App\Services\FossilServices;
 use Illuminate\Http\Request;
 use QL\QueryList;
 use Curl, Log, Storage, DB, Url;
@@ -44,6 +45,7 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
+        //dd($this->getSendBuilder('化石 暴龍'));
     	echo 'hi';
     }
 
@@ -167,6 +169,9 @@ class AnimalCrossingController extends Controller
                             case 'items':
                                 $result[] = ItemsServices::createItemBubble($detail);
                                 break;
+                            case 'fossil':
+                                $result[] = FossilServices::createItemBubble($detail);
+                                break;
                             case 'diy':
                                 $result[] = DiyServices::createItemBubble($detail);
                                 break;
@@ -244,6 +249,9 @@ class AnimalCrossingController extends Controller
                 break;
             case 'diy':
                 $url .= '/diy/list';
+                break;
+            case 'fossil':
+                $url .= '/fossil/list';
                 break;
         }
 
@@ -346,11 +354,15 @@ class AnimalCrossingController extends Controller
         $text .= '範例 查名稱：找貓跳台、找咖啡杯' . "\n";
         $text .= '範例 查名稱：找熱狗、找黃金' . "\n";
         $text .= "\n";
-        $text .= '6.【查】查詢真假畫' . "\n";
+        $text .= '6.【查】查詢藝術品' . "\n";
         $text .= '範例 查名稱：查充滿母愛的雕塑' . "\n";
         $text .= '範例 查名稱：查名畫' . "\n";
         $text .= "\n";
-        $text .= '7.抽 amiibo卡片 (◑‿◐)' . "\n";
+        $text .= '7.【化石】查詢化石' . "\n";
+        $text .= '範例 查名稱：化石 三葉蟲' . "\n";
+        $text .= '範例 查名稱：化石 暴龍' . "\n";
+        $text .= "\n";
+        $text .= '8.抽 amiibo卡片 (◑‿◐)' . "\n";
         $text .= '範例 抽' . "\n";
         $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
@@ -435,6 +447,19 @@ class AnimalCrossingController extends Controller
 
         $type = mb_substr($text, 0, 1);
         $target = mb_substr($text, 1);
+
+        //化石
+        $checkFossil = mb_substr($text, 0, 2);
+
+        if ($checkFossil == '化石') {
+            $target = str_replace("化石", "", $text);
+            $target = trim($target);
+
+            $this->dbType = 'fossil';
+            $this->realText = $target;
+
+            return FossilServices::getDataByMessage($target);
+        }
 
         switch ($type) {
             case '#':
