@@ -25,7 +25,9 @@
         </div>
         <div class="content">
           <pre>
-新增博物館 > 化石
+新增博物館 查化石
+範例: 化石 暴龍
+<img src="/update/20200428-1.jpg">
           </pre>
         </div>
       </div>
