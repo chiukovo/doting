@@ -53,6 +53,9 @@ Route::get('/furniture/list', 'ItemsController@list')->name('furniture');
 //服飾
 Route::get('/apparel/list', 'ItemsController@list')->name('apparel');
 
+//植物
+Route::get('/plant/list', 'ItemsController@list')->name('plant');
+
 //動物
 Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
@@ -103,4 +106,5 @@ Route::get('/itemsToZh', 'ApiController@itemsToZh');
 Route::get('/getAnimalHome', 'ApiController@getAnimalHome');
 Route::get('/getAnimalCard', 'ApiController@getAnimalCard');
 Route::get('/getArtwork', 'ApiController@getArtwork');
-Route::get('/getFossil', 'ApiController@getFossil');*/
+Route::get('/getFossil', 'ApiController@getFossil');
+Route::get('/getPlant', 'ApiController@getPlant');*/

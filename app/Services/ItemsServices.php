@@ -82,6 +82,10 @@ class ItemsServices
             $dbAnimal = $dbAnimal->whereIn('type', self::getFurnitureAllType());
         } else if ($type == 'apparel') {
             $dbAnimal = $dbAnimal->whereNotIn('type', self::getFurnitureAllType());
+        } else if ($type == 'plant') {
+            $dbAnimal = $dbAnimal->where('type', '')
+                ->where('source_sell', '')
+                ->where('size', '');
         }
 
         if ($page != '') {
@@ -139,37 +143,55 @@ class ItemsServices
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('價格: $' . number_format($item->source_sell))
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->source_sell != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('價格: $' . number_format($item->source_sell))
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('賣出: $' . number_format($item->sell))
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->info != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('配方: ' . $item->info)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('回收: $' . number_format($item->sample_sell))
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->sell != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('賣出: $' . number_format($item->sell))
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('類型: ' . $item->type)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->sample_sell != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('回收: $' . number_format($item->sample_sell))
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
+
+        if ($item->type != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('類型: ' . $item->type)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         if ($item->buy_type != '') {
             $components[] = TextComponentBuilder::builder()
@@ -181,14 +203,15 @@ class ItemsServices
                 ->setFlex(0);
         }
 
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('分類: ' . $item->detail_type)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->detail_type != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('分類: ' . $item->detail_type)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         if ($item->size != '') {
             $components[] = TextComponentBuilder::builder()

@@ -47,6 +47,10 @@ class ItemsController extends Controller
             $lists = $lists->whereIn('type', ItemsServices::getFurnitureAllType());
         } else if ($type == 'apparel') {
             $lists = $lists->whereNotIn('type', ItemsServices::getFurnitureAllType());
+        } else if ($type == 'plant') {
+            $lists = $lists->whereNull('type')
+                ->whereNull('source_sell')
+                ->whereNull('size');
         }
 
         if (!empty($itemsType) && is_array($itemsType)) {

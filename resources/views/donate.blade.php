@@ -40,6 +40,7 @@
     <div class="media-card-title">贊助名單</div>
     <div class="update-card">
       <p>2019/04/29 --- Quniiii NTD.5 --- </p>
+      <p>2019/04/29 --- 安琪 NTD.77 --- </p>
     </div>
   </div>
 </div>

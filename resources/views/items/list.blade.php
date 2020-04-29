@@ -1,5 +1,5 @@
 @extends('layouts.web')
-@section('title', '服飾家具圖鑑')
+@section('title', '服飾/家具/植物圖鑑')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
@@ -8,6 +8,8 @@
     <a href="/furniture/list">服飾圖鑑</a>
   @elseif ($type == 'apparel')
     <a href="/apparel/list">家具圖鑑</a>
+  @elseif ($type == 'plant')
+    <a href="/plant/list">植物圖鑑</a>
   @else
     <a href="/items/all/list">家具服飾圖鑑</a>
   @endif
@@ -69,12 +71,15 @@
     <tr>
       <th>名稱</th>
       <th width="60">價格</th>
+      @if($type != 'plant')
       <th width="60">類型</th>
       <th width="70">分類</th>
-      @if($type != 'furniture')
+      @endif
+      @if($type != 'furniture' && $type != 'plant')
       <th>訂購</th>
       <th>尺寸</th>
       @endif
+      <th v-if="type == 'plant'">配方</th>
     </tr>
     <tr v-for="list in lists">
       <td>
@@ -85,13 +90,17 @@
           </div>
         </a>
       </td>
-      <td>@{{ list.source_sell }}</td>
-      <td>@{{ list.type }}</td>
-      <td>@{{ list.detail_type }}</td>
-      @if($type != 'furniture')
+      <td>
+        @{{ list.source_sell }}
+        <span v-if="list.source_sell == null">@{{ list.sell }}</span>
+      </td>
+      <td v-if="list.type != null">@{{ list.type }}</td>
+      <td v-if="list.detail_type != null">@{{ list.detail_type }}</td>
+      @if($type != 'furniture' && $type != 'plant')
       <td>@{{ list.buy_type }}</td>
       <td>@{{ list.size }}</td>
       @endif
+      <td v-if="type == 'plant'">@{{ list.info }}</td>
     </tr>
   </table>
   <infinite-loading :identifier="infiniteId" @infinite="search">
