@@ -22,8 +22,8 @@
             <ul class="first-list">
               <li>
                 <a href="/instructions">
-                  <img src="image/icon_instructions.png" alt="豆丁指令">
-                  <span>豆丁指令</span>
+                  <img src="image/icon_instructions.png" alt="豆丁教學">
+                  <span>豆丁教學</span>
                 </a>
               </li>
               <li>

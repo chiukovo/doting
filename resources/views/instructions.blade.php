@@ -4,7 +4,7 @@
 <div class="breadcrumbs">
   <a href="/">首頁</a>
   <span class="sep">/</span>
-  <a href="#">豆丁指令</a>
+  <a href="#">豆丁教學</a>
 </div>
 <div id="app" class="media">
   <div class="media-banner">
@@ -17,10 +17,14 @@
     </div>
   </div>
   <div class="media-card">
-    <div class="media-card-title">豆丁指令</div>
+    <div class="media-card-title">豆丁教學</div>
       <div class="update-card">
         <div class="content">
+          <b>加豆丁LINE好友 ID: <span style="color: red">@875uxytu</span></b>
+          <br>
           <pre>
+<img src="/image/doting.jpg">
+
 👇以下教您如何使用指令👇
 1.輸入【豆丁】，重新查詢教學指令
 範例 豆丁
