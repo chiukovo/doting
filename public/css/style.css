@@ -457,7 +457,13 @@ body {
 .donate .update-card p {
   margin: 0;
 }
-
+.donate .text-center {
+  text-align: center;
+  margin: 10px !important;
+}
+.donate p img {
+  width: 100px;
+}
 .donate .update-card span {
   font-size: 20px;
 }
