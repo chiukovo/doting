@@ -323,6 +323,10 @@ body {
 .btn.current {
   background-color: rgba(195, 220, 227, 0.65);
 }
+.btn-primary {
+  background-color: rgb(255, 231, 96);
+  border: 0;
+}
 .btn-senior {
   position: relative;
   width: 100%;
@@ -341,6 +345,10 @@ body {
   right: 0;
   opacity: .3;
 }
+.text-danger {
+  color: red;
+}
+
 
 .input {
   display: block;
@@ -413,7 +421,6 @@ body {
 .update-data {
   color: #9fbec7;
 }
-
 .update-card {
   background: #fff;
   padding: 14px;
@@ -442,6 +449,22 @@ body {
   padding-bottom: 4px;
   margin-bottom: 10px;
 }
+
+.donate .update-card {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.donate .update-card p {
+  margin: 0;
+}
+
+.donate .update-card span {
+  font-size: 20px;
+}
+.donate .update-card .media-list li + li {
+  margin-top: 0;
+}
+
 
 
 /* lightbox */
