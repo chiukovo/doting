@@ -19,7 +19,7 @@
         <li>遊戲資料分析整理</li>
         <li><s>無止境的修BUG</s></li>
       </ul>
-      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。 如果您對我們的網站有任何建議、或是想當許願池，歡迎 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a> 提出喔。</p>
+      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。 如果您對我們的網站有任何建議、或是想當許願池，歡迎 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a> 或 <a href="mailto:q8156697@gmail.com">與豆丁聯絡</a> </p>
     </div>
   </div>
   <div class="media-card">
