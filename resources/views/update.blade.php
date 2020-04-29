@@ -26,6 +26,12 @@
         <div class="content">
           <pre>
 不好意思 今日豆丁被攻擊導致伺服器中斷 目前已復活嚕 哇耶!
+1.新增植物圖鑑 + 植物合成配方
+範例: 找金色玫瑰
+<img src="/update/20200429-1.jpg">
+範例: 找柊樹幼苗
+<img src="/update/20200429-2.jpg">
+
           </pre>
         </div>
       </div>
