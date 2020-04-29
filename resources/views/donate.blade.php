@@ -19,17 +19,17 @@
         <li>遊戲資料分析整理</li>
         <li><s>無止境的修BUG</s></li>
       </ul>
-      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。 如果您對我們的網站有任何建議、或是想當許願池，歡迎 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a> 或 <a href="mailto:q8156697@gmail.com">與豆丁聯絡</a> </p>
+      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。 如果您對我們的網站有任何建議、或是想當許願池，歡迎 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></p>
     </div>
   </div>
   <div class="media-card">
     <div class="media-card-title">實際行動</div>
     <div class="update-card">
       <p class="text-center">
-        <img src="/image/donate.png" alt="贊助豆丁">
+        <img src="/image/donate.png?v=update" alt="贊助豆丁">
       </p>
       <p class="text-center">
-        <a href="https://p.ecpay.com.tw/4B1D3" target="_blank"><button class="btn btn-primary">歡迎贊助、打賞豆丁</button></a>
+        <a href="https://p.ecpay.com.tw/D4B83" target="_blank"><button class="btn btn-primary">歡迎贊助、打賞豆丁</button></a>
       </p>
       <p class="text-danger">如果覺得我們的資訊對您有幫助，歡迎以行動支持我們！</p>
       <p>轉跳頁面為金流服務由綠界科技ECPay 贊助功能！</p>
