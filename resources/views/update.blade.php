@@ -1,5 +1,5 @@
 @extends('layouts.web')
-
+@section('title', '豆丁更新資訊')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
