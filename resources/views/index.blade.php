@@ -10,6 +10,9 @@
 </head>
 <body>
   <div id="root">
+    <div id="donateMe">
+      <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+    </div>
     <div class="container">
       <div class="first-banner">
         <div class="first-logo">

@@ -18,6 +18,9 @@
 <body>
   <div id="root">
     <div id="out">
+      <div id="donateMe">
+        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+      </div>
       <header class="header">
         <div class="logo">
           <a href="/"><img src="/image/logo.png" alt="動物森友會"></a>
