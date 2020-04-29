@@ -1,5 +1,5 @@
 @extends('layouts.web')
-
+@section('title', '豆丁更新資訊')
 @section('content')
 <div class="breadcrumbs">
   <a href="/">首頁</a>
@@ -18,6 +18,17 @@
   </div>
   <div class="media-card">
     <div class="media-card-title">更新資訊</div>
+      <div class="update-card">
+        <div class="update-title">
+          <div class="title">更新 v3.2.0</div>
+          <div class="data">2020/4/29</div>
+        </div>
+        <div class="content">
+          <pre>
+不好意思 今日豆丁被攻擊導致伺服器中斷 目前已復活嚕 哇耶!
+          </pre>
+        </div>
+      </div>
       <div class="update-card">
         <div class="update-title">
           <div class="title">更新 v3.2.0</div>
