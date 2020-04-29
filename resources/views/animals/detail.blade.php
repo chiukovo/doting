@@ -104,13 +104,17 @@
         @if($detail->info == '')
         <div class="media-card">
           <div class="media-card-title">室內裝修</div>
-          <img src="/animal/{{ $detail->name }}_home.png" alt="{{ $detail->name }}家">
+          <a href="/animal/{{ $detail->name }}_home.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
+            <img src="/animal/{{ $detail->name }}_home.png" alt="{{ $detail->name }}家">
+          </a>
         </div>
         @endif
         @if($detail->amiibo != '')
         <div class="media-card">
           <div class="media-card-title">Amiibo Card</div>
-          <img src="/animal/card/{{ $detail->amiibo }}.png" alt="{{ $detail->name }}卡">
+          <a href="/animal/card/{{ $detail->amiibo }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
+            <img src="/animal/card/{{ $detail->amiibo }}.png" alt="{{ $detail->name }}卡">
+          </a>
         </div>
         @endif
       </div>
