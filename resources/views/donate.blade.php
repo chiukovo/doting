@@ -32,7 +32,7 @@
     <div class="media-card-title">實際行動 (๑´ㅂ`๑) </div>
     <div class="update-card">
       <p class="text-center">
-        <img src="/image/donate.png?v=update" alt="贊助豆丁">
+        <img src="/image/donate.png?v=update1" alt="贊助豆丁">
       </p>
       <p class="text-center">
         <a href="https://p.ecpay.com.tw/88B51" target="_blank"><button class="btn btn-primary">歡迎贊助、打賞豆丁</button></a>
