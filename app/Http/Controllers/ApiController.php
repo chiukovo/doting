@@ -10,6 +10,64 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getKK()
+    {
+        $animals = DB::table('animal')
+            ->whereNotNull('kk')
+            ->where('kk', '!=', '')
+            ->groupBy('kk')
+            ->get()
+            ->toArray();
+
+        $kkDb = DB::table('kk')
+            ->get()
+            ->toArray();
+
+        foreach ($animals as $animal) {
+            $kk = $animal->kk;
+            $kk = str_replace(" ", "_", $kk);
+            $isset = false;
+
+            foreach ($kkDb as $db) {
+                if ($db->name == $animal->kk) {
+                    $isset = true;
+                }
+            }
+
+            if ($isset) {
+                continue;
+            }
+
+            $url = 'https://animalcrossing.fandom.com/wiki/' . $kk;
+
+            $ql = QueryList::get($url);
+            $result = $ql->rules([
+                'img' => ['img', 'src'],
+            ])
+            ->range('.roundy td:eq(1)')
+            ->queryData();
+
+            $img = $result[0]['img'];
+            
+            $headers = get_headers($img);
+            $code = substr($headers[0], 9, 3);
+
+            if ($code == 200) {
+                $content = file_get_contents($img);
+                Storage::disk('kk')->put($kk . '.png', $content);
+            }
+
+            //insert
+            DB::table('kk')->insert([
+                'name' => $animal->kk,
+                'file_name' => $kk,
+                'img_name' => $kk,
+            ]);
+
+            echo 'insert: ' . $kk . '<br>';
+        }
+    }
+
     public function getPlant()
     {
         $ql = QueryList::get('https://wiki.biligame.com/dongsen/%E6%A4%8D%E7%89%A9%E5%9B%BE%E9%89%B4');

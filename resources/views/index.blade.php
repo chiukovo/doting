@@ -82,11 +82,25 @@
                 </a>
               </li>
             </ul>
+            <ul class="first-list">
+              <li>
+                <a href="/plant/list">
+                  <img src="/image/icon_plant.png" alt="植物圖鑑">
+                  <span>植物</span>
+                </a>
+              </li>
+              <li>
+                <a href="/kk/list">
+                  <img src="/image/icon_kk.png" alt="唱片">
+                  <span>唱片</span>
+                </a>
+              </li>
+            </ul>
           </section>
         </article>
       </div>
     </div>
-    <footer class="footer">copyright © doting</footer>
+    <footer class="footer">copyright © 豆丁森友會</footer>
   </div>
 </body>
 <!-- Global site tag (gtag.js) - Google Analytics -->

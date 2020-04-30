@@ -42,6 +42,10 @@ return [
     */
 
     'disks' => [
+        'kk' => [
+            'driver' => 'local',
+            'root' => public_path('kk'),
+        ],
         'fossil' => [
             'driver' => 'local',
             'root' => public_path('fossil'),

@@ -90,6 +90,11 @@ Route::post('/fossil/search', 'FossilController@getFossilSearch');
 Route::get('/diy/list', 'DiyController@list');
 Route::post('/diy/search', 'DiyController@getDiySearch');
 
+//kk
+Route::get('/kk/list', 'KKController@list')->name('kk');
+Route::post('/kk/search', 'KKController@getKKSearch');
+Route::get('/kk/detail', 'KKController@detail');
+
 //test
 //Route::get('/test', 'AnimalCrossingController@index');
 
@@ -107,4 +112,5 @@ Route::get('/getAnimalHome', 'ApiController@getAnimalHome');
 Route::get('/getAnimalCard', 'ApiController@getAnimalCard');
 Route::get('/getArtwork', 'ApiController@getArtwork');
 Route::get('/getFossil', 'ApiController@getFossil');
-Route::get('/getPlant', 'ApiController@getPlant');*/
+Route::get('/getPlant', 'ApiController@getPlant');
+Route::get('/getKK', 'ApiController@getKK');*/
