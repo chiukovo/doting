@@ -35,10 +35,10 @@
         <img src="/image/donate.png?v=update" alt="贊助豆丁">
       </p>
       <p class="text-center">
-        <a href="https://p.ecpay.com.tw/D4B83" target="_blank"><button class="btn btn-primary">歡迎贊助、打賞豆丁</button></a>
+        <a href="https://p.ecpay.com.tw/88B51" target="_blank"><button class="btn btn-primary">歡迎贊助、打賞豆丁</button></a>
       </p>
       <p class="text-danger">如果覺得我們的資訊對您有幫助，歡迎以行動支持我們！</p>
-      <p>轉跳頁面為金流服務由綠界科技ECPay 贊助功能！</p>
+      <p>轉跳頁面為金流服務由綠界科技ECPay 實況主贊助功能！</p>
       <p>當然，如果您只是想看看網頁瀏覽我們的廣告也是可以，完全不會影響瀏覽網站的功能， 原則上只要能力許可，我們仍會繼續維持網站的運作。</p>
     </div>
   </div>
