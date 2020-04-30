@@ -9,7 +9,7 @@
 <div class="media donate">
   <div class="media-banner"><img src="/image/info.jpg" class="w100" style="border-radius: 16px;"></div>
   <div class="media-card">
-    <div class="media-card-title">贊助豆丁</div>
+    <div class="media-card-title">贊助豆丁 ٩(^ᴗ^)۶</div>
     <div class="update-card">
       <p>本資料站資訊一切免費，僅提供給喜愛 動物森友會 的玩家參考。</p>
       <p>我們維持網站運作必須花費許多精力與資源，包括但不限於：</p>
@@ -19,11 +19,17 @@
         <li>遊戲資料分析整理</li>
         <li><s>無止境的修BUG</s></li>
       </ul>
-      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。 如果您對我們的網站有任何建議、或是想當許願池，歡迎 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></p>
+      <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。</p>
+      <p>
+        👉<a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a>
+      </p>
+      <p>
+        👉<a href="mailto:q8156697@gmail.com">聯絡豆丁</a>
+      </p>
     </div>
   </div>
   <div class="media-card">
-    <div class="media-card-title">實際行動</div>
+    <div class="media-card-title">實際行動 (๑´ㅂ`๑) </div>
     <div class="update-card">
       <p class="text-center">
         <img src="/image/donate.png?v=update" alt="贊助豆丁">
@@ -37,7 +43,7 @@
     </div>
   </div>
   <div class="media-card">
-    <div class="media-card-title">贊助名單</div>
+    <div class="media-card-title">贊助名單 ٩(●˙▿˙●)۶…⋆ฺ</div>
     <div class="update-card">
       <p>2019/04/30 --- 吳冠穎 NTD.220 --- </p>
       <p>2019/04/29 --- 安琪 NTD.77 --- </p>
