@@ -94,11 +94,13 @@
         @{{ list.source_sell }}
         <span v-if="list.source_sell == null">@{{ list.sell }}</span>
       </td>
-      <td v-if="list.type != null">@{{ list.type }}</td>
-      <td v-if="list.detail_type != null">@{{ list.detail_type }}</td>
+      @if($type != 'plant')
+      <td>@{{ list.type }}</td>
+      <td>@{{ list.detail_type }}</td>
       @if($type != 'furniture' && $type != 'plant')
       <td>@{{ list.buy_type }}</td>
       <td>@{{ list.size }}</td>
+      @endif
       @endif
       <td v-if="type == 'plant'">@{{ list.info }}</td>
     </tr>
