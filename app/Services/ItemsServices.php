@@ -74,44 +74,44 @@ class ItemsServices
             return '(*´∀`)~♥';
         }
 
-    	$dbAnimal = DB::table('items')
+        $items = DB::table('items')
     	    ->where('name', 'like', '%' . $message . '%');
 
         //家具
         if ($type == 'furniture') {
-            $dbAnimal = $dbAnimal->whereIn('type', self::getFurnitureAllType());
+            $items = $items->whereIn('type', self::getFurnitureAllType());
         } else if ($type == 'apparel') {
-            $dbAnimal = $dbAnimal->whereNotIn('type', self::getFurnitureAllType());
+            $items = $items->whereNotIn('type', self::getFurnitureAllType());
         } else if ($type == 'plant') {
-            $dbAnimal = $dbAnimal->where('type', '')
-                ->where('source_sell', '')
-                ->where('size', '');
+            $items = $items->whereNull('type')
+                ->whereNull('source_sell')
+                ->whereNull('size');
         }
 
         if ($page != '') {
-            $dbAnimal = $dbAnimal
+            $items = $items
                 ->select()
                 ->paginate(30)
                 ->toArray();
 
-            $dbAnimal = $dbAnimal['data'];
+            $items = $items['data'];
         } else {
-            $dbAnimal = $dbAnimal->get()
+            $items = $items->get()
                 ->toArray();
         }
 
         //> 30
-        if (count($dbAnimal) > 30 && $page == '') {
-            $text = '挖哩勒...搜尋結果有 ' . count($dbAnimal) . ' 個' . "\n";
+        if (count($items) > 30 && $page == '') {
+            $text = '挖哩勒...搜尋結果有 ' . count($items) . ' 個' . "\n";
             $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
             $text .= env('APP_URL') . '/items/all/text=' . urlencode($message);
         }
 
-    	if (empty($dbAnimal)) {
+        if (empty($items)) {
     	    return $notFound;
     	}
 
-    	return $dbAnimal;
+        return $items;
     }
 
     public static function createItemBubble($item)
