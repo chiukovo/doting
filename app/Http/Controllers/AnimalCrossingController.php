@@ -79,6 +79,13 @@ class AnimalCrossingController extends Controller
                     if ($messageType == 'text') {
                         $text = $event->getText();// 得到使用者輸入
 
+                        //離開群組/對話
+                        if ($text = '豆丁再見我們不要你了') {
+                            $this->doLeave($event);
+                            return;
+                        }
+
+                        //判斷關鍵字
                         $sendBuilder = $this->getSendBuilder($text);
 
                         //卡片型態
@@ -322,6 +329,38 @@ class AnimalCrossingController extends Controller
                     } else {
                         Log::debug($response->getRawBody());
                     }
+                }
+            }
+        }
+    }
+
+    public function doLeave($event)
+    {
+        //group
+        if ($event->isGroupEvent()) {
+            $this->userId = $event->getUserId();
+            $this->groupId = $event->getGroupId();
+
+            if (!is_null($this->userId) && !is_null($this->groupId)) {
+                $response = $this->lineBot->leaveGroup($this->groupId);
+
+                if (!$response->isSucceeded()) {
+                    Log::debug($response->getRawBody());
+                }
+            }
+        }
+
+
+        //room
+        if ($event->isRoomEvent()) {
+            $this->userId = $event->getUserId();
+            $this->roomId = $event->getRoomId();
+
+            if (!is_null($this->userId) && !is_null($this->roomId)) {
+               $response = $this->lineBot->leaveRoom($this->roomId);
+
+                if (!$response->isSucceeded()) {
+                    Log::debug($response->getRawBody());
                 }
             }
         }
