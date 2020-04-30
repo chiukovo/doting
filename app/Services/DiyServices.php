@@ -87,9 +87,18 @@ class DiyServices
 
     public static function createItemBubble($item)
     {
+        $url = env('APP_URL') . '/diy/list?text=' . urlencode($item->name);
+
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item))
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'detail',
+                    $url,
+                    new AltUriBuilder($url)
+                )
+            )
             ->setBody(self::createItemBodyBlock($item));
     }
 

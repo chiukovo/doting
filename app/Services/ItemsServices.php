@@ -12,6 +12,8 @@ use LINE\LINEBot\Constant\Flex\ComponentImageSize;
 use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
@@ -116,9 +118,18 @@ class ItemsServices
 
     public static function createItemBubble($item)
     {
+        $url = env('APP_URL') . '/items/all/text=' . urlencode($item->name);
+
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item))
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'detail',
+                    $url,
+                    new AltUriBuilder($url)
+                )
+            )
             ->setBody(self::createItemBodyBlock($item));
     }
 

@@ -73,11 +73,19 @@ class ArtServices
 
     public static function createItemBubble($item, $img)
     {
-        return $target = BubbleContainerBuilder::builder()
+        $url = env('APP_URL') . '/art/detail?name=' . urlencode($item->name);
+
+        return BubbleContainerBuilder::builder()
             ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item, $img))
-            ->setBody(self::createItemBodyBlock($item))
-            ->setFooter(self::createItemFooterBlock($item));
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'detail',
+                    $url,
+                    new AltUriBuilder($url)
+                )
+            )
+            ->setBody(self::createItemBodyBlock($item));
     }
 
     public static function createItemHeroBlock($item, $img)

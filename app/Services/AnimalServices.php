@@ -160,11 +160,19 @@ class AnimalServices
 
     public static function createItemBubble($item, $amiibo = false)
     {
+        $url = env('APP_URL') . '/animals/detail?name=' . urlencode($item->name);
+
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
             ->setHero(self::createItemHeroBlock($item, $amiibo))
-            ->setBody(self::createItemBodyBlock($item))
-            ->setFooter(self::createItemFooterBlock($item));
+            ->setAction(
+                new UriTemplateActionBuilder(
+                    'detail',
+                    $url,
+                    new AltUriBuilder($url)
+                )
+            )
+            ->setBody(self::createItemBodyBlock($item));
     }
 
     public static function createItemHeroBlock($item, $amiibo)
