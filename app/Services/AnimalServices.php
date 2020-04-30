@@ -129,6 +129,7 @@ class AnimalServices
     	    ->orWhere('en_name', 'like', '%' . $message . '%')
     	    ->orWhere('jp_name', 'like', '%' . $message . '%')
     	    ->orWhere('personality', 'like', '%' . $message . '%')
+            ->orWhere('say', $message)
     	    ->orWhere('bd_m', $message)
     	    ->orWhere('bd', $message);
 

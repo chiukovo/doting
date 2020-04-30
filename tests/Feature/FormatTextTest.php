@@ -16,7 +16,7 @@ class FormatTextTest extends TestCase
     public function testAnimal()
     {
         $class = App::make('App\Http\Controllers\AnimalCrossingController');
-        $texts = ['#阿一', '#茶茶丸', '#Dom', '#ちゃちゃまる', '#曹賣', '#運動', '#小熊', '#6', '#阿戰隊', '#1.21', '抽'];
+        $texts = ['#阿一', '#茶茶丸', '#Dom', '#ちゃちゃまる', '#曹賣', '#運動', '#小熊', '#6', '#阿戰隊', '#1.21', '抽', '#一絲絲'];
 
         foreach ($texts as $text) {
             $result = $class->getSendBuilder($text);
