@@ -58,12 +58,12 @@ class ArtServices
             foreach ($art as $data) {
                 $text .= $data->name . "\n";
             }
-            
+
             $text .= "\n";
             $text .= '哪個呢 ( ・◇・)？';
             $text .= "\n";
             $text .= "\n";
-            $text .= '或看全部 >> https://' . request()->getHttpHost() . '/art/list';
+            $text .= '或看全部 >> ' . env('APP_URL') . '/art/list';
 
             return $text;
         }
@@ -127,7 +127,6 @@ class ArtServices
             ->setContents($components);
     }
 
-    
     public static function createItemFooterBlock($item)
     {
         $url = env('APP_URL') . '/art/detail?name=' . urlencode($item->name);
