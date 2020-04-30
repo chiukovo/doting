@@ -37,7 +37,7 @@ class AnimalWebCrossingController extends Controller
             //format
             $detail->kk = str_replace(".", "", $detail->kk);
             $detail->kk = str_replace(" ", "_", $detail->kk);
-            $detail->kk = str_replace("'", "", $detail->file_name);
+            $detail->kk = str_replace("'", "", $detail->kk);
             $detail->kk = $detail->kk . '_Live';
         }
 
