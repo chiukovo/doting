@@ -350,9 +350,10 @@ class AnimalCrossingController extends Controller
         $text .= '4.【做】查詢DIY圖鑑' . "\n";
         $text .= '範例 查名稱：做石斧頭、做櫻花' . "\n";
         $text .= "\n";
-        $text .= '5.【找】查詢家具、服飾' . "\n";
+        $text .= '5.【找】查詢家具、服飾、植物' . "\n";
         $text .= '範例 查名稱：找貓跳台、找咖啡杯' . "\n";
         $text .= '範例 查名稱：找熱狗、找黃金' . "\n";
+        $text .= '範例 查名稱：找金色玫瑰' . "\n";
         $text .= "\n";
         $text .= '6.【查】查詢藝術品' . "\n";
         $text .= '範例 查名稱：查充滿母愛的雕塑' . "\n";
