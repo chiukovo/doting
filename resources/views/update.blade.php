@@ -20,7 +20,19 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
-          <div class="title">更新 v3.2.0</div>
+          <div class="title">更新 v3.4.0</div>
+          <div class="data">2020/4/30</div>
+        </div>
+        <div class="content">
+          <pre>
+1.修改成所有卡片都能點擊連到網站
+2.移除動物 藝術品卡片詳細按鈕, 改成直接點擊卡片即可
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
+          <div class="title">更新 v3.3.0</div>
           <div class="data">2020/4/29</div>
         </div>
         <div class="content">
