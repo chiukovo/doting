@@ -80,10 +80,10 @@ class AnimalCrossingController extends Controller
                         $text = $event->getText();// 得到使用者輸入
 
                         //離開群組/對話
-                        if ($text = '豆丁再見我們不要你了') {
+                        /*if ($text = '豆丁再見我們不要你了') {
                             $this->doLeave($event);
                             return;
-                        }
+                        }*/
 
                         //判斷關鍵字
                         $sendBuilder = $this->getSendBuilder($text);
