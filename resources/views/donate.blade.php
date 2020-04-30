@@ -43,10 +43,11 @@
     </div>
   </div>
   <div class="media-card">
-    <div class="media-card-title">贊助名單 ٩(●˙▿˙●)۶…⋆ฺ</div>
+    <div class="media-card-title">贊助名單 由衷感謝你們 ٩(●˙▿˙●)۶…⋆ฺ</div>
     <div class="update-card">
-      <p>2019/04/30 --- 吳冠穎 NTD.220 --- </p>
-      <p>2019/04/29 --- 安琪 NTD.77 --- </p>
+      <p>2019/04/30 --- 陳*安 NTD.100 --- </p>
+      <p>2019/04/30 --- 吳*穎 NTD.220 --- </p>
+      <p>2019/04/29 --- 陳*琪 NTD.77 --- </p>
       <p>2019/04/29 --- Quniiii NTD.5 --- </p>
     </div>
   </div>
