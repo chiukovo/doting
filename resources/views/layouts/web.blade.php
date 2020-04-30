@@ -43,6 +43,8 @@
             <li><a href="/diy/list">DIY方程式</a></li>
             <li><a href="/apparel/list">家具</a></li>
             <li><a href="/furniture/list">服飾</a></li>
+            <li><a href="/plant/list">植物</a></li>
+            <li><a href="/kk/list">唱片</a></li>
           </ul>
         </div>
       </div>
