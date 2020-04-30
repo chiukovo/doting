@@ -118,7 +118,7 @@ class ItemsServices
 
     public static function createItemBubble($item)
     {
-        $url = env('APP_URL') . '/items/all/text=' . urlencode($item->name);
+        $url = env('APP_URL') . '/items/all/list?text=' . urlencode($item->name);
 
         return BubbleContainerBuilder::builder()
             ->setSize('kilo')
