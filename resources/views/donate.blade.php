@@ -39,8 +39,9 @@
   <div class="media-card">
     <div class="media-card-title">贊助名單</div>
     <div class="update-card">
-      <p>2019/04/29 --- Quniiii NTD.5 --- </p>
+      <p>2019/04/30 --- 吳冠穎 NTD.220 --- </p>
       <p>2019/04/29 --- 安琪 NTD.77 --- </p>
+      <p>2019/04/29 --- Quniiii NTD.5 --- </p>
     </div>
   </div>
 </div>
