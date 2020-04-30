@@ -330,7 +330,8 @@ class AnimalCrossingController extends Controller
 
     public function instructionExample()
     {
-        $text = '你好 偶是豆丁 ε٩(๑> ₃ <)۶з' . "\n";
+        $text = '你好 偶是豆丁' . "\n";
+        $text .= 'ε٩(๑> ₃ <)۶з' . "\n";
         $text .= 'version ' . config('app.version') . "\n";
         $text .= "\n";
         $text .= '👇以下教您如何使用指令👇' . "\n";
