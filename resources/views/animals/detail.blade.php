@@ -69,13 +69,13 @@
             <div class="animals-info-group">
               <div class="animals-info-item">
                 <label>座右銘</label>
-                <span>{{ $detail->target }}</span>
+                <span>{{ $detail->motto }}</span>
               </div>
             </div>
             <div class="animals-info-group">
               <div class="animals-info-item">
                 <label>目標</label>
-                <span></span>
+                <span>{{ $detail->target }}</span>
               </div>
             </div>
             @if($detail->kk != '')
