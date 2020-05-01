@@ -32,7 +32,6 @@ class AnimalServices
     public static function getRandomCard()
     {
         $item = DB::table('animal')
-            ->where('amiibo', '!=', '')
             ->inRandomOrder()
             ->first();
 
@@ -178,7 +177,7 @@ class AnimalServices
 
     public static function createItemHeroBlock($item, $amiibo)
     {
-        if ($amiibo) {
+        if ($amiibo && $item->amiibo != '') {
             $imgPath = env('APP_URL') . '/animal/card/' . urlencode($item->amiibo) . '.png';
         } else {
             $imgPath = env('APP_URL') . '/animal/' . urlencode($item->name) . '.png';
