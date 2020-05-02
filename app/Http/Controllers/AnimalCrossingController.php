@@ -236,7 +236,7 @@ class AnimalCrossingController extends Controller
         $realText = $this->realText;
 
         $text = '👇👇 查看其他搜尋結果 👇👇' . "\n";
-        $url = 'https://' . request()->getHttpHost();
+        $url = env('APP_URL');
 
         switch ($type) {
             case 'animal':
