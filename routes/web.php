@@ -136,3 +136,15 @@ Route::get('/getArtwork', 'ApiController@getArtwork');
 Route::get('/getFossil', 'ApiController@getFossil');
 Route::get('/getPlant', 'ApiController@getPlant');
 Route::get('/getKK', 'ApiController@getKK');*/
+
+
+
+//admin
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function() {
+	Route::get('/', function () {
+	  return view('admin.index');
+	});
+	Route::get('/login', function () {
+	  return view('admin.login');
+	});
+});
