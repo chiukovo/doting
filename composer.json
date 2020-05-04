@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "linecorp/line-bot-sdk": "^4.3",
         "predis/predis": "^1.1",
-        "spatie/browsershot": "^3.36"
+        "spatie/browsershot": "^3.36",
+        "unisharp/laravel-filemanager": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
