@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/search', 'LineBotController@search');
 //Route::get('/getApi', 'LineBotController@getApi');
+Route::group(['prefix' => 'filemanager', 'middleware' => []], function () {
+	\UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
