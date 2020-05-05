@@ -34,7 +34,7 @@ class AnimalCrossingController extends Controller
     public $dbType = '';
     public $realText = '';
     public $isSend = false;
-    public $notFound = false;
+    public $notFound = true;
 
     public function __construct()
     {
@@ -233,7 +233,6 @@ class AnimalCrossingController extends Controller
             $message = new TextMessageBuilder($dataArray);
 
             $this->isSend = true;
-            $this->notFound = true;
 
             return $message;
         }
