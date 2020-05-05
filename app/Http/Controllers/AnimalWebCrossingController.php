@@ -46,8 +46,16 @@ class AnimalWebCrossingController extends Controller
             return redirect('animals/list');
         }
 
+        //同種族
+        $sameRaceArray = DB::table('animal')
+            ->where('race', 'like', '%' . $detail->race . '%')
+            ->where('id', '!=', $detail->id)
+            ->get()
+            ->toArray();
+
         return view('animals.detail', [
-            'detail' => $detail
+            'detail' => $detail,
+            'sameRaceArray' => $sameRaceArray,
         ]);
     }
 

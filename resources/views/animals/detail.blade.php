@@ -117,11 +117,23 @@
           </a>
         </div>
         @endif
-      </div>
-      <div class="media-footer">
-        <ul>
-          <!-- <li><a href="">加入最愛</a></li> -->
-        </ul>
+        @if(!empty($sameRaceArray))
+        <div class="media-card">
+          <div class="media-card-title">{{ $detail->name }}的族人</div>
+          <ul class="media-card-list">
+            @foreach($sameRaceArray as $animal)
+            <li>
+              <a href="/animals/detail?name={{ $animal->name }}">
+                <span>{{ $animal->name }}</span>
+                <div class="table-img">
+                  <img src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
+                </div>
+              </a>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
       </div>
     </div>
   </section>
