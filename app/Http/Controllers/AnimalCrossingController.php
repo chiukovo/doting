@@ -134,6 +134,8 @@ class AnimalCrossingController extends Controller
         $dataArray = $this->formatMessage($text);
 
         if ($text == '抽') {
+            $this->notFound = false;
+
             return $dataArray;
         }
 
