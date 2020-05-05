@@ -138,6 +138,8 @@ class AnimalWebCrossingController extends Controller
 
         $result = [];
 
+        $num = 1;
+
         foreach ($collection as $text => $number) {
             $builder = $class->getSendBuilder($text);
 
@@ -160,9 +162,48 @@ class AnimalWebCrossingController extends Controller
                 'number' => $number,
                 'img' => $img,
                 'url' => $url,
+                'comment' => $this->statisticsComment($num),
             ];
+
+            $num++;
         }
 
         return $result;
+    }
+
+    public function statisticsComment($number)
+    {
+        switch ($number) {
+            case 1:
+                return '看來大家抽得很開心~~ ٩(ˊᗜˋ )و';
+                break;
+            case 2:
+                return '不意外 我就是這麼厲害 ≖‿≖';
+                break;
+            case 3:
+                return '媽 我在這~ 〜(꒪꒳꒪)〜';
+                break;
+            case 4:
+                return '樓上有事嗎? (-_-)';
+                break;
+            case 5:
+                return '請繼續投我一票~~(＠゜▽゜)';
+                break;
+            case 6:
+                return '我會加油的 (握拳';
+                break;
+            case 7:
+                return '叫我人氣王 ´･ᴗ･`';
+                break;
+            case 8:
+                return '首先我要感謝我的家人 (X';
+                break;
+            case 9:
+                return '(＿ ＿*) Z z z';
+                break;
+            case 10:
+                return '可憐娜 差點沒上榜';
+                break;
+        }
     }
 }
