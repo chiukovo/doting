@@ -187,7 +187,7 @@ class AnimalWebCrossingController extends Controller
                 return '樓上有事嗎? (-_-)';
                 break;
             case 5:
-                return '請繼續投我一票~~(＠゜▽゜)';
+                return '請繼續投我一票 ~~~ (＠゜▽゜)';
                 break;
             case 6:
                 return '我會加油的 (握拳';
