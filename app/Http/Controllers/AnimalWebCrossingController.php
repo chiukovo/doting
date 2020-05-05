@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\AnimalServices;
 use Illuminate\Http\Request;
-use Curl, Log, DB;
+use Illuminate\Support\Facades\Redis;
+use Curl, Log, DB, App;
 
 class AnimalWebCrossingController extends Controller
 {
@@ -106,5 +107,51 @@ class AnimalWebCrossingController extends Controller
         $type = $request->input('type', '');
 
         return AnimalServices::getAllType($type);
+    }
+
+    public function statistics(Request $request)
+    {
+        $all = Redis::hGetAll('array');
+        $collection = collect($all)->sort(function ($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a > $b) ? -1 : 1;
+        })
+        ->take(10)
+        ->all();
+
+        $class = App::make('App\Http\Controllers\AnimalCrossingController');
+
+        $result = [];
+
+        foreach ($collection as $text => $number) {
+            $builder = $class->getSendBuilder($text);
+
+            $img = '';
+            $url = '';
+
+            if (is_array($builder) && $text != '抽') {
+                foreach ($builder as $detail) {
+                    $build = $detail->buildMessage();
+
+                    if (isset($build[0])) {
+                        $img = $build[0]['contents']['contents'][0]['hero']['url'];
+                        $url = $build[0]['contents']['contents'][0]['action']['uri'];
+                    }
+                }
+            }
+
+            $result[] = [
+                'text' => $text,
+                'number' => $number,
+                'img' => $img,
+                'url' => $url,
+            ];
+        }
+
+        return view('statistics', [
+            'lists' => $result
+        ]);
     }
 }

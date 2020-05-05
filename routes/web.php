@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 //main
 Route::post('/message', 'AnimalCrossingController@message');
 
+//statistics
+Route::get('/statistics', 'AnimalWebCrossingController@statistics');
+
 //donate
 Route::get('/donate', function () {
   return view('donate');
