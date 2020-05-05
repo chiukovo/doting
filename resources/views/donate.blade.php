@@ -45,6 +45,7 @@
   <div class="media-card">
     <div class="media-card-title">贊助名單 由衷感謝你們 ٩(●˙▿˙●)۶…⋆ฺ</div>
     <div class="update-card">
+      <p>2019/05/05 --- 鹿島 NTD.100 --- </p>
       <p>2019/05/01 --- 黃*君 NTD.266 --- </p>
       <p>2019/05/01 --- 星羽 NTD.100 --- </p>
       <p>2019/05/01 --- Jeff NTD.100 --- </p>
