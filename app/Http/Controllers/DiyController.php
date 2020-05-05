@@ -26,7 +26,8 @@ class DiyController extends Controller
         $diy = DB::table('diy');
 
         if ($text != '') {
-           $diy->where('name', 'like', '%' . $text . '%');
+           $diy->where('name', 'like', '%' . $text . '%')
+                ->orWhere('diy', 'like', '%' . $text . '%');
         }
 
         $diy = $diy->select()

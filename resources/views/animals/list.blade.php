@@ -98,7 +98,6 @@
   </div>
   @include('layouts.goodUrl')
 </div>
-
 <script>
   Vue.use(GoTop);
   new Vue({

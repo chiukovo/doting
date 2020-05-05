@@ -20,13 +20,27 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.5.0</div>
+          <div class="data">2020/5/5</div>
+        </div>
+        <div class="content">
+          <pre>
+1.新增動物相同種族
+2.新增DIY也能用從材料反搜索DIY方程式
+範例: 找硬木材
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.4.0</div>
           <div class="data">2020/4/30</div>
         </div>
         <div class="content">
           <pre>
 1.修改成所有卡片都能點擊連到網站
-2.移除動物 藝術品卡片詳細按鈕, 改成直接點擊卡片即可
+2.移除動物 藝術品卡片詳細按鈕,
+  改成直接點擊卡片即可
 3.新增網站-植物
 4.新增網站-唱片
           </pre>
@@ -39,7 +53,8 @@
         </div>
         <div class="content">
           <pre>
-不好意思 今日豆丁被攻擊導致伺服器中斷 目前已復活嚕 哇耶!
+不好意思 今日豆丁被攻擊導致伺服器中斷
+目前已復活嚕 哇耶!
 1.新增植物圖鑑 + 植物合成配方
 範例: 找金色玫瑰
 <img src="/update/20200429-1.jpg">

@@ -36,6 +36,7 @@ class DiyServices
 
     	$dbAnimal = DB::table('diy')
     	    ->where('name', 'like', '%' . $message . '%')
+            ->orWhere('diy', 'like', '%' . $message . '%')
     	    ->get()
     	    ->toArray();
 

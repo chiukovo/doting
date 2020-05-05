@@ -181,6 +181,28 @@ class AnimalWebCrossingController extends Controller
         return $result;
     }
 
+    public function compatible()
+    {
+        return view('animals.compatible');
+    }
+
+    public function getAnimalsGroupRace()
+    {
+        //get all animal
+        $lists = DB::table('animal')
+            ->whereNull('info')
+            ->get()
+            ->toArray();
+
+        $lists = collect($lists)->groupBy('race')->toArray();
+        $races = collect($lists)->keys()->toArray();
+
+        return [
+            'lists' => $lists,
+            'races' => $races,
+        ];
+    }
+
     public function statisticsComment($number)
     {
         switch ($number) {

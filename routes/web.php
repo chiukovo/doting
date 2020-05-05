@@ -65,6 +65,9 @@ Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
+//相容度分析
+Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible');
+Route::post('/animals/getAnimalsGroupRace', 'AnimalWebCrossingController@getAnimalsGroupRace');
 
 //npc
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
