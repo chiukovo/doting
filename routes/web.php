@@ -21,6 +21,7 @@ Route::post('/message', 'AnimalCrossingController@message');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');
+Route::post('/statistics/getData', 'AnimalWebCrossingController@statisticsGetData');
 
 //donate
 Route::get('/donate', function () {

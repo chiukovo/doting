@@ -111,6 +111,11 @@ class AnimalWebCrossingController extends Controller
 
     public function statistics(Request $request)
     {
+        return view('statistics');
+    }
+
+    public function statisticsGetData(Request $request)
+    {
         $all = Redis::hGetAll('array');
         $collection = collect($all)->sort(function ($a, $b) {
             if ($a == $b) {
@@ -150,8 +155,6 @@ class AnimalWebCrossingController extends Controller
             ];
         }
 
-        return view('statistics', [
-            'lists' => $result
-        ]);
+        return $result;
     }
 }
