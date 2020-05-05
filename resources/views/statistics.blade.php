@@ -10,7 +10,7 @@
   <table class="media-card table">
     <tr>
       <th width="50px">名次</th>
-      <th>名稱</th>
+      <th>關鍵字</th>
       <th width="50px">次數</th>
       <th>得獎感言</th>
     </tr>
