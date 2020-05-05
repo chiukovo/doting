@@ -17,7 +17,7 @@
       <td>@{{ key + 1 }}</td>
       <td>
         <div v-if="list.url != ''">
-          <a :href="list.img" target="_blank">
+          <a :href="list.url" target="_blank">
             <span>@{{ list.text }}</span>
             <div class="table-img">
               <img :src="list.img" :alt="list.text">
