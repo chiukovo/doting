@@ -114,11 +114,11 @@ class AnimalCrossingController extends Controller
                     ];
 
                     Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
-                }
 
-                //統計
-                if (!$this->notFound && env('OPEN_REDIS_STATISTICS')) {
-                    $this->statisticsMsg($text);
+                    //統計
+                    if (!$this->notFound && env('OPEN_REDIS_STATISTICS')) {
+                        $this->statisticsMsg($text);
+                    }
                 }
             }
         } catch (Exception $e) {
