@@ -256,10 +256,10 @@ class AnimalCrossingController extends Controller
         }
     }
 
-    public function getMoreText()
+    public function getMoreText($paramType = null, $paramRealText = null)
     {
-        $type = $this->dbType;
-        $realText = $this->realText;
+        $type = is_null($paramType) ? $this->dbType : $paramType;
+        $realText = is_null($paramRealText) ? $this->realText : $paramRealText;
 
         $text = '👇👇 查看其他搜尋結果 👇👇' . "\n";
         $url = env('APP_URL');
@@ -283,6 +283,10 @@ class AnimalCrossingController extends Controller
         }
 
         $text .= $url . '?text=' . urlencode($realText);
+
+        if (!is_null($paramType) && !is_null($paramRealText)) {
+            return $url . '?text=' . urlencode($realText);
+        }
 
         return $text;
     }
@@ -534,6 +538,33 @@ class AnimalCrossingController extends Controller
 
                     return ArtServices::getDataByMessage($target);
                 }
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+
+    public function typeToUrl($type)
+    {
+        switch ($type) {
+            case '#':
+                return 'animal';
+                break;
+            case '$':
+                return 'other';
+                break;
+
+            case '做':
+                return 'diy';
+                break;
+
+            case '找':
+                return 'items';
+                break;
+
+            case '查':
+                return 'art';
                 break;
             default:
                 return '';

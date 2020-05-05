@@ -149,10 +149,20 @@ class AnimalWebCrossingController extends Controller
             if (is_array($builder) && $text != '抽') {
                 foreach ($builder as $detail) {
                     $build = $detail->buildMessage();
-
                     if (isset($build[0])) {
                         $img = $build[0]['contents']['contents'][0]['hero']['url'];
                         $url = $build[0]['contents']['contents'][0]['action']['uri'];
+
+                        if (count($build) > 1) {
+                            //取得type
+                            $type = mb_substr($text, 0, 1);
+                            $type = $class->typeToUrl($type);
+
+                            //取得字串
+                            $target = mb_substr($text, 1);
+
+                            $url = $class->getMoreText($type, $target);
+                        }
                     }
                 }
             }
