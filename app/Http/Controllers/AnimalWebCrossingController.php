@@ -175,10 +175,10 @@ class AnimalWebCrossingController extends Controller
     {
         switch ($number) {
             case 1:
-                return '看來大家抽得很開心~~ ٩(ˊᗜˋ )و';
+                return '看來大家抽得很開心 ~~~ ٩(ˊᗜˋ )و';
                 break;
             case 2:
-                return '不意外 我就是這麼厲害 ≖‿≖';
+                return '第二名 94棒 ≖‿≖';
                 break;
             case 3:
                 return '媽 我在這~ 〜(꒪꒳꒪)〜';
