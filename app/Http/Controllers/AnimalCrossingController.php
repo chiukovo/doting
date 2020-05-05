@@ -22,6 +22,7 @@ use App\Services\ArtServices;
 use App\Services\FossilServices;
 use Illuminate\Http\Request;
 use QL\QueryList;
+use Illuminate\Support\Facades\Redis;
 use Curl, Log, Storage, DB, Url;
 
 class AnimalCrossingController extends Controller
@@ -33,6 +34,7 @@ class AnimalCrossingController extends Controller
     public $dbType = '';
     public $realText = '';
     public $isSend = false;
+    public $notFound = false;
 
     public function __construct()
     {
@@ -45,7 +47,6 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
-        //dd($this->getSendBuilder('化石 暴龍'));
     	echo 'hi';
     }
 
@@ -113,6 +114,11 @@ class AnimalCrossingController extends Controller
                     ];
 
                     Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
+                }
+
+                //統計
+                if (!$this->notFound && env('OPEN_REDIS_STATISTICS')) {
+                    $this->statisticsMsg($text);
                 }
             }
         } catch (Exception $e) {
@@ -219,14 +225,33 @@ class AnimalCrossingController extends Controller
                 }
             }
 
-            return $returnArray;
-
             $this->isSend = true;
+            $this->notFound = false;
+
+            return $returnArray;
         } else {
             $message = new TextMessageBuilder($dataArray);
+
             $this->isSend = true;
+            $this->notFound = true;
 
             return $message;
+        }
+    }
+
+    //統計用
+    public function statisticsMsg($text)
+    {
+        $key = 'array';
+        $number = Redis::hGet('array', $text);
+
+        if (is_null($number)) {
+            //set
+            Redis::hSet('array', $text, 1);
+        } else {
+            //++
+            $number = $number + 1;
+            Redis::hSet('array', $text, $number);
         }
     }
 

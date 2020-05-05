@@ -96,7 +96,7 @@ Route::post('/kk/search', 'KKController@getKKSearch');
 Route::get('/kk/detail', 'KKController@detail');
 
 //test
-//Route::get('/test', 'AnimalCrossingController@index');
+Route::get('/test', 'AnimalCrossingController@index');
 
 //爬蟲
 /*Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
