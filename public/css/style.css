@@ -273,7 +273,7 @@ body {
   border-left: 1px solid rgba(195, 220, 227, 0.65);
 }
 .table tr + tr td {
-  border-bottom: 1px solid rgba(195, 220, 227, 0.65);
+  border-top: 1px solid rgba(195, 220, 227, 0.65);
 }
 .table a {
   color: #608089;
