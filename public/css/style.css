@@ -173,6 +173,29 @@ body {
   padding: 6px 12px;
   margin-bottom: 10px;
 }
+.media-card-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  line-height: 1.6;
+  padding: 0;
+  border-top: 1px solid rgba(195, 220, 227, 0.65);
+  border-left: 1px solid rgba(195, 220, 227, 0.65);
+}
+.media-card-list li {
+  flex: 0 0 25%;
+  text-align: center;
+  border-right: 1px solid rgba(195, 220, 227, 0.65);
+  border-bottom: 1px solid rgba(195, 220, 227, 0.65);
+}
+.media-card-list li:hover {
+  background-color: #fff;
+}
+.media-card-list li a {
+  color: #608089;
+  text-decoration: underline;
+}
+
 .media-list {
   list-style: none;
   line-height: 1.6;
