@@ -178,9 +178,9 @@ class AnimalServices
     public static function createItemHeroBlock($item, $amiibo)
     {
         if ($amiibo && $item->amiibo != '') {
-            $imgPath = env('APP_URL') . '/animal/card/' . urlencode($item->amiibo) . '.png';
+            $imgPath = env('APP_URL') . '/animal/card/' . urlencode($item->amiibo) . '.png?v=' . config('app.version');
         } else {
-            $imgPath = env('APP_URL') . '/animal/' . urlencode($item->name) . '.png';
+            $imgPath = env('APP_URL') . '/animal/' . urlencode($item->name) . '.png?v=' . config('app.version');
         }
 
         return ImageComponentBuilder::builder()
