@@ -126,7 +126,11 @@
               <a href="/animals/detail?name={{ $animal->name }}">
                 <span>{{ $animal->name }}</span>
                 <div class="table-img">
-                  <img src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
+                  @if($animal->info == '')
+                    <img src="/animal/{{ $animal->name }}_icon.png" alt="{{ $animal->name }}">
+                  @else
+                    <img src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
+                  @endif
                 </div>
               </a>
             </li>
