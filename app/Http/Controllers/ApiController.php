@@ -10,6 +10,46 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getAnimalIcon()
+    {
+        $animals = DB::table('animal')
+            ->whereNotNull('jp_name')
+            ->whereNull('info')
+            ->get()
+            ->toArray();
+
+        $url = 'https://gamepedia.jp/ac-switch/archives/6987';
+
+        $ql = QueryList::get($url);
+
+        $result = $ql->rules([
+            'img' => ['td:eq(0) img', 'src'],
+            'jp_name' => ['td:eq(0) span', 'text'],
+        ])
+        ->range('.table-datatable:eq(1) tr')
+        ->queryData();
+
+        foreach ($result as $target) {
+            if ($target['jp_name'] == '') {
+                continue;
+            }
+
+            foreach ($animals as $animal) {
+                if ($target['jp_name'] == $animal->jp_name) {
+                    $img = $target['img'];
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+
+                    if ($code == 200) {
+                        $content = file_get_contents($img);
+                        Storage::disk('animal')->put($animal->name . '_icon.png', $content);
+                    }
+
+                }
+            }
+        }
+    }
+
     public function getKK()
     {
         $animals = DB::table('animal')

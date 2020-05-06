@@ -152,16 +152,28 @@ class AnimalWebCrossingController extends Controller
                     if (isset($build[0])) {
                         $img = $build[0]['contents']['contents'][0]['hero']['url'];
                         $url = $build[0]['contents']['contents'][0]['action']['uri'];
+                        //取得type
+                        $type = mb_substr($text, 0, 1);
+                        $type = $class->typeToUrl($type);
 
                         if (count($build) > 1) {
-                            //取得type
-                            $type = mb_substr($text, 0, 1);
-                            $type = $class->typeToUrl($type);
-
                             //取得字串
                             $target = mb_substr($text, 1);
 
                             $url = $class->getMoreText($type, $target);
+                        }
+
+                        if ($type == 'animal') {
+                            $name = $build[0]['contents']['contents'][0]['body']['contents'][0]['text'];
+                            $expName = explode(" ", $name);
+
+                            $imgUrl = env('APP_URL') . '/animal/' . urlencode($expName[0]) . '_icon.png';
+                            $headers = get_headers($imgUrl);
+                            $code = substr($headers[0], 9, 3);
+
+                            if ($code == 200) {
+                                $img = $imgUrl;
+                            }
                         }
                     }
                 }

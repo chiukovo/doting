@@ -70,7 +70,10 @@
       <td>
         <a :href="'/animals/detail?name=' + list.name">
           <span>@{{ list.name }}</span>
-          <div class="table-img">
+          <div class="table-img" v-if="list.info == null">
+            <img :src="'/animal/' + list.name + '_icon.png'" :alt="list.name">
+          </div>
+          <div class="table-img" v-else>
             <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
           </div>
         </a>
