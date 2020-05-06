@@ -203,6 +203,36 @@ class AnimalWebCrossingController extends Controller
         ];
     }
 
+    //診斷
+    public function analysis(Request $request)
+    {
+        $animalsName = $request->input('name');
+        //去頭尾空白
+        $animalsName = trim($animalsName);
+        //去除前後空白
+        $animalsName = preg_replace('/\s+/', '', $animalsName);
+        $array = explode(",", $animalsName);
+
+        //get all animal
+        $lists = DB::table('animal')
+            ->whereIn('name', $array)
+            ->whereNull('info')
+            ->get(['id', 'name', 'personality', 'sex', 'race', 'bd'])
+            ->toArray();
+
+        if (empty($lists)) {
+            return redirect('animals/compatible');
+        }
+
+        foreach ($lists as $key => $list) {
+            $list->constellation = constellation($list->bd);
+            $lists[$key] = $list;
+        }
+
+        //媒合度
+        $lists = matchmaking($lists);
+    }
+
     public function statisticsComment($number)
     {
         switch ($number) {

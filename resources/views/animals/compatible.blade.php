@@ -12,7 +12,7 @@
       <tr>
         <th>種族</th>
         <td>
-          <button class="btn" :class="selected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
+          <button class="btn" :class="searchSelected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
             @{{ race }}
           </button>
         </td>
@@ -21,7 +21,7 @@
         <th></th>
         <td>
           <button class="btn" @click="openAll">全部開啟</button>
-          <button class="btn" @click="selected = []">全部隱藏</button>
+          <button class="btn" @click="searchSelected = []">全部隱藏</button>
         </td>
       </tr>
     </table>
@@ -29,7 +29,7 @@
   <section class="animals-info">
     <div class="media">
       <div class="media-body">
-        <div class="media-card" v-for="(animal, race) in animals" v-show="selected.indexOf(race) != '-1'">
+        <div class="media-card" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1'">
           <div class="media-card-title">@{{ race }}</div>
           <ul class="media-card-list">
             <li v-for="detail in animal">
@@ -52,7 +52,7 @@
     data: {
       animals: [],
       races: [],
-      selected: [],
+      searchSelected: [],
     },
     mounted() {
       this.getAnimalsGroupRace()
@@ -63,22 +63,22 @@
          }).then((response) => {
            this.animals = response.data.lists
            this.races = response.data.races
-           this.selected = JSON.parse(JSON.stringify(this.races))
+           this.searchSelected = JSON.parse(JSON.stringify(this.races))
          })
       },
       toggleRace(race) {
-        const key = this.selected.indexOf(race)
+        const key = this.searchSelected.indexOf(race)
 
         if (key == '-1') {
           //push
-          this.selected.push(race)
+          this.searchSelected.push(race)
         } else {
           //add
-          this.selected.splice(key, 1);
+          this.searchSelected.splice(key, 1);
         }
       },
       openAll() {
-        this.selected = JSON.parse(JSON.stringify(this.races))
+        this.searchSelected = JSON.parse(JSON.stringify(this.races))
       }
     }
   })
