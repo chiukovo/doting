@@ -20,6 +20,19 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.5.1</div>
+          <div class="data">2020/5/6</div>
+        </div>
+        <div class="content">
+          <pre>
+1.動物列表圖片調整成ICON顯示
+2.動物個性相容度功能 (開發中)
+3.大頭菜統計計算 (開發中)
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.5.0</div>
           <div class="data">2020/5/5</div>
         </div>
