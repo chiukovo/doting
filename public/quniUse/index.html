@@ -2,36 +2,199 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>豆丁森友會</title>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="root">
-    <header>
-      <nav class="navbar bg-white shadow-sm">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
-            <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </div>
+    <header class="header">
+      <div class="header-wrap">
+        <div class="container">
+          <a href="/" class="logo">
+            <h1>豆丁森友會 Doting Animal crossing 動物森友會</h1>
+            <img src="../image/logo.png" alt="豆丁森友會">
+          </a>
+          <button class="btn btn-nav"><ion-icon name="menu-outline"></ion-icon></button>
+          <nav class="nav">
+            <ul>
+              <li><a href="/">首頁</a></li>
+              <li class="sub-nav">
+                <a href="">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/animals/list">動物居民</a></li>
+                  <li><a href="/npc/list">動物NPC</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="">魚圖鑑</a></li>
+                  <li><a href="">昆蟲圖鑑</a></li>
+                  <li><a href="">化石圖鑑</a></li>
+                  <li><a href="">藝術品</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/diy/list">DIY方程式</a></li>
+                  <li><a href="/apparel/list">家具</a></li>
+                  <li><a href="/furniture/list">服飾</a></li>
+                  <li><a href="/plant/list">植物</a></li>
+                  <li><a href="/kk/list">唱片</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/instructions">豆丁教學</a></li>
+                  <li><a href="/update/version">更新資訊</a></li>
+                  <li><a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></li>
+                  <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- <a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a> -->
         </div>
-      </nav>
+      </div>
     </header>
-    <div class="container">
-      container
+    <div class="content">
+      <div class="content-wrap">
+        <div id="banner">
+          <div class="container"></div>
+        </div>
+        <section class="update">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-4 center update-title">
+                <div class="update-version">v3.5.0</div>
+                <div class="update-date">2020/5/5</div>
+              </div>
+              <div class="col-12 col-md-7 offset-md-1">
+                <blockquote class="update-quote">
+                  <p>1.新增動物相同種族<br>
+                    2.新增DIY也能用從材料反搜索DIY方程式<br>
+                    範例: 找硬木材</p>
+                  <a href="/update/version">查看更多</a>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="first-list">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <ul>
+                  <li>
+                    <a href="/instructions">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_instructions.png" alt="豆丁教學">
+                      </div>
+                      <span>豆丁教學</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/update/version">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_update.png" alt="更新資訊">
+                      </div>
+                      <span>更新資訊</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_feedback.png" alt="意見回饋">
+                      </div>
+                      <span>意見回饋</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/animals/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_animal.png" alt="動物居民">
+                      </div>
+                      <span>動物居民</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/npc/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_npc.png" alt="動物NPC">
+                      </div>
+                      <span>動物NPC</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/museum/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_museum.png" alt="博物館">
+                      </div>
+                      <span>博物館</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/diy/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_diy.png" alt="DIY方程式">
+                      </div>
+                      <span>DIY方程式</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/apparel/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_furniture.png" alt="家具">
+                      </div>
+                      <span>家具</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/furniture/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_clothing.png" alt="服飾">
+                      </div>
+                      <span>服飾</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/plant/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_plant.png" alt="植物">
+                      </div>
+                      <span>植物</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/kk/list">
+                      <div class="first-list-icon">
+                        <img src="../image/icon_kk.png" alt="唱片">
+                      </div>
+                      <span>唱片</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- <div class="col-12 col-md-3 border center">Advertising</div> -->
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
     <footer>
-      <div class="container">
-        footer
+      <div class="copyright">
+        copyright © 豆丁森友會
+      </div>
+      <div id="donateMe">
+        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
       </div>
     </footer>
   </div>
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
