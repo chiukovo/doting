@@ -20,6 +20,19 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.5.2</div>
+          <div class="data">2020/5/7</div>
+        </div>
+        <div class="content">
+          <pre>
+1.新增豆丁搜尋排行榜
+範例: 搜尋排行榜
+就會出現連結: <a href="https://doting.tw/statistics">https://doting.tw/statistics</a>
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.5.1</div>
           <div class="data">2020/5/6</div>
         </div>

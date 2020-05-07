@@ -45,6 +45,7 @@
             <li><a href="/furniture/list">服飾</a></li>
             <li><a href="/plant/list">植物</a></li>
             <li><a href="/kk/list">唱片</a></li>
+            <li><a href="/statistics">豆丁搜尋排行榜</a></li>
           </ul>
         </div>
       </div>

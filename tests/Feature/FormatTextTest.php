@@ -49,6 +49,25 @@ class FormatTextTest extends TestCase
     }
 
     /**
+     * 排行榜
+     */
+    public function searchWinner()
+    {
+        $class = App::make('App\Http\Controllers\AnimalCrossingController');
+        $texts = ['搜尋排行榜'];
+
+        foreach ($texts as $text) {
+            $result = $class->getSendBuilder($text);
+
+            if (!is_array($result) || empty($result)) {
+                $this->assertTrue(false);
+            }
+        }
+
+        $this->assertTrue(true);
+    }
+
+    /**
      * 查詢DIY圖鑑
      */
     public function testDiy()

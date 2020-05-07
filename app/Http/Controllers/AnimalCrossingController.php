@@ -400,6 +400,9 @@ class AnimalCrossingController extends Controller
         $text .= '8.抽 amiibo卡片 (◑‿◐)' . "\n";
         $text .= '範例 抽' . "\n";
         $text .= "\n";
+        $text .= '9.豆丁搜尋排行榜' . "\n";
+        $text .= '範例 請輸入 搜尋排行榜' . "\n";
+        $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= env('APP_URL');
 
@@ -412,6 +415,13 @@ class AnimalCrossingController extends Controller
 
         if ($text == '豆丁笨蛋') {
             return '你才笨蛋 (／‵Д′)／~ ╧╧';
+        }
+
+        if ($text == '搜尋排行榜') {
+            $returnText = '豆丁搜尋排行榜 (´・ω・`)' . "\n";
+            $returnText .= 'https://doting.tw/statistics';
+
+            return $returnText;
         }
 
         if ($text == '#豬力力') {
