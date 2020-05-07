@@ -102,6 +102,14 @@
           </div>
         </div>
         @if($detail->info == '')
+          @if(is_file(public_path('animal/house/' .  $detail->name . '.png')))
+          <div class="media-card">
+            <div class="media-card-title">{{ $detail->name }}家外觀</div>
+            <a href="/animal/house/{{ $detail->name }}.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
+              <img src="/animal/house/{{ $detail->name }}.png" alt="{{ $detail->name }}家">
+            </a>
+          </div>
+          @endif
         <div class="media-card">
           <div class="media-card-title">室內裝修</div>
           <a href="/animal/{{ $detail->name }}_home.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
