@@ -35,7 +35,7 @@
             <li v-for="detail in animal">
               <span>@{{ detail.name }}</span>
               <div class="table-img">
-                <img :src="'/animal/' + detail.name + '_icon.png'" :alt="detail.name">
+                <img :src="'/animal/icon/' + detail.name + '.png'" :alt="detail.name">
               </div>
             </li>
           </ul>

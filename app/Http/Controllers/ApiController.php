@@ -12,39 +12,54 @@ class ApiController extends Controller
 {
     public function getAnimalIcon()
     {
+        set_time_limit(0);
+
         $animals = DB::table('animal')
-            ->whereNotNull('jp_name')
+            ->whereNotNull('en_name')
             ->whereNull('info')
             ->get()
             ->toArray();
 
-        $url = 'https://gamepedia.jp/ac-switch/archives/6987';
+        $result = Curl::to('https://api.nookplaza.net/items?category=Villagers')->asJson()->get();
 
-        $ql = QueryList::get($url);
-
-        $result = $ql->rules([
-            'img' => ['td:eq(0) img', 'src'],
-            'jp_name' => ['td:eq(0) span', 'text'],
-        ])
-        ->range('.table-datatable:eq(1) tr')
-        ->queryData();
+        $result = $result->results;
 
         foreach ($result as $target) {
-            if ($target['jp_name'] == '') {
-                continue;
-            }
-
             foreach ($animals as $animal) {
-                if ($target['jp_name'] == $animal->jp_name) {
-                    $img = $target['img'];
-                    $headers = get_headers($img);
-                    $code = substr($headers[0], 9, 3);
+                if (strtolower($target->name) == $animal->en_name) {
+                    $icon = $target->content->image;
+                    $houseImage = $target->content->houseImage;
 
-                    if ($code == 200) {
-                        $content = file_get_contents($img);
-                        Storage::disk('animal')->put($animal->name . '_icon.png', $content);
+                    $headers = get_headers($icon);
+                    $code = substr($headers[0], 9, 3);
+                    $fileIsset = is_file(public_path('animal/icon/' .  $animal->name . '.png'));
+
+                    if ($code == 200 && !$fileIsset) {
+                        $content = file_get_contents($icon);
+                        Storage::disk('animalIcon')->put($animal->name . '.png', $content);
                     }
 
+                    $headers = get_headers($houseImage);
+                    $code = substr($headers[0], 9, 3);
+                    $fileIsset = is_file(public_path('animal/house/' .  $animal->name . '.png'));
+
+                    if ($code == 200) {
+                        $content = file_get_contents($houseImage);
+                        Storage::disk('animalHouse')->put($animal->name . '.png', $content);
+                    }
+                }
+
+                if (strtolower($target->name) == $animal->en_name . "'s poster") {
+                    $img = $target->content->image;
+
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+                    $fileIsset = is_file(public_path('animal/poster/' .  $animal->name . '.png'));
+
+                    if ($code == 200 && !$fileIsset) {
+                        $content = file_get_contents($img);
+                        Storage::disk('animalPoster')->put($animal->name . '.png', $content);
+                    }
                 }
             }
         }

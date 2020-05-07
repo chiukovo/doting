@@ -127,7 +127,7 @@
                 <span>{{ $animal->name }}</span>
                 <div class="table-img">
                   @if($animal->info == '')
-                    <img src="/animal/{{ $animal->name }}_icon.png" alt="{{ $animal->name }}">
+                    <img src="/animal/icon/{{ $animal->name }}.png" alt="{{ $animal->name }}">
                   @else
                     <img src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
                   @endif

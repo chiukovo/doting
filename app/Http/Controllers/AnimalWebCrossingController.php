@@ -167,7 +167,7 @@ class AnimalWebCrossingController extends Controller
                             $name = $build[0]['contents']['contents'][0]['body']['contents'][0]['text'];
                             $expName = explode(" ", $name);
 
-                            $imgUrl = env('APP_URL') . '/animal/' . urlencode($expName[0]) . '_icon.png';
+                            $imgUrl = env('APP_URL') . '/animal/icon/' . urlencode($expName[0]) . '.png';
                             $headers = get_headers($imgUrl);
                             $code = substr($headers[0], 9, 3);
 

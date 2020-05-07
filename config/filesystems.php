@@ -66,6 +66,18 @@ return [
             'driver' => 'local',
             'root' => public_path('other'),
         ],
+        'animalPoster' => [
+            'driver' => 'local',
+            'root' => public_path('animal/poster'),
+        ],
+        'animalHouse' => [
+            'driver' => 'local',
+            'root' => public_path('animal/house'),
+        ],
+        'animalIcon' => [
+            'driver' => 'local',
+            'root' => public_path('animal/icon'),
+        ],
         'animalCard' => [
             'driver' => 'local',
             'root' => public_path('animal/card'),
