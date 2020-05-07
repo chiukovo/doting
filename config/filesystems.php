@@ -58,6 +58,10 @@ return [
             'driver' => 'local',
             'root' => public_path('art'),
         ],
+        'itemsNew' => [
+            'driver' => 'local',
+            'root' => public_path('itemsNew'),
+        ],
         'items' => [
             'driver' => 'local',
             'root' => public_path('items'),

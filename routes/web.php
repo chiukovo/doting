@@ -108,7 +108,8 @@ Route::get('/kk/detail', 'KKController@detail');
 Route::get('/test', 'AnimalCrossingController@index');
 
 //爬蟲
-/*Route::get('/getAnimalIcon', 'ApiController@getAnimalIcon');
+/*Route::get('/getNewFurniture', 'ApiController@getNewFurniture');
+Route::get('/getAnimalIcon', 'ApiController@getAnimalIcon');
 Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
 Route::get('/getFishApi', 'ApiController@getFishApi');
 Route::get('/getInsectApi', 'ApiController@getInsectApi');

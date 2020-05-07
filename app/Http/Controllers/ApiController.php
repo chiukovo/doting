@@ -10,6 +10,86 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getNewFurniture()
+    {
+        set_time_limit(0);
+
+        $result = Curl::to('https://api.nookplaza.net/items?category=Clothing')->asJson()->get();
+        $result = $result->results;
+
+        foreach ($result as $target) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $target->category . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'jp_name' => ['td:eq(14)', 'text'],
+                'name' => ['td:eq(13)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            //翻譯
+            $name = '';
+            $jpName = '';
+            $insert = [];
+
+            foreach ($trans as $tran) {
+                if (strtolower($tran['en_name']) == strtolower($target->name)) {
+                    $name = $tran['name'];
+                    $jpName = $tran['jp_name'];
+                }
+            }
+
+            if ($name != '') {
+                $sizeData = $target->content->size;
+                $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
+
+                $insert = [
+                    'en_name' => strtolower($target->name),
+                    'jp_name' => $jpName,
+                    'name' => $name,
+                    'buy' => $target->content->buy,
+                    'sell' => $target->content->sell,
+                    'is_diy' => $target->content->dIY,
+                    'category' => $target->category,
+                    'size' => $size,
+                    'type' => 1,
+                ];
+
+                foreach ($target->variations as $key => $detail) {
+                    $insert['color'] = $detail->content->bodyColor;
+                    $img = $detail->content->image;
+                    $insert['img_name'] = '';
+                    $fileIsset = false;
+
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+                    $code = substr($headers[0], 9, 3);
+
+                    if ($code == 200) {
+                        $insert['img_name'] = $name . '_' . $key;
+                        $fileIsset = is_file(public_path('itemsNew/' .  $insert['img_name'] . '.png'));
+
+                        if (!$fileIsset) {
+                            $content = file_get_contents($img);
+                            Storage::disk('itemsNew')->put($insert['img_name'] . '.png', $content);
+                        }
+                    }
+
+                    if (!$fileIsset) {
+                        //insert
+                        DB::table('items_new')->insert($insert);
+
+                        echo 'insert: ' . $name . '<br>';
+                    }
+                }
+            }
+        }
+
+        echo 'done';
+    }
+
     public function getAnimalIcon()
     {
         set_time_limit(0);
