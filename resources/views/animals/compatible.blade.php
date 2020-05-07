@@ -22,6 +22,7 @@
         <td>
           <button class="btn" @click="openAll">全部開啟</button>
           <button class="btn" @click="searchSelected = []">全部隱藏</button>
+          <button class="btn" @click="analysis">分析</button>
         </td>
       </tr>
     </table>
@@ -32,7 +33,7 @@
         <div class="media-card" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1'">
           <div class="media-card-title">@{{ race }}</div>
           <ul class="media-card-list">
-            <li v-for="detail in animal">
+            <li v-for="detail in animal" @click="toggleSelected(detail.name)">
               <span>@{{ detail.name }}</span>
               <div class="table-img">
                 <img :src="'/animal/icon/' + detail.name + '.png'" :alt="detail.name">
@@ -53,6 +54,7 @@
       animals: [],
       races: [],
       searchSelected: [],
+      selected: [],
     },
     mounted() {
       this.getAnimalsGroupRace()
@@ -76,6 +78,31 @@
           //add
           this.searchSelected.splice(key, 1);
         }
+      },
+      toggleSelected(name) {
+        const key = this.selected.indexOf(name)
+
+        if (key == '-1') {
+          //push
+          this.selected.push(name)
+        } else {
+          //add
+          this.selected.splice(key, 1);
+        }
+      },
+      analysis() {
+        let url = '/animals/analysis?name='
+        const _this = this
+
+        this.selected.forEach(function(animal, key) {
+          url += animal
+
+          if (key < _this.selected.length - 1) {
+            url += ','
+          }
+        })
+
+        location.href = url
       },
       openAll() {
         this.searchSelected = JSON.parse(JSON.stringify(this.races))

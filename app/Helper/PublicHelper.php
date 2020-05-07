@@ -103,6 +103,8 @@ if (!function_exists('matchmaking')) {
     function matchmaking($lists)
     {
     	$result = [];
+    	$resultScore = 0;
+    	$resultSum = 0;
 
 		foreach ($lists as $target) {
 			$detail = [];
@@ -116,7 +118,7 @@ if (!function_exists('matchmaking')) {
 			$raceScore = 0;
 			$raceScoreTotal = 0;
 			//全部加起來
-			$sumAll = 0;
+			$totalSum = 0;
 			/*
 				分數
 				如果10點以上，兼容性很好
@@ -135,13 +137,13 @@ if (!function_exists('matchmaking')) {
 					$perScoreTotal += $perScore;
 					$matchScoreTotal += $matchScore;
 					$raceScoreTotal += $raceScore;
-					$sumAll = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
+					$totalSum = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
 
-					if ($perScoreTotal > 10 || $matchScoreTotal > 10 || $raceScoreTotal > 10) {
+					if ($sum > 10) {
 						$score++;
 					}
 
-					if ($perScoreTotal < 4 || $matchScoreTotal < 4 || $raceScoreTotal < 4) {
+					if ($sum < 4) {
 						$score--;
 					}
 
@@ -152,20 +154,31 @@ if (!function_exists('matchmaking')) {
 						'raceScore' => $raceScore,
 						'sum' => $sum,
 					];
+				} else {
+					$detail[] = [
+						'name' => $check->name,
+					];
 				}
 			}
 
 			$target->perScoreTotal = $perScoreTotal;
 			$target->matchScoreTotal = $matchScoreTotal;
 			$target->raceScoreTotal = $raceScoreTotal;
-			$target->sumAll = $sumAll;
+			$target->totalSum = $totalSum;
 			$target->detail = $detail;
 			$target->score = $score;
+
+			$resultScore += $score;
+			$resultSum += $totalSum;
 
 			$result[] = $target;
 		}
 
-		return $result;
+		return [
+			'data' => $result,
+			'resultSum' => $resultSum,
+			'resultScore' => $resultScore,
+		];
     }
 }
 

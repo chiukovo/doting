@@ -50,6 +50,7 @@ class AnimalWebCrossingController extends Controller
         $sameRaceArray = DB::table('animal')
             ->where('race', 'like', '%' . $detail->race . '%')
             ->where('id', '!=', $detail->id)
+            ->whereNull('info')
             ->get()
             ->toArray();
 
@@ -244,7 +245,9 @@ class AnimalWebCrossingController extends Controller
         //媒合度
         $lists = matchmaking($lists);
 
-        return $lists;
+        return view('animals.analysis', [
+            'lists' => $lists
+        ]);
     }
 
     public function statisticsComment($number)

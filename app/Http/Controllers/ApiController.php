@@ -14,7 +14,7 @@ class ApiController extends Controller
     {
         set_time_limit(0);
 
-        $result = Curl::to('https://api.nookplaza.net/items?category=Clothing')->asJson()->get();
+        $result = Curl::to('https://api.nookplaza.net/items?category=Equippables')->asJson()->get();
         $result = $result->results;
 
         foreach ($result as $target) {
@@ -42,8 +42,12 @@ class ApiController extends Controller
             }
 
             if ($name != '') {
-                $sizeData = $target->content->size;
-                $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
+                $size = '';
+
+                if (isset($target->content->size)) {
+                    $sizeData = $target->content->size;
+                    $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
+                }
 
                 $insert = [
                     'en_name' => strtolower($target->name),
@@ -56,6 +60,43 @@ class ApiController extends Controller
                     'size' => $size,
                     'type' => 1,
                 ];
+
+                if (empty($target->variations)) {
+                    if (isset($target->content->bodyColor)) {
+                        $insert['color'] = $target->content->bodyColor;
+                    }
+
+                    if (isset($target->content->curtainColor)) {
+                        $insert['color'] = $target->content->curtainColor;
+                    }
+
+                    $img = $target->content->image;
+                    $insert['img_name'] = '';
+                    $fileIsset = false;
+
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+                    $code = substr($headers[0], 9, 3);
+
+                    if ($code == 200) {
+                        $insert['img_name'] = $name;
+                        $fileIsset = is_file(public_path('itemsNew/' .  $insert['img_name'] . '.png'));
+
+                        if (!$fileIsset) {
+                            $content = file_get_contents($img);
+                            Storage::disk('itemsNew')->put($insert['img_name'] . '.png', $content);
+                        }
+                    }
+
+                    if (!$fileIsset) {
+                        //insert
+                        DB::table('items_new')->insert($insert);
+
+                        echo 'insert: ' . $name . '<br>';
+                    }
+
+                    continue;
+                }
 
                 foreach ($target->variations as $key => $detail) {
                     $insert['color'] = $detail->content->bodyColor;
