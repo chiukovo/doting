@@ -105,20 +105,67 @@ if (!function_exists('matchmaking')) {
     	$result = [];
 
 		foreach ($lists as $target) {
+			$detail = [];
 			//性格
 			$perScore = 0;
+			$perScoreTotal = 0;
 			//星座
 			$matchScore = 0;
+			$matchScoreTotal = 0;
 			//種族
 			$raceScore = 0;
+			$raceScoreTotal = 0;
+			//全部加起來
+			$sumAll = 0;
+			/*
+				分數
+				如果10點以上，兼容性很好
+				在5到9分的情況下，兼容性正常或良好
+				4點以下時兼容性差
+			 */
+			$score = 0;
 
 			foreach ($lists as $check) {
 				if ($target->id != $check->id) {
 					$perScore = computedPer($target, $check);
 					$matchScore = computedMatch($target, $check);
+					$raceScore = computedRace($target, $check);
+
+					$sum = $perScore + $matchScore + $raceScore;
+					$perScoreTotal += $perScore;
+					$matchScoreTotal += $matchScore;
+					$raceScoreTotal += $raceScore;
+					$sumAll = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
+
+					if ($perScoreTotal > 10 || $matchScoreTotal > 10 || $raceScoreTotal > 10) {
+						$score++;
+					}
+
+					if ($perScoreTotal < 4 || $matchScoreTotal < 4 || $raceScoreTotal < 4) {
+						$score--;
+					}
+
+					$detail[] = [
+						'name' => $check->name,
+						'perScore' => $perScore,
+						'matchScore' => $matchScore,
+						'raceScore' => $raceScore,
+						'sum' => $sum,
+					];
 				}
 			}
+
+			$target->perScoreTotal = $perScoreTotal;
+			$target->matchScoreTotal = $matchScoreTotal;
+			$target->raceScoreTotal = $raceScoreTotal;
+			$target->sumAll = $sumAll;
+			$target->detail = $detail;
+			$target->score = $score;
+
+			$result[] = $target;
 		}
+
+		return $result;
     }
 }
 
@@ -488,5 +535,81 @@ if (!function_exists('computedMatch')) {
 	    }
 
 	    return 0;
+    }
+}
+
+if (!function_exists('computedRace')) {
+
+    /**
+     * 種族分數
+     *
+     * @return string
+     */
+    function computedRace($target, $check)
+    {
+		/*  --5分--
+	    	1.狗和狼
+	    	2.熊和小熊
+	    	3.山羊和綿羊
+	    	4.老虎和貓
+	    	5.公牛和母牛
+	    	6.無尾熊和袋鼠
+		*/
+		if ($target->race == '狗' && $check->race == '狼' || $check->race == '狗' && $target->race == '狼') {
+			return 5;
+		}
+
+		if ($target->race == '牛' && $check->race == '牛') {
+			if ($target->sex == '♀' && $check->race == '♂' || $check->sex == '♀' && $target->race == '♂') {
+				return 5;
+			}
+		}
+
+		if ($target->race == '大熊' && $check->race == '小熊' || $check->race == '大熊' && $target->race == '小熊') {
+			return 5;
+		}
+
+		if ($target->race == '山羊' && $check->race == '綿羊' || $check->race == '山羊' && $target->race == '綿羊') {
+			return 5;
+		}
+
+		if ($target->race == '老虎' && $check->race == '貓' || $check->race == '老虎' && $target->race == '貓') {
+			return 5;
+		}
+
+		if ($target->race == '無尾熊' && $check->race == '袋鼠' || $check->race == '無尾熊' && $target->race == '袋鼠') {
+			return 5;
+		}
+
+		/*  --3分--
+			次要:
+			1.同種族
+			2.松鼠和老鼠
+			3.松鼠和倉鼠
+			4.老鼠和倉鼠
+			5.馬和鹿
+		 */
+
+		if ($target->race == $check->race) {
+			return 2;
+		}
+
+		if ($target->race == '松鼠' && $check->race == '老鼠' || $check->race == '松鼠' && $target->race == '老鼠') {
+			return 2;
+		}
+
+		if ($target->race == '松鼠' && $check->race == '倉鼠' || $check->race == '松鼠' && $target->race == '倉鼠') {
+			return 2;
+		}
+
+		if ($target->race == '老鼠' && $check->race == '倉鼠' || $check->race == '老鼠' && $target->race == '倉鼠') {
+			return 2;
+		}
+
+		if ($target->race == '馬' && $check->race == '鹿' || $check->race == '馬' && $target->race == '鹿') {
+			return 2;
+		}
+
+		return 1;
     }
 }

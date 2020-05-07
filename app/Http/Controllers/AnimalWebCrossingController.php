@@ -243,6 +243,8 @@ class AnimalWebCrossingController extends Controller
 
         //媒合度
         $lists = matchmaking($lists);
+
+        return $lists;
     }
 
     public function statisticsComment($number)
