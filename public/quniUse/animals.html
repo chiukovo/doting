@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>豆丁森友會</title>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="root">
+    <div id="donateMe">
+      <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+    </div>
+    <header class="header">
+      <div class="header-wrap">
+        <div class="container">
+          <a href="/" class="logo">
+            <h1>豆丁森友會 Doting Animal crossing</h1>
+            <h2>動物森友會</h2>
+            <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
+          </a>
+          <button class="btn btn-nav"><ion-icon name="menu-outline"></ion-icon></button>
+          <nav class="nav">
+            <ul>
+              <li class="sub-nav">
+                <a href="">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/animals/list">動物居民</a></li>
+                  <li><a href="/npc/list">動物NPC</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="">魚圖鑑</a></li>
+                  <li><a href="">昆蟲圖鑑</a></li>
+                  <li><a href="">化石圖鑑</a></li>
+                  <li><a href="">藝術品</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/diy/list">DIY方程式</a></li>
+                  <li><a href="/apparel/list">家具</a></li>
+                  <li><a href="/furniture/list">服飾</a></li>
+                  <li><a href="/plant/list">植物</a></li>
+                  <li><a href="/kk/list">唱片</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/instructions">豆丁教學</a></li>
+                  <li><a href="/update/version">更新資訊</a></li>
+                  <li><a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></li>
+                  <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- <a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a> -->
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="content-wrap">
+        <div class="container">
+          <h2 class="content-title">動物居民</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="\">首頁</a></li>
+              <li class="breadcrumb-item active" aria-current="page">動物居民</li>
+            </ol>
+          </nav>
+          <section>
+            <div class="section-search row">
+              <div class="col">
+                <!-- 電腦版隱藏進階搜尋按鈕, class="collapse" 移除 -->
+                <a class="section-search-btn" data-toggle="collapse" href="#collapseSearch" role="button">進階搜尋<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <div class="collapse" id="collapseSearch">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td class="text-center" width="80">查看全部</td>
+                      <td>
+                        <button class="btn btn-search">查看全部</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">種族</td>
+                      <td>
+                        <button class="btn btn-search">狗</button>
+                        <button class="btn btn-search current">猴子</button>
+                        <button class="btn btn-search current">老鼠</button>
+                        <button class="btn btn-search">大熊</button>
+                        <button class="btn btn-search">山羊</button>
+                        <button class="btn btn-search">獅子</button>
+                        <button class="btn btn-search">鴨</button>
+                        <button class="btn btn-search">袋鼠</button>
+                        <button class="btn btn-search">青蛙</button>
+                        <button class="btn btn-search">貓</button>
+                        <button class="btn btn-search">鴕鳥</button>
+                        <button class="btn btn-search">兔子</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">個性</td>
+                      <td>
+                        <button class="btn btn-search">普通</button>
+                        <button class="btn btn-search">元氣</button>
+                        <button class="btn btn-search">運動</button>
+                        <button class="btn btn-search">成熟</button>
+                        <button class="btn btn-search">自戀</button>
+                        <button class="btn btn-search">休閒</button>
+                        <button class="btn btn-search">大姊姊</button>
+                        <button class="btn btn-search">暴躁</button>
+                        <button class="btn btn-search">隨和</button>
+                        <button class="btn btn-search">貪婪</button>
+                        <button class="btn btn-search">號呆</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">生日</td>
+                      <td>
+                        <button class="btn btn-search">一月</button>
+                        <button class="btn btn-search">二月</button>
+                        <button class="btn btn-search">三月</button>
+                        <button class="btn btn-search">四月</button>
+                        <button class="btn btn-search">五月</button>
+                        <button class="btn btn-search">六月</button>
+                        <button class="btn btn-search">七月</button>
+                        <button class="btn btn-search">八月</button>
+                        <button class="btn btn-search">九月</button>
+                        <button class="btn btn-search">十月</button>
+                        <button class="btn btn-search">十一月</button>
+                        <button class="btn btn-search">十二月</button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="form-search">
+                  <input type="text" class="form-control" placeholder="請輸入關鍵字">
+                  <button class="btn btn-primary" native-type="submit">搜尋</button>
+                  <button class="btn">清除搜尋</button></div>
+                </td>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered table-hover text-center">
+                  <thead>
+                    <tr>
+                      <th scope="col">名稱</th>
+                      <th scope="col">性別</th>
+                      <th scope="col">個性</th>
+                      <th scope="col">種族</th>
+                      <th scope="col">生日</th>
+                      <th scope="col">口頭禪</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">
+                        <a href="#">
+                          <span>茶茶丸</span>
+                          <div class="table-img">
+                            <img src="../animal/icon/茶茶丸.png" alt="茶茶丸">
+                          </div>
+                        </a>
+                      </td>
+                      <td>♂</td>
+                      <td>運動</td>
+                      <td>綿羊</td>
+                      <td>3.18</td>
+                      <td>哇耶</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">
+                        <a href="#">
+                          <span>彭花</span>
+                          <div class="table-img">
+                            <img src="../animal/icon/彭花.png" alt="彭花">
+                          </div>
+                        </a>
+                      </td>
+                      <td>♂</td>
+                      <td>運動</td>
+                      <td>綿羊</td>
+                      <td>3.18</td>
+                      <td>哇耶</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">
+                        <a href="#">
+                          <span>月兔</span>
+                          <div class="table-img">
+                            <img src="../animal/icon/月兔.png" alt="月兔">
+                          </div>
+                        </a>
+                      </td>
+                      <td>♂</td>
+                      <td>運動</td>
+                      <td>綿羊</td>
+                      <td>3.18</td>
+                      <td>哇耶</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">
+                        <a href="#">
+                          <span>毛海兒</span>
+                          <div class="table-img">
+                            <img src="../animal/icon/毛海兒.png" alt="毛海兒">
+                          </div>
+                        </a>
+                      </td>
+                      <td>♂</td>
+                      <td>運動</td>
+                      <td>綿羊</td>
+                      <td>3.18</td>
+                      <td>哇耶</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="copyright">
+        copyright © 豆丁森友會
+      </div>
+    </footer>
+  </div>
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>
