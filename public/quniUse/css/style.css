@@ -11129,9 +11129,19 @@ ul {
 .table-analysis .analysis-scores-total {
   font-size: 1.25em;
   text-align: center;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   margin-bottom: .3rem;
   border-radius: .25rem;
+}
+
+.table-analysis .analysis-scores-total.good {
+  background-color: rgba(40, 167, 69, 0.05);
+  border-color: #28a745;
+}
+
+.table-analysis .analysis-scores-total.bad {
+  background-color: rgba(220, 53, 69, 0.05);
+  border-color: #dc3545;
 }
 
 .table-analysis .analysis-scores-subtotal {
@@ -11185,6 +11195,10 @@ ul {
 
 .alert-primary {
   background-color: rgba(30, 135, 240, 0.06);
+}
+
+.alert-primary span {
+  font-size: 16px;
 }
 
 .table {
@@ -11241,23 +11255,5 @@ ul {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-  }
-}
-
-@media (min-width: 768px) {
-  #root {
-    border: 1px solid red;
-  }
-}
-
-@media (min-width: 992px) {
-  #root {
-    border: 1px solid green;
-  }
-}
-
-@media (min-width: 1200px) {
-  #root {
-    border: 1px solid blue;
   }
 }

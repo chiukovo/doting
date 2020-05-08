@@ -521,3 +521,20 @@ body {
   position: absolute;
   right: 0;
 }
+
+.donate-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.donate-list li {
+  padding-bottom: 5px;
+}
+.donate-list li + li {
+  border-top: 1px solid rgba(195, 220, 227, 0.4);
+}
+.donate-list-re {
+  display: block;
+  color: #c3c3c3;
+  line-height: 1;
+}

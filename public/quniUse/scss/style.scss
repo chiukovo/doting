@@ -1,6 +1,6 @@
 @import "bootstrap";
 
-$developer: 1;
+$developer: 0;
 
 ul {
   line-height: 1.8;
@@ -283,14 +283,16 @@ ul {
   .analysis-scores-total {
     font-size: 1.25em;
     text-align: center;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     margin-bottom: .3rem;
     border-radius: .25rem;
     &.good {
-      border-color: $text-danger;
+      background-color: rgba($success, .05);
+      border-color: $success;
     }
     &.bad {
-      border-color: $text-primary;
+      background-color: rgba($danger, .05);
+      border-color: $danger;
     }
   }
   .analysis-scores-subtotal {
@@ -344,6 +346,9 @@ ul {
 }
 .alert-primary {
   background-color: rgba($primary, .06);
+  span {
+    font-size: 16px;
+  }
 }
 
 // table
