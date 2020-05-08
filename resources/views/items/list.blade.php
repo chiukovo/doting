@@ -50,7 +50,7 @@
   <table class="media-card table">
     <tr>
       <th>名稱</th>
-      <th width="60">價格</th>
+      <th width="70">價格</th>
       <th width="60">賣出</th>
       <th width="60">類型</th>
       <th>尺寸</th>
@@ -64,8 +64,8 @@
           </div>
         </a>
       </td>
-      <td>@{{ list.buy }}</td>
-      <td>@{{ list.sell }}</td>
+      <td>@{{ formatPrice(list.buy) }}</td>
+      <td>@{{ formatPrice(list.sell) }}</td>
       <td>@{{ list.category }}</td>
       <td>@{{ list.size }}</td>
     </tr>
@@ -122,6 +122,13 @@
              $state.complete();
            }
          })
+      },
+      formatPrice(money) {
+        if (money == null) {
+          return ''
+        }
+
+        return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
       },
       clearAll() {
         this.searchData = {

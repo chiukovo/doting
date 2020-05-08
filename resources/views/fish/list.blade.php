@@ -43,7 +43,7 @@
     <tr v-for="list in lists">
       <td>
         <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
-          <span>@{{ list.name }}<br>$@{{ list.sell }}</span>
+          <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
           <div class="table-img">
             <img :src="'/other/' + list.name + '.png'" :alt="list.name">
           </div>
@@ -78,6 +78,13 @@
     mounted() {
     },
     methods: {
+      formatPrice(money) {
+        if (money == null) {
+          return ''
+        }
+        
+        return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+      },
       search($state) {
         axios.post('/fish/search', {
            page: this.page,
