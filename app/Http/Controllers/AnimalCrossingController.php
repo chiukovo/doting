@@ -413,12 +413,20 @@ class AnimalCrossingController extends Controller
     {
         $returnText = '';
 
+        if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
+            return ' 醒醒吧你只有左右手 哇耶';
+        }
+
+        if ($text == '找妹妹') {
+            return ' 醒醒吧你根本沒有妹妹 哇耶';
+        }
+
         if ($text == '豆丁笨蛋') {
-            return '你才笨蛋 (／‵Д′)／~ ╧╧';
+            return '你才笨蛋 哇耶 (／‵Д′)／~ ╧╧';
         }
 
         if ($text == '搜尋排行榜') {
-            $returnText = '豆丁搜尋排行榜 (´・ω・`)' . "\n";
+            $returnText = '豆丁搜尋排行榜 哇耶 (´・ω・`)' . "\n";
             $returnText .= 'https://doting.tw/statistics';
 
             return $returnText;
