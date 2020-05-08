@@ -312,6 +312,40 @@ ul {
 
 
 
+.donate {
+  .donate-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      padding: .3rem .5rem;
+      .donate-list-date {
+        color: $gray-500;
+      }
+      .donate-list-name {
+        font-size: 15px;
+      }
+      .donate-list-money {
+        font-size: 15px;
+        font-weight: bold;
+        &:before {
+          content: '$';
+        }
+      }
+      .donate-list-re {
+        color: $gray-500;
+        &:before {
+          content: "\2014\00A0";
+        }
+      }
+      &:nth-child(odd) {
+        background-color: $gray-100;
+      }
+    }
+  }
+}
+
+
 
 .footer {
   .copyright {
@@ -385,6 +419,14 @@ a.link {
     .post-card-list {
       &.check-list li {
         width: 16.66%;
+      }
+    }
+  }
+  .donate {
+    .donate-list {
+      li {
+        display: flex;
+        justify-content: space-between;
       }
     }
   }

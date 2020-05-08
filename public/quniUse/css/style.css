@@ -11165,6 +11165,45 @@ ul {
   background-color: rgba(220, 53, 69, 0.1);
 }
 
+.donate .donate-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.donate .donate-list li {
+  padding: .3rem .5rem;
+}
+
+.donate .donate-list li .donate-list-date {
+  color: #adb5bd;
+}
+
+.donate .donate-list li .donate-list-name {
+  font-size: 15px;
+}
+
+.donate .donate-list li .donate-list-money {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.donate .donate-list li .donate-list-money:before {
+  content: '$';
+}
+
+.donate .donate-list li .donate-list-re {
+  color: #adb5bd;
+}
+
+.donate .donate-list li .donate-list-re:before {
+  content: "\2014\00A0";
+}
+
+.donate .donate-list li:nth-child(odd) {
+  background-color: #f8f9fa;
+}
+
 .footer .copyright {
   color: #ced4da;
   text-align: center;
@@ -11236,6 +11275,14 @@ a.link {
 @media (min-width: 768px) {
   .post .post-card-list.check-list li {
     width: 16.66%;
+  }
+  .donate .donate-list li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
 }
 
