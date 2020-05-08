@@ -10764,9 +10764,8 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-p {
-  display: block;
-  height: 1000px;
+ul {
+  line-height: 1.8;
 }
 
 .header {
@@ -10859,7 +10858,12 @@ p {
 }
 
 .section-search .btn-search {
+  border-color: #e9ecef;
   margin: 2px 0;
+}
+
+.section-search .btn-search:hover {
+  background-color: #f8f9fa;
 }
 
 .section-search .btn-search.current {
@@ -10867,7 +10871,7 @@ p {
   border-color: rgba(30, 135, 240, 0.2);
 }
 
-.section-search .section-search-btn {
+.section-search .collapse-search {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10878,13 +10882,12 @@ p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  text-align: center;
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
   padding: .5rem;
 }
 
-.section-search .section-search-btn ion-icon {
+.section-search .collapse-search ion-icon {
   position: absolute;
   right: 10px;
   opacity: 0.5;
@@ -11020,6 +11023,56 @@ p {
   background-color: #f8f9fa;
 }
 
+.post .post-card-list.check-list li {
+  position: relative;
+  cursor: pointer;
+}
+
+.post .post-card-list.check-list li:before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: #1e87f0;
+  background-color: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 50%;
+}
+
+.post .post-card-list.check-list li.current {
+  background-color: #f8f9fa;
+}
+
+.post .post-card-list.check-list li.current:before {
+  content: '';
+  background: #fff url("../../image/checkmark-outline.svg") center no-repeat;
+  background-size: 100%;
+  border-color: #ced4da;
+}
+
+.collapse-analysis {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #212529;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: .5rem;
+}
+
+.collapse-analysis ion-icon {
+  position: absolute;
+  right: 10px;
+  opacity: 0.5;
+}
+
 footer .copyright {
   color: #ced4da;
   text-align: center;
@@ -11045,11 +11098,14 @@ footer .copyright {
 }
 
 .btn {
-  border-color: #e9ecef;
   word-break: keep-all;
 }
 
-.btn:hover {
+.btn-default {
+  border-color: #e9ecef;
+}
+
+.btn-default:hover {
   background-color: #f8f9fa;
 }
 
@@ -11087,11 +11143,8 @@ footer .copyright {
 }
 
 @media (min-width: 768px) {
-  .post-header {
-    float: left;
-  }
-  .post-body {
-    margin-left: 260px;
+  .post .post-card-list.check-list li {
+    width: 20%;
   }
 }
 
@@ -11099,10 +11152,16 @@ footer .copyright {
   .post .post-card-list li {
     width: 20%;
   }
+  .post .post-card-list.check-list li {
+    width: 16.66%;
+  }
 }
 
 @media (min-width: 1200px) {
   .post .post-card-list li {
     width: 16.66%;
+  }
+  .post .post-card-list.check-list li {
+    width: 12.5%;
   }
 }

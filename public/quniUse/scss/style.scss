@@ -1,8 +1,7 @@
 @import "bootstrap";
 
-p {
-  display: block;
-  height: 1000px;
+ul {
+  line-height: 1.8;
 }
 .header {
   display: flex;
@@ -67,18 +66,21 @@ p {
     margin-bottom: 0;
   }
   .btn-search {
+    border-color: $gray-200;
     margin: 2px 0;
+    &:hover {
+      background-color: $gray-100;
+    }
     &.current {
       background-color: rgba($primary, .08);
       border-color: rgba($primary, .2);
     }
   }
-  .section-search-btn {
+  .collapse-search {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     background-color: $gray-100;
     border: 1px solid $gray-200;
     padding: .5rem;
@@ -189,6 +191,49 @@ p {
         background-color: $gray-100;
       }
     }
+    &.check-list {
+      li {
+        position: relative;
+        cursor: pointer;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          display: block;
+          width: 20px;
+          height: 20px;
+          color: $primary;
+          background-color: #fff;
+          border: 1px solid $gray-200;
+          border-radius: 50%;
+        }
+        &.current {
+          background-color: $gray-100;
+          &:before {
+            content: '';
+            background: #fff url('../../image/checkmark-outline.svg') center no-repeat;
+            background-size: 100%;
+            border-color: $gray-400;
+          }
+        }
+      }
+    }
+  }
+}
+
+.collapse-analysis {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: $gray-900;
+  background-color: $gray-100;
+  border: 1px solid $gray-200;
+  padding: .5rem;
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    opacity: 0.5;
   }
 }
 
@@ -222,8 +267,10 @@ footer {
   overflow: hidden;
 }
 .btn {
-  border-color: $gray-200;
   word-break: keep-all;
+}
+.btn-default {
+  border-color: $gray-200;
   &:hover {
     background-color: $gray-100;
   }
@@ -353,21 +400,39 @@ footer {
 
 // >768px
 @include media-breakpoint-up(md) {
-  .post-header {
-    float: left;
-  }
-  .post-body {
-    margin-left: 260px;
+  // #root {
+  //   border: 1px solid red;
+  // }
+  .post .post-card-list {
+    &.check-list li {
+      width: 20%;
+    }
   }
 }
 @include media-breakpoint-up(lg) {
-  .post .post-card-list li {
-    width: 20%;
+  // #root {
+  //   border: 1px solid green;
+  // }
+  .post .post-card-list {
+    li {
+      width: 20%;
+    }
+    &.check-list li {
+      width: 16.66%;
+    }
   }
 }
 @include media-breakpoint-up(xl) {
-  .post .post-card-list li {
-    width: 16.66%;
+  // #root {
+  //   border: 1px solid blue;
+  // }
+  .post .post-card-list {
+    li {
+      width: 16.66%;
+    }
+    &.check-list li {
+      width: 12.5%;
+    }
   }
 }
 // // < 575px
