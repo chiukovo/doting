@@ -42,7 +42,6 @@ class FishController extends Controller
             $result[] = $data;
         }
 
-
         return $result;
     }
 }

@@ -273,8 +273,26 @@ class OtherServices
         if ($item->m12 == $type || $item->m12 == '全') {
             $target[] = 12;
         }
+        
+        sort($target);
+        $groups = [];
+        $string = '';
 
-        $string = implode(",", $target);
+        for($i = 0; $i < count($target); $i++) {
+            if ($i > 0 && ($target[$i - 1] == $target[$i] - 1)) {
+                array_push($groups[count($groups) - 1], $target[$i]);
+            } else {
+                array_push($groups, array($target[$i])); 
+            }
+        }
+
+        foreach($groups as $group) {
+            if(count($group) == 1) {
+                $string .= ' ' . $group[0] . "\n";
+            } else {
+                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . "\n";
+            }
+        }
 
         return $string;
     }

@@ -37,8 +37,8 @@
       <th width="50">陰影</th>
       <th>位置</th>
       <th width="60">時間</th>
-      <th width="50">南半球月份</th>
-      <th width="50">北半球月份</th>
+      <th width="55">南半球</th>
+      <th width="55">北半球</th>
     </tr>
     <tr v-for="list in lists">
       <td>
