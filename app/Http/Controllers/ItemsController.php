@@ -23,9 +23,7 @@ class ItemsController extends Controller
 
     public function getItemsSearch(Request $request)
     {
-        $itemsType = $request->input('itemsType', []);
-        $buyType = $request->input('buyType', []);
-        $detailType = $request->input('detailType', []);
+        $category = $request->input('category', []);
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
         $type = $request->input('type', 'apparel');
@@ -40,29 +38,19 @@ class ItemsController extends Controller
             return [];
         }
 
-        $lists = DB::table('items');
+        $lists = DB::table('items_new');
 
         //家具
         if ($type == 'furniture') {
-            $lists = $lists->whereIn('type', ItemsServices::getFurnitureAllType());
+            $lists = $lists->whereIn('category', ItemsServices::getFurnitureAllType());
         } else if ($type == 'apparel') {
-            $lists = $lists->whereNotIn('type', ItemsServices::getFurnitureAllType());
+            $lists = $lists->whereNotIn('category', ItemsServices::getFurnitureAllType());
         } else if ($type == 'plant') {
-            $lists = $lists->whereNull('type')
-                ->whereNull('source_sell')
-                ->whereNull('size');
+            $lists = $lists->where('category', '植物');
         }
 
-        if (!empty($itemsType) && is_array($itemsType)) {
-            $lists->whereIn('type', $itemsType);
-        }
-
-        if (!empty($buyType) && is_array($buyType)) {
-            $lists->whereIn('buy_type', $buyType);
-        }
-
-        if (!empty($detailType) && is_array($detailType)) {
-            $lists->whereIn('detail_type', $detailType);
+        if (!empty($category) && is_array($category)) {
+            $lists->whereIn('category', $category);
         }
 
         $lists = $lists->select()

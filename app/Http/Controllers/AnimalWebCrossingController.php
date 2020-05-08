@@ -281,7 +281,7 @@ class AnimalWebCrossingController extends Controller
                 return '(＿ ＿*) Z z z';
                 break;
             case 10:
-                return '可憐娜 差點沒上榜';
+                return '我就帥';
                 break;
         }
     }

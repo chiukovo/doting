@@ -27,6 +27,7 @@ class AddItemsNew extends Migration
             $table->string('sell', 100)->nullable()->comment('sell');
             $table->string('size', 100)->nullable()->comment('size');
             $table->string('tag', 100)->nullable()->comment('tag');
+            $table->string('info', 200)->nullable()->commit('info');
             $table->string('category', 100)->nullable()->comment('category');
         });
     }

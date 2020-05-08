@@ -28,42 +28,40 @@ class ItemsServices
 {
     public static function getAllType($type)
     {
-        $items = DB::table('items');
+        $items = DB::table('items_new');
 
         //家具
         if ($type == 'furniture') {
-            $items = $items->whereIn('type', self::getFurnitureAllType());
-        } else {
-            $items = $items->whereNotIn('type', self::getFurnitureAllType());
+            $items = $items->whereIn('category', self::getFurnitureAllType());
+        } else if ($type == 'apparel') {
+            $items = $items->whereNotIn('category', ItemsServices::getFurnitureAllType());
+        } else if ($type == 'plant') {
+            $items = $items->where('category', '植物');
         }
 
-        $items = $items->get(['type as items_type', 'buy_type', 'detail_type'])
+        $items = $items->whereNotNull('category');
+        $items = $items->get(['category'])
             ->toArray();
 
         //race
-        $itemsType = collect($items)->unique('items_type');
-        $buyType = collect($items)->unique('buy_type');
-        $detailType = collect($items)->unique('detail_type');
+        $category = collect($items)->unique('category');
 
         return [
-            'itemsType' => $itemsType,
-            'buyType' => $buyType,
-            'detailType' => $detailType,
+            'category' => $category,
         ];
     }
 
     public static function getFurnitureAllType()
     {
         return [
-            '鞋',
-            '包',
-            '飾品',
-            '頭盔',
-            '帽子',
-            '襪子',
-            '連衣裙',
+            '頭飾',
+            '臉部',
+            '上衣',
             '下裝',
-            '上裝',
+            '包包',
+            '襪子',
+            '鞋子',
+            '飾品',
         ];
     }
 
@@ -76,18 +74,16 @@ class ItemsServices
             return '(*´∀`)~♥';
         }
 
-        $items = DB::table('items')
+        $items = DB::table('items_new')
     	    ->where('name', 'like', '%' . $message . '%');
 
         //家具
         if ($type == 'furniture') {
-            $items = $items->whereIn('type', self::getFurnitureAllType());
+            $items = $items->whereIn('category', self::getFurnitureAllType());
         } else if ($type == 'apparel') {
-            $items = $items->whereNotIn('type', self::getFurnitureAllType());
+            $items = $items->whereNotIn('category', self::getFurnitureAllType());
         } else if ($type == 'plant') {
-            $items = $items->whereNull('type')
-                ->whereNull('source_sell')
-                ->whereNull('size');
+            $items = $items->where('category', '植物');
         }
 
         if ($page != '') {
@@ -106,7 +102,7 @@ class ItemsServices
         if (count($items) > 30 && $page == '') {
             $text = '挖哩勒...搜尋結果有 ' . count($items) . ' 個' . "\n";
             $text .= '👇👇 查看更多搜尋結果 👇👇' . "\n";
-            $text .= env('APP_URL') . '/items/all/text=' . urlencode($message);
+            $text .= env('APP_URL') . '/items/all/list?text=' . urlencode($message);
         }
 
         if (empty($items)) {
@@ -135,7 +131,7 @@ class ItemsServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = env('APP_URL') . '/items/' . urlencode($item->img_name) . '.png';
+        $imgPath = env('APP_URL') . '/itemsNew/' . urlencode($item->img_name) . '.png';
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
@@ -154,9 +150,10 @@ class ItemsServices
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
-        if ($item->source_sell != '') {
+
+        if ($item->category != '') {
             $components[] = TextComponentBuilder::builder()
-                ->setText('價格: $' . number_format($item->source_sell))
+                ->setText('類型: ' . $item->category)
                 ->setWrap(true)
                 ->setAlign('center')
                 ->setSize(ComponentFontSize::XS)
@@ -164,9 +161,9 @@ class ItemsServices
                 ->setFlex(0);
         }
 
-        if ($item->info != '') {
+        if ($item->buy != '') {
             $components[] = TextComponentBuilder::builder()
-                ->setText('配方: ' . $item->info)
+                ->setText('價格: $' . number_format($item->buy))
                 ->setWrap(true)
                 ->setAlign('center')
                 ->setSize(ComponentFontSize::XS)
@@ -184,39 +181,9 @@ class ItemsServices
                 ->setFlex(0);
         }
 
-        if ($item->sample_sell != '') {
+        if ($item->info != '') {
             $components[] = TextComponentBuilder::builder()
-                ->setText('回收: $' . number_format($item->sample_sell))
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->type != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('類型: ' . $item->type)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->buy_type != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('訂購: ' . $item->buy_type)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->detail_type != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('分類: ' . $item->detail_type)
+                ->setText('配方: ' . $item->info)
                 ->setWrap(true)
                 ->setAlign('center')
                 ->setSize(ComponentFontSize::XS)

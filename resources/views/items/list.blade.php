@@ -29,31 +29,11 @@
       <tr v-if="moreSearch">
         <th>類型</th>
         <td>
-          <button class="btn" :class="searchData.itemsType.indexOf(data.items_type) == '-1' ? '' : 'current'" v-for="data in itemsType"  v-if="data.items_type != null" @click="addItemsType(data.items_type)">
-            @{{ data.items_type }}
+          <button class="btn" :class="searchData.category.indexOf(data.category) == '-1' ? '' : 'current'" v-for="data in category"  v-if="data.category != null" @click="addCategory(data.category)">
+            @{{ data.category }}
           </button>
         </td>
       </tr>
-      @if($type != 'furniture')
-      <tr v-if="moreSearch">
-        <th>訂購</th>
-        <td>
-          <button class="btn" :class="searchData.buyType.indexOf(data.buy_type) == '-1' ? '' : 'current'" v-for="data in buyType"  v-if="data.buy_type != null" @click="addBuyType(data.buy_type)">
-            @{{ data.buy_type }}
-          </button>
-        </td>
-      </tr>
-      @endif
-      @if($type != 'furniture')
-      <tr v-if="moreSearch">
-        <th>分類</th>
-        <td>
-          <button class="btn" :class="searchData.detailType.indexOf(data.detail_type) == '-1' ? '' : 'current'" v-for="data in detailType"  v-if="data.detail_type != null" @click="addDetailType(data.detail_type)">
-            @{{ data.detail_type }}
-          </button>
-        </td>
-      </tr>
-      @endif
       <tr>
         <td colspan="2">
           <form>
@@ -71,38 +51,23 @@
     <tr>
       <th>名稱</th>
       <th width="60">價格</th>
-      @if($type != 'plant')
+      <th width="60">賣出</th>
       <th width="60">類型</th>
-      <th width="70">分類</th>
-      @endif
-      @if($type != 'furniture' && $type != 'plant')
-      <th>訂購</th>
       <th>尺寸</th>
-      @endif
-      <th v-if="type == 'plant'">配方</th>
     </tr>
     <tr v-for="list in lists">
       <td>
-        <a :href="'/items/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+        <a :href="'/itemsNew/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name">
           <span>@{{ list.name }}</span>
           <div class="table-img">
-            <img :src="'/items/' + list.img_name + '.png'" :alt="list.name">
+            <img :src="'/itemsNew/' + list.img_name + '.png'" :alt="list.name">
           </div>
         </a>
       </td>
-      <td>
-        @{{ list.source_sell }}
-        <span v-if="list.source_sell == null">@{{ list.sell }}</span>
-      </td>
-      @if($type != 'plant')
-      <td>@{{ list.type }}</td>
-      <td>@{{ list.detail_type }}</td>
-      @if($type != 'furniture' && $type != 'plant')
-      <td>@{{ list.buy_type }}</td>
+      <td>@{{ list.buy }}</td>
+      <td>@{{ list.sell }}</td>
+      <td>@{{ list.category }}</td>
       <td>@{{ list.size }}</td>
-      @endif
-      @endif
-      <td v-if="type == 'plant'">@{{ list.info }}</td>
     </tr>
   </table>
   <infinite-loading :identifier="infiniteId" @infinite="search">
@@ -120,13 +85,13 @@
       lists: [],
       page: 1,
       infiniteId: +new Date(),
-      itemsType: [],
+      category: [],
       buyType: [],
       detailType: [],
       type: "{{ $type }}",
       moreSearch: false,
       searchData: {
-        itemsType: [],
+        category: [],
         buyType: [],
         detailType: [],
         text: "{{ $text }}",
@@ -139,17 +104,13 @@
       getAllType() {
         axios.get('/items/getAllType?type=' + this.type, {
          }).then((response) => {
-           this.itemsType = response.data.itemsType
-           this.buyType = response.data.buyType
-           this.detailType = response.data.detailType
+           this.category = response.data.category
          })
       },
       search($state) {
         axios.post('/items/search', {
            page: this.page,
-           detailType: this.searchData.detailType,
-           buyType: this.searchData.buyType,
-           itemsType: this.searchData.itemsType,
+           category: this.searchData.category,
            text: this.searchData.text,
            type: this.type
          }).then((response) => {
@@ -164,49 +125,21 @@
       },
       clearAll() {
         this.searchData = {
-          itemsType: [],
-          buyType: [],
-          detailType: [],
+          category: [],
           text: '',
         }
 
         this.searchDefault()
       },
-      addItemsType(itemsType) {
-        const key = this.searchData.itemsType.indexOf(itemsType)
+      addCategory(category) {
+        const key = this.searchData.category.indexOf(category)
 
         if (key == '-1') {
           //push
-          this.searchData.itemsType.push(itemsType)
+          this.searchData.category.push(category)
         } else {
           //add
-          this.searchData.itemsType.splice(key, 1);
-        }
-
-        this.searchDefault()
-      },
-      addBuyType(buyType) {
-        const key = this.searchData.buyType.indexOf(buyType)
-
-        if (key == '-1') {
-          //push
-          this.searchData.buyType.push(buyType)
-        } else {
-          //add
-          this.searchData.buyType.splice(key, 1);
-        }
-
-        this.searchDefault()
-      },
-      addDetailType(detailType) {
-        const key = this.searchData.detailType.indexOf(detailType)
-
-        if (key == '-1') {
-          //push
-          this.searchData.detailType.push(detailType)
-        } else {
-          //add
-          this.searchData.detailType.splice(key, 1);
+          this.searchData.category.splice(key, 1);
         }
 
         this.searchDefault()
@@ -217,7 +150,7 @@
         this.infiniteId += 1;
       },
       checkAllCurrent() {
-        if (this.searchData.detailType.length == 0 && this.searchData.buyType.length == 0 && this.searchData.itemsType.length == 0) {
+        if (this.searchData.category.length == 0) {
           return 'current'
         }
       }
