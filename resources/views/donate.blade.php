@@ -24,7 +24,7 @@
         👉<a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a>
       </p>
       <p>
-        👉<a href="mailto:q8156697@gmail.com">聯絡豆丁</a>
+        👉<a href="mailto:q8156697@gmail.com">聯絡豆丁</a> q8156697@gmail.com
       </p>
     </div>
   </div>
@@ -45,19 +45,60 @@
   <div class="media-card">
     <div class="media-card-title">贊助名單 由衷感謝你們 ٩(●˙▿˙●)۶…⋆ฺ</div>
     <div class="update-card">
-      <p>2019/05/08 --- 小虎的經紀人 NTD.300 --- </p>
-      <p>2019/05/08 --- 胡利洋行 NTD.300 --- </p>
-      <p>2019/05/08 --- 黎客房貸 NTD.300 --- </p>
-      <p>2019/05/07 --- 星見曦 NTD.30 --- </p>
-      <p>2019/05/05 --- 鹿島 NTD.100 --- </p>
-      <p>2019/05/01 --- 黃*君 NTD.266 --- </p>
-      <p>2019/05/01 --- 星羽 NTD.100 --- </p>
-      <p>2019/05/01 --- Jeff NTD.100 --- </p>
-      <p>2019/04/30 --- 葉*君 NTD.30 --- </p>
-      <p>2019/04/30 --- 陳*安 NTD.100 --- </p>
-      <p>2019/04/30 --- 吳*穎 NTD.220 --- </p>
-      <p>2019/04/29 --- 陳*琪 NTD.77 --- </p>
-      <p>2019/04/29 --- Quniiii NTD.5 --- </p>
+      <ul class="donate-list">
+        <li>
+          2019/05/08 --- 小虎的經紀人 NTD.300 ---
+          <small class="donate-list-re">經紀人您好 不好意思虧待您家小虎了 圖片已更正 如有更漂亮的圖片也歡迎提供給我歐 (上方有信箱) ٩(ˊᗜˋ )و</small>
+        </li>
+        <li>
+          2019/05/08 --- 胡利洋行 NTD.300 ---
+          <small class="donate-list-re">感謝! 請繼續支持我們 ̋(๑˃́ꇴ˂̀๑)</small>
+        </li>
+        <li>
+          2019/05/08 --- 黎客房貸 NTD.300 ---
+          <small class="donate-list-re">謝謝支持 (๑¯◡¯๑)</small>
+        </li>
+        <li>
+          2019/05/07 --- 星見曦 NTD.30 ---
+          <small class="donate-list-re">沒問題歐 謝謝支持 ʘ‿ʘ</small>
+        </li>
+        <li>
+          2019/05/05 --- 鹿島 NTD.100 ---
+          <small class="donate-list-re">不客氣 謝謝支持 ＼( ^▽^ )／</small>
+        </li>
+        <li>
+          2019/05/01 --- 黃*君 NTD.266 ---
+          <small class="donate-list-re">謝謝支持 (๑¯◡¯๑)</small>
+        </li>
+        <li>
+          2019/05/01 --- 星羽 NTD.100 ---
+          <small class="donate-list-re">謝謝支持 ´･ᴗ･`</small>
+        </li>
+        <li>
+          2019/05/01 --- Jeff NTD.100 ---
+          <small class="donate-list-re">謝謝你Jeff大大 沒問題會持續更新的</small>
+        </li>
+        <li>
+          2019/04/30 --- 葉*君 NTD.30 ---
+          <small class="donate-list-re">謝謝你~~</small>
+        </li>
+        <li>
+          2019/04/30 --- 陳*安 NTD.100 ---
+          <small class="donate-list-re">謝謝大大 ⊙▽⊙</small>
+        </li>
+        <li>
+          2019/04/30 --- 吳*穎 NTD.220 ---
+          <small class="donate-list-re">感謝 ◉‿◉</small>
+        </li>
+        <li>
+          2019/04/29 --- 陳*琪 NTD.77 ---
+          <small class="donate-list-re">謝謝您 (´・ω・`)</small>
+        </li>
+        <li>
+          2019/04/29 --- Quniiii NTD.5 ---
+          <small class="donate-list-re">謝 Quniiii!</small>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
