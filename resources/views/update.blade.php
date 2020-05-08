@@ -20,6 +20,22 @@
     <div class="media-card-title">更新資訊</div>
       <div class="update-card">
         <div class="update-title">
+          <div class="title">更新 v3.5.3</div>
+          <div class="data">2020/5/8</div>
+        </div>
+        <div class="content">
+          <pre>
+1.新增雨傘查詢 關鍵字【找】
+範例: 找童話風雨傘
+2.新增地墊查詢 關鍵字【找】
+範例: 找活潑媽媽廚房地墊
+3.新增地板查詢 關鍵字【找】
+範例: 找楓葉地板
+          </pre>
+        </div>
+      </div>
+      <div class="update-card">
+        <div class="update-title">
           <div class="title">更新 v3.5.2</div>
           <div class="data">2020/5/7</div>
         </div>
