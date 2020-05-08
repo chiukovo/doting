@@ -45,6 +45,7 @@
   <div class="media-card">
     <div class="media-card-title">贊助名單 由衷感謝你們 ٩(●˙▿˙●)۶…⋆ฺ</div>
     <div class="update-card">
+      <p>2019/05/08 --- 小虎的經紀人 NTD.300 --- </p>
       <p>2019/05/08 --- 胡利洋行 NTD.300 --- </p>
       <p>2019/05/08 --- 黎客房貸 NTD.300 --- </p>
       <p>2019/05/07 --- 星見曦 NTD.30 --- </p>
