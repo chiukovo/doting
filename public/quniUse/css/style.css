@@ -11175,6 +11175,11 @@ ul {
   overflow: hidden;
 }
 
+a.link {
+  color: #1e87f0 !important;
+  text-decoration: underline;
+}
+
 .btn {
   white-space: nowrap;
 }

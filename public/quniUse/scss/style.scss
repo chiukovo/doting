@@ -331,6 +331,10 @@ ul {
 .hidden {
   overflow: hidden;
 }
+a.link {
+  color: $primary !important;
+  text-decoration: underline;
+}
 .btn {
   white-space: nowrap;
 }
