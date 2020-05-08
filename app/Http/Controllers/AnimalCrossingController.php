@@ -413,6 +413,10 @@ class AnimalCrossingController extends Controller
     {
         $returnText = '';
 
+        if ($text == '哇耶') {
+            return ' 哇耶 (｀･ω･´)';
+        }
+
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
             return ' 醒醒吧你只有左右手 哇耶';
         }
