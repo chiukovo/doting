@@ -10,7 +10,7 @@
 </div>
 <article>
   <section class="animals-info">
-    <h1 class="media-title">{{ $detail->name }}</h1>
+    <h1 class="media-title">{{ $detail->cn_name }} / {{ $detail->name }}</h1>
     <div class="media">
       <div class="media-photo">
         <img src="/kk/{{ $detail->img_name }}.png" alt="{{ $detail->name }}">
