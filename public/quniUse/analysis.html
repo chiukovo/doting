@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div id="root">
+  <div id="root" class="analysis-fixed">
     <header class="header">
       <div id="donateMe">
         <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
@@ -77,6 +77,24 @@
             </ol>
           </nav>
           <section class="post">
+            <div class="row fixed-bottom analysis-tag">
+              <div class="col-12 col-md-10">
+                <div class="table-responsive">
+                  <span>已選擇4位居民</span>
+                  <button class="btn btn-tag">彭花</button>
+                  <button class="btn btn-tag">茶茶丸</button>
+                  <button class="btn btn-tag">阿妹</button>
+                  <button class="btn btn-tag">阿泥</button>
+                  <button class="btn btn-tag">彭花</button>
+                  <button class="btn btn-tag">茶茶丸</button>
+                  <button class="btn btn-tag">阿妹</button>
+                  <button class="btn btn-tag">阿泥</button>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <button class="btn btn-primary btn-block" native-type="submit">診斷分析</button>
+              </div>
+            </div>
             <div class="post-card">
               <a class="collapse-analysis" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="true">居民選擇<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
               <div class="collapse" id="collapse1">
@@ -84,14 +102,14 @@
                   <div class="col">
                     <table class="table table-bordered">
                       <tr>
-                        <td class="text-center" width="80">顯示隱藏</td>
+                        <td class="text-center table-label">顯示隱藏</td>
                         <td>
                           <button class="btn btn-search">全部顯示</button>
                           <button class="btn btn-search">全部隱藏</button>
                         </td>
                       </tr>
                       <tr>
-                        <td class="text-center">種族</td>
+                        <td class="text-center table-label">種族</td>
                         <td>
                           <button class="btn btn-search">狗</button>
                           <button class="btn btn-search current">猴子</button>
@@ -108,20 +126,10 @@
                         </td>
                       </tr>
                     </table>
-                    <div class="form-search">
-                      <button class="btn btn-primary btn-block" native-type="submit">診斷分析</button>
-                    </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <ul>
-                      <li>選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~10人)</li>
-                      <li>已選擇居民：
-                        <span class="text-danger">茶茶丸、彭花、哈姆、月兔(4人)</span>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="row my-2">
+                  <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~10人)</div>
                 </div>
                 <div class="row">
                   <div class="col">

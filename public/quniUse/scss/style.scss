@@ -300,10 +300,11 @@ audio {
     white-space: nowrap;
   }
   .analysis-scores-total {
+    max-width: 46px;
     font-size: 1.25em;
     text-align: center;
     border: 1px solid transparent;
-    margin-bottom: .3rem;
+    margin: 0 auto .3rem;
     border-radius: .25rem;
     &.good {
       background-color: rgba($success, .05);
@@ -323,8 +324,48 @@ audio {
     .bgColor-primary {
       background-color: rgba($primary, .1);
     }
+    .bgColor-success {
+      background-color: rgba($success, .1);
+    }
     .bgColor-danger {
       background-color: rgba($danger, .1);
+    }
+  }
+}
+.analysis-fixed {
+  margin-bottom: 60px;
+}
+.analysis-tag {
+  background-color: #fff;
+  box-shadow: 0 0 25px rgba(0,0,0,0.1);
+  padding: 0.75rem;
+  .table-responsive {
+    white-space: nowrap;
+  }
+  .btn-tag {
+    position: relative;
+    background-color: #fff;
+    border-color: rgba($primary, .2);
+    padding-left: 1.5rem;
+    margin: 2px;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 6px;
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      background-color: $primary;
+      mask-image: url('../../image/close-outline.svg');
+      mask-size: cover;
+    }
+    &:hover {
+      background-color: $gray-100;
+    }
+    &.current {
+      background-color: rgba($primary, .08);
+      border-color: rgba($primary, .2);
     }
   }
 }
@@ -440,6 +481,9 @@ a.link {
     background-color: $gray-100;
     padding: 1rem;
   }
+  .table-label {
+    width: 90px;
+  }
 }
 .table-img {
   max-width: 66px;
@@ -454,6 +498,12 @@ a.link {
 
 // <691px
 @include media-breakpoint-down(sm) {
+  .analysis-fixed {
+     margin-bottom: 120px;
+    .header {
+      position: static;
+    }
+  }
   .header {
     position: fixed;
     z-index: 9;
@@ -475,17 +525,15 @@ a.link {
     position: relative;
   }
   .navigation-wrap {
+    display: none;
     position: absolute;
     top: 100%;
     width: 100%;
     height: 100vh;
     transition: all .5s;
     &.show {
+      display: block;
       .navigation {
-        &:before {
-          content: '';
-          display: block;
-        }
         > ul {
           transform: translateX(0%);
         }
@@ -513,7 +561,6 @@ a.link {
     }
     &:before {
       content: '';
-      display: none;
       position: absolute;
       left: 0;
       right: 0;
@@ -536,6 +583,11 @@ a.link {
       > li.sub-nav > a {
         display: none;
       }
+    }
+  }
+  .analysis-tag {
+    > div:first-child {
+      margin-bottom: .5rem;
     }
   }
 }
