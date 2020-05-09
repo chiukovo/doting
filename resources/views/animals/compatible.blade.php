@@ -102,11 +102,13 @@
         <a class="collapse-analysis" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="true">分析結果<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
         <div class="collapse" :class="collapseShow ? '' :'show'" id="collapse2">
           <div class="alert alert-primary mt-2" role="alert">
-            <p class="mb-0">集合啦！豆丁森友會 居民 我們診斷出有
-              <span class="text-danger">@{{ selected.length }}</span>
-              人 診斷結果為
-              <span class="text-success" v-if="score >= 0">+@{{ score }}</span>
-              <span class="text-danger" v-else-if="score < 0">@{{ score }}</span>
+            <p class="mb-0">集合啦！豆丁森友會<br>
+              總共有
+              <span class="text-success">@{{ selected.length }}</span>
+              人
+              診斷結果為
+              <span class="text-success h3" v-if="score >= 0">+@{{ score }}</span>
+              <span class="text-danger h3" v-else-if="score < 0">@{{ score }}</span>
             </p>
             <p>在遊戲中 良好的兼容性:
               <span class="text-success">@{{ good }}</span>

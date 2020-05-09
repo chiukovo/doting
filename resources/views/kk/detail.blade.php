@@ -17,14 +17,14 @@
             <div class="post-card">
               <h2 class="post-title">{{ $detail->cn_name }} / {{ $detail->name }}</h2>
               <div class="post-photo">
-                <img src="/kk/{{ $detail->img_name }}.png" alt="{{ $detail->cn_name }}">
+                <img class="img-fluid" src="/kk/{{ $detail->img_name }}.png" alt="{{ $detail->cn_name }}">
               </div>
             </div>
           </div>
           <div class="post-body">
-            <div class="post-card">
-              <div class="post-card-title">聽歌</div>
-              <div style="text-align: center;">
+            <div class="card">
+              <div class="card-header">聽歌</div>
+              <div class="card-body">
                 <audio controls name="media">
                   <source src="/animal/kk/{{ $detail->file_name }}.mp3" type="audio/mpeg">
                 </audio>

@@ -13,12 +13,12 @@
     </nav>
     <section class="post">
       <div class="row justify-content-md-center">
-        <div class="col col-lg-6">
+        <div class="col col-lg-9">
           <div class="post-header fixed">
             <div class="post-card">
               <h2 class="post-title">{{ $detail->name }}</h2>
               <div class="post-photo">
-                <img src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
+                <img class="img-fluid" src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
               </div>
             </div>
           </div>
@@ -90,43 +90,45 @@
                 </div>
               </div>
             </div>
-            <div class="post-card">
-              <div class="post-card-title">{{ $detail->name }}的家</div>
-              <div class="post-card-img">
+            <div class="card">
+              <div class="card-header">{{ $detail->name }}的家</div>
+              <div class="card-body text-center">
                 <a href="/animal/house/{{ $detail->name }}.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
-                  <img src="/animal/house/{{ $detail->name }}.png" alt="{{ $detail->name }}家">
+                  <img class="img-fluid" src="/animal/house/{{ $detail->name }}.png" alt="{{ $detail->name }}家">
                 </a>
               </div>
             </div>
-            <div class="post-card">
-              <div class="post-card-title">{{ $detail->name }}的室內裝修</div>
-              <div class="post-card-img">
+            <div class="card">
+              <div class="card-header">{{ $detail->name }}的室內裝修</div>
+              <div class="card-body text-center">
                 <a href="/animal/{{ $detail->name }}_home.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
-                  <img src="/animal/{{ $detail->name }}_home.png" alt="{{ $detail->name }}家">
+                  <img class="img-fluid" src="/animal/{{ $detail->name }}_home.png" alt="{{ $detail->name }}家">
                 </a>
               </div>
             </div>
             @if($detail->amiibo != '')
-            <div class="post-card">
-              <div class="post-card-title">Amiibo Card</div>
-              <a href="/animal/card/{{ $detail->amiibo }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
-                <img src="/animal/card/{{ $detail->amiibo }}.png" alt="{{ $detail->name }}卡">
-              </a>
+            <div class="card">
+              <div class="card-header">Amiibo Card</div>
+              <div class="card-body text-center">
+                <a href="/animal/card/{{ $detail->amiibo }}.png" data-lightbox="{{ $detail->name }}" data-title="{{ $detail->name }}">
+                  <img class="img-fluid" src="/animal/card/{{ $detail->amiibo }}.png" alt="{{ $detail->name }}卡">
+                </a>
+              </div>
             </div>
             @endif
             @if(!empty($sameRaceArray))
-            <div class="post-card">
-              <div class="post-card-title">{{ $detail->name }}的族人</div>
-              <ul class="post-card-list">
+            <div class="card">
+              <div class="card-header">{{ $detail->name }}的族人</div>
+              <ul class="post-card-list animal-list">
                 @foreach($sameRaceArray as $animal)
                 <li>
                   <a href="/animals/detail?name={{ $animal->name }}">
                     <span>{{ $animal->name }}</span>
                     <div class="table-img">
                       @if($animal->info == '')
-                        <img src="/animal/icon/{{ $animal->name }}.png" alt="{{ $animal->name }}">
+                        <img class="img-fluid" src="/animal/icon/{{ $animal->name }}.png" alt="{{ $animal->name }}">
                       @else
-                        <img src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
+                        <img class="img-fluid" src="/animal/{{ $animal->name }}.png" alt="{{ $animal->name }}">
                       @endif
                     </div>
                   </a>
