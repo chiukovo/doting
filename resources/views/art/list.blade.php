@@ -1,61 +1,80 @@
 @extends('layouts.web')
 @section('title', '藝術品')
 @section('content')
-<div class="breadcrumbs">
-  <a href="/">首頁</a>
-  <span class="sep">/</span>
-  <a href="/museum/list">博物館</a>
-  <span class="sep">/</span>
-  <a href="/art/list">藝術品圖鑑</a>
-</div>
-<div id="app" class="media" v-cloak>
-  <div class="search">
-    <form>
-      <table class="table">
-        <tr>
-          <th>類型</th>
-          <td>
-            @include('layouts.museum-tabs')
-          </td>
-        </tr>
-        <tr>
-          <th>搜尋</th>
-          <td>
+<div id="app" class="content-wrap" v-cloak>
+  <div class="container">
+    <h2 class="content-title">藝術品</h2>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首頁</a></li>
+        <li class="breadcrumb-item"><a href="/museum/list">博物館</a></li>
+        <li class="breadcrumb-item active" aria-current="page">藝術品</li>
+      </ol>
+    </nav>
+    <section>
+      <div class="section-search row">
+        <div class="col">
+          <div class="collapse show" id="collapseSearch">
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-center" width="80">查看全部</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.text == '' ? 'current' : ''" @click="clearAll">查看全部</button>
+                </td>
+              </tr>
+              <tr>
+                <th>類型</th>
+                <td>
+                  @include('layouts.museum-tabs')
+                </td>
+              </tr>
+            </table>
+          </div>
+          <form>
             <div class="form-search">
-              <input type="text" class="input" v-model="searchData.text">
-              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
-              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
+              <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
+              <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
             </div>
-          </td>
-        </tr>
-      </table>
-    </form>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">名稱</th>
+                <th scope="col">照片</th>
+                <th scope="col">介紹</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="list in lists">
+                <td class="link" scope="row">
+                  <a :href="'/art/detail?name=' + list.name">
+                    <span>@{{ list.name }}</span>
+                  </a>
+                </td>
+                <td>
+                  <a class="link" :href="'/art/detail?name=' + list.name">
+                    <div class="table-img">
+                      <img :src="'/art/' + list.img1 + '.png'" :alt="list.name" v-if="list.img1 != ''">
+                    </div>
+                  </a>
+                </td>
+                <td>@{{ list.info }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <infinite-loading :identifier="infiniteId" @infinite="search">
+            <div slot="no-more"></div>
+            <div slot="no-results"></div>
+          </infinite-loading>
+        </div>
+      </div>
+    </section>
   </div>
-  <table class="media-card table">
-    <tr>
-      <th width="100">名稱</th>
-      <th>照片</th>
-      <th>介紹</th>
-    </tr>
-    <tr v-for="list in lists">
-      <td>
-        <a :href="'/art/detail?name=' + list.name">
-          <span>@{{ list.name }}</span>
-        </a>
-      </td>
-      <td>
-        <a :href="'/art/detail?name=' + list.name">
-          <img :src="'/art/' + list.img1 + '.png'" :alt="list.name" v-if="list.img1 != ''">
-        </a>
-      </td>
-      <td>@{{ list.info }}</td>
-    </tr>
-  </table>
-  <infinite-loading :identifier="infiniteId" @infinite="search">
-    <div slot="no-more"></div>
-    <div slot="no-results"></div>
-  </infinite-loading>
-  @include('layouts.goodUrl')
+  @include('layouts.goTop')
 </div>
 
 <script>
@@ -98,7 +117,7 @@
         this.page = 1;
         this.lists = [];
         this.infiniteId += 1;
-      }
+      },
     }
   })
 </script>

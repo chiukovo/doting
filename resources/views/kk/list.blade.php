@@ -1,51 +1,69 @@
 @extends('layouts.web')
 @section('title', '唱片圖鑑')
 @section('content')
-<div class="breadcrumbs">
-  <a href="/">首頁</a>
-  <span class="sep">/</span>
-  <a href="#">唱片圖鑑</a>
-</div>
-<div id="app" class="media" v-cloak>
-  <div class="search">
-    <form>
-      <table class="table">
-        <tr>
-          <th>搜尋</th>
-          <td>
+<div id="app" class="content-wrap" v-cloak>
+  <div class="container">
+    <h2 class="content-title">唱片圖鑑</h2>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">唱片圖鑑</li>
+      </ol>
+    </nav>
+    <section>
+      <div class="section-search row">
+        <div class="col">
+          <div class="collapse show" id="collapseSearch">
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-center" width="80">查看全部</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.text == '' ? 'current' : ''" @click="clearAll">查看全部</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <form>
             <div class="form-search">
-              <input type="text" class="input" v-model="searchData.text">
-              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
-              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
+              <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
+              <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
             </div>
-          </td>
-        </tr>
-      </table>
-    </form>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">名稱</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="list in lists">
+                <td class="link" scope="row">
+                  <a class="link" :href="'/kk/detail?name=' + list.img_name">
+                    <img :src="'/kk/' + list.img_name + '.png'" :alt="list.name">
+                  </a>
+                </td>
+                <td>
+                  <a class="link" :href="'/kk/detail?name=' + list.img_name">
+                    @{{ list.cn_name }} / @{{ list.name }}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <infinite-loading :identifier="infiniteId" @infinite="search">
+            <div slot="no-more"></div>
+            <div slot="no-results"></div>
+          </infinite-loading>
+        </div>
+      </div>
+    </section>
   </div>
-  <table class="media-card table">
-    <tr>
-      <th></th>
-      <th>名稱</th>
-    </tr>
-    <tr v-for="list in lists">
-      <td>
-        <a :href="'/kk/detail?name=' + list.img_name">
-          <img :src="'/kk/' + list.img_name + '.png'" :alt="list.name">
-        </a>
-      </td>
-      <td>
-        <a :href="'/kk/detail?name=' + list.img_name">
-          @{{ list.cn_name }} / @{{ list.name }}
-        </a>
-      </td>
-    </tr>
-  </table>
-  <infinite-loading :identifier="infiniteId" @infinite="search">
-    <div slot="no-more"></div>
-    <div slot="no-results"></div>
-  </infinite-loading>
-  @include('layouts.goodUrl')
+  @include('layouts.goTop')
 </div>
 
 <script>

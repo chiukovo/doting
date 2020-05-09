@@ -13,52 +13,80 @@
   <script src="/js/vue-go-top.min.js"></script>
   <script src="/js/jquery-2.2.4.min.js"></script>
   <script src="/js/lightbox.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <script data-ad-client="ca-pub-2560043137442562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
   <div id="root">
-    <div id="out">
-      <div id="donateMe">
-        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
-      </div>
-      <header class="header">
-        <div class="logo">
-          <a href="/"><img src="/image/logo.png" alt="動物森友會"></a>
-        </div>
-        <div class="header-right">
-          <button @click="menuShow = !menuShow" class="btn-menu" :class="menuShow ? 'current' : ''">
-            <div class="menu-icon"></div>
-          </button>
-        </div>
-      </header>
-      <div id="menu" class="menu" v-if="menuShow">
-        <div class="menu-list">
-          <ul>
-            <li><a href="/instructions">豆丁指令</a></li>
-            <li><a href="/update/version">更新資訊</a></li>
-            <li><a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></li>
-            <li><a href="/animals/list">動物居民</a></li>
-            <li><a href="/npc/list">動物NPC</a></li>
-            <li><a href="/museum/list">博物館</a></li>
-            <li><a href="/diy/list">DIY方程式</a></li>
-            <li><a href="/apparel/list">家具</a></li>
-            <li><a href="/furniture/list">服飾</a></li>
-            <li><a href="/plant/list">植物</a></li>
-            <li><a href="/kk/list">唱片</a></li>
-            <li><a href="/statistics">豆丁搜尋排行榜</a></li>
-          </ul>
-        </div>
-      </div>
+    <div id="donateMe">
+      <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
     </div>
-    <div class="container">
+    <header id="header" class="header">
+      <div class="header-wrap">
+        <div class="container">
+          <a href="/" class="logo">
+            <h1>豆丁森友會 Doting Animal crossing</h1>
+            <h2>動物森友會</h2>
+            <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
+          </a>
+          <button class="btn btn-nav" @click="menuShow = !menuShow"><ion-icon name="menu-outline"></ion-icon></button>
+          <nav class="nav" v-show="menuShow">
+            <ul>
+              <li class="sub-nav">
+                <a href="#">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/animals/list">動物居民</a></li>
+                  <li><a href="/npc/list">動物NPC</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/fish/list">魚圖鑑</a></li>
+                  <li><a href="/insect/list">昆蟲圖鑑</a></li>
+                  <li><a href="/fossil/list">化石圖鑑</a></li>
+                  <li><a href="/art/list">藝術品</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="#">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/diy/list">DIY方程式</a></li>
+                  <li><a href="/apparel/list">家具</a></li>
+                  <li><a href="/furniture/list">服飾</a></li>
+                  <li><a href="/plant/list">植物</a></li>
+                  <li><a href="/kk/list">唱片</a></li>
+                </ul>
+              </li>
+              <li class="sub-nav">
+                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <ul>
+                  <li><a href="/instructions">豆丁教學</a></li>
+                  <li><a href="/update/version">更新資訊</a></li>
+                  <li><a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a></li>
+                  <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- <a href="#" class="link">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a> -->
+        </div>
+      </div>
+    </header>
+    <div class="content">
       @yield('content')
     </div>
-    <footer class="footer">copyright © doting</footer>
+    <footer class="footer">
+      <div class="copyright">
+        copyright © 豆丁森友會
+      </div>
+    </footer>
   </div>
 </body>
 <script>
   new Vue({
-    el: '#out',
+    el: '#header',
     data: {
       menuShow: false
     },

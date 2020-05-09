@@ -1,105 +1,105 @@
 @extends('layouts.web')
 @section('title', '動物圖鑑')
 @section('content')
-<div class="breadcrumbs">
-  <a href="/">首頁</a>
-  <span class="sep">/</span>
-  @if ($type == 'npc')
-    <a href="/npc/list">npc</a>
-  @else
-    <a href="/animals/list">動物島民</a>
-  @endif
-</div>
-<div id="app" class="media" v-cloak>
-  <div class="search">
-    <table class="table">
-      <tr>
-        <td colspan="2">
-          <button type="button" class="btn btn-senior" @click.preven="moreSearch = !moreSearch">進階搜尋</button>
-        </td>
-      </tr>
-      <tr v-if="moreSearch">
-        <th>查看全部</th>
-        <td><button class="btn" :class="checkAllCurrent()" @click="clearAll">查看全部</button></td>
-      </tr>
-      <tr v-if="moreSearch">
-        <th>種族</th>
-        <td>
-          <button class="btn" :class="searchData.race.indexOf(data.race) == '-1' ? '' : 'current'" v-for="data in race"  v-if="data.race != ''" @click="addRace(data.race)">
-            @{{ data.race }}
-          </button>
-        </td>
-      </tr>
-      <tr v-if="moreSearch">
-        <th>個性</th>
-        <td>
-          <button class="btn" :class="searchData.personality.indexOf(data) == '-1' ? '' : 'current'" v-for="data in personality" @click="addPersonality(data)">
-            @{{ data }}
-          </button>
-        </td>
-      </tr>
-      <tr v-if="moreSearch">
-        <th>生日</th>
-        <td>
-          <button class="btn" :class="searchData.bd.indexOf(key + 1) == '-1' ? '' : 'current'" v-for="(data, key) in bd" @click="addBd(key + 1)">
-            @{{ data }}
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
+<div id="app" class="content-wrap" v-cloak>
+  <div class="container">
+    <h2 class="content-title">動物居民</h2>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">動物居民</li>
+      </ol>
+    </nav>
+    <section>
+      <div class="section-search row">
+        <div class="col">
+          <!-- 電腦版隱藏進階搜尋按鈕, class="collapse" 移除 -->
+          <a class="collapse-search" data-toggle="collapse" href="#collapseSearch" role="button" v-show="isMobile()">進階搜尋<ion-icon name="chevron-down-outline"></ion-icon></a>
+          <div class="collapse" :class="isMobile() ? '' : 'show'" id="collapseSearch">
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-center" width="80">查看全部</td>
+                <td>
+                  <button class="btn btn-search" :class="checkAllCurrent()" @click="clearAll">查看全部</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">種族</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.race.indexOf(data.race) == '-1' ? '' : 'current'" v-for="data in race"  v-if="data.race != ''" @click="addRace(data.race)">
+                    @{{ data.race }}
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">個性</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.personality.indexOf(data) == '-1' ? '' : 'current'" v-for="data in personality" @click="addPersonality(data)">
+                    @{{ data }}
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">生日</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.bd.indexOf(key + 1) == '-1' ? '' : 'current'" v-for="(data, key) in bd" @click="addBd(key + 1)">
+                    @{{ data }}
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
           <form>
             <div class="form-search">
-              <input type="text" class="input" v-model="searchData.text">
-              <button native-type="submit" class="btn" @click.prevent="searchDefault">搜尋</button>
-              <button class="btn" @click.prevent="clearAll">清除搜尋</button>
+              <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
+              <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
             </div>
           </form>
-        </td>
-      </tr>
-    </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table table-bordered table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">名稱</th>
+                <th scope="col">性別</th>
+                <th scope="col">個性</th>
+                <th scope="col">種族</th>
+                <th scope="col">生日</th>
+                <th scope="col">口頭禪</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="list in lists">
+                <td scope="row">
+                  <a class="link" :href="'/animals/detail?name=' + list.name">
+                    <div class="table-img" v-if="list.info == null">
+                      <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
+                    </div>
+                    <div class="table-img" v-else>
+                      <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
+                    </div>
+                    <span>@{{ list.name }}</span>
+                  </a>
+                </td>
+                <td>@{{ list.race }}</td>
+                <td>@{{ list.personality }}</td>
+                <td>@{{ list.race }}</td>
+                <td>@{{ list.bd }}</td>
+                <td>@{{ list.say }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <infinite-loading :identifier="infiniteId" @infinite="search">
+            <div slot="no-more"></div>
+            <div slot="no-results"></div>
+          </infinite-loading>
+        </div>
+      </div>
+    </section>
   </div>
-  <table class="media-card table">
-    <tr>
-      <th>名稱</th>
-      <th>種族</th>
-      <th>個性</th>
-      <th>生日</th>
-    </tr>
-    <tr v-for="list in lists">
-      <td>
-        <a :href="'/animals/detail?name=' + list.name">
-          <span>@{{ list.name }}</span>
-          <div class="table-img" v-if="list.info == null">
-            <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
-          </div>
-          <div class="table-img" v-else>
-            <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
-          </div>
-        </a>
-      </td>
-      <td>@{{ list.race }}</td>
-      <td>@{{ list.personality }}</td>
-      <td>@{{ list.bd }}</td>
-    </tr>
-  </table>
-  <infinite-loading :identifier="infiniteId" @infinite="search">
-    <div slot="no-more"></div>
-    <div slot="no-results"></div>
-  </infinite-loading>
-  <div class="media-card">
-    <div class="media-card-title">島民說明</div>
-    <ul class="media-list">
-      <li>島上居民動物有親密度設定：認識的人、好友、親友</li>
-      <li>親密度增加方式1：相遇初日以及每天對話會有加成、如果缺了一天會重置加成</li>
-      <li>親密度增加方式2：完成動物賦予的任務、賣給小動物要的手上物件、信件往來</li>
-      <li>親密度增加方式3：達成一定親密度才能送禮、生日當天送禮，禮物用包裝紙會有額外加成</li>
-      <li>親密度降低方式：用補蟲網猛打、持續推擠、贈送空罐、長靴、雜草、壞掉的大頭菜</li>
-      <li>長期沒有玩遊戲不會減低親密度</li>
-      <li>親密度提昇至親友：會被主動對話，可獲得動物照片、可裝飾，能知道生日、星座、座右銘</li>
-    </ul>
-  </div>
-  @include('layouts.goodUrl')
+  @include('layouts.goTop')
 </div>
 <script>
   Vue.use(GoTop);
@@ -125,6 +125,10 @@
       this.getAllType()
     },
     methods: {
+      isMobile(){
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
       getAllType() {
         axios.get('/animals/getAllType?type=' + this.type, {
          }).then((response) => {

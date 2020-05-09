@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,15 @@ Route::post('/statistics/getData', 'AnimalWebCrossingController@statisticsGetDat
 
 //donate
 Route::get('/donate', function () {
-  return view('donate');
+
+	$donate = DB::table('donate')
+	    ->orderBy('id', 'desc')
+	    ->get()
+	    ->toArray();
+
+  return view('donate', [
+  	'donate' => $donate
+  ]);
 });
 
 //index
