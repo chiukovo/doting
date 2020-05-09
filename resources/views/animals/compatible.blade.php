@@ -124,9 +124,9 @@
                 <td class="bg-light text-center" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
                 <td class="bg-light text-center" v-for="data in analysis">
                   <div class="analysis-scores">
-                    <span>@{{ data.personality }} @{{ data.sex }}</span>
-                    <span>@{{ data.constellation }} @{{ data.bd }}</span>
-                    <span>@{{ data.race }}</span>
+                    <div>@{{ data.personality }} @{{ data.sex }}</div>
+                    <div>@{{ data.constellation }} @{{ data.bd }}</div>
+                    <div>@{{ data.race }}</div>
                   </div>
                 </td>
               </tr>
@@ -147,9 +147,9 @@
               <tr v-for="data in analysis">
                 <td class="bg-light text-center">
                   <div class="analysis-scores">
-                    <span>@{{ data.personality }} @{{ data.sex }}</span>
-                    <span>@{{ data.constellation }} @{{ data.bd }}</span>
-                    <span>@{{ data.race }}</span>
+                    <div>@{{ data.personality }} @{{ data.sex }}</div>
+                    <div>@{{ data.constellation }} @{{ data.bd }}</div>
+                    <div>@{{ data.race }}</div>
                   </div>
                 </td>
                 <td class="bg-light">
