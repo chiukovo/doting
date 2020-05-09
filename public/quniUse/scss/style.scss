@@ -1,6 +1,6 @@
 @import "bootstrap";
 
-$developer: 0;
+$developer: 1;
 
 ul {
   line-height: 1.8;
@@ -87,7 +87,7 @@ ul {
   }
   .btn-search {
     border-color: $gray-200;
-    margin: 2px 0;
+    margin: 2px;
     &:hover {
       background-color: $gray-100;
     }
@@ -150,6 +150,18 @@ ul {
     .post-card {
       margin-bottom: 2rem;
     }
+    .card {
+      margin-bottom: 1rem;
+      ul.list-decimal {
+        list-style: decimal;
+        line-height: 1.4;
+        padding: 0 0 0 1rem;
+        margin: 0;
+        li + li {
+          margin-top: 0.36rem;
+        }
+      }
+    }
   }
   .post-card-title {
     background-color: $gray-200;
@@ -166,7 +178,7 @@ ul {
     list-style: none;
     line-height: 1.6;
     background: $gray-200;
-    border-radius: 15px;
+    border-radius: .25rem;
     padding: 6px 10px;
     margin: 0;
     .post-info-group {
@@ -194,8 +206,8 @@ ul {
     flex-wrap: wrap;
     list-style: none;
     line-height: 1.6;
-    padding: 0;
     border-left: 1px solid $gray-200;
+    padding: 0;
     a {
       color: $gray-900;
     }
@@ -208,12 +220,16 @@ ul {
       text-align: center;
       border: 1px solid $gray-200;
       border-left: 0;
-      margin-top: -1px;
+      border-top: 0;
       &:hover {
         background-color: $gray-100;
       }
     }
+    // &.animal-list {
+    //   margin: 0 -1px -1px 0;
+    // }
     &.check-list {
+      margin: 0 -1px -1px 0;
       li {
         position: relative;
         cursor: pointer;
@@ -248,7 +264,8 @@ ul {
   position: relative;
   display: flex;
   align-items: center;
-  color: $gray-800;
+  justify-content: center;
+  // color: $gray-800;
   background-color: $gray-100;
   border: 1px solid $gray-200;
   padding: .5rem;
@@ -322,9 +339,6 @@ ul {
       .donate-list-date {
         color: $gray-500;
       }
-      .donate-list-name {
-        font-size: 15px;
-      }
       .donate-list-money {
         font-size: 15px;
         font-weight: bold;
@@ -342,6 +356,13 @@ ul {
         background-color: $gray-100;
       }
     }
+  }
+}
+
+.version {
+  .img-fluid {
+    width: 400px;
+    margin: .5rem 0;
   }
 }
 
@@ -371,6 +392,7 @@ a.link {
 }
 .btn {
   white-space: nowrap;
+  border-radius: 0.25rem;
 }
 .btn-default {
   border-color: $gray-200;
@@ -389,6 +411,20 @@ a.link {
   }
 }
 
+// card
+.card {
+  border: 0;
+  // border: 1px solid $gray-200;
+}
+.card-header {
+  background-color: $gray-100;
+  border: 1px solid $gray-200;
+}
+.card-body {
+  border: 1px solid $gray-200;
+}
+
+
 // table
 .table {
   background-color: #fff;
@@ -404,7 +440,8 @@ a.link {
   }
 }
 .table-img {
-  width: 66px;
+  max-width: 66px;
+  padding: 0 .2rem;
   margin: 0 auto;
   img {
     max-width: 100%;
@@ -417,6 +454,9 @@ a.link {
 @include media-breakpoint-up(md) {
   .post {
     .post-card-list {
+      &.animal-list li {
+        width: 16.66%;
+      }
       &.check-list li {
         width: 16.66%;
       }
@@ -435,9 +475,6 @@ a.link {
 // ≥992px
 @include media-breakpoint-up(lg) {
   .post .post-card-list {
-    li {
-      width: 20%;
-    }
     &.check-list li {
       width: 12.5%;
     }
