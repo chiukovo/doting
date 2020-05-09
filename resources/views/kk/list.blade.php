@@ -36,7 +36,7 @@
       </td>
       <td>
         <a :href="'/kk/detail?name=' + list.img_name">
-          @{{ list.name }}
+          @{{ list.cn_name }} / @{{ list.name }}
         </a>
       </td>
     </tr>

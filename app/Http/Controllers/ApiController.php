@@ -10,6 +10,37 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getKKZhName()
+    {
+        $url = 'https://handler.travel/stayhome-%E5%AE%85%E5%9C%A8%E5%AE%B6/%E5%8B%95%E7%89%A9%E4%B9%8B%E6%A3%AE%E6%94%BB%E7%95%A5-%E5%8B%95%E7%89%A9%E6%A3%AE%E5%8F%8B%E6%9C%83-kk-%E9%BB%9E%E6%AD%8C-%E9%9A%B1%E8%97%8F%E6%AD%8C%E6%9B%B2-%E5%85%A8%E6%AD%8C%E5%96%AE-%E8%A9%A6';
+
+        $ql = QueryList::get($url);
+        $result = $ql->rules([
+            'name' => ['td:eq(2)', 'text'],
+            'cn_name' => ['td:eq(1)', 'text'],
+        ])
+        ->range('.wp-block-table:eq(1) tr')
+        ->queryData();
+
+        $kks = DB::table('kk')
+            ->get()
+            ->toArray();
+
+        foreach ($result as $data) {
+            foreach ($kks as $kk) {
+                if (strtolower($data['name']) == strtolower($kk->name)) {
+                    DB::table('kk')
+                        ->where('name', $kk->name)
+                        ->update([
+                            'cn_name' => $data['cn_name'],
+                        ]);
+
+                    echo 'update ' . $kk->name . '</br>';
+                }
+            }
+        }
+    }
+
     public function getNewFurniture()
     {
         set_time_limit(0);
@@ -224,7 +255,7 @@ class ApiController extends Controller
             ->queryData();
 
             $img = $result[0]['img'];
-            
+
             $headers = get_headers($img);
             $code = substr($headers[0], 9, 3);
 

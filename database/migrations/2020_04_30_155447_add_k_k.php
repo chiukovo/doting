@@ -16,6 +16,7 @@ class AddKK extends Migration
         Schema::create('kk', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->comment('名稱');
+            $table->string('cn_name', 100)->comment('cn_name');
             $table->string('file_name', 100)->comment('file_name');
             $table->string('img_name', 100)->comment('img_name');
         });
