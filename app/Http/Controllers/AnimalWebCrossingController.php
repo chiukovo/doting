@@ -244,22 +244,33 @@ class AnimalWebCrossingController extends Controller
         $lists = DB::table('animal')
             ->whereIn('name', $array)
             ->whereNull('info')
-            ->get(['id', 'name', 'personality', 'sex', 'race', 'bd'])
+            ->get()
             ->toArray();
 
         if (empty($lists)) {
             return redirect('animals/compatible');
         }
 
-        foreach ($lists as $key => $list) {
+        //重新排序
+        $format = [];
+
+        foreach ($array as $name) {
+            foreach ($lists as $key => $list) {
+                if ($list->name == $name) {
+                    $format[] = $list;
+                }
+            }
+        }
+
+        foreach ($format as $key => $list) {
             $list->constellation = constellation($list->bd);
-            $lists[$key] = $list;
+            $format[$key] = $list;
         }
 
         //媒合度
-        $lists = matchmaking($lists);
+        $format = matchmaking($format);
 
-        return $lists;
+        return $format;
     }
 
     public function statisticsComment($number)

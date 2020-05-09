@@ -76,7 +76,7 @@ Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
 //相容度分析
-Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible');
+Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible')->name('analysis');
 Route::post('/animals/getAnimalsGroupRace', 'AnimalWebCrossingController@getAnimalsGroupRace');
 Route::get('/animals/analysis', 'AnimalWebCrossingController@analysis');
 

@@ -44,7 +44,7 @@ if (!function_exists('constellation')) {
     		}
     	}
 
-    	//地	
+    	//地
     	$di = [
     		[
     			'start' => '4.20',
@@ -66,7 +66,7 @@ if (!function_exists('constellation')) {
     		}
     	}
 
-    	//風	
+    	//風
     	$phone = [
     		[
     			'start' => '5.21',
@@ -84,7 +84,7 @@ if (!function_exists('constellation')) {
 
     	foreach ($phone as $data) {
     		if (strtotime($bd) >= strtotime($data['start']) && strtotime($bd) <= strtotime($data['end']))  {
-    			return '地';
+    			return '風';
     		}
     	}
 
@@ -142,7 +142,7 @@ if (!function_exists('matchmaking')) {
 					$raceScoreTotal += $raceScore;
 					$totalSum = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
 
-					if ($sum >= 9) {
+					if ($sum > 9) {
 						$score++;
 						$good++;
 						$class = 'good';
@@ -210,28 +210,28 @@ if (!function_exists('computedPer')) {
 	    	foreach ($allType as $key => $checkType) {
 	    		if ($type == '普通') {
 	    			switch ($key) {
-	    				case 0:
-	    					$score = 2;
+	    				case 0: //普通
+	    					$score = 3;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 1;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 5;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 2;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 1;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 2;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 2;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 5;
 	    					break;
 	    			}
@@ -239,28 +239,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '元氣') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 1;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 5;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 2;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 2;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 2;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 5;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 1;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 2;
 	    					break;
 	    			}
@@ -268,28 +268,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '成熟') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 5;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 2;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 2;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 1;
 	    					break;
-	    				case 4:
-	    					$score = 2;
+	    				case 4: //悠閒
+	    					$score = 3;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 1;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 5;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 2;
 	    					break;
 	    			}
@@ -297,28 +297,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '大姐姐') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 2;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 2;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 1;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 5;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 5;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 2;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 2;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 1;
 	    					break;
 	    			}
@@ -326,28 +326,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '悠閒') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 1;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 2;
 	    					break;
-	    				case 2:
-	    					$score = 2;
+	    				case 2: //成熟
+	    					$score = 3;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 5;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 5;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 1;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 2;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 2;
 	    					break;
 	    			}
@@ -355,28 +355,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '運動') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 2;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 5;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 1;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 2;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 1;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 5;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 2;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 2;
 	    					break;
 	    			}
@@ -384,28 +384,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '暴躁') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 2;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 1;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 5;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 2;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 2;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 2;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 5;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 1;
 	    					break;
 	    			}
@@ -413,28 +413,28 @@ if (!function_exists('computedPer')) {
 
 	    		if ($type == '自戀') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //普通
 	    					$score = 5;
 	    					break;
-	    				case 1:
+	    				case 1: //元氣
 	    					$score = 2;
 	    					break;
-	    				case 2:
+	    				case 2: //成熟
 	    					$score = 2;
 	    					break;
-	    				case 3:
+	    				case 3: //大姐姐
 	    					$score = 1;
 	    					break;
-	    				case 4:
+	    				case 4: //悠閒
 	    					$score = 2;
 	    					break;
-	    				case 5:
+	    				case 5: //運動
 	    					$score = 2;
 	    					break;
-	    				case 6:
+	    				case 6: //暴躁
 	    					$score = 1;
 	    					break;
-	    				case 7:
+	    				case 7: //自戀
 	    					$score = 5;
 	    					break;
 	    			}
@@ -476,16 +476,16 @@ if (!function_exists('computedMatch')) {
 	    	foreach ($allType as $key => $checkType) {
 	    		if ($type == '火') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //火
 	    					$score = 5;
 	    					break;
-	    				case 1:
+	    				case 1: //地
 	    					$score = 2;
 	    					break;
-	    				case 2:
+	    				case 2: //風
 	    					$score = 2;
 	    					break;
-	    				case 3:
+	    				case 3: //水
 	    					$score = 1;
 	    					break;
 	    			}
@@ -493,16 +493,16 @@ if (!function_exists('computedMatch')) {
 
 	    		if ($type == '地') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //火
 	    					$score = 2;
 	    					break;
-	    				case 1:
+	    				case 1: //地
 	    					$score = 5;
 	    					break;
-	    				case 2:
-	    					$score = 1;
+	    				case 2: //風
+	    					$score = 0;
 	    					break;
-	    				case 3:
+	    				case 3: //水
 	    					$score = 2;
 	    					break;
 	    			}
@@ -510,16 +510,16 @@ if (!function_exists('computedMatch')) {
 
 	    		if ($type == '風') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //火
 	    					$score = 2;
 	    					break;
-	    				case 1:
-	    					$score = 1;
+	    				case 1: //地
+	    					$score = 0;
 	    					break;
-	    				case 2:
+	    				case 2: //風
 	    					$score = 5;
 	    					break;
-	    				case 3:
+	    				case 3: //水
 	    					$score = 2;
 	    					break;
 	    			}
@@ -527,16 +527,16 @@ if (!function_exists('computedMatch')) {
 
 	    		if ($type == '水') {
 	    			switch ($key) {
-	    				case 0:
+	    				case 0: //火
 	    					$score = 1;
 	    					break;
-	    				case 1:
+	    				case 1: //地
 	    					$score = 2;
 	    					break;
-	    				case 2:
-	    					$score = 1;
+	    				case 2: //風
+	    					$score = 2;
 	    					break;
-	    				case 3:
+	    				case 3: //水
 	    					$score = 5;
 	    					break;
 	    			}
@@ -633,6 +633,6 @@ if (!function_exists('computedRace')) {
 			return 3;
 		}
 
-		return 1;
+		return 2;
     }
 }

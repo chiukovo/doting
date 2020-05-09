@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>豆丁森友會 - @yield('title')</title>
-  <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/style.css?v={{ config('app.version') }}">
   <link rel="stylesheet" href="/css/lightbox.min.css">
   <script src="/js/vue.min.js"></script>
@@ -18,11 +17,15 @@
   <script data-ad-client="ca-pub-2560043137442562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
-  <div id="root">
-    <div id="donateMe">
-      <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
-    </div>
+  @php
+    $routeName = request()->route()->getName();
+    $name = $routeName == 'analysis' ? 'analysis-fixed' : '';
+  @endphp
+  <div id="root" class="{{ $name }}">
     <header id="header" class="header">
+      <div id="donateMe">
+        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+      </div>
       <div class="header-wrap">
         <div class="container">
           <a href="/" class="logo">
