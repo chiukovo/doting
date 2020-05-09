@@ -321,15 +321,6 @@ audio {
     span {
       padding: 0 3px;
     }
-    .bgColor-primary {
-      background-color: rgba($primary, .1);
-    }
-    .bgColor-success {
-      background-color: rgba($success, .1);
-    }
-    .bgColor-danger {
-      background-color: rgba($danger, .1);
-    }
   }
 }
 .analysis-fixed {
@@ -455,6 +446,15 @@ a.link {
   span {
     font-size: 16px;
   }
+}
+.bg-primary-light {
+  background-color: rgba($primary, .1);
+}
+.bg-success-light {
+  background-color: rgba($success, .1);
+}
+.bg-danger-light {
+  background-color: rgba($danger, .1);
 }
 
 // card
