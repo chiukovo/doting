@@ -56,6 +56,10 @@ if (!function_exists('constellation')) {
     		],
     		[
     			'start' => '12.22',
+    			'end' => '12.31',
+    		],
+    		[
+    			'start' => '1.1',
     			'end' => '1.19',
     		],
     	];
@@ -123,7 +127,7 @@ if (!function_exists('matchmaking')) {
 			$totalSum = 0;
 			/*
 				分數
-				如果9點以上，兼容性很好
+				如果10點以上，兼容性很好
 				在5到9分的情況下，兼容性正常或良好
 				4點以下時兼容性差
 			 */
@@ -142,7 +146,7 @@ if (!function_exists('matchmaking')) {
 					$raceScoreTotal += $raceScore;
 					$totalSum = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
 
-					if ($sum > 9) {
+					if ($sum > 10) {
 						$score++;
 						$good++;
 						$class = 'good';
@@ -229,7 +233,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 6: //暴躁
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 7: //自戀
 	    					$score = 5;
@@ -249,7 +253,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 3: //大姐姐
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 4: //悠閒
 	    					$score = 2;
@@ -301,7 +305,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 1: //元氣
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 2: //成熟
 	    					$score = 1;
@@ -374,7 +378,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 5;
 	    					break;
 	    				case 6: //暴躁
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 7: //自戀
 	    					$score = 2;
@@ -385,7 +389,7 @@ if (!function_exists('computedPer')) {
 	    		if ($type == '暴躁') {
 	    			switch ($key) {
 	    				case 0: //普通
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 1: //元氣
 	    					$score = 1;
@@ -400,7 +404,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 5: //運動
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 6: //暴躁
 	    					$score = 5;
@@ -486,7 +490,7 @@ if (!function_exists('computedMatch')) {
 	    					$score = 2;
 	    					break;
 	    				case 3: //水
-	    					$score = 1;
+	    					$score = 0;
 	    					break;
 	    			}
 	    		}
@@ -528,7 +532,7 @@ if (!function_exists('computedMatch')) {
 	    		if ($type == '水') {
 	    			switch ($key) {
 	    				case 0: //火
-	    					$score = 1;
+	    					$score = 0;
 	    					break;
 	    				case 1: //地
 	    					$score = 2;

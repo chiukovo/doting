@@ -42,6 +42,7 @@
                 <ul>
                   <li><a href="/animals/list">動物居民</a></li>
                   <li><a href="/npc/list">動物NPC</a></li>
+                  <li><a href="/animals/compatible">動物相容性分析</a></li>
                 </ul>
               </li>
               <li class="sub-nav">

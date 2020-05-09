@@ -3,11 +3,11 @@
 @section('content')
 <div id="app" class="content-wrap" v-cloak>
   <div class="container">
-    <h2 class="content-title">動物居民兼容性診斷</h2>
+    <h2 class="content-title">動物相容性分析</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="\">首頁</a></li>
-        <li class="breadcrumb-item active" aria-current="page">動物居民兼容性診斷</li>
+        <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
     <section class="post">
@@ -58,17 +58,19 @@
           </div>
           <div class="row" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1' && checkShow(animal)">
             <div class="col">
-              <div class="post-card-title">@{{ race }}</div>
-              <ul class="post-card-list check-list">
-                <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show">
-                  <a href="javascript:void(0)">
-                    <span>@{{ detail.name }}</span>
-                    <div class="table-img">
-                      <img :src="'/animal/icon/' + detail.name + '.png'" :alt="detail.name">
-                    </div>
-                  </a>
-                </li>
-              </ul>
+              <div class="card mb-3">
+                <div class="card-header">@{{ race }}</div>
+                <ul class="post-card-list animal-list check-list">
+                  <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show">
+                    <a href="javascript:void(0)">
+                      <span>@{{ detail.name }}</span>
+                      <div class="table-img">
+                        <img :src="'/animal/icon/' + detail.name + '.png'" :alt="detail.name">
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="row" v-if="animals.length == 0">
@@ -96,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="post-card">
+      <div class="post-card" v-show="analysis.length > 0">
         <a class="collapse-analysis" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="true">分析結果<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
         <div class="collapse" :class="collapseShow ? '' :'show'" id="collapse2">
           <div class="alert alert-primary mt-2" role="alert">
@@ -104,7 +106,7 @@
               <span class="text-danger">@{{ selected.length }}</span>
               人 診斷結果為
               <span class="text-success" v-if="score >= 0">+@{{ score }}</span>
-              <span class="text-danger" v-else-if="score < 0">-@{{ score }}</span>
+              <span class="text-danger" v-else-if="score < 0">@{{ score }}</span>
             </p>
             <p>在遊戲中 良好的兼容性:
               <span class="text-success">@{{ good }}</span>
@@ -119,17 +121,16 @@
           <div class="table-responsive">
             <table class="table table-bordered table-analysis">
               <tr>
-                <td class="bg-light text-center"></td>
-                <td class="bg-light text-center"></td>
+                <td class="bg-light text-center" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
                 <td class="bg-light text-center" v-for="data in analysis">
-                  <div>@{{ data.personality }} @{{ data.sex }}</div>
-                  <div>@{{ data.constellation }} @{{ data.bd }}</div>
-                  <div>@{{ data.race }}</div>
+                  <div class="analysis-scores">
+                    <span>@{{ data.personality }} @{{ data.sex }}</span>
+                    <span>@{{ data.constellation }} @{{ data.bd }}</span>
+                    <span>@{{ data.race }}</span>
+                  </div>
                 </td>
               </tr>
               <tr>
-                <td class="bg-light text-center"></td>
-                <td class="bg-light text-center"><h5>總分數: @{{ sum }}</h5></td>
                 <td class="bg-light" v-for="data in analysis">
                   <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
                     <div class="analysis-info top">
@@ -145,9 +146,11 @@
               </tr>
               <tr v-for="data in analysis">
                 <td class="bg-light text-center">
-                  <div>@{{ data.personality }} @{{ data.sex }}</div>
-                  <div>@{{ data.constellation }} @{{ data.bd }}</div>
-                  <div>@{{ data.race }}</div>
+                  <div class="analysis-scores">
+                    <span>@{{ data.personality }} @{{ data.sex }}</span>
+                    <span>@{{ data.constellation }} @{{ data.bd }}</span>
+                    <span>@{{ data.race }}</span>
+                  </div>
                 </td>
                 <td class="bg-light">
                   <div class="analysis-info left">
@@ -157,16 +160,16 @@
                     <div class="analysis-info-box text-center">
                       <div class="analysis-name">@{{ data.name }}
                         <span class="analysis-scores-total">
-                          @{{ data.totalSum }}
-                          <span class="text-success" v-if="data.score > 0">+@{{ data.score }}</span>
-                          <span class="text-danger" v-else-if="data.score < 0">@{{ data.score }}</span>
-                          <span v-else>@{{ data.score }}</span>
+                          <strong class="text-success" v-if="data.score > 0">+@{{ data.score }}</strong>
+                          <strong class="text-danger" v-else-if="data.score < 0">@{{ data.score }}</strong>
+                          <strong v-else>@{{ data.score }}</strong>
+                          <strong>@{{ data.totalSum }}</strong>
                         </span>
                       </div>
                       <div class="analysis-scores">
-                        性格<span class="bgColor-danger">@{{ data.perScoreTotal }}</span>
-                        星座<span class="bgColor-success">@{{ data.matchScoreTotal }}</span>
-                        種族<span class="bgColor-primary">@{{ data.raceScoreTotal }}</span>
+                        性格<span class="bg-danger-light">@{{ data.perScoreTotal }}</span>
+                        星座<span class="bg-success-light">@{{ data.matchScoreTotal }}</span>
+                        種族<span class="bg-primary-light">@{{ data.raceScoreTotal }}</span>
                       </div>
                     </div>
                   </div>
@@ -174,9 +177,9 @@
                 <td v-for="detail in data.detail" v-if="data.name != detail.name">
                   <div class="analysis-scores-total" :class="detail.class">@{{ detail.sum }}</div>
                   <div class="analysis-scores-subtotal clearfix">
-                    <span class="bgColor-danger">@{{ detail.perScore }}</span>
-                    <span class="bgColor-success">@{{ detail.matchScore }}</span>
-                    <span class="bgColor-primary">@{{ detail.raceScore }}</span>
+                    <span class="bg-danger-light">@{{ detail.perScore }}</span>
+                    <span class="bg-success-light">@{{ detail.matchScore }}</span>
+                    <span class="bg-primary-light">@{{ detail.raceScore }}</span>
                   </div>
                 </td>
                 <td class="text-center" v-else>-</td>
@@ -187,6 +190,7 @@
       </div>
     </section>
   </div>
+  @include('layouts.goTop')
 </div>
 <script>
   Vue.use(GoTop);
@@ -202,7 +206,7 @@
       sum: 0,
       good: 0,
       bad: 0,
-      analysis: 0,
+      analysis: [],
       searchName: '',
     },
     mounted() {
