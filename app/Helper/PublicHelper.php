@@ -62,7 +62,7 @@ if (!function_exists('constellation')) {
 
     	foreach ($di as $data) {
     		if (strtotime($bd) >= strtotime($data['start']) && strtotime($bd) <= strtotime($data['end']))  {
-    			return '地	';
+    			return '地';
     		}
     	}
 
@@ -96,7 +96,7 @@ if (!function_exists('constellation')) {
 if (!function_exists('matchmaking')) {
 
     /**
-     * 媒合度計算 
+     * 媒合度計算
      *
      * @return []
      */
@@ -105,6 +105,8 @@ if (!function_exists('matchmaking')) {
     	$result = [];
     	$resultScore = 0;
     	$resultSum = 0;
+    	$good = 0;
+    	$bad = 0;
 
 		foreach ($lists as $target) {
 			$detail = [];
@@ -121,7 +123,7 @@ if (!function_exists('matchmaking')) {
 			$totalSum = 0;
 			/*
 				分數
-				如果10點以上，兼容性很好
+				如果9點以上，兼容性很好
 				在5到9分的情況下，兼容性正常或良好
 				4點以下時兼容性差
 			 */
@@ -132,6 +134,7 @@ if (!function_exists('matchmaking')) {
 					$perScore = computedPer($target, $check);
 					$matchScore = computedMatch($target, $check);
 					$raceScore = computedRace($target, $check);
+					$class = '';
 
 					$sum = $perScore + $matchScore + $raceScore;
 					$perScoreTotal += $perScore;
@@ -139,12 +142,16 @@ if (!function_exists('matchmaking')) {
 					$raceScoreTotal += $raceScore;
 					$totalSum = $perScoreTotal + $matchScoreTotal + $raceScoreTotal;
 
-					if ($sum > 10) {
+					if ($sum >= 9) {
 						$score++;
+						$good++;
+						$class = 'good';
 					}
 
-					if ($sum < 4) {
+					if ($sum <= 3) {
 						$score--;
+						$bad++;
+						$class = 'bad';
 					}
 
 					$detail[] = [
@@ -153,6 +160,7 @@ if (!function_exists('matchmaking')) {
 						'matchScore' => $matchScore,
 						'raceScore' => $raceScore,
 						'sum' => $sum,
+						'class' => $class,
 					];
 				} else {
 					$detail[] = [
@@ -178,6 +186,8 @@ if (!function_exists('matchmaking')) {
 			'data' => $result,
 			'resultSum' => $resultSum,
 			'resultScore' => $resultScore,
+			'good' => $good,
+			'bad' => $bad,
 		];
     }
 }
@@ -195,7 +205,7 @@ if (!function_exists('computedPer')) {
     	$score = 0;
     	//all type
     	$allType = ['普通', '元氣', '成熟', '大姐姐', '悠閒', '運動', '暴躁', '自戀'];
-    	
+
     	foreach ($allType as $type) {
 	    	foreach ($allType as $key => $checkType) {
 	    		if ($type == '普通') {
@@ -604,23 +614,23 @@ if (!function_exists('computedRace')) {
 		 */
 
 		if ($target->race == $check->race) {
-			return 2;
+			return 3;
 		}
 
 		if ($target->race == '松鼠' && $check->race == '老鼠' || $check->race == '松鼠' && $target->race == '老鼠') {
-			return 2;
+			return 3;
 		}
 
 		if ($target->race == '松鼠' && $check->race == '倉鼠' || $check->race == '松鼠' && $target->race == '倉鼠') {
-			return 2;
+			return 3;
 		}
 
 		if ($target->race == '老鼠' && $check->race == '倉鼠' || $check->race == '老鼠' && $target->race == '倉鼠') {
-			return 2;
+			return 3;
 		}
 
 		if ($target->race == '馬' && $check->race == '鹿' || $check->race == '馬' && $target->race == '鹿') {
-			return 2;
+			return 3;
 		}
 
 		return 1;

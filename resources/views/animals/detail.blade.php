@@ -1,5 +1,5 @@
 @extends('layouts.web')
-@section('title', $detail->name . '圖鑑')
+@section('title', $detail->name . '圖鑑 室內裝修')
 @section('content')
 <div class="content-wrap">
   <div class="container">

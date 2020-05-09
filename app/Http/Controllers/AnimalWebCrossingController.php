@@ -199,13 +199,27 @@ class AnimalWebCrossingController extends Controller
         return view('animals.compatible');
     }
 
-    public function getAnimalsGroupRace()
+    public function getAnimalsGroupRace(Request $request)
     {
+        $name = $request->input('name', '');
+
         //get all animal
-        $lists = DB::table('animal')
+        $lists = DB::table('animal');
+
+        if ($name != '') {
+            $lists->where('name', 'like', '%' . $name . '%');
+        }
+
+        $lists = $lists
+            ->where('name', '!=', '豆丁')
             ->whereNull('info')
             ->get()
             ->toArray();
+
+        foreach ($lists as $key => $value) {
+            $value->show = true;
+            $lists[$key] = $value;
+        }
 
         $lists = collect($lists)->groupBy('race')->toArray();
         $races = collect($lists)->keys()->toArray();
@@ -245,9 +259,7 @@ class AnimalWebCrossingController extends Controller
         //媒合度
         $lists = matchmaking($lists);
 
-        return view('animals.analysis', [
-            'lists' => $lists
-        ]);
+        return $lists;
     }
 
     public function statisticsComment($number)
