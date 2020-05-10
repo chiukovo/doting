@@ -119,9 +119,9 @@
             豆丁搜尋排行榜
           </div>
           <div class="card-body">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush first-rank">
               <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(rank, key) in ranking">
-                <span>@{{ key + 1}}</span>
+                <span class="first-rank-num" :class="'first-rank-num' + (key + 1)">@{{ key + 1}}</span>
                 @{{ rank.text }}
                 <span class="badge badge-light badge-pill">@{{ rank.number }}</span>
               </li>
