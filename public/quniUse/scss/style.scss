@@ -786,9 +786,6 @@ a.link {
 @include media-breakpoint-down(sm) {
   .analysis-fixed {
      margin-bottom: 120px;
-    .header {
-      position: static;
-    }
   }
   .header {
     position: fixed;
