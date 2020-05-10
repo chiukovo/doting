@@ -26,7 +26,7 @@ use DB;
 
 class OtherServices
 {
-    public static function getDataByMessage($message, $page = '')
+    public static function getDataByMessage($message, $page = '', $onlyNow = false)
     {
     	$other = [];
     	$notFound = '找不到捏 哇耶...(¬_¬)';
@@ -64,6 +64,34 @@ class OtherServices
     	                ->get()
     	                ->toArray();
     	        }
+
+                if ($onlyNow) {
+                    $format = [];
+
+                    foreach ($other as $key => $data) {
+                        if ($data->time == '全天') {
+                            $format[] = $data;
+                        } else {
+                            $checkDate = explode('~', $data->time);
+                            $start = isset($checkDate[0]) ? $checkDate[0] : 0;
+                            $end = isset($checkDate[1]) ? $checkDate[1] : 0;
+                            $now = strtotime(date('Y-n-d H:i:s'));
+
+                            $start = strtotime(date('Y-m-d ' . $start . ':00:00'));
+                            $end = date('Y-m-d ' . $end . ':00:00');
+
+                            if ($start > $end) {
+                                $end =  strtotime($end . "+1 days");
+                            }
+
+                            if ($now >= $start && $now <= $end) {
+                                $format[] = $data;
+                            }
+                        }
+                    }
+
+                    return $format;
+                }
 
     	        if (!empty($other)) {
     	            return $other;

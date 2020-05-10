@@ -37,9 +37,8 @@ Route::get('/donate', function () {
 });
 
 //index
-Route::get('/', function () {
-  return view('index');
-});
+Route::get('/', 'IndexController@index');
+Route::post('/indexData', 'IndexController@indexData');
 
 //update
 Route::get('/update/version', function () {

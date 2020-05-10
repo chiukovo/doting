@@ -1,115 +1,246 @@
-<!DOCTYPE html>
-<html lang="en" class="first">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>豆丁森友會</title>
-  <link rel="stylesheet" href="/css/normalize.css">
-  <link rel="stylesheet" href="/css/style.css?v={{ config('app.version') }}">
-  <script data-ad-client="ca-pub-2560043137442562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
-<body>
-  <div id="root">
-    <div id="donateMe">
-      <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+@extends('layouts.web')
+@section('title', '豆丁森友會')
+@section('content')
+<div id="app" class="content-wrap first" v-cloak>
+  <div class="first-birthday" v-if="birthday != null">
+    <div class="first-birthday-img" :class="show ? 'show' : ''">
+      <img class="img-fluid" :src="'/animal/' + birthday.name + '.png'" :alt="birthday.name" v-if="typeof birthday.name !== 'undefined'">
     </div>
-    <div class="container">
-      <div class="first-banner">
-        <div class="first-logo">
-          <div class="logo">
-            <img src="/image/logo.png" alt="動物森友會">
+    <div class="first-birthday-text">
+      <span>今天是 @{{ date }}，</span>
+      <span>是 <a :href="'/animals/detail?name=' + birthday.name">@{{ birthday.name }}</a> 的生日！</span>
+    </div>
+  </div>
+  <div class="first-nav-wrap">
+    <ul class="first-nav-list">
+      <li>
+        <a href="/instructions" class="first-nav-item">
+          <span class="t1">豆丁教學</span>
+          <span class="t2">豆丁教學</span>
+          <div class="black icon__instructions"></div>
+          <div class="white icon__instructions"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/update/version" class="first-nav-item">
+          <span class="t1">更新資訊</span>
+          <span class="t2">更新資訊</span>
+          <div class="black icon__version"></div>
+          <div class="white icon__version"></div>
+        </a>
+      </li>
+      <li>
+        <a href="https://forms.gle/Q7StMmonyGdL4rCFA" class="first-nav-item" target="_blank">
+          <span class="t1">意見回饋</span>
+          <span class="t2">意見回饋</span>
+          <div class="black icon__feedback"></div>
+          <div class="white icon__feedback"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/animals/list" class="first-nav-item">
+          <span class="t1">動物居民</span>
+          <span class="t2">動物居民</span>
+          <div class="black icon__animals"></div>
+          <div class="white icon__animals"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/npc/list" class="first-nav-item">
+          <span class="t1">動物NPC</span>
+          <span class="t2">動物NPC</span>
+          <div class="black icon__npc"></div>
+          <div class="white icon__npc"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/museum/list" class="first-nav-item">
+          <span class="t1">博物館</span>
+          <span class="t2">博物館</span>
+          <div class="black icon__museum"></div>
+          <div class="white icon__museum"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/diy/list" class="first-nav-item">
+          <span class="t1">DIY方程式</span>
+          <span class="t2">DIY方程式</span>
+          <div class="black icon__diy"></div>
+          <div class="white icon__diy"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/apparel/list" class="first-nav-item">
+          <span class="t1">家具</span>
+          <span class="t2">家具</span>
+          <div class="black icon__apparel"></div>
+          <div class="white icon__apparel"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/furniture/list" class="first-nav-item">
+          <span class="t1">服飾</span>
+          <span class="t2">服飾</span>
+          <div class="black icon__furniture"></div>
+          <div class="white icon__furniture"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/plant/list" class="first-nav-item">
+          <span class="t1">植物</span>
+          <span class="t2">植物</span>
+          <div class="black icon__plant"></div>
+          <div class="white icon__plant"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/kk/list" class="first-nav-item">
+          <span class="t1">唱片</span>
+          <span class="t2">唱片</span>
+          <div class="black icon__kk"></div>
+          <div class="white icon__kk"></div>
+        </a>
+      </li>
+      <li>
+        <a href="/donate" class="first-nav-item">
+          <span class="t1">贊助豆丁</span>
+          <span class="t2">贊助豆丁</span>
+          <div class="black icon__donate"></div>
+          <div class="white icon__donate"></div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="first-container container">
+    <div class="row">
+      <div class="mt-3 col-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            豆丁搜尋排行榜
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(rank, key) in ranking">
+                <span>@{{ key + 1}}</span>
+                @{{ rank.text }}
+                <span class="badge badge-light badge-pill">@{{ rank.number }}</span>
+              </li>
+            </ul>
+            <div class="text-center mt-3">
+              <a href="/statistics" class="btn btn-primary btn-block">查看更多</a>
+            </div>
           </div>
         </div>
-        <article class="media">
-          <section class="media-card first-list-warp">
-            <ul class="first-list">
-              <li>
-                <a href="/instructions">
-                  <img src="image/icon_instructions.png" alt="豆丁教學">
-                  <span>豆丁教學</span>
+      </div>
+      <div class="mt-3 col-12 col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <nav class="nav nav-pills">
+              <div class="dropdown">
+                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span v-if="isNorth">北半球</span>
+                  <span v-else>南半球</span>
                 </a>
-              </li>
-              <li>
-                <a href="/update/version">
-                  <img src="image/icon_update.png" alt="更新資訊">
-                  <span>更新資訊</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">
-                  <img src="image/icon_feedback.png" alt="意見回饋">
-                  <span>意見回饋</span>
-                </a>
-              </li>
-            </ul>
-            <ul class="first-list">
-              <li>
-                <a href="/animals/list">
-                  <img src="image/icon_animal.png" alt="動物居民">
-                  <span>動物居民</span>
-                </a>
-              </li>
-              <li>
-                <a href="/npc/list">
-                  <img src="/image/icon_npc.png" alt="動物NPC">
-                  <span>動物NPC</span>
-                </a>
-              </li>
-              <li>
-                <a href="/museum/list">
-                  <img src="/image/icon_museum.png" alt="博物館">
-                  <span>博物館</span>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="#" @click.prevent="isNorth = true">北半球</a>
+                  <a class="dropdown-item" href="#" @click.prevent="isNorth = false">南半球</a>
+                </div>
+              </div>
+              <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">現在可捕捉的</a>
+              <a class="nav-item nav-link" href="#" :class="isFish ? 'active' : ''" @click.prevent="isFish = true">魚</a>
+              <a class="nav-item nav-link" href="#" :class="isFish ? '' : 'active'" @click.prevent="isFish = false">昆蟲</a>
+            </nav>
+          </div>
+          <div class="card-body">
+            <ul class="first-season-list" v-show="isFish && isNorth">
+              <li v-for="list in northFish">
+                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
+                  <div class="table-img">
+                    <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                  </div>
                 </a>
               </li>
             </ul>
-            <ul class="first-list">
-              <li>
-                <a href="/diy/list">
-                  <img src="/image/icon_diy.png" alt="DIY方程式">
-                  <span>DIY方程式</span>
-                </a>
-              </li>
-              <li>
-                <a href="/apparel/list">
-                  <img src="/image/icon_furniture.png" alt="家具">
-                  <span>家具</span>
-                </a>
-              </li>
-              <li>
-                <a href="/furniture/list">
-                  <img src="/image/icon_clothing.png" alt="服飾">
-                  <span>服飾</span>
+            <ul class="first-season-list" v-show="isFish && !isNorth">
+              <li v-for="list in southFish">
+                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
+                  <div class="table-img">
+                    <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                  </div>
                 </a>
               </li>
             </ul>
-            <ul class="first-list">
-              <li>
-                <a href="/plant/list">
-                  <img src="/image/icon_plant.png" alt="植物圖鑑">
-                  <span>植物</span>
-                </a>
-              </li>
-              <li>
-                <a href="/kk/list">
-                  <img src="/image/icon_kk.png" alt="唱片">
-                  <span>唱片</span>
+            <ul class="first-season-list" v-show="!isFish && isNorth">
+              <li v-for="list in northInsect">
+                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
+                  <div class="table-img">
+                    <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                  </div>
                 </a>
               </li>
             </ul>
-          </section>
-        </article>
+            <ul class="first-season-list" v-show="!isFish && !isNorth">
+              <li v-for="list in southInsect">
+                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
+                  <div class="table-img">
+                    <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
       </div>
     </div>
-    <footer class="footer">copyright © 豆丁森友會</footer>
   </div>
-</body>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136875596-3"></script>
+</div>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  Vue.use(GoTop);
+  new Vue({
+    el: '#app',
+    data: {
+      date: '',
+      show: false,
+      isNorth: true,
+      isFish: true,
+      birthday: {},
+      ranking: [],
+      northFish: [],
+      southFish: [],
+      northInsect: [],
+      southInsect: [],
+    },
+    mounted() {
+      this.getIndexData()
+    },
+    methods: {
+      formatPrice(money) {
+        if (money == null) {
+          return ''
+        }
 
-  gtag('config', 'UA-136875596-3');
+        return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+      },
+      isMobile(){
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
+      getIndexData() {
+        axios.post('/indexData').then((response) => {
+          const data = response.data
+          this.birthday = data.birthday
+          this.ranking = data.ranking
+          this.northFish = data.northFish
+          this.southFish = data.southFish
+          this.northInsect = data.northInsect
+          this.southInsect = data.southInsect
+          window.setTimeout(( () => this.show = true ), 200)
+        })
+      }
+    }
+  })
 </script>
-</html>
+@endsection
