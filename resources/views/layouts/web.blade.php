@@ -81,6 +81,12 @@
                 </ul>
               </li>
               <li><a href="/statistics">搜尋排行榜</a></li>
+              <li>
+                <a href="#" style="position: relative;top:5px">
+                    <div class="line-it-button" data-lang="zh_Hant" data-type="friend" data-lineid="@875uxytu" data-count="true" data-home="true" style="display: none;"></div>
+                  <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                </a>
+              </li>
               <!-- <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li> -->
             </ul>
           </nav>
