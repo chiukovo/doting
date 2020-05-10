@@ -275,10 +275,10 @@ class AnimalWebCrossingController extends Controller
             return redirect('animals/compatible');
         }
 
-        //判斷是否 > 10
-        if (count($lists) > 10) {
+        //判斷是否 > 20
+        if (count($lists) > 20) {
             $lists = collect($lists)->filter(function ($item, $key) {
-                if ($key <= 9) {
+                if ($key <= 19) {
                     return $item;
                 }
             })->values()->all();
