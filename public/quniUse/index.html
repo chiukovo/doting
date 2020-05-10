@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="first">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>豆丁森友會</title>
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div id="root">
     <header class="header">
+      <div id="donateMe">
+        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
+      </div>
       <div class="header-wrap">
-        <div class="container">
-          <a href="/" class="logo">
-            <h1>豆丁森友會 Doting Animal crossing 動物森友會</h1>
-            <img src="../image/logo.png" alt="豆丁森友會">
-          </a>
-          <button class="btn btn-nav"><ion-icon name="menu-outline"></ion-icon></button>
-          <nav class="nav">
+        <button class="btn btn-nav"><ion-icon name="menu-outline"></ion-icon></button>
+        <a href="/" class="logo">
+          <h1>豆丁森友會 Doting Animal crossing</h1>
+          <h2>動物森友會</h2>
+          <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
+        </a>
+        <button class="btn btn-user"><ion-icon name="person-outline"></ion-icon></button>
+        <!-- 點擊展開 +class show -->
+        <div class="navigation-wrap">
+          <nav class="navigation">
             <ul>
-              <li><a href="/">首頁</a></li>
               <li class="sub-nav">
                 <a href="">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
                 <ul>
@@ -55,198 +60,282 @@
                   <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
                 </ul>
               </li>
+              <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>
             </ul>
           </nav>
-          <!-- <a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a> -->
         </div>
       </div>
     </header>
-    <div class="content">
+    <div class="content first">
       <div class="content-wrap">
-        <div id="banner">
-          <div class="container"></div>
-        </div>
-        <section class="update">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-4 center update-title">
-                <div class="update-version">v3.5.0</div>
-                <div class="update-date">2020/5/5</div>
-              </div>
-              <div class="col-12 col-md-7 offset-md-1">
-                <blockquote class="update-quote">
-                  <p>1.新增動物相同種族<br>
-                    2.新增DIY也能用從材料反搜索DIY方程式<br>
-                    範例: 找硬木材</p>
-                  <a href="/update/version">查看更多</a>
-                </blockquote>
-              </div>
-            </div>
+        <div class="first-birthday">
+          <div class="first-birthday-img">
+            <img src="../animal/阿排.png" alt="阿排" class="img-fluid">
           </div>
-        </section>
-        <section class="first-list">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-8">
-                <ul>
-                  <li>
-                    <a href="/instructions">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_instructions.png" alt="豆丁教學">
-                      </div>
-                      <span>豆丁教學</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/update/version">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_update.png" alt="更新資訊">
-                      </div>
-                      <span>更新資訊</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_feedback.png" alt="意見回饋">
-                      </div>
-                      <span>意見回饋</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/animals/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_animal.png" alt="動物居民">
-                      </div>
-                      <span>動物居民</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/npc/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_npc.png" alt="動物NPC">
-                      </div>
-                      <span>動物NPC</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/museum/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_museum.png" alt="博物館">
-                      </div>
-                      <span>博物館</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/diy/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_diy.png" alt="DIY方程式">
-                      </div>
-                      <span>DIY方程式</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/apparel/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_furniture.png" alt="家具">
-                      </div>
-                      <span>家具</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/furniture/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_clothing.png" alt="服飾">
-                      </div>
-                      <span>服飾</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/plant/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_plant.png" alt="植物">
-                      </div>
-                      <span>植物</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/kk/list">
-                      <div class="first-list-icon">
-                        <img src="../image/icon_kk.png" alt="唱片">
-                      </div>
-                      <span>唱片</span>
-                    </a>
-                  </li>
-                  <li></li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-3 offset-md-1">
-                <div class="card text-center">
-                  <div class="card-header">
-                    豆丁搜尋排行榜
-                  </div>
-                  <div class="card-body">
-                    <table class="table table-sm">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">關鍵字</th>
-                          <th scope="col">次數</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>抽</td>
-                          <td>3404</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>
-                            <a href="#" target="_blank"><span>#貓</span> <div class="table-img"><img src="../animal/彭花_icon.png" alt="#貓"></div></a>
-                          </td>
-                          <td>338</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>
-                            <a href="#" target="_blank"><span>#貓</span> <div class="table-img"><img src="../animal/彭花_icon.png" alt="#貓"></div></a>
-                          </td>
-                          <td>338</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">4</th>
-                          <td>
-                            <a href="#" target="_blank"><span>#茶茶丸</span> <div class="table-img"><img src="../animal/茶茶丸_icon.png" alt="#貓"></div></a>
-                          </td>
-                          <td>338</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">5</th>
-                          <td>
-                            <a href="#" target="_blank"><span>#豆丁</span> <div class="table-img"><img src="../animal/豆丁_icon.png" alt="#貓"></div></a>
-                          </td>
-                          <td>338</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="card-footer text-muted">
-                    <a href="#">查看更多</a>
+          <div class="first-birthday-text">
+            <span>今天是 5/10，</span>
+            <span>是 <a href="#">阿排</a> 的生日！</span>
+          </div>
+        </div>
+        <div class="first-nav-wrap">
+          <ul class="first-nav-list">
+            <li>
+              <a href="/instructions" class="first-nav-item">
+                <span class="t1">豆丁教學</span>
+                <span class="t2">豆丁教學</span>
+                <div class="black icon__instructions"></div>
+                <div class="white icon__instructions"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/update/version" class="first-nav-item">
+                <span class="t1">更新資訊</span>
+                <span class="t2">更新資訊</span>
+                <div class="black icon__version"></div>
+                <div class="white icon__version"></div>
+              </a>
+            </li>
+            <li>
+              <a href="https://forms.gle/Q7StMmonyGdL4rCFA" class="first-nav-item" target="_blank">
+                <span class="t1">意見回饋</span>
+                <span class="t2">意見回饋</span>
+                <div class="black icon__feedback"></div>
+                <div class="white icon__feedback"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/animals/list" class="first-nav-item">
+                <span class="t1">動物居民</span>
+                <span class="t2">動物居民</span>
+                <div class="black icon__animals"></div>
+                <div class="white icon__animals"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/npc/list" class="first-nav-item">
+                <span class="t1">動物NPC</span>
+                <span class="t2">動物NPC</span>
+                <div class="black icon__npc"></div>
+                <div class="white icon__npc"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/museum/list" class="first-nav-item">
+                <span class="t1">博物館</span>
+                <span class="t2">博物館</span>
+                <div class="black icon__museum"></div>
+                <div class="white icon__museum"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/diy/list" class="first-nav-item">
+                <span class="t1">DIY方程式</span>
+                <span class="t2">DIY方程式</span>
+                <div class="black icon__diy"></div>
+                <div class="white icon__diy"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/apparel/list" class="first-nav-item">
+                <span class="t1">家具</span>
+                <span class="t2">家具</span>
+                <div class="black icon__apparel"></div>
+                <div class="white icon__apparel"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/furniture/list" class="first-nav-item">
+                <span class="t1">服飾</span>
+                <span class="t2">服飾</span>
+                <div class="black icon__furniture"></div>
+                <div class="white icon__furniture"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/plant/list" class="first-nav-item">
+                <span class="t1">植物</span>
+                <span class="t2">植物</span>
+                <div class="black icon__plant"></div>
+                <div class="white icon__plant"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/kk/list" class="first-nav-item">
+                <span class="t1">唱片</span>
+                <span class="t2">唱片</span>
+                <div class="black icon__kk"></div>
+                <div class="white icon__kk"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/donate" class="first-nav-item">
+                <span class="t1">贊助豆丁</span>
+                <span class="t2">贊助豆丁</span>
+                <div class="black icon__donate"></div>
+                <div class="white icon__donate"></div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="first-container container">
+          <div class="row">
+            <div class="mt-3 col-12 col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  豆丁搜尋排行榜
+                </div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>1</span>
+                      <a href="#">抽</a>
+                      <span class="badge badge-light badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>2</span>
+                      <a href="#">#貓</a>
+                      <span class="badge badge-light badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>3</span>
+                      <a href="#">#狼</a>
+                      <span class="badge badge-light badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>4</span>
+                      <a href="#">#小潤</a>
+                      <span class="badge badge-light badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>5</span>
+                      <a href="#">#傑克</a>
+                      <span class="badge badge-light badge-pill">14</span>
+                    </li>
+                  </ul>
+                  <div class="text-center mt-3">
+                    <a href="#" class="btn btn-primary btn-block">查看更多</a>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="mt-3 col-12 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <nav class="nav nav-pills">
+                    <div class="dropdown">
+                      <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        北半球
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">北半球</a>
+                        <a class="dropdown-item" href="#">南半球</a>
+                      </div>
+                    </div>
+                    <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">現在可捕捉的</a>
+                    <a class="nav-item nav-link active" href="#">魚</a>
+                    <a class="nav-item nav-link" href="#">昆蟲</a>
+                  </nav>
+                </div>
+                <div class="card-body">
+                  <ul class="first-season-list">
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/other/金鱒.png">
+                        <span>金鱒<br>$15,000</span>
+                        <div class="table-img">
+                          <img src="/other/金鱒.png" alt="金鱒">
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
-    <footer>
+    <footer class="footer">
       <div class="copyright">
         copyright © 豆丁森友會
-      </div>
-      <div id="donateMe">
-        <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
       </div>
     </footer>
   </div>

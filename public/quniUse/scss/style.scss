@@ -1,6 +1,7 @@
 @import "bootstrap";
 
 $developer: 0;
+$font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helvetica Neue","Helvetica","Noto Sans TC","Microsoft JhengHei","Arial",sans-serif;
 
 
 #donateMe {
@@ -391,6 +392,221 @@ $developer: 0;
   }
 }
 
+.first {
+  .first-nav-wrap {
+    background-color: $gray-100;
+    padding: 1rem 0;
+  }
+  .first-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    max-width: 1200px;
+    padding: 0;
+    margin: 0 auto;
+    li {
+      padding: 0.5rem;
+      a {
+        font-size: 15px;
+        color: $gray-700;
+        overflow: hidden;
+      }
+      .first-nav-item {
+        position: relative;
+        display: block;
+        width: 160px;
+        height: 180px;
+        background-color: #fff;
+        border: 1px solid $gray-200;
+        margin: 0 auto;
+        &:hover {
+          &:after {
+            opacity: .88;
+          }
+          .t2 {
+            opacity: 1;
+            &:after {
+              width: 12px;
+              transition: all .3s ease .2s;
+            }
+          }
+          .white {
+            opacity: 1;
+            right: -50px;
+            transition: all .5s ease .2s;
+          }
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 3;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(to left, #28a5f5, #1e87f0);
+          transition: all .3s ease;
+          opacity: 0;
+        }
+        .t1 {
+          display: block;
+          position: absolute;
+          top: 2rem;
+          left: 0;
+          z-index: 2;
+          width: 100%;
+          text-align: center;
+          line-height: 20px;
+          &:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -1rem;
+            width: 12px;
+            height: 2px;
+            background-color: $primary;
+            margin-left: -6px;
+          }
+        }
+        .t2 {
+          position: absolute;
+          left: 20px;
+          bottom: 37px;
+          z-index: 6;
+          color: white;
+          transition: all .3s ease;
+          padding-bottom: 16px;
+          opacity: 0;
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: all .3s ease;
+            opacity: .7;
+          }
+        }
+        .black {
+          position: absolute;
+          left: 50%;
+          bottom: -20px;
+          z-index: 1;
+          width: 100px;
+          height: 100px;
+          background-color: $gray-100;
+          mask-size: cover;
+          mask-repeat: no-repeat;
+          margin-left: -50px;
+        }
+        .white {
+          position: absolute;
+          top: 16%;
+          right: -65px;
+          z-index: 6;
+          width: 120px;
+          height: 120px;
+          transition: all .3s ease;
+          background-color: #fff;
+          mask-size: cover;
+          mask-repeat: no-repeat;
+          opacity: 0;
+        }
+      }
+      img {
+        max-width: 100%;
+      }
+      .icon__instructions {
+        mask: url('../image/icon/instructions.svg');
+      }
+      .icon__version {
+        mask: url('../image/icon/version.svg');
+      }
+      .icon__feedback {
+        mask: url('../image/icon/feedback.svg');
+      }
+      .icon__animals {
+        mask: url('../image/icon/animals.svg');
+      }
+      .icon__npc {
+        mask: url('../image/icon/npc.svg');
+      }
+      .icon__museum {
+        mask: url('../image/icon/museum.svg');
+      }
+      .icon__diy {
+        mask: url('../image/icon/diy.svg');
+      }
+      .icon__apparel {
+        mask: url('../image/icon/apparel.svg');
+      }
+      .icon__furniture {
+        mask: url('../image/icon/furniture.svg');
+      }
+      .icon__plant {
+        mask: url('../image/icon/plant.svg');
+      }
+      .icon__kk {
+        mask: url('../image/icon/kk.svg');
+      }
+      .icon__donate {
+        mask: url('../image/icon/donate.svg');
+      }
+    }
+  }
+  .first-birthday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    padding: 2rem;
+    margin: 0 auto;
+    .first-birthday-img {
+      width: 100px;
+      img {
+        position: relative;
+        left: -20px;
+        opacity: 0.2;
+        transition: all .5s ease .2s;
+      }
+      &.show img {
+        left: 0;
+        opacity: 1;
+      }
+    }
+    .first-birthday-text {
+      font-family: $font-family;
+      font-size: 20px;
+      margin-left: 2rem;
+      > span {
+        display: block;
+      }
+    }
+  }
+  .first-season-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 1rem auto 0;
+    li {
+      flex: 0 0 25%;
+      text-align: center;
+      margin-bottom: 1rem;
+      a {
+        span {
+          display: block;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+}
+
 
 
 .footer {
@@ -436,6 +652,7 @@ a.link {
     margin-top: 0.36rem;
   }
 }
+.nav-pills .nav-link,
 .btn {
   white-space: nowrap;
   border-radius: 0.25rem;
@@ -517,7 +734,18 @@ a.link {
 }
 
 
-
+// <518px
+@include media-breakpoint-down(xs) {
+  .first {
+    .first-nav-list li {
+      padding: .2rem;
+      .first-nav-item {
+        width: 120px;
+        height: 100px;
+      }
+    }
+  }
+}
 // <691px
 @include media-breakpoint-down(sm) {
   .analysis-fixed {
@@ -615,6 +843,9 @@ a.link {
       }
     }
   }
+  .content {
+    padding-top: 90px;
+  }
   .analysis-tag {
     > div:first-child {
       margin-bottom: .5rem;
@@ -660,6 +891,7 @@ a.link {
             a {
               display: block;
               padding: .5rem 1.25rem;
+              white-space: nowrap;
               &:hover {
                 color: $primary;
                 background-color: rgba($primary, .08);
@@ -701,10 +933,34 @@ a.link {
       width: 120px;
     }
   }
+  .first {
+    .first-nav-list li .first-nav-item {
+      width: 180px;
+      .white {
+        right: -50px;
+      }
+      &:hover {
+        .white {
+          right: -30px;
+        }
+      }
+    }
+    .first-birthday {
+      .first-birthday-text {
+        margin-left: 3rem;
+        > span {
+          display: inline-block;
+        }
+      }
+    }
+  }
 }
 
 // ≥992px
 @include media-breakpoint-up(lg) {
+  .first .first-season-list li {
+    flex: 0 0 20%;
+  }
   .post .post-card-list {
     &.check-list li {
       width: 12.5%;
@@ -716,6 +972,9 @@ a.link {
 @include media-breakpoint-up(xl) {
   .header-wrap {
     max-width: 1140px;
+  }
+  .first .first-season-list li {
+    flex: 0 0 12.5%;
   }
   .post .post-card-list {
     li {
