@@ -2,13 +2,6 @@
 
 $developer: 0;
 
-ul {
-  line-height: 1.8;
-}
-
-audio {
-  width: 100%;
-}
 
 #donateMe {
   width: 100%;
@@ -158,15 +151,6 @@ audio {
     }
     .card {
       margin-bottom: 1rem;
-      ul.list-decimal {
-        list-style: decimal;
-        line-height: 1.4;
-        padding: 0 0 0 1rem;
-        margin: 0;
-        li + li {
-          margin-top: 0.36rem;
-        }
-      }
     }
   }
   .post-card-title {
@@ -420,12 +404,33 @@ audio {
 
 
 // components
+ul {
+  line-height: 1.8;
+}
+audio {
+  width: 100%;
+}
+.vue-go-top {
+  width: 40px !important;
+  height: 40px !important;
+  background-color: rgba($primary, .8) !important;
+  box-shadow: none !important;
+}
 .hidden {
   overflow: hidden;
 }
 a.link {
   color: $primary !important;
   text-decoration: underline;
+}
+.list-decimal {
+  list-style: decimal;
+  line-height: 1.4;
+  padding: 0 0 0 1rem;
+  margin: 0;
+  li + li {
+    margin-top: 0.36rem;
+  }
 }
 .btn {
   white-space: nowrap;
@@ -463,7 +468,6 @@ a.link {
 // card
 .card {
   border: 0;
-  // border: 1px solid $gray-200;
 }
 .card-header {
   background-color: $gray-100;
@@ -471,6 +475,14 @@ a.link {
 }
 .card-body {
   border: 1px solid $gray-200;
+}
+.card-group {
+  hr {
+    margin: .5rem 0;
+  }
+  .card {
+    margin-bottom: 0;
+  }
 }
 
 

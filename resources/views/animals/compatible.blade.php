@@ -192,70 +192,87 @@
       <div class="post-card" v-show="analysis.length > 0">
         <a class="collapse-analysis" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="true">分數判定基準<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
         <div class="collapse" id="collapse3">
-          <div class="card">
+          <div class="card my-3">
             <div class="card-header">分數算法</div>
             <div class="card-body">
-              <p>如果10分以上(不含10), 兼容性很好 (+1)</p>
-              <p>在5到9分的情況下, 兼容性正常或良好 (+0)</p>
-              <p>4分以下(不含4), 兼容性差 (-1)</p>
+              <p class="mb-0">如果10分以上(不含10), 兼容性很好 (+1)</p>
+              <p class="mb-0">在5到9分的情況下, 兼容性正常或良好 (+0)</p>
+              <p class="mb-0">4分以下(不含4), 兼容性差 (-1)</p>
             </div>
           </div>
           <div class="card">
             <div class="card-header">個性判定</div>
-            <div class="card-body">
-              <table>
-                <tr>
-                  <td></td>
-                  <td v-for="type in perArray.type">
-                    @{{ type }}
-                  </td>
-                </tr>
-                <tr v-for="type in perArray.type">
-                  <td>@{{ type }}</td>
-                  <td v-for="detail in perArray.scoreDetail" v-if="type == detail.from">
-                    @{{ detail.score }}
-                  </td>
-                </tr>
-              </table>
-            </div>
+            <table class="table table-bordered text-center">
+              <tr>
+                <td></td>
+                <td v-for="type in perArray.type">
+                  @{{ type }}
+                </td>
+              </tr>
+              <tr v-for="type in perArray.type">
+                <td>@{{ type }}</td>
+                <td v-for="detail in perArray.scoreDetail" v-if="type == detail.from">
+                  @{{ detail.score }}
+                </td>
+              </tr>
+            </table>
           </div>
           <div class="card">
             <div class="card-header">星座判定</div>
-            <div class="card-body">
-              <table>
-                <tr>
-                  <td></td>
-                  <td v-for="type in matchArray.type">
-                    @{{ type }}
-                  </td>
-                </tr>
-                <tr v-for="type in matchArray.type">
-                  <td>@{{ type }}</td>
-                  <td v-for="detail in matchArray.scoreDetail" v-if="type == detail.from">
-                    @{{ detail.score }}
-                  </td>
-                </tr>
-              </table>
-            </div>
+            <table class="table table-bordered text-center">
+              <tr>
+                <td></td>
+                <td v-for="type in matchArray.type">
+                  @{{ type }}
+                </td>
+              </tr>
+              <tr v-for="type in matchArray.type">
+                <td>@{{ type }}</td>
+                <td v-for="detail in matchArray.scoreDetail" v-if="type == detail.from">
+                  @{{ detail.score }}
+                </td>
+              </tr>
+            </table>
           </div>
           <div class="card">
             <div class="card-header">種族判定</div>
-            <div class="card-body">
-              <p>--5分--</p>
-              <p>1.狗和狼</p>
-              <p>2.熊和小熊</p>
-              <p>3.山羊和綿羊</p>
-              <p>4.老虎和貓</p>
-              <p>5.公牛和母牛</p>
-              <p>6.無尾熊和袋鼠</p>
-              <p>--3分--</p>
-              <p>1.同種族</p>
-              <p>2.松鼠和老鼠</p>
-              <p>3.松鼠和倉鼠</p>
-              <p>4.老鼠和倉鼠</p>
-              <p>5.馬和鹿</p>
-              <p>--2分--</p>
-              <p>其他組合</p>
+            <div class="card-group">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title text-center">5分</h5>
+                  <hr>
+                  <ul class="list-decimal">
+                    <li>狗和狼</li>
+                    <li>熊和小熊</li>
+                    <li>山羊和綿羊</li>
+                    <li>老虎和貓</li>
+                    <li>公牛和母牛</li>
+                    <li>無尾熊和袋鼠</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title text-center">3分</h5>
+                  <hr>
+                  <ul class="list-decimal">
+                    <li>同種族</li>
+                    <li>松鼠和老鼠</li>
+                    <li>松鼠和倉鼠</li>
+                    <li>老鼠和倉鼠</li>
+                    <li>馬和鹿</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title text-center">2分</h5>
+                  <hr>
+                  <ul class="list-decimal">
+                    <li>其他組合</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
