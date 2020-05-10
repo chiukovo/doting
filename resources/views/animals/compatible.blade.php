@@ -124,11 +124,11 @@
             <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive m-1">
             <table class="table table-bordered table-analysis">
               <thead>
                 <tr>
-                  <td class="bg-light text-center" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
+                  <td class="bg-light text-center fixed-column" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
                   <td class="bg-light text-center" v-for="data in analysis">
                     <div class="analysis-scores">
                       <div>@{{ data.personality }} @{{ data.sex }}</div>
@@ -154,14 +154,14 @@
               </thead>
               <tbody>
                 <tr v-for="data in analysis">
-                  <td class="bg-light text-center">
+                  <td class="bg-light text-center fixed-column">
                     <div class="analysis-scores">
                       <div>@{{ data.personality }} @{{ data.sex }}</div>
                       <div>@{{ data.constellation }} @{{ data.bd }}</div>
                       <div>@{{ data.race }}</div>
                     </div>
                   </td>
-                  <td class="bg-light">
+                  <td class="bg-light fixed-column">
                     <div class="analysis-info left">
                       <div class="analysis-icon">
                         <img :src="'/animal/icon/' + data.name + '.png'" :alt="data.name">
@@ -194,6 +194,9 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="text-center">
+            <iframe :src="'https://www.facebook.com/plugins/share_button.php?href=https://doting.tw/animals/compatible?name=' + params + '&layout=button_count&size=small&width=102&height=20&appId'" width="102" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
           </div>
         </div>
       </div>
@@ -458,6 +461,7 @@
           this.analysis = response.data.data
           this.perArray = response.data.perArray
           this.matchArray = response.data.matchArray
+          this.params = response.data.names
 
           this.collapseShow = false
           this.loading = false

@@ -262,6 +262,7 @@ class AnimalWebCrossingController extends Controller
         $animalsName = trim($animalsName);
         //去除前後空白
         $animalsName = preg_replace('/\s+/', '', $animalsName);
+        $names = $animalsName;
         $array = explode(",", $animalsName);
 
         //get all animal
@@ -301,7 +302,7 @@ class AnimalWebCrossingController extends Controller
         }
 
         //媒合度
-        $format = matchmaking($format);
+        $format = matchmaking($format, $names);
 
         return $format;
     }

@@ -104,7 +104,7 @@ if (!function_exists('matchmaking')) {
      *
      * @return []
      */
-    function matchmaking($lists)
+    function matchmaking($lists, $names)
     {
     	$result = [];
     	$resultScore = 0;
@@ -192,6 +192,7 @@ if (!function_exists('matchmaking')) {
 			'resultScore' => round($resultScore / 2),
 			'good' => $good,
 			'bad' => $bad,
+			'names' => $names,
 			'perArray' => computedPer([], [], true),
 			'matchArray' => computedMatch([], [], true),
 		];

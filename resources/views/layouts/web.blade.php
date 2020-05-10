@@ -109,6 +109,15 @@
     data: {
       menuShow: false
     },
+    watch: {
+      menuShow(show) {
+        if (show) {
+          $('#html').addClass('hidden')
+        } else {
+          $('#html').removeClass('hidden')
+        }
+      }
+    }
   })
 </script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
