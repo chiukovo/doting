@@ -18,7 +18,7 @@
               <tr>
                 <td class="text-center" width="80">查看全部</td>
                 <td>
-                  <button class="btn btn-search" :class="searchData.text == '' ? 'current' : ''" @click="clearAll">查看全部</button>
+                  <button class="btn btn-search"@click.prevent="clearAll">查看全部</button>
                 </td>
               </tr>
               <tr>

@@ -70,7 +70,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="#">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
                 <ul>
                   <li><a href="/instructions">豆丁教學</a></li>
                   <li><a href="/update/version">更新資訊</a></li>
@@ -78,6 +78,7 @@
                   <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
                 </ul>
               </li>
+              <li><a href="/statistics">搜尋排行榜</a></li>
               <!-- <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li> -->
             </ul>
           </nav>

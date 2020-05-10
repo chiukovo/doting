@@ -195,9 +195,9 @@
           <div class="card my-3">
             <div class="card-header">分數算法</div>
             <div class="card-body">
-              <p class="mb-0">如果10分以上(不含10), 兼容性很好 (+1)</p>
-              <p class="mb-0">在5到9分的情況下, 兼容性正常或良好 (+0)</p>
-              <p class="mb-0">4分以下(不含4), 兼容性差 (-1)</p>
+              <p class="mb-0">如果10分以上(不含10), 兼容性很好 <strong class="text-success">+1</strong></p>
+              <p class="mb-0">在5到9分的情況下, 兼容性正常或良好 <strong class="text-success">+0</strong></p>
+              <p class="mb-0">4分以下(不含4), 兼容性差 <strong class="text-danger">-1</strong></p>
             </div>
           </div>
           <div class="card">
@@ -211,7 +211,7 @@
               </tr>
               <tr v-for="type in perArray.type">
                 <td>@{{ type }}</td>
-                <td v-for="detail in perArray.scoreDetail" v-if="type == detail.from">
+                <td v-for="detail in perArray.scoreDetail" v-if="type == detail.from" :class="checkClassBg(detail.score)">
                   @{{ detail.score }}
                 </td>
               </tr>
@@ -228,7 +228,7 @@
               </tr>
               <tr v-for="type in matchArray.type">
                 <td>@{{ type }}</td>
-                <td v-for="detail in matchArray.scoreDetail" v-if="type == detail.from">
+                <td v-for="detail in matchArray.scoreDetail" v-if="type == detail.from" :class="checkClassBg(detail.score)">
                   @{{ detail.score }}
                 </td>
               </tr>
@@ -279,7 +279,13 @@
       </div>
     </section>
   </div>
-  @include('layouts.goTop')
+  <go-top
+    :max-width="0"
+    :right="20"
+    :bottom="bottom"
+  >
+    TOP
+  </go-top>
 </div>
 <script>
   Vue.use(GoTop);
@@ -299,14 +305,44 @@
       bad: 0,
       analysis: [],
       searchName: '',
+      params: "{{ $animalsName }}",
+      bottom: 80,
+    },
+    created() {
+      if (this.isMobile()) {
+        this.bottom = 140
+      } else {
+        this.bottom = 80
+      }
     },
     mounted() {
       this.getAnimalsGroupRace()
       window.addEventListener('scroll', this.handleScroll)
-    },
-    watch: {
+
+      if (this.params != '') {
+        this.selected = this.params.split(",")
+
+        if (this.selected.length > 2 && this.selected.length < 10) {
+          this.goAnalysis()
+        }
+      }
     },
     methods: {
+      isMobile(){
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
+      checkClassBg(score) {
+        if (score == 5) {
+          return 'bg-success-light'
+        }
+
+        if (score == 1 || score == 0) {
+          return 'bg-danger-light'
+        }
+
+        return ''
+      },
       handleScroll() {
         let selected = document.getElementById("select-div");
         let sticky = selected.offsetTop

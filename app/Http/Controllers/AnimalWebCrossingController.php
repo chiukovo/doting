@@ -34,6 +34,17 @@ class AnimalWebCrossingController extends Controller
             ->where('name', $name)
             ->first();
 
+        $detail->kk_cn_name = '';
+
+        //kk ch name
+        $kk = DB::table('kk')
+            ->where('name', $detail->kk)
+            ->first(['cn_name']);
+
+        if (!is_null($kk)) {
+            $detail->kk_cn_name = $kk->cn_name;
+        }
+
         if ($detail->kk != '') {
             //format
             $detail->kk = str_replace(".", "", $detail->kk);
@@ -41,6 +52,7 @@ class AnimalWebCrossingController extends Controller
             $detail->kk = str_replace("'", "", $detail->kk);
             $detail->kk = $detail->kk . '_Live';
         }
+
 
         if (is_null($detail)) {
             return redirect('animals/list');
@@ -194,9 +206,21 @@ class AnimalWebCrossingController extends Controller
         return $result;
     }
 
-    public function compatible()
+    public function compatible(Request $request)
     {
-        return view('animals.compatible');
+        $animalsName = $request->input('name', '');
+
+        if ($animalsName != '') {
+            //去頭尾空白
+            $animalsName = trim($animalsName);
+            //去除前後空白
+            $animalsName = preg_replace('/\s+/', '', $animalsName);
+            $array = explode(",", $animalsName);
+        }
+
+        return view('animals.compatible', [
+            'animalsName' => $animalsName
+        ]);
     }
 
     public function getAnimalsGroupRace(Request $request)

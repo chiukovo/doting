@@ -54,6 +54,8 @@ class AnimalServices
 
         if ($type == 'npc') {
             $animal = $animal->where('info', '!=', '');
+        } else {
+            $animal = $animal->whereNull('info');
         }
 
         $animal = $animal->get(['race', 'personality'])

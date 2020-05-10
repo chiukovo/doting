@@ -3,11 +3,19 @@
 @section('content')
 <div class="content-wrap">
   <div class="container">
+    @if($detail->info != '')
+    <h2 class="content-title">動物NPC</h2>
+    @else
     <h2 class="content-title">動物居民</h2>
+    @endif
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">首頁</a></li>
+        @if($detail->info != '')
+        <li class="breadcrumb-item"><a href="/npc/list">動物NPC</a></li>
+        @else
         <li class="breadcrumb-item"><a href="/animals/list">動物居民</a></li>
+        @endif
         <li class="breadcrumb-item active" aria-current="page">{{ $detail->name }}</li>
       </ol>
     </nav>
@@ -41,6 +49,14 @@
                         </span>
                       </div>
                     </div>
+                    @if($detail->info != '')
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>用途</label>
+                        <span>{{ $detail->info }}</span>
+                      </div>
+                    </div>
+                    @endif
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>種族</label>
@@ -61,6 +77,7 @@
                         <span>{{ $detail->bd }}</span>
                       </div>
                     </div>
+                    @if($detail->info == '')
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>口頭禪</label>
@@ -79,10 +96,12 @@
                         <span>{{ $detail->target }}</span>
                       </div>
                     </div>
+                    @endif
+                    @if($detail->kk != '')
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label style="width: 100px;">最喜歡的歌曲</label>
-                        <span>{{ $detail->kk }}</span>
+                        <span>{{ $detail->kk_cn_name }} / {{ $detail->kk }}</span>
                         <div class="post-info-audio">
                           <audio controls="" name="media">
                             <source src="/animal/kk/{{ $detail->kk }}.mp3" type="audio/mpeg">
@@ -90,11 +109,13 @@
                         </div>
                       </div>
                     </div>
+                    @endif
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          @if($detail->info == '')
           <div class="post-body">
             <div class="card">
               <div class="card-header">{{ $detail->name }}的家</div>
@@ -112,6 +133,7 @@
                 </a>
               </div>
             </div>
+            @endif
             @if($detail->amiibo != '')
             <div class="card">
               <div class="card-header">Amiibo Card</div>
