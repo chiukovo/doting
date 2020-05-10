@@ -6,6 +6,10 @@
   <title>豆丁森友會</title>
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <link rel="stylesheet" href="../css/style.css">
+  <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 </head>
 <body>
   <div id="root">
@@ -150,10 +154,12 @@
             </div>
             <div class="row">
               <div class="col">
-                <table class="table table-bordered table-hover text-center">
+                <table class="table table-bordered table-hover text-center" data-toggle="table"
+                data-sort-class="table-active"
+                data-sortable="true">
                   <thead>
                     <tr>
-                      <th scope="col">名稱</th>
+                      <th scope="col" data-field="name" data-sortable="true">名稱</th>
                       <th scope="col">性別</th>
                       <th scope="col">個性</th>
                       <th scope="col">種族</th>
@@ -163,7 +169,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td scope="row">
+                      <td scope="row" data-field="name">
                         <a href="#" class="link">
                           <div class="table-img">
                             <img src="../animal/icon/茶茶丸.png" alt="茶茶丸">
@@ -178,7 +184,7 @@
                       <td>哇耶</td>
                     </tr>
                     <tr>
-                      <td scope="row">
+                      <td scope="row" data-field="name">
                         <a href="#" class="link">
                           <div class="table-img">
                             <img src="../animal/icon/彭花.png" alt="彭花">
@@ -193,7 +199,7 @@
                       <td>哇耶</td>
                     </tr>
                     <tr>
-                      <td scope="row">
+                      <td scope="row" data-field="name">
                         <a href="#" class="link">
                           <div class="table-img">
                             <img src="../animal/icon/月兔.png" alt="月兔">
@@ -208,7 +214,7 @@
                       <td>哇耶</td>
                     </tr>
                     <tr>
-                      <td scope="row">
+                      <td scope="row" data-field="name">
                         <a href="#" class="link">
                           <div class="table-img">
                             <img src="../animal/icon/毛海兒.png" alt="毛海兒">
@@ -236,7 +242,5 @@
       </div>
     </footer>
   </div>
-  <script src="../js/jquery-2.2.4.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

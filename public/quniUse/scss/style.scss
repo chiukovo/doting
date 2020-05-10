@@ -3,6 +3,36 @@
 $developer: 0;
 $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helvetica Neue","Helvetica","Noto Sans TC","Microsoft JhengHei","Arial",sans-serif;
 
+html, body {
+  touch-action: manipulation;
+}
+
+// .table-responsive {
+//   .table {
+//     table-layout: fixed;
+//     th, td {
+//       width: 80px;
+//     }
+//     tr {
+//       td:first-child {
+//         .analysis-scores {
+//           width: 70px;
+//         }
+//         left: 0;
+//         position:sticky;
+//         z-index:1;
+//         background-color:lightpink;
+//       }
+//       td:nth-child(2) {
+//         left: 87.78px;
+//         width: 180px;
+//         position:sticky;
+//         z-index:1;
+//         background-color:lightpink;
+//       }
+//     }
+//   }
+// }
 
 #donateMe {
   width: 100%;
@@ -865,8 +895,9 @@ a.link {
       background-color: rgba($gray-900, 0.7);
     }
     > ul {
-      overflow: hidden;
+      overflow-x: hidden;
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
       transform: translateX(100%);
       position: absolute;
       right: 0;
