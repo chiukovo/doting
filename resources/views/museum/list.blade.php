@@ -22,7 +22,7 @@
                 </td>
               </tr>
               <tr>
-                <th>類型</th>
+                <td>類型</td>
                 <td>
                   @include('layouts.museum-tabs')
                 </td>
@@ -52,8 +52,8 @@
             </thead>
             <tbody>
               <tr v-for="list in lists">
-                <td class="link" scope="row">
-                  <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+                <td scope="row">
+                  <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
                     <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                     <div class="table-img">
                       <img :src="'/other/' + list.name + '.png'" :alt="list.name">

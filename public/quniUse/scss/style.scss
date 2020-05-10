@@ -23,11 +23,12 @@ $developer: 0;
   }
 }
 .header-wrap {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
   .logo {
     display: block;
     padding-left: 1rem;
@@ -139,11 +140,15 @@ $developer: 0;
   }
   .post-photo {
     text-align: center;
-    height: 260px;
-    padding-bottom: 1rem;
+    max-width: 200px;
+    padding: 1rem 0;
+    margin: 0 auto;
     img {
       max-height: 100%;
     }
+  }
+  .post-animal {
+    height: 320px;
   }
   .post-body {
     .post-card {
@@ -168,9 +173,8 @@ $developer: 0;
     list-style: none;
     line-height: 1.6;
     background: $gray-200;
-    border-radius: .25rem;
+    border-radius: 16px;
     padding: 6px 10px;
-    margin: 0;
     .post-info-group {
       display: flex;
       .post-info-item {
@@ -500,7 +504,7 @@ a.link {
     padding: 1rem;
   }
   .table-label {
-    width: 90px;
+    width: 80px;
   }
 }
 .table-img {
@@ -596,9 +600,9 @@ a.link {
       background-color: rgba($gray-900, 0.7);
     }
     > ul {
-      transform: translateX(-100%);
+      transform: translateX(100%);
       position: absolute;
-      left: 0;
+      right: 0;
       z-index: 100;
       width: 80%;
       max-width: 220px;
@@ -619,6 +623,9 @@ a.link {
 }
 // ≥768px
 @include media-breakpoint-up(md) {
+  .header-wrap {
+    max-width: 960px;
+  }
   .btn-user,
   .btn-nav {
     display: none;
@@ -689,6 +696,11 @@ a.link {
       }
     }
   }
+  .table {
+    .table-label {
+      width: 120px;
+    }
+  }
 }
 
 // ≥992px
@@ -702,6 +714,9 @@ a.link {
 
 // ≥1200px
 @include media-breakpoint-up(xl) {
+  .header-wrap {
+    max-width: 1140px;
+  }
   .post .post-card-list {
     li {
       width: 16.66%;

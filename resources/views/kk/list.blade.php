@@ -13,20 +13,11 @@
     <section>
       <div class="section-search row">
         <div class="col">
-          <div class="collapse show" id="collapseSearch">
-            <table class="table table-bordered">
-              <tr>
-                <td class="text-center" width="80">查看全部</td>
-                <td>
-                  <button class="btn btn-search" :class="searchData.text == '' ? 'current' : ''" @click="clearAll">查看全部</button>
-                </td>
-              </tr>
-            </table>
-          </div>
           <form>
             <div class="form-search">
               <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
               <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
+              <button class="btn btn-default" :class="searchData.text == '' ? 'current' : ''" @click="clearAll">清除搜尋</button>
             </div>
           </form>
         </div>

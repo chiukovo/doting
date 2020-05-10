@@ -17,84 +17,90 @@
           <div class="post-header fixed">
             <div class="post-card">
               <h2 class="post-title">{{ $detail->name }}</h2>
-              <div class="post-photo">
-                <img class="img-fluid" src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
-              </div>
             </div>
-          </div>
-          <div class="post-body">
-            <div class="post-card">
-              <div class="post-card-info">
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>名稱</label>
-                    <span>
-                      {{ $detail->name }} /
-                      @if($detail->en_name != '')
-                      {{ $detail->en_name }} /
-                      @endif
-                      @if($detail->jp_name != '')
-                      {{ $detail->jp_name }}
-                      @endif
-                    </span>
-                  </div>
+            <div class="row my-4">
+              <div class="col-12 col-md-4">
+                <div class="post-photo post-animal">
+                  <img class="img-fluid" src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
                 </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>種族</label>
-                    <span>{{ $detail->race }}</span>
-                  </div>
-                  <div class="post-info-item">
-                    <label>個性</label>
-                    <span>{{ $detail->personality }}</span>
-                  </div>
-                </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>性別</label>
-                    <span>{{ $detail->sex }}</span>
-                  </div>
-                  <div class="post-info-item">
-                    <label>生日</label>
-                    <span>{{ $detail->bd }}</span>
-                  </div>
-                </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>口頭禪</label>
-                    <span>{{ $detail->say }}</span>
-                  </div>
-                </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>座右銘</label>
-                    <span>{{ $detail->motto }}</span>
-                  </div>
-                </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label>目標</label>
-                    <span>{{ $detail->target }}</span>
-                  </div>
-                </div>
-                <div class="post-info-group">
-                  <div class="post-info-item">
-                    <label style="width: 100px;">最喜歡的歌曲</label>
-                    <span>{{ $detail->kk }}</span>
-                    <div class="post-info-audio">
-                      <audio controls="" name="media">
-                        <source src="/animal/kk/{{ $detail->kk }}.mp3" type="audio/mpeg">
-                      </audio>
+              </div>
+              <div class="col-12 col-md-8">
+                <div class="post-card">
+                  <div class="post-card-info">
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>名稱</label>
+                        <span>
+                          {{ $detail->name }} /
+                          @if($detail->en_name != '')
+                          {{ $detail->en_name }} /
+                          @endif
+                          @if($detail->jp_name != '')
+                          {{ $detail->jp_name }}
+                          @endif
+                        </span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>種族</label>
+                        <span>{{ $detail->race }}</span>
+                      </div>
+                      <div class="post-info-item">
+                        <label>個性</label>
+                        <span>{{ $detail->personality }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>性別</label>
+                        <span>{{ $detail->sex }}</span>
+                      </div>
+                      <div class="post-info-item">
+                        <label>生日</label>
+                        <span>{{ $detail->bd }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>口頭禪</label>
+                        <span>{{ $detail->say }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>座右銘</label>
+                        <span>{{ $detail->motto }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>目標</label>
+                        <span>{{ $detail->target }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label style="width: 100px;">最喜歡的歌曲</label>
+                        <span>{{ $detail->kk }}</span>
+                        <div class="post-info-audio">
+                          <audio controls="" name="media">
+                            <source src="/animal/kk/{{ $detail->kk }}.mp3" type="audio/mpeg">
+                          </audio>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="post-body">
             <div class="card">
               <div class="card-header">{{ $detail->name }}的家</div>
               <div class="card-body text-center">
                 <a href="/animal/house/{{ $detail->name }}.png" data-lightbox="{{ $detail->name }}家" data-title="{{ $detail->name }}家">
-                  <img class="img-fluid" src="/animal/house/{{ $detail->name }}.png" alt="{{ $detail->name }}家">
+                  <img class="img-fluid" src="/animal/house/{{ $detail->name }}.png" alt="{{ $detail->name }}家" style="width: 300px">
                 </a>
               </div>
             </div>

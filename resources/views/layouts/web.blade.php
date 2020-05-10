@@ -32,13 +32,13 @@
         <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
       </div>
       <div class="header-wrap">
-        <button class="btn btn-nav" @click="menuShow = !menuShow"><ion-icon name="menu-outline"></ion-icon></button>
         <a href="/" class="logo">
           <h1>豆丁森友會 Doting Animal crossing</h1>
           <h2>動物森友會</h2>
           <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
         </a>
-        <button class="btn btn-user"><ion-icon name="person-outline"></ion-icon></button>
+        <button class="btn btn-nav" @click="menuShow = !menuShow"><ion-icon name="menu-outline"></ion-icon></button>
+        <!-- <button class="btn btn-user"><ion-icon name="person-outline"></ion-icon></button> -->
         <div class="navigation-wrap" :class="menuShow ? 'show' : ''">
           <nav class="navigation">
             <ul>
@@ -78,7 +78,7 @@
                   <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
                 </ul>
               </li>
-              <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>
+              <!-- <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li> -->
             </ul>
           </nav>
         </div>
