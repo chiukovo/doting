@@ -267,7 +267,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 1;
 	    					break;
 	    				case 7: //自戀
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    			}
 	    		}
@@ -423,7 +423,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 5;
 	    					break;
 	    				case 1: //元氣
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 2: //成熟
 	    					$score = 2;
