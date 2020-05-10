@@ -605,6 +605,42 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       }
     }
   }
+  .first-rank {
+    .first-rank-num {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      color: $gray-500;
+      background-color: $gray-200;
+      border-radius: 50%;
+      &.first-rank-num1 {
+        color: #fff;
+        background: transparent url('../../image/first-rank-1.png');
+        background-size: 100%;
+        border-radius: 0;
+        box-sizing: content-box;
+        padding-top: 6px;
+      }
+      &.first-rank-num2 {
+        color: #fff;
+        background: transparent url('../../image/first-rank-2.png');
+        background-size: 100%;
+        border-radius: 0;
+        box-sizing: content-box;
+        padding-top: 6px;
+      }
+      &.first-rank-num3 {
+        color: #fff;
+        background: transparent url('../../image/first-rank-3.png');
+        background-size: 100%;
+        border-radius: 0;
+        box-sizing: content-box;
+        padding-top: 6px;
+      }
+    }
+  }
 }
 
 
