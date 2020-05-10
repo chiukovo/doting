@@ -281,7 +281,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 2: //成熟
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 3: //大姐姐
 	    					$score = 1;
@@ -354,7 +354,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 2;
 	    					break;
 	    				case 7: //自戀
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    			}
 	    		}
@@ -432,7 +432,7 @@ if (!function_exists('computedPer')) {
 	    					$score = 1;
 	    					break;
 	    				case 4: //悠閒
-	    					$score = 2;
+	    					$score = 3;
 	    					break;
 	    				case 5: //運動
 	    					$score = 2;
