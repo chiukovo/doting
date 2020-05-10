@@ -21,6 +21,21 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.6.0</div>
+                <div class="card-header-date">2020/5/10</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>
+                    網站UI全新更新<br>
+                    新增動物相容度分析<br>
+                    <a href="https://doting.tw/animals/compatible">https://doting.tw/animals/compatible</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.5.3</div>
                 <div class="card-header-date">2020/5/8</div>
               </div>

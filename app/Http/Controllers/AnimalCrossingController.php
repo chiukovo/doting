@@ -403,6 +403,9 @@ class AnimalCrossingController extends Controller
         $text .= '9.豆丁搜尋排行榜' . "\n";
         $text .= '範例 請輸入 搜尋排行榜' . "\n";
         $text .= "\n";
+        $text .= '10.動物相容性分析' . "\n";
+        $text .= '範例 請輸入 動物相容性分析' . "\n";
+        $text .= "\n";
         $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
         $text .= env('APP_URL');
 
@@ -436,42 +439,9 @@ class AnimalCrossingController extends Controller
             return $returnText;
         }
 
-        if ($text == '#豬力力') {
-            $returnText = '名稱: 豬力力' . "\n";
-            $returnText .= '個性: 好吃懶做' . "\n";
-            $returnText .= '種族: 耍廢星人' . "\n";
-            $returnText .= '生日: 0112' . "\n";
-            $returnText .= '口頭禪: 賊賊給我錢';
-
-            return $returnText;
-        }
-
-        if ($text == '#軒哥') {
-            $returnText = '名稱: 軒哥' . "\n";
-            $returnText .= '個性: 火爆' . "\n";
-            $returnText .= '種族: 苦命星人' . "\n";
-            $returnText .= '生日: ??' . "\n";
-            $returnText .= '口頭禪: 走了拉 夾';
-
-            return $returnText;
-        }
-
-        if ($text == '#ㄦㄦ') {
-            $returnText = '名稱: ㄦㄦ' . "\n";
-            $returnText .= '個性: 溫和' . "\n";
-            $returnText .= '種族: 不想上班星人' . "\n";
-            $returnText .= '生日: 0119 or 0123' . "\n";
-            $returnText .= '口頭禪: 想下班';
-
-            return $returnText;
-        }
-
-        if ($text == '#Quni') {
-            $returnText = '名稱: Quni' . "\n";
-            $returnText .= '個性: 易怒' . "\n";
-            $returnText .= '種族: 愛睏星人' . "\n";
-            $returnText .= '生日: 0121' . "\n";
-            $returnText .= '口頭禪: 想睡覺';
+        if ($text == '動物相容性分析') {
+            $returnText = '動物相容性分析 哇耶 (´・ω・`)' . "\n";
+            $returnText .= 'https://doting.tw/animals/compatible';
 
             return $returnText;
         }
