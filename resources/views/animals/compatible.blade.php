@@ -120,71 +120,75 @@
             <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
           </div>
-          <div class="table-responsive">
+          <div>
             <table class="table table-bordered table-analysis">
-              <tr>
-                <td class="bg-light text-center" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
-                <td class="bg-light text-center" v-for="data in analysis">
-                  <div class="analysis-scores">
-                    <div>@{{ data.personality }} @{{ data.sex }}</div>
-                    <div>@{{ data.constellation }} @{{ data.bd }}</div>
-                    <div>@{{ data.race }}</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="bg-light" v-for="data in analysis">
-                  <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
-                    <div class="analysis-info top">
+              <thead>
+                <tr>
+                  <td class="bg-light text-center" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
+                  <td class="bg-light text-center" v-for="data in analysis">
+                    <div class="analysis-scores">
+                      <div>@{{ data.personality }} @{{ data.sex }}</div>
+                      <div>@{{ data.constellation }} @{{ data.bd }}</div>
+                      <div>@{{ data.race }}</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bg-light" v-for="data in analysis">
+                    <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
+                      <div class="analysis-info top">
+                        <div class="analysis-icon">
+                          <img :src="'/animal/icon/' + data.name + '.png'" :alt="data.name">
+                        </div>
+                        <div class="analysis-info-box">
+                          <div class="analysis-name">@{{ data.name }}</div>
+                        </div>
+                      </div>
+                    </a>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="data in analysis">
+                  <td class="bg-light text-center">
+                    <div class="analysis-scores">
+                      <div>@{{ data.personality }} @{{ data.sex }}</div>
+                      <div>@{{ data.constellation }} @{{ data.bd }}</div>
+                      <div>@{{ data.race }}</div>
+                    </div>
+                  </td>
+                  <td class="bg-light">
+                    <div class="analysis-info left">
                       <div class="analysis-icon">
                         <img :src="'/animal/icon/' + data.name + '.png'" :alt="data.name">
                       </div>
-                      <div class="analysis-info-box">
-                        <div class="analysis-name">@{{ data.name }}</div>
+                      <div class="analysis-info-box text-center">
+                        <div class="analysis-name">@{{ data.name }}
+                          <span class="analysis-scores-total">
+                            <strong class="text-success" v-if="data.score >= 0">+@{{ data.score }}</strong>
+                            <strong class="text-danger" v-else-if="data.score < 0">@{{ data.score }}</strong>
+                            <strong>@{{ data.totalSum }}</strong>
+                          </span>
+                        </div>
+                        <div class="analysis-scores">
+                          性格<span class="bg-danger-light">@{{ data.perScoreTotal }}</span>
+                          星座<span class="bg-success-light">@{{ data.matchScoreTotal }}</span>
+                          種族<span class="bg-primary-light">@{{ data.raceScoreTotal }}</span>
+                        </div>
                       </div>
                     </div>
-                  </a>
-                </td>
-              </tr>
-              <tr v-for="data in analysis">
-                <td class="bg-light text-center">
-                  <div class="analysis-scores">
-                    <div>@{{ data.personality }} @{{ data.sex }}</div>
-                    <div>@{{ data.constellation }} @{{ data.bd }}</div>
-                    <div>@{{ data.race }}</div>
-                  </div>
-                </td>
-                <td class="bg-light">
-                  <div class="analysis-info left">
-                    <div class="analysis-icon">
-                      <img :src="'/animal/icon/' + data.name + '.png'" :alt="data.name">
+                  </td>
+                  <td v-for="detail in data.detail" v-if="data.name != detail.name">
+                    <div class="analysis-scores-total" :class="detail.class">@{{ detail.sum }}</div>
+                    <div class="analysis-scores-subtotal clearfix">
+                      <span class="bg-danger-light">@{{ detail.perScore }}</span>
+                      <span class="bg-success-light">@{{ detail.matchScore }}</span>
+                      <span class="bg-primary-light">@{{ detail.raceScore }}</span>
                     </div>
-                    <div class="analysis-info-box text-center">
-                      <div class="analysis-name">@{{ data.name }}
-                        <span class="analysis-scores-total">
-                          <strong class="text-success" v-if="data.score >= 0">+@{{ data.score }}</strong>
-                          <strong class="text-danger" v-else-if="data.score < 0">@{{ data.score }}</strong>
-                          <strong>@{{ data.totalSum }}</strong>
-                        </span>
-                      </div>
-                      <div class="analysis-scores">
-                        性格<span class="bg-danger-light">@{{ data.perScoreTotal }}</span>
-                        星座<span class="bg-success-light">@{{ data.matchScoreTotal }}</span>
-                        種族<span class="bg-primary-light">@{{ data.raceScoreTotal }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td v-for="detail in data.detail" v-if="data.name != detail.name">
-                  <div class="analysis-scores-total" :class="detail.class">@{{ detail.sum }}</div>
-                  <div class="analysis-scores-subtotal clearfix">
-                    <span class="bg-danger-light">@{{ detail.perScore }}</span>
-                    <span class="bg-success-light">@{{ detail.matchScore }}</span>
-                    <span class="bg-primary-light">@{{ detail.raceScore }}</span>
-                  </div>
-                </td>
-                <td class="text-center" v-else>-</td>
-              </tr>
+                  </td>
+                  <td class="text-center" v-else>-</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -344,13 +348,13 @@
         return ''
       },
       handleScroll() {
-        let selected = document.getElementById("select-div");
+        let selected = document.getElementById("select-div")
         let sticky = selected.offsetTop
 
         if (window.pageYOffset > sticky) {
-          selected.classList.add("fixed-selected");
+          selected.classList.add("fixed-selected")
         } else {
-          selected.classList.remove("fixed-selected");
+          selected.classList.remove("fixed-selected")
         }
       },
       checkShow(animal) {

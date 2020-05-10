@@ -46,8 +46,8 @@
                 <th scope="col" v-show="!isMobile()">陰影</th>
                 <th scope="col">位置</th>
                 <th scope="col" v-show="!isMobile()">時間</th>
-                <th scope="col">南半球</th>
-                <th scope="col">北半球</th>
+                <th scope="col">南半球月份</th>
+                <th scope="col">北半球月份</th>
               </tr>
             </thead>
             <tbody>

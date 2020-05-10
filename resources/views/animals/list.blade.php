@@ -148,7 +148,7 @@
            if (response.data.length) {
              this.page += 1;
              this.lists.push(...response.data);
-             $state.loaded();
+             $state.loaded()
            } else {
              $state.complete();
            }

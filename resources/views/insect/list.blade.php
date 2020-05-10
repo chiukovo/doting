@@ -41,8 +41,8 @@
                 <th class="table-label" scope="col">名稱</th>
                 <th scope="col" v-show="!isMobile()">位置</th>
                 <th scope="col">時間</th>
-                <th scope="col">南半球</th>
-                <th scope="col">北半球</th>
+                <th scope="col">南半球月份</th>
+                <th scope="col">北半球月份</th>
               </tr>
             </thead>
             <tbody>
