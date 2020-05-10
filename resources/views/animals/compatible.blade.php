@@ -19,7 +19,11 @@
           </div>
         </div>
         <div class="col-12 col-md-2">
-          <button class="btn btn-primary btn-block" native-type="submit" @click="goAnalysis">診斷分析</button>
+          <button class="btn btn-primary btn-block" native-type="submit" @click="goAnalysis" v-if="!loading">診斷分析</button>
+          <button class="btn btn-primary btn-block" disabled v-else>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
         </div>
       </div>
       <div class="post-card">
@@ -296,6 +300,7 @@
   new Vue({
     el: '#app',
     data: {
+      loading: false,
       animals: [],
       races: [],
       searchSelected: [],
@@ -442,6 +447,8 @@
           }
         })
 
+        this.loading = true
+
         axios.get(url, {
          }).then((response) => {
           this.sum = response.data.resultSum
@@ -453,6 +460,7 @@
           this.matchArray = response.data.matchArray
 
           this.collapseShow = false
+          this.loading = false
           $('#collapse1').removeClass('show')
          })
       },
