@@ -7,7 +7,7 @@
       <img class="img-fluid" :src="'/animal/' + birthday.name + '.png'" :alt="birthday.name" v-if="typeof birthday.name !== 'undefined'">
     </div>
     <div class="first-birthday-text">
-      <span>今天是 @{{ date }}，</span>
+      <span>今天是 @{{ date }}</span>
       <span>是 <a :href="'/animals/detail?name=' + birthday.name">@{{ birthday.name }}</a> 的生日！</span>
     </div>
   </div>
@@ -233,6 +233,7 @@
           const data = response.data
           this.birthday = data.birthday
           this.ranking = data.ranking
+          this.date = data.date
           this.northFish = data.northFish
           this.southFish = data.southFish
           this.northInsect = data.northInsect
