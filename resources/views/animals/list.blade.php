@@ -63,11 +63,13 @@
             <thead>
               <tr>
                 <th scope="col">名稱</th>
-                <th scope="col">性別</th>
+                <th scope="col" v-show="!isMobile()">性別</th>
                 <th scope="col">個性</th>
                 <th scope="col">種族</th>
+                @if($type != 'npc')
                 <th scope="col">生日</th>
-                <th scope="col">口頭禪</th>
+                <th scope="col" v-show="!isMobile()">口頭禪</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -84,10 +86,12 @@
                   </a>
                 </td>
                 <td>@{{ list.race }}</td>
-                <td>@{{ list.personality }}</td>
+                <td v-show="!isMobile()">@{{ list.personality }}</td>
                 <td>@{{ list.race }}</td>
+                @if($type != 'npc')
                 <td>@{{ list.bd }}</td>
-                <td>@{{ list.say }}</td>
+                <td v-show="!isMobile()">@{{ list.say }}</td>
+                @endif
               </tr>
             </tbody>
           </table>

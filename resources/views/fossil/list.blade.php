@@ -43,7 +43,7 @@
           <table class="table table-bordered table-hover text-center">
             <thead>
               <tr>
-                <th scope="col">名稱</th>
+                <th class="table-label" scope="col">名稱</th>
                 <th scope="col">介紹</th>
               </tr>
             </thead>

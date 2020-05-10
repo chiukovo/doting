@@ -192,6 +192,8 @@ if (!function_exists('matchmaking')) {
 			'resultScore' => $resultScore,
 			'good' => $good,
 			'bad' => $bad,
+			'perArray' => computedPer([], [], true),
+			'matchArray' => computedMatch([], [], true),
 		];
     }
 }
@@ -203,7 +205,7 @@ if (!function_exists('computedPer')) {
      *
      * @return string
      */
-    function computedPer($target, $check)
+    function computedPer($target, $check, $returnType = false)
     {
     	$formatScore = [];
     	$score = 0;
@@ -452,6 +454,13 @@ if (!function_exists('computedPer')) {
 	    	}
     	}
 
+    	if ($returnType) {
+    		return [
+    			'type' => $allType,
+    			'scoreDetail' => $formatScore,
+    		];
+    	}
+
     	//確認分數
     	foreach($formatScore as $chceckScore) {
     		if ($chceckScore['from'] == $target->personality && $chceckScore['to'] == $check->personality) {
@@ -470,7 +479,7 @@ if (!function_exists('computedMatch')) {
      *
      * @return string
      */
-    function computedMatch($target, $check)
+    function computedMatch($target, $check, $returnType = false)
     {
     	$allType = ['火', '地', '風', '水'];
     	$formatScore = [];
@@ -552,6 +561,13 @@ if (!function_exists('computedMatch')) {
 	    			'score' => $score,
 	    		];
 	    	}
+	    }
+
+	    if ($returnType) {
+	    	return [
+	    		'type' => $allType,
+	    		'scoreDetail' => $formatScore,
+	    	];
 	    }
 
 	    //確認分數

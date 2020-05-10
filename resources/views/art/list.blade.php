@@ -43,7 +43,7 @@
           <table class="table table-bordered table-hover text-center">
             <thead>
               <tr>
-                <th scope="col">名稱</th>
+                <th class="table-label" scope="col">名稱</th>
                 <th scope="col">照片</th>
                 <th scope="col">介紹</th>
               </tr>
@@ -57,9 +57,7 @@
                 </td>
                 <td>
                   <a class="link" :href="'/art/detail?name=' + list.name">
-                    <div class="table-img">
-                      <img :src="'/art/' + list.img1 + '.png'" :alt="list.name" v-if="list.img1 != ''">
-                    </div>
+                    <img :src="'/art/' + list.img1 + '.png'" :alt="list.name" v-if="list.img1 != ''" style="width: 150px">
                   </a>
                 </td>
                 <td>@{{ list.info }}</td>

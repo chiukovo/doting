@@ -42,10 +42,10 @@
           <table class="table table-bordered table-hover text-center">
             <thead>
               <tr>
-                <th scope="col">名稱</th>
-                <th scope="col">陰影</th>
+                <th class="table-label" scope="col">名稱</th>
+                <th scope="col" v-show="!isMobile()">陰影</th>
                 <th scope="col">位置</th>
-                <th scope="col">時間</th>
+                <th scope="col" v-show="!isMobile()">時間</th>
                 <th scope="col">南半球</th>
                 <th scope="col">北半球</th>
               </tr>
@@ -60,9 +60,9 @@
                     </div>
                   </a>
                 </td>
-                <td>@{{ list.shadow }}</td>
+                <td v-show="!isMobile()">@{{ list.shadow }}</td>
                 <td>@{{ list.position }}</td>
-                <td>@{{ list.time }}</td>
+                <td v-show="!isMobile()">@{{ list.time }}</td>
                 <td>@{{ list.south }}</td>
                 <td>@{{ list.north }}</td>
               </tr>
@@ -94,6 +94,10 @@
     mounted() {
     },
     methods: {
+      isMobile(){
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
       formatPrice(money) {
         if (money == null) {
           return ''
