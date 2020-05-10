@@ -189,7 +189,7 @@ if (!function_exists('matchmaking')) {
 		return [
 			'data' => $result,
 			'resultSum' => $resultSum,
-			'resultScore' => $resultScore,
+			'resultScore' => round($resultScore / 2),
 			'good' => $good,
 			'bad' => $bad,
 			'perArray' => computedPer([], [], true),

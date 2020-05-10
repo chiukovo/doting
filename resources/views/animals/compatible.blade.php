@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="row my-2">
-            <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~10人)</div>
+            <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~20人)</div>
           </div>
           <div class="row" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1' && checkShow(animal)">
             <div class="col">
@@ -88,7 +88,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p>分析人數範圍：2~10人</p>
+                  <p>分析人數範圍：2~20人</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
@@ -310,7 +310,7 @@
     },
     created() {
       if (this.isMobile()) {
-        this.bottom = 140
+        this.bottom = 120
       } else {
         this.bottom = 80
       }
@@ -322,7 +322,7 @@
       if (this.params != '') {
         this.selected = this.params.split(",")
 
-        if (this.selected.length > 2 && this.selected.length < 10) {
+        if (this.selected.length > 2 && this.selected.length < 20) {
           this.goAnalysis()
         }
       }
@@ -390,7 +390,7 @@
         if (key == '-1') {
           const num = this.selected.length
 
-          if (num >= 10) {
+          if (num >= 20) {
             $('#warning').modal()
 
             return
@@ -421,7 +421,7 @@
       goAnalysis() {
         const num = this.selected.length
 
-        if (num > 10 || num < 2) {
+        if (num > 20 || num < 2) {
           $('#warning').modal()
 
           return
