@@ -6,7 +6,7 @@
     <h2 class="content-title">動物相容性分析</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="\">首頁</a></li>
+        <li class="breadcrumb-item"><a href="/">首頁</a></li>
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
