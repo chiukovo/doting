@@ -968,83 +968,42 @@ class ApiController extends Controller
 
     public function getFishApi()
     {
-        $url = 'http://e0game.com/animalcrossing/%e9%ad%9a-%e5%9c%96%e9%91%91/';
+        $url = 'https://wiki.biligame.com/dongsen/%E8%99%AB%E5%9B%BE%E9%89%B4';
         $ql = QueryList::get($url);
         $result = $ql->rules([
-            'img' => ['.column-1 img', 'src'],
-            'name' => ['.column-3', 'text'],
-            'shadow' => ['.column-4', 'text'],
-            'position' => ['.column-5', 'text'],
-            'time' => ['.column-6', 'text'],
-            'sell' => ['.column-7', 'text'],
-            'm1' => ['.column-8', 'text'],
-            'm2' => ['.column-9', 'text'],
-            'm3' => ['.column-10', 'text'],
-            'm4' => ['.column-11', 'text'],
-            'm5' => ['.column-12', 'text'],
-            'm6' => ['.column-13', 'text'],
-            'm7' => ['.column-14', 'text'],
-            'm8' => ['.column-15', 'text'],
-            'm9' => ['.column-16', 'text'],
-            'm10' => ['.column-17', 'text'],
-            'm11' => ['.column-18', 'text'],
-            'm12' => ['.column-19', 'text'],
+            'img' => ['td:eq(0) img', 'srcset'],
+            'name' => ['td:eq(0) a', 'text'],
         ])
-        ->range('#tablepress-3 .row-hover tr')
+        ->range('#CardSelectTr tr')
         ->queryData();
 
-        //DB DATA
-        $dbAnimal = DB::table('fish')->get()->toArray();
 
         //save api result
         foreach ($result as $key => $data) {
-            if ($data['name'] != '') {
-                $dbData = [];
-                $isset = false;
-
-                //檢查是否資料庫存在
-                foreach ($dbAnimal as $source) {
-                    if ($source->name == $data['name']) {
-                        $isset = true;
-                        $dbData = $source;
-                    }
+            if ($data['name'] != '' && $data['img']) {
+                //get
+                $name = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $data['name'])->asJson()->get();
+                $name = $name->data->text;
+                
+                $imgExplode = explode(',', $data['img']);
+                if (!isset($imgExplode[1])) {
+                    $format = str_replace("1.5x", "", $imgExplode[0]);
+                    $format = str_replace(" ", "", $format);
+                    $imgExplode[1] = $format;
                 }
 
-                if (!$isset) {
-                    //save img
-                    $headers = get_headers($data['img']);
-                    $code = substr($headers[0], 9, 3);
-                    $imgUploadSuccess = 0;
+                $img = trim(substr($imgExplode[1], 0, -2));
 
-                    if ($code == 200) {
-                        $imgUploadSuccess = 1;
-                        $content = file_get_contents($data['img']);
-                        Storage::disk('other')->put($data['name'] . '.png', $content);
-                    }
+                //save img
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
 
-                    //insert
-                    DB::table('fish')->insert([
-                        'name' => $data['name'],
-                        'shadow' => $data['shadow'],
-                        'position' => $data['position'],
-                        'time' => $data['time'],
-                        'sell' => $data['sell'],
-                        'm1' => $data['m1'],
-                        'm2' => $data['m2'],
-                        'm3' => $data['m3'],
-                        'm4' => $data['m4'],
-                        'm5' => $data['m5'],
-                        'm6' => $data['m6'],
-                        'm7' => $data['m7'],
-                        'm8' => $data['m8'],
-                        'm9' => $data['m9'],
-                        'm10' => $data['m10'],
-                        'm11' => $data['m11'],
-                        'm12' => $data['m12'],
-                    ]);
-
-                    echo 'insert: ' . $data['name'] . '<br>';
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('other')->put($name . '.png', $content);
                 }
+
+                echo 'update: ' . $name . '<br>';
             }
         }
 

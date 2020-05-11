@@ -41,7 +41,7 @@
                 <th class="table-label" scope="col">名稱</th>
                 <th scope="col" v-show="!isMobile()">陰影</th>
                 <th scope="col">位置</th>
-                <th scope="col" v-show="!isMobile()">時間</th>
+                <th scope="col">時間</th>
                 <th scope="col">南半球月份</th>
                 <th scope="col">北半球月份</th>
               </tr>
@@ -58,7 +58,7 @@
                 </td>
                 <td v-show="!isMobile()">@{{ list.shadow }}</td>
                 <td>@{{ list.position }}</td>
-                <td v-show="!isMobile()">@{{ list.time }}</td>
+                <td>@{{ list.time }}</td>
                 <td>@{{ list.south }}</td>
                 <td>@{{ list.north }}</td>
               </tr>
