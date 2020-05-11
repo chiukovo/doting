@@ -35,7 +35,7 @@
                 <tr>
                   <td class="text-center" width="80">顯示隱藏</td>
                   <td>
-                    <button class="btn btn-search" @click="openAll">全部顯示</button>
+                    <button class="btn btn-search" :class="searchSelected.length == 0 ? 'current' : ''" @click="openAll">全部顯示</button>
                     <button class="btn btn-search" @click="searchSelected = []">全部隱藏</button>
                   </td>
                 </tr>
@@ -60,7 +60,7 @@
           <div class="row my-2">
             <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~20人)</div>
           </div>
-          <div class="row" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1' && checkShow(animal)">
+          <div class="row" v-for="(animal, race) in animals" v-show="checkShow(animal, race)">
             <div class="col">
               <div class="card mb-3">
                 <div class="card-header">@{{ race }}</div>
@@ -369,9 +369,18 @@
           selected.classList.remove("fixed-selected")
         }
       },
-      checkShow(animal) {
+      checkShow(animal, race) {
         let show = false
 
+        //大項目
+        if (this.searchSelected.length > 0) {
+          if (this.searchSelected.indexOf(race) != '-1') {
+            return true
+          }
+
+          return false
+        }
+        
         animal.forEach(function(val) {
           if (val.show) {
             show = true
@@ -386,7 +395,6 @@
          }).then((response) => {
            this.animals = response.data.lists
            this.races = response.data.races
-           this.searchSelected = JSON.parse(JSON.stringify(this.races))
          })
       },
       toggleRace(race) {
