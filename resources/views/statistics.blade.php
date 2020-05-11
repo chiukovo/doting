@@ -30,9 +30,11 @@
                 <th scope="col">得獎感言</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="list-rank">
               <tr v-for="(list, key) in lists">
-                <td>@{{ key + 1 }}</td>
+                <td>
+                  <span class="list-rank-num" :class="'list-rank-num' + (key + 1)" style="margin: auto;">@{{ key + 1}}</span>
+                </td>
                 <td>
                   <div v-if="list.url != ''">
                     <a :href="list.url" target="_blank">

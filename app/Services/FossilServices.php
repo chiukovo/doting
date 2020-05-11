@@ -166,7 +166,7 @@ class FossilServices
             if(count($group) == 1) {
                 $string .= ' ' . $group[0] . "\n";
             } else {
-                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . "\n";
+                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . '月' . "\n";
             }
         }
 

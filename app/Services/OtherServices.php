@@ -316,9 +316,9 @@ class OtherServices
 
         foreach($groups as $group) {
             if(count($group) == 1) {
-                $string .= ' ' . $group[0] . "\n";
+                $string .= ' ' . $group[0] . '月' . "\n";
             } else {
-                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . "\n";
+                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . '月' . "\n";
             }
         }
 
