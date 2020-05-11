@@ -17,7 +17,7 @@
             <div class="alert alert-primary mt-2" role="alert">
               <h4 class="alert-heading">問題回復專區</h4>
               <p class="mb-0">在意見回饋的問題都可以在這邊查詢並得到回復，感謝您的回饋，我們會盡力改善且盡可能幫助大家。</p>
-              <a href="#" target="_blank">https://reurl.cc/9ER9ya</a>
+              <a href="https://reurl.cc/9ER9ya" target="_blank">https://reurl.cc/9ER9ya</a>
             </div>
             <div class="card">
               <div class="card-body">
