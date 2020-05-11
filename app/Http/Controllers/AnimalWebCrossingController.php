@@ -60,7 +60,7 @@ class AnimalWebCrossingController extends Controller
 
         //同種族
         $sameRaceArray = DB::table('animal')
-            ->where('race', 'like', '%' . $detail->race . '%')
+            ->where('race', $detail->race)
             ->where('id', '!=', $detail->id)
             ->whereNull('info')
             ->get()
