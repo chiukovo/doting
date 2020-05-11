@@ -181,10 +181,8 @@ class AnimalWebCrossingController extends Controller
                             $expName = explode(" ", $name);
 
                             $imgUrl = env('APP_URL') . '/animal/icon/' . urlencode($expName[0]) . '.png';
-                            $headers = get_headers($imgUrl);
-                            $code = substr($headers[0], 9, 3);
 
-                            if ($code == 200) {
+                            if (file_exists(public_path('/animal/icon/' . $expName[0] . '.png'))) {
                                 $img = $imgUrl;
                             }
                         }
