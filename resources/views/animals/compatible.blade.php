@@ -205,8 +205,13 @@
               </tbody>
             </table>
           </div>
-          <div class="text-center">
-            <iframe :src="'https://www.facebook.com/plugins/share_button.php?href=https://doting.tw/animals/compatible?name=' + params + '&layout=button_count&size=small&width=102&height=20&appId'" width="102" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+          <div class="text-center" style="margin: 10px">
+            <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://doting.tw/animals/compatible?name=' + params" target="_blank" onclick="window.open(this.href,'targetWindow','width=600,height=400'); return false">
+              <button type="button" class="btn btn-outline-primary"><i class="fa fa-facebook fa-2"></i>FB分享</button>
+            </a>
+            <button class="btn btn-outline-success" :data-clipboard-text="'https://doting.tw/animals/compatible?name=' + params">
+              複製分析結果
+            </button>
           </div>
         </div>
       </div>
@@ -351,6 +356,11 @@
           this.goAnalysis()
         }
       }
+
+      clipboard = new ClipboardJS('.btn')
+      clipboard.on('success', function(e) {
+        alert('複製成功')
+      })
     },
     methods: {
       isMobile(){
@@ -555,6 +565,35 @@
   }
   .table-scroll thead tr:nth-child(2) th:nth-child(2) {
     z-index: 6;
+  }
+  .modal {
+    text-align: center;
+    padding: 0!important;
+  }
+
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .btn-facebook {
+    color: #fff;
+    background-color: #4C67A1;
+  }
+  .btn-facebook:hover {
+    color: #fff;
+    background-color: #405D9B;
+  }
+  .btn-facebook:focus {
+    color: #fff;
   }
 </style>
 @endsection
