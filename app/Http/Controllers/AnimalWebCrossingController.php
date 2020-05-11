@@ -245,12 +245,15 @@ class AnimalWebCrossingController extends Controller
             $lists[$key] = $value;
         }
 
+
+        $personality = collect($lists)->groupBy('personality')->keys()->toArray();
         $lists = collect($lists)->groupBy('race')->toArray();
         $races = collect($lists)->keys()->toArray();
 
         return [
             'lists' => $lists,
             'races' => $races,
+            'personality' => $personality,
         ];
     }
 

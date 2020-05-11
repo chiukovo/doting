@@ -35,15 +35,22 @@
                 <tr>
                   <td class="text-center" width="80">顯示隱藏</td>
                   <td>
-                    <button class="btn btn-search" :class="searchSelected.length == 0 ? 'current' : ''" @click="openAll">全部顯示</button>
-                    <button class="btn btn-search" @click="searchSelected = []">全部隱藏</button>
+                    <button class="btn btn-search" :class="racesSelected.length == 0 ? 'current' : ''" @click="openAll">全部顯示</button>
                   </td>
                 </tr>
                 <tr>
                   <td class="text-center">種族</td>
                   <td>
-                    <button class="btn btn-search" :class="searchSelected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
+                    <button class="btn btn-search" :class="racesSelected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
                       @{{ race }}
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center">個性</td>
+                  <td>
+                    <button class="btn btn-search" :class="personalitySelected.indexOf(per) == '-1' ? '' : 'current'" v-for="per in personality" @click="togglePersonality(per)">
+                      @{{ per }}
                     </button>
                   </td>
                 </tr>
@@ -65,7 +72,7 @@
               <div class="card mb-3">
                 <div class="card-header">@{{ race }}</div>
                 <ul class="post-card-list animal-list check-list">
-                  <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show">
+                  <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show && checkPer(detail.personality)">
                     <a href="javascript:void(0)">
                       <span>@{{ detail.name }}</span>
                       <div class="table-img">
@@ -310,7 +317,9 @@
       first: false,
       animals: [],
       races: [],
-      searchSelected: [],
+      racesSelected: [],
+      personality: [],
+      personalitySelected: [],
       selected: [],
       perArray: [],
       matchArray: [],
@@ -369,12 +378,24 @@
           selected.classList.remove("fixed-selected")
         }
       },
-      checkShow(animal, race) {
+      checkPer(per) {
+        //個性
+        if (this.personalitySelected.length > 0) {
+          if (this.personalitySelected.indexOf(per) != '-1') {
+            return true
+          }
+
+          return false
+        }
+
+        return true
+      },
+      checkShow(animal, race, per) {
         let show = false
 
-        //大項目
-        if (this.searchSelected.length > 0) {
-          if (this.searchSelected.indexOf(race) != '-1') {
+        //種族
+        if (this.racesSelected.length > 0) {
+          if (this.racesSelected.indexOf(race) != '-1') {
             return true
           }
 
@@ -395,17 +416,29 @@
          }).then((response) => {
            this.animals = response.data.lists
            this.races = response.data.races
+           this.personality = response.data.personality
          })
       },
       toggleRace(race) {
-        const key = this.searchSelected.indexOf(race)
+        const key = this.racesSelected.indexOf(race)
 
         if (key == '-1') {
           //push
-          this.searchSelected.push(race)
+          this.racesSelected.push(race)
         } else {
           //add
-          this.searchSelected.splice(key, 1);
+          this.racesSelected.splice(key, 1);
+        }
+      },
+      togglePersonality(per) {
+        const key = this.personalitySelected.indexOf(per)
+
+        if (key == '-1') {
+          //push
+          this.personalitySelected.push(per)
+        } else {
+          //add
+          this.personalitySelected.splice(key, 1);
         }
       },
       toggleSelected(name) {
@@ -481,7 +514,8 @@
         })
       },
       openAll() {
-        this.searchSelected = JSON.parse(JSON.stringify(this.races))
+        this.racesSelected = []
+        this.personalitySelected = []
       }
     }
   })
