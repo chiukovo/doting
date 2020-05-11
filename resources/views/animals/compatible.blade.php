@@ -124,7 +124,7 @@
             <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
           </div>
-          <div class="m-1" :class="isMobile() ? 'table-scroll' : ''">
+          <div class="m-1" :class="isMobile() ? 'table-scroll' : 'table-responsive'">
             <table class="table table-bordered table-analysis">
               <thead>
                 <tr>
