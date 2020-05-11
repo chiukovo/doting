@@ -124,21 +124,24 @@
             <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
           </div>
-          <div class="table-responsive m-1">
+          <div class="m-1" :class="isMobile() ? 'table-scroll' : ''">
             <table class="table table-bordered table-analysis">
               <thead>
                 <tr>
-                  <td class="bg-light text-center fixed-column" colspan="2" rowspan="2"><h5>總分數: <strong>@{{ sum }}</strong></h5></td>
-                  <td class="bg-light text-center" v-for="data in analysis">
+                  <th></th>
+                  <th></th>
+                  <th class="bg-light text-center" v-for="data in analysis">
                     <div class="analysis-scores">
                       <div>@{{ data.personality }} @{{ data.sex }}</div>
                       <div>@{{ data.constellation }} @{{ data.bd }}</div>
                       <div>@{{ data.race }}</div>
                     </div>
-                  </td>
+                  </th>
                 </tr>
                 <tr>
-                  <td class="bg-light" v-for="data in analysis">
+                  <th></th>
+                  <th class="bg-light text-center"><h5>總分數: <strong>@{{ sum }}</strong></h5></th>
+                  <th class="bg-light" v-for="data in analysis">
                     <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
                       <div class="analysis-info top">
                         <div class="analysis-icon">
@@ -149,19 +152,19 @@
                         </div>
                       </div>
                     </a>
-                  </td>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="data in analysis">
-                  <td class="bg-light text-center fixed-column">
+                  <td class="bg-light text-center">
                     <div class="analysis-scores">
                       <div>@{{ data.personality }} @{{ data.sex }}</div>
                       <div>@{{ data.constellation }} @{{ data.bd }}</div>
                       <div>@{{ data.race }}</div>
                     </div>
                   </td>
-                  <td class="bg-light fixed-column">
+                  <td class="bg-light">
                     <div class="analysis-info left">
                       <div class="analysis-icon">
                         <img :src="'/animal/icon/' + data.name + '.png'" :alt="data.name">
@@ -304,6 +307,7 @@
     el: '#app',
     data: {
       loading: false,
+      first: false,
       animals: [],
       races: [],
       searchSelected: [],
@@ -334,7 +338,7 @@
       if (this.params != '') {
         this.selected = this.params.split(",")
 
-        if (this.selected.length > 2 && this.selected.length < 20) {
+        if (this.selected.length >= 2 && this.selected.length <= 20) {
           this.goAnalysis()
         }
       }
@@ -466,7 +470,7 @@
           this.collapseShow = false
           this.loading = false
           $('#collapse1').removeClass('show')
-         })
+        })
       },
       openAll() {
         this.searchSelected = JSON.parse(JSON.stringify(this.races))
@@ -474,4 +478,41 @@
     }
   })
 </script>
+<style>
+  .table-scroll {
+    position: relative;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    max-height: 500px;
+  }
+  .table-scroll table {
+    width: 100%;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .table-scroll thead tr:nth-child(1) th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+  .table-scroll thead tr:nth-child(2) th {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+  }
+  .table-scroll td:first-child, th:nth-child(2), td:nth-child(2) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+  }
+
+  .table-scroll thead td:first-child, thead tr:nth-child(2) th {
+    z-index: 5;
+  }
+  .table-scroll thead tr:nth-child(2) th:nth-child(2) {
+    z-index: 6;
+  }
+</style>
 @endsection
