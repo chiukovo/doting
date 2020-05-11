@@ -33,11 +33,11 @@
                   <li><s>無止境的修BUG</s></li>
                 </ul>
                 <p>由於遊戲資料眾多，也許無法將所有資訊呈現給大家，但我們會盡力將有用的資訊釋出。 盡可能幫助大家。</p>
-                <p class="mb-0">
-                  👉<a href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a>
+                <p>
+                  <a class="btn btn-primary" href="https://forms.gle/Q7StMmonyGdL4rCFA" target="_blank">意見回饋</a>
                 </p>
                 <p class="mb-0">
-                  👉<a href="mailto:q8156697@gmail.com">聯絡豆丁</a>
+                  豆丁信箱: <a href="mailto:q8156697@gmail.com">q8156697@gmail.com</a>
                 </p>
               </div>
             </div>
