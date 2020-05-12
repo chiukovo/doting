@@ -38,23 +38,16 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">豆丁後台</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" action="/{{ env('ADMIN_PREFIX') }}/login" method="post">
+                    <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" placeholder="帳號">
+                      <input type="text" name="account" class="form-control form-control-user" placeholder="帳號">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" placeholder="密碼">
+                      <input type="password" name="password" class="form-control form-control-user" placeholder="密碼">
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      登入
-                    </a>
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="登入">
                     <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
                   </form>
                 </div>
               </div>

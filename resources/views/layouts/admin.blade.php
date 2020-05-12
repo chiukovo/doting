@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2</title>
+  <title>admin</title>
 
   <!-- Custom fonts for this template -->
   <link href="/adminData/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,6 +19,23 @@
 
   <!-- Custom styles for this page -->
   <link href="/adminData/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css?v={{ config('app.version') }}">
+  <link rel="stylesheet" href="/css/lightbox.min.css">
+
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script src="/js/vue-infinite-loading.js"></script>
+  <script src="/js/vue-go-top.min.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/lightbox.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
 
 </head>
 
@@ -43,7 +60,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>首頁</span></a>
       </li>
@@ -53,12 +70,12 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}/animals">
           <i class="fas fa-fw fa-table"></i>
           <span>動物居民</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>動物NPC</span></a>
       </li>
@@ -70,35 +87,35 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/admin">魚圖鑑</a>
-            <a class="collapse-item" href="/admin">昆蟲圖鑑</a>
-            <a class="collapse-item" href="/admin">化石圖鑑</a>
-            <a class="collapse-item" href="/admin">藝術品圖鑑</a>
+            <a class="collapse-item" href="/{{env('ADMIN_PREFIX')}}">魚圖鑑</a>
+            <a class="collapse-item" href="/{{env('ADMIN_PREFIX')}}">昆蟲圖鑑</a>
+            <a class="collapse-item" href="/{{env('ADMIN_PREFIX')}}">化石圖鑑</a>
+            <a class="collapse-item" href="/{{env('ADMIN_PREFIX')}}">藝術品圖鑑</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>DIY方程式</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>家具圖鑑</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>服飾圖鑑</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>植物圖鑑</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">
+        <a class="nav-link" href="/{{env('ADMIN_PREFIX')}}">
           <i class="fas fa-fw fa-table"></i>
           <span>唱片圖鑑</span></a>
       </li>
@@ -138,7 +155,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">admin</span>
-                <img class="img-profile rounded-circle" src="/image/icon_npc.png">
+                <img class="img-profile rounded-circle" src="/image/icon/animals.svg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -194,8 +211,11 @@
         </div>
         <div class="modal-body">確定要登出?</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-          <a class="btn btn-primary" href="login.html">確定</a>
+          <form action="/{{ env('ADMIN_PREFIX') }}/logout" method="post">
+              {{ csrf_field() }}
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+              <button class="btn btn-primary">確定</button>
+          </form>
         </div>
       </div>
     </div>

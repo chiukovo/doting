@@ -140,11 +140,27 @@ Route::get('/getKK', 'ApiController@getKK');*/
 
 
 //admin
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function() {
-	Route::get('/', function () {
-	  return view('admin.index');
-	});
+Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function() {
+
 	Route::get('/login', function () {
-	  return view('admin.login');
+	  	return view('admin.login');
 	});
+
+	Route::post('/login', 'AdminController@login')->name('login');
+	Route::post('/logout', 'AdminController@logout');
+
+	Route::group(['middleware' => 'auth'], function () {
+		Route::get('/', function () {
+		  return view('admin.index');
+		});
+
+		//動物居民
+		Route::get('/animals', 'AnimalController@index');
+		Route::post('/animals/search', 'AnimalController@getAnimalSearch');
+
+		//編輯動物
+		Route::get('/animals/detail', 'AnimalController@detail');
+		Route::patch('/animals/edit/{id}', 'AnimalController@edit');
+	});
+
 });
