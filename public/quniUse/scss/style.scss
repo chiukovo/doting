@@ -611,40 +611,169 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   }
 }
 
-// passport
+// user
 .passport-warp {
   background-color: $gray-100;
+  border: 1px solid $gray-200;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1rem 0;
+  .passport-header {
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    color: lighten($primary, 10%);
+    background-image: linear-gradient(to right, $gray-200 10%, $gray-200 90%, transparent 50%);
+    background-size: 60px 1px;
+    background-repeat: repeat-x;
+    padding: 1.5rem 0;
+    > span {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        display: block;
+        width: 26%;
+        height: 1px;
+        background-color: lighten($primary, 10%);
+      }
+      &:before {
+        left: 0;
+      }
+      &:after {
+        right: 0;
+      }
+    }
+  }
+  .passport-body {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin: 0;
+  }
+  .passport-footer {
+    position: relative;
+    padding: 1rem 1rem 0 1rem;
+    &:after {
+      content: '<<<<<<<<<';
+      position: absolute;
+      top: 48%;
+      right: 1rem;
+      font-family: monospace, monospace;
+      letter-spacing: 3px;
+      font-size: 12px;
+      color: $gray-300;
+    }
+  }
   .passport-hr {
     border-bottom: 1px solid $gray-200;
   }
   .passport-info {
     list-style: none;
-    width: 100%;
-    font-size: 15px;
     padding: 0;
-    margin-left: 2rem;
+    margin: 0;
     li {
+      padding: .5rem 1rem;
+    }
+    .passport-sw {
       padding: .5rem 0;
+      > span {
+        display: block;
+        width: 100%;
+        max-width: 360px;
+        font-size: 13px;
+        font-weight: bold;
+        background: $gray-100;
+        border-radius: 30px;
+        box-shadow: inset 1px 1px 2px rgba($gray-900, 0.06);
+        padding: .5rem 1rem;
+      }
     }
   }
-  .passport-sw {
-    margin-left: -10px;
-    > span {
-      display: inline-block;
-      font-size: 16px;
-      background: #fff;
-      border-radius: 30px;
-      box-shadow: inset 1px 1px 2px rgba($gray-900, 0.12);
-      padding: .5rem 1.25rem;
-    }
+  .passport-info-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .passport-info-top {
     display: flex;
     > div + div {
-      margin-left: 1rem;
+      margin-left: 2rem;
     }
+    .passport-info-island,
+    .passport-info-fruit {
+      position: relative;
+      padding-left: 2rem;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        display: inline-block;
+        height: 23px;
+        background-color: $gray-300;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+      }
+    }
+    .passport-info-island:before {
+      width: 21px;
+      mask-image: url('../image/icon/island.svg');
+    }
+    .passport-info-fruit:before {
+      width: 23px;
+      mask-image: url('../image/icon/apple.svg');
+    }
+  }
+  .passport-join {
+    color: $gray-600;
+  }
+}
+.user-header {
+  text-align: center;
+  padding-bottom: .5rem;
+  margin-bottom: .5rem;
+  h4 {
+    margin-bottom: .2rem;
+  }
+  small {
+    color: $gray-400;
+  }
+}
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  li {
+    text-align: center;
+    padding: 0.5rem;
+    &:hover {
+      a {
+        border-color: $gray-200;
+      }
+    }
+    .user-item {
+      .user-item-title {
+        display: block;
+        padding-top: 0.2rem;
+      }
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+  a {
+    display: block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: $gray-100;
+    border: 5px solid rgba($gray-200, .5);
   }
 }
 
@@ -869,6 +998,9 @@ audio {
 }
 .hidden {
   overflow: hidden;
+}
+.rounded {
+  border-radius: .25rem !important;
 }
 a.link {
   color: $primary !important;
