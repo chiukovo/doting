@@ -57,7 +57,7 @@
             <div class="card">
               <div class="card-header">當前活動時間</div>
               <div class="card-body">
-                <p>時間： 全天</p>
+                <p>時間： {{ $detail['time'] }}</p>
                 <!-- 能捕捉時間 li+class "has" -->
                 <!-- 當前時間 li+class "current" -->
                 <div class="list-time-wrap">
