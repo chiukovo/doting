@@ -154,7 +154,7 @@
           <div class="card-body">
             <ul class="first-season-list" v-show="isFish && isNorth">
               <li v-for="list in northFish">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/fish/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -164,7 +164,7 @@
             </ul>
             <ul class="first-season-list" v-show="isFish && !isNorth">
               <li v-for="list in southFish">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/fish/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -174,7 +174,7 @@
             </ul>
             <ul class="first-season-list" v-show="!isFish && isNorth">
               <li v-for="list in northInsect">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/insect/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -184,7 +184,7 @@
             </ul>
             <ul class="first-season-list" v-show="!isFish && !isNorth">
               <li v-for="list in southInsect">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/insect/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">

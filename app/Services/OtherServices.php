@@ -75,10 +75,10 @@ class OtherServices
                             $checkDate = explode('~', $data->time);
                             $start = isset($checkDate[0]) ? $checkDate[0] : 0;
                             $end = isset($checkDate[1]) ? $checkDate[1] : 0;
-                            $now = strtotime(date('Y-n-d H:i:s'));
+                            $now = strtotime(date('Y-m-d H:i:s'));
 
                             $start = strtotime(date('Y-m-d ' . $start . ':00:00'));
-                            $end = date('Y-m-d ' . $end . ':00:00');
+                            $end = strtotime(date('Y-m-d ' . $end . ':00:00'));
 
                             if ($start > $end) {
                                 $end =  strtotime($end . "+1 days");

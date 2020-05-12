@@ -92,10 +92,12 @@ Route::post('/art/search', 'ArtController@getArtSearch');
 
 //魚
 Route::get('/fish/list', 'FishController@list')->name('fish');
+Route::get('/fish/detail', 'FishController@detail');
 Route::post('/fish/search', 'FishController@getFishSearch');
 
 //昆蟲
 Route::get('/insect/list', 'InsectController@list')->name('insect');
+Route::get('/insect/detail', 'InsectController@detail');
 Route::post('/insect/search', 'InsectController@getInsectSearch');
 
 //化石

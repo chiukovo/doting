@@ -49,7 +49,7 @@
             <tbody>
               <tr v-for="list in lists">
                 <td scope="row">
-                  <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <a :href="'/fish/detail?name=' + list.name" class="link">
                     <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                     <div class="table-img">
                       <img :src="'/other/' + list.name + '.png'" :alt="list.name">

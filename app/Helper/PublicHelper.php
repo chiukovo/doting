@@ -13,6 +13,47 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('checkTimeClass')) {
+
+    /**
+     * @return string
+     */
+    function checkTimeClass($time, $target)
+    {
+    	$class = '';
+
+    	if ($time == '全天') {
+    	    $class = 'has';
+    	} else {
+    	    $checkDate = explode('~', $time);
+    	    $start = isset($checkDate[0]) ? $checkDate[0] : 0;
+    	    $end = isset($checkDate[1]) ? $checkDate[1] : 0;
+    	    $now = strtotime(date('Y-m-d ' . $target . ':00:00'));
+
+    	    $start = strtotime(date('Y-m-d ' . $start . ':00:00'));
+    	    $end = strtotime(date('Y-m-d ' . $end . ':00:00'));
+
+    	    if ($start > $end) {
+    	        $end =  strtotime($end . "+1 days");
+    	    }
+
+    	    if ($now >= $start && $now <= $end) {
+    	    	
+    	        $class = 'has';
+    	    }
+    	}
+
+    	$nowHour = date('H');
+
+    	if ($nowHour == $target) {
+    		$class .= ' current';
+    	}
+
+    	return $class;
+    }
+}
+
+
 if (!function_exists('constellation')) {
 
     /**
