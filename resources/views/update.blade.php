@@ -21,6 +21,25 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.6.5</div>
+                <div class="card-header-date">2020/5/12</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>
+                    修正一堆BUG QAQ
+                  </li>
+                  <li>
+                    優化UI<br>
+                  </li>
+                  <li>
+                    新增魚圖鑑　昆蟲圖鑑詳細頁面
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.6.0</div>
                 <div class="card-header-date">2020/5/10</div>
               </div>
