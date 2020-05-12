@@ -140,6 +140,7 @@ Route::get('/getKK', 'ApiController@getKK');*/
 
 
 //admin
+
 Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function() {
 
 	Route::get('/login', function () {

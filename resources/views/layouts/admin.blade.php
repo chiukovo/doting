@@ -36,7 +36,6 @@
       display: none;
     }
   </style>
-
 </head>
 
 <body id="page-top">
