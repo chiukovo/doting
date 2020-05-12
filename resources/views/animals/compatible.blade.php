@@ -148,7 +148,7 @@
                 <tr>
                   <th></th>
                   <th class="bg-light text-center"><h5>總分數: <strong>@{{ sum }}</strong></h5></th>
-                  <th class="bg-light" v-for="data in analysis">
+                  <th class="bg-light th-animal" v-for="data in analysis">
                     <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
                       <div class="analysis-info top">
                         <div class="analysis-icon">
@@ -594,6 +594,9 @@
   }
   .btn-facebook:focus {
     color: #fff;
+  }
+  .table-scroll .th-animal {
+    min-width: 80px;
   }
 </style>
 @endsection
