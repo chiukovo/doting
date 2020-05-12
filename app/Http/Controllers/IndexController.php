@@ -50,13 +50,21 @@ class IndexController extends Controller
             ];
         }
 
+        //first
+        $month = date('m');
+        $firstMonth = substr($month, 0, 1);
+
+        if ($firstMonth == 0) {
+            $month = substr($month, 1, strlen($month));
+        }
+
         //魚
-        $northFish = OtherServices::getDataByMessage('北5月魚', '', true);
-        $southFish = OtherServices::getDataByMessage('南5月魚', '', true);
+        $northFish = OtherServices::getDataByMessage('北' . $month . '月魚', '', true);
+        $southFish = OtherServices::getDataByMessage('南' . $month . '月魚', '', true);
 
         //昆蟲
-        $northInsect = OtherServices::getDataByMessage('北5月蟲', '', true);
-        $southInsect = OtherServices::getDataByMessage('南5月蟲', '', true);
+        $northInsect = OtherServices::getDataByMessage('北' . $month . '月蟲', '', true);
+        $southInsect = OtherServices::getDataByMessage('南' . $month . '月蟲', '', true);
 
         return [
             'date' => $date,
