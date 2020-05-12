@@ -28,19 +28,23 @@ if (!function_exists('checkTimeClass')) {
     	    $checkDate = explode('~', $time);
     	    $start = isset($checkDate[0]) ? $checkDate[0] : 0;
     	    $end = isset($checkDate[1]) ? $checkDate[1] : 0;
-    	    $now = strtotime(date('Y-m-d ' . $target . ':00:00'));
+    	    $range1 = [];
+    	    $range2 = [];
 
-    	    $start = strtotime(date('Y-m-d ' . $start . ':00:00'));
-    	    $end = strtotime(date('Y-m-d ' . $end . ':00:00'));
+			if ($start > $end) {
+				$range1 = range($start, 23);
+				$range2 = range(0, $end);
+			} else {
+				$range1 = range($start, $end);
+			}
 
-    	    if ($start > $end) {
-    	        $end =  strtotime($end . "+1 days");
-    	    }
+			if (!empty($range1) && in_array($target, $range1)) {
+				$class = 'has';
+			}
 
-    	    if ($now >= $start && $now <= $end) {
-    	    	
-    	        $class = 'has';
-    	    }
+			if (!empty($range2) && in_array($target, $range2)) {
+				$class = 'has';
+			}
     	}
 
     	$nowHour = date('H');

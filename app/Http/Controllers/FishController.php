@@ -33,7 +33,7 @@ class FishController extends Controller
         if (is_null($detail)) {
             return redirect('/');
         }
-        
+
         $detail = (array)$detail;
 
         //class check
@@ -58,7 +58,7 @@ class FishController extends Controller
         //南
         foreach ($months as $month) {
             $class = '';
-            
+
             if ($detail['m' . $month] == '全' || $detail['m' . $month] == '南') {
                 $class = 'has';
             }
