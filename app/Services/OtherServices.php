@@ -166,7 +166,11 @@ class OtherServices
 
     public static function createItemBubble($item)
     {
-        $url = env('APP_URL') . '/museum/list?text=' . urlencode($item->name);
+        if (isset($item->shadow)) {
+            $url = env('APP_URL') . '/fish/detail?name=' . urlencode($item->name);
+        } else {
+            $url = env('APP_URL') . '/insect/detail?name=' . urlencode($item->name);
+        }
 
         return $target = BubbleContainerBuilder::builder()
             ->setSize('kilo')
@@ -307,7 +311,7 @@ class OtherServices
         if ($item->m12 == $type || $item->m12 == '全') {
             $target[] = 12;
         }
-        
+
         sort($target);
         $groups = [];
         $string = '';
@@ -316,7 +320,7 @@ class OtherServices
             if ($i > 0 && ($target[$i - 1] == $target[$i] - 1)) {
                 array_push($groups[count($groups) - 1], $target[$i]);
             } else {
-                array_push($groups, array($target[$i])); 
+                array_push($groups, array($target[$i]));
             }
         }
 
