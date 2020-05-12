@@ -611,6 +611,45 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   }
 }
 
+// passport
+.passport-warp {
+  background-color: $gray-100;
+  border-radius: 1rem;
+  padding: 1rem;
+  .passport-hr {
+    border-bottom: 1px solid $gray-200;
+  }
+  .passport-info {
+    list-style: none;
+    width: 100%;
+    font-size: 15px;
+    padding: 0;
+    margin-left: 2rem;
+    li {
+      padding: .5rem 0;
+    }
+  }
+  .passport-sw {
+    margin-left: -10px;
+    > span {
+      display: inline-block;
+      font-size: 16px;
+      background: #fff;
+      border-radius: 30px;
+      box-shadow: inset 1px 1px 2px rgba($gray-900, 0.12);
+      padding: .5rem 1.25rem;
+    }
+  }
+  .passport-info-top {
+    display: flex;
+    > div + div {
+      margin-left: 1rem;
+    }
+  }
+}
+
+
+
 
 .list-rank {
   .list-rank-num {
