@@ -10,6 +10,103 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getRecipes()
+    {
+        $ranges = range(1, 51);
+        $result = Curl::to('https://api.nookplaza.net/items?category=Recipes')->asJson()->get();
+        $result = $result->results;
+        $transAll = [];
+
+        foreach ($ranges as $range) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $range . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'jp_name' => ['td:eq(14)', 'text'],
+                'name' => ['td:eq(13)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            $transAll[] = $trans;
+        }
+
+        foreach ($result as $target) {
+            $materials = [];
+            //翻譯
+            $name = '';
+            $jpName = '';
+
+            foreach ($transAll as $trans) {
+                foreach ($trans as $tran) {
+                    if (strtolower($tran['en_name']) == strtolower($target->name)) {
+                        $name = $tran['name'];
+                        $jpName = $tran['jp_name'];
+                    }
+                }
+
+                foreach ($target->content->materials as $value) {
+                    $itemName = '';
+                    foreach ($trans as $tran) {
+                        if (strtolower($tran['en_name']) == strtolower($value->itemName)) {
+                            $itemName = $tran['name'];
+
+                            $materials[] = [
+                                'count' => $value->count,
+                                'itemName' => $itemName,
+                            ];
+                        }
+                    }
+                }
+            }
+
+            if ($name == '') {
+                dd($target);
+            }
+
+            $img = $target->content->itemImage;
+            $fileIsset = false;
+
+            $headers = get_headers($img);
+            $code = substr($headers[0], 9, 3);
+            $size = '';
+
+            if (isset($target->content->size)) {
+                $sizeData = $target->content->size;
+                $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
+            }
+
+
+            if ($code == 200) {
+                $fileIsset = is_file(public_path('diy/' .  $name . '.png'));
+
+                if (!$fileIsset) {
+                    $content = file_get_contents($img);
+                    Storage::disk('diy')->put($name . '.png', $content);
+
+                    //insert
+                    DB::table('diy_new')->insert([
+                        'name' => $name,
+                        'en_name' => $target->name,
+                        'jp_name' => $jpName,
+                        'sell' => $target->content->sell,
+                        'size' => $size,
+                        'note' => $target->content->sourceNotes,
+                        'type' => $target->content->itemCategory,
+                        'get' => json_encode($target->content->obtainedFrom, JSON_UNESCAPED_UNICODE),
+                        'diy' => json_encode($materials, JSON_UNESCAPED_UNICODE),
+                        'img_name' => $name,
+                    ]);
+
+                    echo 'insert: ' . $name . '<br>';
+                }
+            }
+
+            
+        }
+    }
+
     public function getKKZhName()
     {
         $url = 'https://handler.travel/stayhome-%E5%AE%85%E5%9C%A8%E5%AE%B6/%E5%8B%95%E7%89%A9%E4%B9%8B%E6%A3%AE%E6%94%BB%E7%95%A5-%E5%8B%95%E7%89%A9%E6%A3%AE%E5%8F%8B%E6%9C%83-kk-%E9%BB%9E%E6%AD%8C-%E9%9A%B1%E8%97%8F%E6%AD%8C%E6%9B%B2-%E5%85%A8%E6%AD%8C%E5%96%AE-%E8%A9%A6';
@@ -106,7 +203,6 @@ class ApiController extends Controller
                     $fileIsset = false;
 
                     $headers = get_headers($img);
-                    $code = substr($headers[0], 9, 3);
                     $code = substr($headers[0], 9, 3);
 
                     if ($code == 200) {
