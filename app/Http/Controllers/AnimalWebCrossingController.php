@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AnimalServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Curl, Log, DB, App;
+use Curl, Log, DB, App, File;
 
 class AnimalWebCrossingController extends Controller
 {
@@ -202,6 +202,57 @@ class AnimalWebCrossingController extends Controller
         }
 
         return $result;
+    }
+
+    public function printCompatible(Request $request)
+    {
+        $animalsName = $request->input('name', '');
+
+        if ($animalsName != '') {
+            //去頭尾空白
+            $animalsName = trim($animalsName);
+            //去除前後空白
+            $animalsName = preg_replace('/\s+/', '', $animalsName);
+            $array = explode(",", $animalsName);
+        }
+
+        return view('animals.printCompatible', [
+            'animalsName' => $animalsName,
+            'token' => encrypt(env('APP_KEY') . 'chiuko0121'),
+        ]);
+    }
+
+    public function saveImg(Request $request)
+    {
+        $params = $request->input('params');
+        $token = $request->input('token');
+        $data = $request->input('data');
+        $date = date('Y-m-d');
+
+        if ($params == '' && $data == '') {
+            return 'fail params';
+        }
+
+        $decode = decrypt($token);
+        $checkDecode = env('APP_KEY') . 'chiuko0121';
+
+        if ($decode != $checkDecode) {
+            return 'fail token';
+        }
+
+        $image = str_replace('data:image/png;base64,', '', $request->input('data'));
+        $image = str_replace(' ', '+', $image);
+
+        $imageName = md5($params . $token . env('APP_KEY')) . '.jpg';
+
+        $path = storage_path('print/' . $date);
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+
+        File::put($path . '/' . $imageName, base64_decode($image));
+
+        return 'success';
     }
 
     public function compatible(Request $request)

@@ -75,8 +75,10 @@ Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
 
 //相容度分析
 Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible')->name('analysis');
+Route::get('/animals/printCompatible', 'AnimalWebCrossingController@printCompatible');
 Route::post('/animals/getAnimalsGroupRace', 'AnimalWebCrossingController@getAnimalsGroupRace');
 Route::get('/animals/analysis', 'AnimalWebCrossingController@analysis');
+Route::post('/animals/saveImg', 'AnimalWebCrossingController@saveImg');
 
 //npc
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
