@@ -22,6 +22,10 @@
     [v-cloak] {
       display: none;
     }
+    #birthday {
+      position: absolute;
+      z-index: -1
+    }
   </style>
 </head>
 <body>

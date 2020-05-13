@@ -1,12 +1,13 @@
 @extends('layouts.web')
 @section('title', '豆丁森友會')
 @section('content')
+<canvas id="birthday"></canvas>
 <div id="app" class="content-wrap first" v-cloak>
   <div class="first-birthday" v-if="birthday != null">
     <div class="first-birthday-img" :class="show ? 'show' : ''">
       <img class="img-fluid" :src="'/animal/' + birthday.name + '.png'" :alt="birthday.name" v-if="typeof birthday.name !== 'undefined'">
     </div>
-    <div class="first-birthday-text">
+    <div class="first-birthday-text" style="margin-top: 60px">
       <span>今天是 @{{ date }}</span>
       <span>是 <a :href="'/animals/detail?name=' + birthday.name">@{{ birthday.name }}</a> 的生日！</span>
     </div>
@@ -197,6 +198,7 @@
     </div>
   </div>
 </div>
+<script src="/js/birthday.js"></script>
 <script>
   Vue.use(GoTop);
   new Vue({
