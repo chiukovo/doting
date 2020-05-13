@@ -502,7 +502,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
           z-index: 1;
           width: 100px;
           height: 100px;
-          background-color: $gray-200;
+          background-color: lighten($gray-200, 3%);
           mask-size: cover;
           mask-repeat: no-repeat;
           margin-left: -50px;
@@ -941,7 +941,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     }
     &.has {
       .list-time-item {
-        background-color: $gray-100;
+        background-color: rgba($primary, .08);
       }
     }
     &.current {
