@@ -1,5 +1,5 @@
 @extends('layouts.web')
-@section('title', '動物相容性分析')
+@section('title', '動物森友會 動物相容性分析')
 @section('content')
 <div id="app" class="content-wrap" v-cloak>
   <div class="container">
