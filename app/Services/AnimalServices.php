@@ -94,9 +94,9 @@ class AnimalServices
         }
 
         Browsershot::url($newsUrl)
-            ->windowSize(1920, 1000)
             ->userAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36')
             ->touch()
+            ->fullPage()
             ->noSandbox()
             ->setDelay(100)
             ->save($path . $image . '.jpg');
