@@ -148,13 +148,18 @@ class AnimalCrossingController extends Controller
         if ($this->dbType == 'compatible') {
             if ($dataArray['status'] == 'success') {
                 $imgUrl = $dataArray['url'];
+                $multipleMessageBuilder = new MultiMessageBuilder();
 
-                $message = new ImageMessageBuilder($imgUrl, $imgUrl);
+                $imgBuilder = new ImageMessageBuilder($imgUrl, $imgUrl);
+                $multipleMessageBuilder->add($imgBuilder);
+
+                $message = new TextMessageBuilder($dataArray['source_url']);
+                $multipleMessageBuilder->add($message);
 
                 $this->isSend = true;
                 Log::info(json_encode($dataArray, JSON_UNESCAPED_UNICODE));
 
-                return $message;
+                return $multipleMessageBuilder;
             } else {
                 $dataArray = $dataArray['msg'];
             }
