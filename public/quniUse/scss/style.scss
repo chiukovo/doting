@@ -777,6 +777,32 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   }
 }
 
+.user-save {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1060;
+  background-color: #fff;
+  border-top: 1px solid $gray-200;
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      flex: 0 0 33.33%;
+      .btn {
+        padding: 0.75rem;
+        &.current {
+          color: $gray-500 !important;
+        }
+      }
+    }
+  }
+}
+
 
 
 
