@@ -152,6 +152,7 @@ class AnimalCrossingController extends Controller
                 $message = new ImageMessageBuilder($imgUrl, $imgUrl);
 
                 $this->isSend = true;
+                Log::info(json_encode($dataArray, JSON_UNESCAPED_UNICODE));
 
                 return $message;
             } else {
