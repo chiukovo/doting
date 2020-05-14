@@ -459,6 +459,10 @@ class AnimalCrossingController extends Controller
         }
 
         //相容性判斷
+        if ($checkTwoWord == '##') {
+            return '##已移除 改成只需一個# 哇耶';
+        }
+
         if ($type == '#') {
             $source = str_replace("#", "", $source);
             $source = trim($source);
@@ -472,10 +476,6 @@ class AnimalCrossingController extends Controller
                     return AnimalServices::compatiblePrint($source);
                 }
             }
-        }
-
-        if ($checkTwoWord == '##') {
-            return '##已移除 改成只需一個# 哇耶';
         }
 
         switch ($type) {
