@@ -51,8 +51,6 @@ class AnimalServices
 
     public static function compatiblePrint($target)
     {
-        $newsUrl = 'https://doting.tw/animals/compatible/print?name=' . $target;
-
         //判斷是否需要截圖
         $explode = explode(" ", $target);
 
@@ -84,6 +82,8 @@ class AnimalServices
             ];
         }
 
+        $target = import(",", $array);
+        $newsUrl = 'https://doting.tw/animals/compatible/print?name=' . $target;
         $image = md5($target . env('APP_KEY'));
         $date = date('Y-m-d');
 
@@ -98,7 +98,7 @@ class AnimalServices
             ->userAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36')
             ->touch()
             ->noSandbox()
-            ->setDelay(500)
+            ->setDelay(100)
             ->save($path . $image . '.jpg');
 
         //real path
