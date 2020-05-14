@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AnimalServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Curl, Log, DB, App, File;
+use Curl, Log, DB, App, File, Response;
 
 class AnimalWebCrossingController extends Controller
 {
@@ -204,7 +204,7 @@ class AnimalWebCrossingController extends Controller
         return $result;
     }
 
-    public function printCompatible(Request $request)
+    public function compatiblePrint(Request $request)
     {
         $animalsName = $request->input('name', '');
 
@@ -216,10 +216,34 @@ class AnimalWebCrossingController extends Controller
             $array = explode(",", $animalsName);
         }
 
-        return view('animals.printCompatible', [
+        return view('animals.compatiblePrint', [
             'animalsName' => $animalsName,
             'token' => encrypt(env('APP_KEY') . 'chiuko0121'),
         ]);
+    }
+
+    public function compatibleImage(Request $request)
+    {
+        $date = $request->input('date');
+        $image = $request->input('image');
+
+        if ($date == '' || $image == '') {
+            return;
+        }
+
+        $filePath = storage_path('print') . '/' . $date . '/' . $image . '.jpg';
+
+        if (!File::exists($filePath)) {
+             return '';
+        }
+
+        $file = File::get($filePath);
+        $type = File::mimeType($filePath);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
     }
 
     public function saveImg(Request $request)
@@ -246,6 +270,7 @@ class AnimalWebCrossingController extends Controller
         $imageName = md5($params . $token . env('APP_KEY')) . '.jpg';
 
         $path = storage_path('print/' . $date);
+
         if(!File::isDirectory($path)){
             File::makeDirectory($path, 0777, true, true);
         }

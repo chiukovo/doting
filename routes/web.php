@@ -72,13 +72,15 @@ Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
+//print path
+Route::get('/animals/compatible/image', 'AnimalWebCrossingController@compatibleImage');
 
 //相容度分析
 Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible')->name('analysis');
-Route::get('/animals/printCompatible', 'AnimalWebCrossingController@printCompatible');
+Route::get('/animals/compatible/print', 'AnimalWebCrossingController@compatiblePrint');
 Route::post('/animals/getAnimalsGroupRace', 'AnimalWebCrossingController@getAnimalsGroupRace');
 Route::get('/animals/analysis', 'AnimalWebCrossingController@analysis');
-Route::post('/animals/saveImg', 'AnimalWebCrossingController@saveImg');
+//Route::post('/animals/saveImg', 'AnimalWebCrossingController@saveImg');
 
 //npc
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');

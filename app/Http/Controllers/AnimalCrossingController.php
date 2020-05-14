@@ -11,6 +11,7 @@ use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
 use LINE\LINEBot\Event\BaseEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
@@ -141,6 +142,21 @@ class AnimalCrossingController extends Controller
 
         if ($dataArray == '') {
             return '';
+        }
+
+        //相容性 回圖片
+        if ($this->dbType == 'compatible') {
+            if ($dataArray['status'] == 'success') {
+                $imgUrl = $dataArray['url'];
+
+                $message = new ImageMessageBuilder($imgUrl, $imgUrl);
+
+                $this->isSend = true;
+
+                return $message;
+            } else {
+                $dataArray = $dataArray['msg'];
+            }
         }
 
         if (is_array($dataArray)) {
@@ -463,6 +479,8 @@ class AnimalCrossingController extends Controller
     {
         //去頭尾空白
         $text = trim($text);
+        $source = $text;
+
         //去除前後空白
         $text = preg_replace('/\s+/', '', $text);
 
@@ -481,9 +499,9 @@ class AnimalCrossingController extends Controller
         $target = mb_substr($text, 1);
 
         //化石
-        $checkFossil = mb_substr($text, 0, 2);
+        $checkTwoWord = mb_substr($text, 0, 2);
 
-        if ($checkFossil == '化石') {
+        if ($checkTwoWord == '化石') {
             $target = str_replace("化石", "", $text);
             $target = trim($target);
 
@@ -491,6 +509,16 @@ class AnimalCrossingController extends Controller
             $this->realText = $target;
 
             return FossilServices::getDataByMessage($target);
+        }
+
+        if ($checkTwoWord == '##') {
+            $source = str_replace("##", "", $source);
+            $source = trim($source);
+
+            $this->dbType = 'compatible';
+            $this->realText = $source;
+
+            return AnimalServices::compatiblePrint($source);
         }
 
         switch ($type) {

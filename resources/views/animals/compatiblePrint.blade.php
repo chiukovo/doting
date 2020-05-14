@@ -178,8 +178,6 @@
           this.collapseShow = false
           this.loading = false
           $('#collapse1').removeClass('show')
-
-          window.setTimeout(( () => screenshot() ), 1000)
         })
       },
       openAll() {
@@ -188,22 +186,5 @@
       },
     }
   })
-</script>
-<script  src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script type="text/javascript">
-    function screenshot(){
-        html2canvas(document.body).then(function(canvas) {
-            var img = canvas.toDataURL('image/png')
-            var data = img.replace(/^data:image\/(png|jpg);base64,/, "")
-
-            axios.post('/animals/saveImg', {
-              data: data,
-              token: app.token,
-              params: app.params
-             }).then((response) => {
-              console.log(response)
-            })
-        });
-    }
 </script>
 @endsection

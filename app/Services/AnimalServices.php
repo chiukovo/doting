@@ -24,8 +24,9 @@ use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
+use Spatie\Browsershot\Browsershot;
 
-use DB;
+use DB, File;
 
 class AnimalServices
 {
@@ -46,6 +47,65 @@ class AnimalServices
         $multipleMessageBuilder->add($msg);
 
         return [$multipleMessageBuilder];
+    }
+
+    public static function compatiblePrint($target)
+    {
+        $newsUrl = 'https://doting.tw/compatible/print?name=' . $target;
+
+        //判斷是否需要截圖
+        $explode = explode(" ", $target);
+
+        if (count($explode) < 2 && count($explode) > 20) {
+            return [
+                'status' => 'error',
+                'msg' => '格式錯誤 無法產生圖片 哇耶'
+            ];
+        }
+
+        //2次檢查
+        $animalsName = $target;
+        //去頭尾空白
+        $animalsName = trim($animalsName);
+        $names = $animalsName;
+        $array = explode(" ", $animalsName);
+
+        //get all animal
+        $lists = DB::table('animal')
+            ->whereIn('name', $array)
+            ->whereNull('info')
+            ->get(['id'])
+            ->toArray();
+
+        if (count($lists) < 2 || count($lists) > 20) {
+            return [
+                'status' => 'error',
+                'msg' => '動物只可選：2~20人 哇耶'
+            ];
+        }
+
+        $image = md5($target . env('APP_KEY'));
+        $date = date('Y-m-d');
+
+        $path = storage_path('print/' . $date) . '/';
+
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+
+        Browsershot::url($newsUrl)
+            ->windowSize(1920, 1000)
+            ->userAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36')
+            ->touch()
+            ->noSandbox()
+            ->setDelay(500)
+            ->save($path . $image . '.jpg');
+
+        //real path
+        return [
+            'status' => 'success',
+            'url' => 'https://doting.tw/animals/compatible/image?date=' . $date . '&image=' . $image
+        ];
     }
 
     public static function getAllType($type)
