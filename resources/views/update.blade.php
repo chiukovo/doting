@@ -21,6 +21,22 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.7.0</div>
+                <div class="card-header-date">2020/5/14</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>
+                    新增在LINE裡面也能分析相容性 使用兩個【##】前贅字<br>
+                    ex: ##阿一 阿二 阿三 阿四<br>
+                    ex: ##茶茶丸 傑客 美玲 小潤 章丸丸 草莓
+                  </li>
+                  <li>修正圖片錯誤問題</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.6.5</div>
                 <div class="card-header-date">2020/5/12</div>
               </div>
