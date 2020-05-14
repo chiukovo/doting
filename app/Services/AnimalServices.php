@@ -78,7 +78,7 @@ class AnimalServices
         if (count($lists) < 2 || count($lists) > 20) {
             return [
                 'status' => 'error',
-                'msg' => '動物只可選：2~20人 或找不到動物 哇耶'
+                'msg' => '動物只可選：2~20人 或找不到動物 (看是不是打錯字) 哇耶'
             ];
         }
 
