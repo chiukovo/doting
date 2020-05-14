@@ -51,7 +51,7 @@ class AnimalServices
 
     public static function compatiblePrint($target)
     {
-        $newsUrl = 'https://doting.tw/compatible/print?name=' . $target;
+        $newsUrl = 'https://doting.tw/animals/compatible/print?name=' . $target;
 
         //判斷是否需要截圖
         $explode = explode(" ", $target);
