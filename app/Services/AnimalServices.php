@@ -82,7 +82,7 @@ class AnimalServices
             ];
         }
 
-        $target = import(",", $array);
+        $target = implode(",", $array);
         $newsUrl = 'https://doting.tw/animals/compatible/print?name=' . $target;
         $image = md5($target . env('APP_KEY'));
         $date = date('Y-m-d');
