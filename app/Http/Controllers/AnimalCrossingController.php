@@ -458,14 +458,24 @@ class AnimalCrossingController extends Controller
             return FossilServices::getDataByMessage($target);
         }
 
-        if ($checkTwoWord == '##') {
-            $source = str_replace("##", "", $source);
+        //相容性判斷
+        if ($type == '#') {
+            $source = str_replace("#", "", $source);
             $source = trim($source);
+            $explode = explode(" ", $source);
 
-            $this->dbType = 'compatible';
-            $this->realText = $source;
+            if (count($explode) >= 2) {
+                if ($explode[0] != '' && $explode[1] != '') {
+                    $this->dbType = 'compatible';
+                    $this->realText = $source;
 
-            return AnimalServices::compatiblePrint($source);
+                    return AnimalServices::compatiblePrint($source);
+                }
+            }
+        }
+
+        if ($checkTwoWord == '##') {
+            return '##已移除 改成只需一個# 哇耶';
         }
 
         switch ($type) {
