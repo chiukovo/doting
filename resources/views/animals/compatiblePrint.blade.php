@@ -8,7 +8,7 @@
         <a class="collapse-analysis" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="true">分析結果<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
         <div class="collapse" :class="collapseShow ? '' :'show'" id="collapse2">
           <div class="alert alert-primary mt-2" role="alert">
-            <p class="mb-0">集合啦！豆丁森友會<br>
+            <p class="mb-0">集合啦 豆丁森友會<br>
               總共有
               <span class="text-success">@{{ selected.length }}</span>
               人
@@ -23,7 +23,7 @@
             </p>
             <hr>
             <p class="mb-0">診斷結果的值是通過從兼容對的數量中減去不兼容對的數量而獲得的數量。</p>
-            <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
+            <p class="mb-0">正數越大，居民的相容性越好。 相反，負數越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
             <hr>
             <p class="mb-0">貼心提醒: <span class="text-danger">此分析僅供參考</span>, 還是有相容性高相處不好, 相容性低相處融價的情況歐~~٩(^ᴗ^)۶</p>
