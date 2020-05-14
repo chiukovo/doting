@@ -101,7 +101,8 @@ class AnimalServices
             ->setDelay(100)
             ->save($path . $image . '.jpg');
 
-        $sourceUrl = 'https://doting.tw/animals/compatible?name=' . $target;
+        $sourceUrl = '詳情（ﾟДﾟ）σ弌弌弌弌弌⊃' . "\n";
+        $sourceUrl .= 'https://doting.tw/animals/compatible?name=' . $target;
 
         //real path
         return [
