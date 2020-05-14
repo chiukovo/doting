@@ -28,8 +28,8 @@
             <hr>
             <p class="mb-0">貼心提醒: <span class="text-danger">此分析僅供參考</span>, 還是有相容性高相處不好, 相容性低相處融價的情況歐~~٩(^ᴗ^)۶</p>
           </div>
-          <div class="m-1" class='table-responsive'>
-            <table id="test" class="table table-bordered table-analysis">
+          <div class="m-1">
+            <table class="table table-bordered table-analysis">
               <thead>
                 <tr>
                   <th></th>
@@ -107,6 +107,11 @@
     </section>
   </div>
 </div>
+<style>
+  #print {
+    max-width: 100%
+  }
+</style>
 <script>
   let app = new Vue({
     el: '#app',
