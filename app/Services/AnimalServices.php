@@ -12,6 +12,7 @@ use LINE\LINEBot\Constant\Flex\ComponentImageSize;
 use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
@@ -33,8 +34,10 @@ class AnimalServices
 {
     public static function getConstellation()
     {
-        $date = date('Y-m-d');
-        $baseUrl = 'https://www.xzw.com/fortune/';
+        $urls = [
+            'https://www.xzw.com/fortune/',
+            'https://www.xzw.com/fortune/',
+        ];
 
         $starArray = [
             'width:16px;' => '★',
@@ -44,66 +47,76 @@ class AnimalServices
             'width:80px;' => '★★★★★',
         ];
 
-        //insert
-        $check = DB::table('constellation')
-            ->where('date', $date)
-            ->first();
+        foreach ($urls as $key => $url) {
+            $date = $key == 0 ? date('Y-m-d') : date('Y-m-d', strtotime(date('Y-m-d') . "+1 days"));
 
-        if (!is_null($check)) {
-            return;
-        }
+            //insert
+            $check = DB::table('constellation')
+                ->where('date', $date)
+                ->first();
 
-        foreach (constellation() as $name => $detail) {
-            $ql = QueryList::get($baseUrl . $detail[0]);
+            if (!is_null($check)) {
+                continue;
+            }
 
-            $result = $ql->rules([
-                'star1' => ['li:eq(0) em', 'style'],
-                'star2' => ['li:eq(1) em', 'style'],
-                'star3' => ['li:eq(2) em', 'style'],
-                'star4' => ['li:eq(3) em', 'style'],
-                'field1' => ['li:eq(4)', 'text'],
-                'field2' => ['li:eq(5)', 'text'],
-                'field3' => ['li:eq(6)', 'text'],
-                'field4' => ['li:eq(7)', 'text'],
-                'field5' => ['li:eq(8)', 'text'],
-                'field6' => ['li:eq(9)', 'text'],
-            ])
-            ->range('#view dl ul')
-            ->queryData();
+            foreach (getRealConstellation() as $name => $detail) {
+                $url1 = $url . $detail[0];
+                $url2 = $url . $detail[0] . '/1.html';
 
-            foreach ($result as $insertData) {
-                $insertData = json_encode($insertData, JSON_UNESCAPED_UNICODE);
+                $baseUrl = $key == 0 ? $url1 : $url2;
+                
+                $ql = QueryList::get($baseUrl);
 
-                //get
-                $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $insertData)->asJson()->get();
-                $target = $target->data->text;
-                $format = json_decode($target, true);
-                $ranges = range(1, 4);
+                $result = $ql->rules([
+                    'star1' => ['li:eq(0) em', 'style'],
+                    'star2' => ['li:eq(1) em', 'style'],
+                    'star3' => ['li:eq(2) em', 'style'],
+                    'star4' => ['li:eq(3) em', 'style'],
+                    'field1' => ['li:eq(4)', 'text'],
+                    'field2' => ['li:eq(5)', 'text'],
+                    'field3' => ['li:eq(6)', 'text'],
+                    'field4' => ['li:eq(7)', 'text'],
+                    'field5' => ['li:eq(8)', 'text'],
+                    'field6' => ['li:eq(9)', 'text'],
+                ])
+                ->range('#view dl ul')
+                ->queryData();
 
-                foreach ($ranges as $range) {
-                    $format['star' . $range] = trim($format['star' . $range]);
+                foreach ($result as $insertData) {
+                    $insertData = json_encode($insertData, JSON_UNESCAPED_UNICODE);
 
-                    foreach ($starArray as $w => $t) {
-                        if ($w == $format['star' . $range]) {
-                            $format['star' . $range] = $t;
+                    //get
+                    $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $insertData)->asJson()->get();
+                    $target = $target->data->text;
+                    $format = json_decode($target, true);
+                    $ranges = range(1, 4);
+
+                    foreach ($ranges as $range) {
+                        $format['star' . $range] = trim($format['star' . $range]);
+
+                        foreach ($starArray as $w => $t) {
+                            if ($w == $format['star' . $range]) {
+                                $format['star' . $range] = $t;
+                            }
                         }
                     }
+
+                    $insertFormat = json_encode($format, JSON_UNESCAPED_UNICODE);
+
+                    //insert
+                    DB::table('constellation')->insert([
+                        'date' => $date,
+                        'name' => $name,
+                        'result' => $insertFormat,
+                    ]);
                 }
-
-                $insertFormat = json_encode($format, JSON_UNESCAPED_UNICODE);
-
-                //insert
-                DB::table('constellation')->insert([
-                    'date' => $date,
-                    'name' => $name,
-                    'result' => $insertFormat,
-                ]);
             }
         }
     }
 
     public static function getRandomCard()
     {
+        $date = date('Y-m-d');
         $item = DB::table('animal')
             ->inRandomOrder()
             ->first();
@@ -117,6 +130,36 @@ class AnimalServices
             ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
             ->setContents($target);
         $multipleMessageBuilder->add($msg);
+
+        //星座廢話
+        $constellation = $item->constellation;
+        $constellationData = DB::table('constellation')
+            ->where([
+                'date' => $date,
+                'name' => $constellation,
+            ])
+            ->first();
+
+        if (!is_null($constellationData)) {
+            $result = json_decode($constellationData->result);
+            $str = '豆丁老師分析 <(ˉ^ˉ)>' . "\n";
+            $str .= "\n";
+            $str .= '恭喜你抽到 【' . $item->name . '】' . "\n";
+            $str .= '綜合運勢: ' . $result->star1 . "\n";
+            $str .= '愛情運勢: ' . $result->star2 . "\n";
+            $str .= '事業運勢: ' . $result->star3 . "\n";
+            $str .= '財富運勢: ' . $result->star4 . "\n";
+            $str .= $result->field1 . "\n";
+            $str .= $result->field2 . "\n";
+            $str .= $result->field3 . "\n";
+            $str .= $result->field4 . "\n";
+            $str .= $result->field5 . "\n";
+            $str .= "\n";
+            $str .= $result->field6 . "\n";
+
+            $message = new TextMessageBuilder($str);
+            $multipleMessageBuilder->add($message);
+        }
 
         return [$multipleMessageBuilder];
     }
