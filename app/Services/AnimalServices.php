@@ -24,7 +24,8 @@ use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
-use App\Jobs\PrintCompatibleImage;
+use Spatie\Browsershot\Browsershot;
+use Log;
 
 use DB, File;
 
@@ -95,7 +96,17 @@ class AnimalServices
 
         $fullFilePath = $path . $image . '.jpg';
 
-        dispatch(new PrintCompatibleImage($newsUrl, $fullFilePath));
+        try {
+            Browsershot::url($newsUrl)
+                ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36')
+                ->touch()
+                ->fullPage()
+                ->noSandbox()
+                ->setDelay(100)
+                ->save($fullFilePath);
+        } catch (Exception $e) {
+            Log::error($e);
+        }
 
         $sourceUrl = '詳情 ୧| ⁰ ᴥ ⁰ |୨' . "\n";
         $sourceUrl .= 'https://doting.tw/animals/compatible?name=' . $target;
