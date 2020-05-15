@@ -133,6 +133,8 @@ class AnimalCrossingController extends Controller
     {
         //取得須回傳資料
         $dataArray = $this->formatMessage($text);
+        //去頭尾空白
+        $text = trim($text);
 
         if ($text == '抽') {
             $this->notFound = false;
