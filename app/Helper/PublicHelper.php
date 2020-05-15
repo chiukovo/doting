@@ -14,14 +14,14 @@ if (!function_exists('testHelper')) {
 }
 
 
-if (!function_exists('constellation')) {
+if (!function_exists('getRealConstellation')) {
 
     /**
      * 星座array
      *
      * @return array
      */
-    function constellation()
+    function getRealConstellation()
     {
     	return [
 	    	'白羊座' => ['aries', '3/21-4/19'],
