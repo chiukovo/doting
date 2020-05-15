@@ -10,6 +10,42 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function formatAnimalConstellation()
+    {
+        $datas = DB::table('animal')
+            ->get()
+            ->toArray();
+
+        foreach ($datas as $data) {
+            $constellation = '';
+
+            foreach (constellation() as $name => $detail) {
+                $explode = explode('-', $detail[1]);
+                
+                $start = strtotime($explode[0]);
+                $end = strtotime($explode[1]);
+                $target = strtotime(str_replace(".", "/", $data->bd));
+
+                if ($target >= $start && $target <= $end) {
+                    $constellation = $name;
+                }
+            }
+
+            if ($constellation == '' && $data->bd != '') {
+                $constellation = '魔羯座';
+            }
+
+
+            if ($constellation != '') {
+                DB::table('animal')
+                    ->where('id', $data->id)
+                    ->update([
+                        'constellation' => $constellation,
+                    ]);
+            }
+        }
+    }
+
     public function getRecipes()
     {
         $ranges = range(1, 51);

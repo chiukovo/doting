@@ -13,6 +13,33 @@ if (!function_exists('testHelper')) {
     }
 }
 
+
+if (!function_exists('constellation')) {
+
+    /**
+     * 星座array
+     *
+     * @return array
+     */
+    function constellation()
+    {
+    	return [
+	    	'白羊座' => ['aries', '3/21-4/19'],
+	    	'金牛座' => ['taurus', '4/20-5/20'],
+	    	'雙子座' => ['gemini', '5/21-6/21'],
+	    	'巨蟹座' => ['cancer', '6/22-7/22'],
+	    	'獅子座' => ['leo', '7/23-8/22'],
+	    	'處女座' => ['virgo', '8/23-9/22'],
+	    	'天秤座' => ['libra', '9/23-10/23'],
+	    	'天蠍座' => ['scorpio', '10/24-11/22'],
+	    	'射手座' => ['sagittarius', '11/23-12/21'],
+	    	'魔羯座' => ['capricorn', '12/22-1/19'],
+	    	'水瓶座' => ['aquarius', '1/20-2/18'],
+	    	'雙魚座' => ['pisces', '2/19-3/20']
+    	];
+    }
+}
+
 if (!function_exists('printDoc')) {
 
     /**

@@ -26,11 +26,82 @@ use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
 use Spatie\Browsershot\Browsershot;
 use Log;
-
-use DB, File;
+use QL\QueryList;
+use Curl, DB, File;
 
 class AnimalServices
 {
+    public static function getConstellation()
+    {
+        $date = date('Y-m-d');
+        $baseUrl = 'https://www.xzw.com/fortune/';
+
+        $starArray = [
+            'width:16px;' => '★',
+            'width:32px;' => '★★',
+            'width:48px;' => '★★★',
+            'width:64px;' => '★★★★',
+            'width:80px;' => '★★★★★',
+        ];
+
+        //insert
+        $check = DB::table('constellation')
+            ->where('date', $date)
+            ->first();
+
+        if (!is_null($check)) {
+            return;
+        }
+
+        foreach (constellation() as $name => $detail) {
+            $ql = QueryList::get($baseUrl . $detail[0]);
+
+            $result = $ql->rules([
+                'star1' => ['li:eq(0) em', 'style'],
+                'star2' => ['li:eq(1) em', 'style'],
+                'star3' => ['li:eq(2) em', 'style'],
+                'star4' => ['li:eq(3) em', 'style'],
+                'field1' => ['li:eq(4)', 'text'],
+                'field2' => ['li:eq(5)', 'text'],
+                'field3' => ['li:eq(6)', 'text'],
+                'field4' => ['li:eq(7)', 'text'],
+                'field5' => ['li:eq(8)', 'text'],
+                'field6' => ['li:eq(9)', 'text'],
+            ])
+            ->range('#view dl ul')
+            ->queryData();
+
+            foreach ($result as $insertData) {
+                $insertData = json_encode($insertData, JSON_UNESCAPED_UNICODE);
+
+                //get
+                $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $insertData)->asJson()->get();
+                $target = $target->data->text;
+                $format = json_decode($target, true);
+                $ranges = range(1, 4);
+
+                foreach ($ranges as $range) {
+                    $format['star' . $range] = trim($format['star' . $range]);
+
+                    foreach ($starArray as $w => $t) {
+                        if ($w == $format['star' . $range]) {
+                            $format['star' . $range] = $t;
+                        }
+                    }
+                }
+
+                $insertFormat = json_encode($format, JSON_UNESCAPED_UNICODE);
+
+                //insert
+                DB::table('constellation')->insert([
+                    'date' => $date,
+                    'name' => $name,
+                    'result' => $insertFormat,
+                ]);
+            }
+        }
+    }
+
     public static function getRandomCard()
     {
         $item = DB::table('animal')

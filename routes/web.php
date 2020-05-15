@@ -119,6 +119,7 @@ Route::get('/kk/detail', 'KKController@detail');
 
 //test
 Route::get('/test', 'AnimalCrossingController@index');
+Route::get('/getConstellation', 'ApiController@getConstellation');
 
 //爬蟲
 /*Route::get('/getRecipes', 'ApiController@getRecipes');
