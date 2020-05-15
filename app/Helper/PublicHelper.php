@@ -100,8 +100,8 @@ if (!function_exists('printDoc')) {
 		$text .= '範例 查名稱：#阿一 阿二 阿三 阿四' . "\n";
 		$text .= '範例 查名稱：#茶茶丸 傑客 美玲 小潤 章丸丸 草莓' . "\n";
 		$text .= "\n";
-		$text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
-		$text .= env('APP_URL');
+		$text .= '👇 詳細圖文解說 👇' . "\n";
+		$text .= env('APP_URL') . '/instructions';
 
 		return $text;
     }
