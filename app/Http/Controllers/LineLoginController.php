@@ -47,7 +47,13 @@ class LineLoginController extends Controller
 
             $userProfile = LineLoginServices::getUserProfile($response->access_token);
 
-            dd($userProfile);
+            if (!isset($response->error)) {
+                $userId = $userProfile->userId;
+                $displayName = $userProfile->displayName;
+                $pictureUrl = $userProfile->pictureUrl;
+
+                //do login
+            }
         } catch (Exception $e) {
             Log::error($e);
         }
