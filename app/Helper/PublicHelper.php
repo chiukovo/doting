@@ -13,6 +13,26 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('lingLoginUrl')) {
+
+    /**
+     * @return string
+     */
+    function lingLoginUrl()
+    {
+		$authCode = encrypt(env('APP_KEY') . 'lineLogin0121');
+
+		// 組成 Line Login Url
+		$url = config('lineLogin.authorize_base_url') . '?';
+		$url .= 'response_type=code';
+		$url .= '&client_id=' . config('lineLogin.channel_id');
+		$url .= '&redirect_uri=' . config('lineLogin.redirect_uri');
+		$url .= '&state=' . $authCode;
+		$url .= '&scope=openid%20profile';
+
+		return $url;
+    }
+}
 
 if (!function_exists('getRealConstellation')) {
 

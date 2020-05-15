@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
+//line login
+Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');

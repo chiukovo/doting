@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Services\LineLoginServices;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Curl, Log, DB;
+
+class LineLoginController extends Controller
+{
+    public function callback(Request $request)
+    {
+        try {
+            $error = $request->input('error', false);
+
+            if ($error) {
+                Log::error($request->all());
+            }
+
+            $code = $request->input('code', '');
+            $state = $request->input('state', '');
+            $checkState = '';
+
+            if ($code == '' || $state == '') {
+                return 'params error';
+            }
+
+            try {
+                $checkState = decrypt($state);
+            } catch (DecryptException $e) {
+                return 'decode error';
+            }
+
+            $resultState = env('APP_KEY') . 'lineLogin0121';
+
+            if ($checkState != $resultState) {
+                return 'auth error';
+            }
+
+            $response = LineLoginServices::getLineToken($code);
+
+            if (isset($response->error)) {
+                return 'token error';
+            }
+
+            $userProfile = LineLoginServices::getUserProfile($response->access_token);
+
+            dd($userProfile);
+        } catch (Exception $e) {
+            Log::error($e);
+        }
+    }
+}

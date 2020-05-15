@@ -21,7 +21,6 @@ class ApiController extends Controller
 
             foreach (constellation() as $name => $detail) {
                 $explode = explode('-', $detail[1]);
-                
                 $start = strtotime($explode[0]);
                 $end = strtotime($explode[1]);
                 $target = strtotime(str_replace(".", "/", $data->bd));
