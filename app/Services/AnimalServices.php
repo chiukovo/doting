@@ -64,7 +64,6 @@ class AnimalServices
                 $url2 = $url . $detail[0] . '/1.html';
 
                 $baseUrl = $key == 0 ? $url1 : $url2;
-                
                 $ql = QueryList::get($baseUrl);
 
                 $result = $ql->rules([
@@ -85,6 +84,10 @@ class AnimalServices
                 foreach ($result as $insertData) {
                     $insertData = json_encode($insertData, JSON_UNESCAPED_UNICODE);
 
+                    if (!$insertData) {
+                        continue;
+                    }
+
                     //get
                     $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $insertData)->asJson()->get();
                     $target = $target->data->text;
@@ -102,6 +105,10 @@ class AnimalServices
                     }
 
                     $insertFormat = json_encode($format, JSON_UNESCAPED_UNICODE);
+
+                    if (!$insertFormat) {
+                        continue;
+                    }
 
                     //insert
                     DB::table('constellation')->insert([
@@ -132,33 +139,43 @@ class AnimalServices
         $multipleMessageBuilder->add($msg);
 
         //星座廢話
-        $constellation = $item->constellation;
-        $constellationData = DB::table('constellation')
-            ->where([
-                'date' => $date,
-                'name' => $constellation,
-            ])
-            ->first();
+        if ($item->constellation != '') {
+            $constellation = $item->constellation;
+            $constellationData = DB::table('constellation')
+                ->where([
+                    'date' => $date,
+                    'name' => $constellation,
+                ])
+                ->first();
 
-        if (!is_null($constellationData)) {
-            $result = json_decode($constellationData->result);
-            $str = '豆丁老師分析 <(ˉ^ˉ)>' . "\n";
-            $str .= "\n";
-            $str .= '恭喜你抽到 【' . $item->name . '】' . "\n";
-            $str .= '綜合運勢: ' . $result->star1 . "\n";
-            $str .= '愛情運勢: ' . $result->star2 . "\n";
-            $str .= '事業運勢: ' . $result->star3 . "\n";
-            $str .= '財富運勢: ' . $result->star4 . "\n";
-            $str .= $result->field1 . "\n";
-            $str .= $result->field2 . "\n";
-            $str .= $result->field3 . "\n";
-            $str .= $result->field4 . "\n";
-            $str .= $result->field5 . "\n";
-            $str .= "\n";
-            $str .= $result->field6 . "\n";
+            if (is_null($constellationData)) {
+                $constellationData = DB::table('constellation')
+                    ->where([
+                        'name' => $constellation,
+                    ])
+                    ->first();
+            }
 
-            $message = new TextMessageBuilder($str);
-            $multipleMessageBuilder->add($message);
+            if (!is_null($constellationData)) {
+                $result = json_decode($constellationData->result);
+                $str = '豆丁老師分析 <(ˉ^ˉ)>' . "\n";
+                $str .= "\n";
+                $str .= '恭喜你抽到 【' . $item->name . '】' . "\n";
+                $str .= '綜合運勢: ' . $result->star1 . "\n";
+                $str .= '愛情運勢: ' . $result->star2 . "\n";
+                $str .= '事業運勢: ' . $result->star3 . "\n";
+                $str .= '財富運勢: ' . $result->star4 . "\n";
+                $str .= $result->field1 . "\n";
+                $str .= $result->field2 . "\n";
+                $str .= $result->field3 . "\n";
+                $str .= $result->field4 . "\n";
+                $str .= $result->field5 . "\n";
+                $str .= "\n";
+                $str .= $result->field6 . "\n";
+
+                $message = new TextMessageBuilder($str);
+                $multipleMessageBuilder->add($message);
+            }
         }
 
         return [$multipleMessageBuilder];
