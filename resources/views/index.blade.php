@@ -1,5 +1,5 @@
 @extends('layouts.web')
-@section('title', '動物森友會 LINE機器人')
+@section('title', 'LINE機器人')
 @section('content')
 <canvas id="birthday"></canvas>
 <div id="app" class="content-wrap first" v-cloak>
