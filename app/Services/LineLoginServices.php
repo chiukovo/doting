@@ -16,6 +16,7 @@ class LineLoginServices
                 'client_id' => config('lineLogin.channel_id'),
                 'client_secret' => config('lineLogin.secret')
             ])
+            ->withContentType('application/x-www-form-urlencoded')
             ->asJson()
             ->post();
     }
