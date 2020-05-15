@@ -16,8 +16,8 @@ class LineLoginServices
                 'client_id' => config('lineLogin.channel_id'),
                 'client_secret' => config('lineLogin.secret')
             ])
-            ->withContentType('application/x-www-form-urlencoded')
-            ->asJson()
+            ->withContentType('application/x-www-form-urlencoded');
+            ->asJsonResponse()
             ->post();
     }
 
@@ -30,7 +30,7 @@ class LineLoginServices
 
         return Curl::to(config('lineLogin.get_user_profile_url'))
                 ->withHeaders($headers)
-                ->asJson()
+                ->asJsonResponse()
                 ->get();
     }
 }
