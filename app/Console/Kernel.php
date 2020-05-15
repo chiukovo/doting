@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             AnimalServices::getConstellation();
-        })->daily();
+        })->twiceDaily(0, 1);
     }
 
     /**
