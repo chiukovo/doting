@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Curl;
+use Curl, DB, Session;
 
 class LineLoginServices
 {
@@ -32,5 +32,56 @@ class LineLoginServices
                 ->withHeaders($headers)
                 ->asJsonResponse()
                 ->get();
+    }
+
+    public static function doLogin($userId, $displayName, $pictureUrl)
+    {
+        $clientIp = request()->ip();
+        $date = date('Y-m-d H:i:s');
+        $token = md5($userId . $date . env('APP_KEY'));
+
+        try {
+            //判斷是否有資料
+            $user = DB::table('web_user')
+                ->where('line_id', $userId)
+                ->first();
+
+            if (is_null($user)) {
+                //create
+                DB::table('web_user')->insert([
+                    'line_id' => $userId,
+                    'display_name' => $displayName,
+                    'picture_url' => $pictureUrl,
+                    'login_ip' => $clientIp,
+                    'remember_token' => $token,
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                ]);
+            } else {
+                //update
+                DB::table('web_user')->where('line_id', $userId)
+                    ->update([
+                        'display_name' => $displayName,
+                        'picture_url' => $pictureUrl,
+                        'login_ip' => $clientIp,
+                        'remember_token' => $token,
+                        'updated_at' => $date,
+                    ]);
+            }
+
+            //logining
+            Session::put('web', [
+                'lineId' => $userId,
+                'displayName' => $displayName,
+                'pictureUrl' => $pictureUrl,
+                'token' => $token,
+            ]);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return false;
     }
 }

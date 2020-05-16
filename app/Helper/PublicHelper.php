@@ -13,6 +13,34 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('isWebLogin')) {
+
+    /**
+     * is web login
+     *
+     * @return boolean
+     */
+    function isWebLogin()
+    {
+  		$webLogin = session('web');
+
+  		if (!is_null($webLogin)) {
+  			$token = isset($webLogin['token']) ?? '';
+  			$userId = isset($webLogin['userId']) ?? '';
+
+  			$user = DB::table('web_user')
+                ->where('line_id', $userId)
+                ->first(['remember_token']);
+
+            if (!is_null($user) && $user->remember_token == $token) {
+            	return true;
+            }
+  		}
+
+  		return false;
+    }
+}
+
 if (!function_exists('lingLoginUrl')) {
 
     /**

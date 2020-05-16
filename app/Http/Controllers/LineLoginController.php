@@ -53,6 +53,16 @@ class LineLoginController extends Controller
                 $pictureUrl = $userProfile->pictureUrl;
 
                 //do login
+                if ($userId != '') {
+                    $auth = LineLoginServices::doLogin($userId, $displayName, $pictureUrl);
+
+                    if (!$auth) {
+                        return 'login error';
+                    }
+
+                    //success
+                    return redirect('/');
+                }
             }
         } catch (Exception $e) {
             Log::error($e);

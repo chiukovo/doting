@@ -123,6 +123,11 @@ Route::get('/kk/detail', 'KKController@detail');
 Route::get('/test', 'AnimalCrossingController@index');
 Route::get('/getConstellation', 'ApiController@getConstellation');
 
+//auth
+Route::group(['middleware' => ['webAuth']], function() {
+	Route::get('/user', 'WebUserController@index');
+});
+
 //爬蟲
 /*Route::get('/getRecipes', 'ApiController@getRecipes');
 Route::get('/getKKZhName', 'ApiController@getKKZhName');

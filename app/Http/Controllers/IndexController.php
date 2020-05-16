@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Services\OtherServices;
+use App\Services\LineLoginServices;
 use Curl, Log, DB;
 
 class IndexController extends Controller
