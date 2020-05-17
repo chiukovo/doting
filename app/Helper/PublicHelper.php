@@ -23,6 +23,7 @@ if (!function_exists('isWebLogin')) {
     function isWebLogin()
     {
   		$webLogin = session('web');
+  		$clientIp = request()->ip();
 
   		if (!is_null($webLogin)) {
   			$token = isset($webLogin['token']) ?? '';
@@ -30,10 +31,12 @@ if (!function_exists('isWebLogin')) {
 
   			$user = DB::table('web_user')
                 ->where('line_id', $userId)
-                ->first(['remember_token']);
+                ->first(['remember_token', 'login_ip']);
 
             if (!is_null($user) && $user->remember_token == $token) {
-            	return true;
+                if ($clientIp == $user->login_ip) {
+                	return true;
+                }
             }
   		}
 

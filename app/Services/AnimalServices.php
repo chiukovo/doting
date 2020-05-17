@@ -50,18 +50,19 @@ class AnimalServices
         foreach ($urls as $key => $url) {
             $date = $key == 0 ? date('Y-m-d') : date('Y-m-d', strtotime(date('Y-m-d') . "+1 days"));
 
-            //insert
-            $check = DB::table('constellation')
-                ->where('date', $date)
-                ->first();
-
-            if (!is_null($check)) {
-                continue;
-            }
-
             foreach (getRealConstellation() as $name => $detail) {
                 $url1 = $url . $detail[0];
                 $url2 = $url . $detail[0] . '/1.html';
+
+                //insert
+                $check = DB::table('constellation')
+                    ->where('date', $date)
+                    ->where('name', $name)
+                    ->first();
+
+                if (!is_null($check)) {
+                    continue;
+                }
 
                 $baseUrl = $key == 0 ? $url1 : $url2;
                 $ql = QueryList::get($baseUrl);
