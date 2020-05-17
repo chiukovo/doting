@@ -34,6 +34,10 @@ class AnimalWebCrossingController extends Controller
             ->where('name', $name)
             ->first();
 
+        if (is_null($detail)) {
+            return redirect('animals/list');
+        }
+
         $detail->kk_cn_name = '';
 
         //kk ch name
