@@ -166,7 +166,6 @@
               </ul>
             </div>
             @endif
-            @include('layouts.ads')
           </div>
         </div>
       </div>
