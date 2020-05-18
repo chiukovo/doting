@@ -45,7 +45,7 @@
                     <!-- 當前月份 li+class "current" -->
                     <ul class="list-year">
                       @foreach($months as $month)
-                      <li class="{{ $detail['n_' . $month . '_class'] }}">
+                      <li class="{{ $detail['s_' . $month . '_class'] }}">
                         <div class="list-year-item"><span>{{ $month }}月</span></div>
                       </li>
                       @endforeach
