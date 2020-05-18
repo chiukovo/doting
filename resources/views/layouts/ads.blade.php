@@ -1,4 +1,4 @@
-<div class="row text-center">
+<div class="row text-center mb-2">
 	<div class="col">
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<ins class="adsbygoogle"
