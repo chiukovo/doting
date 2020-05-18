@@ -4,7 +4,7 @@
 		     style="display:block"
 		     data-ad-client="ca-pub-2560043137442562"
 		     data-ad-slot="4286195067"
-		     data-ad-format="horizontal"
+		     data-ad-format="horizontal, rectangle"
 		     data-full-width-responsive="true"></ins>
 		<script>
 		     $(document).ready(function(){
