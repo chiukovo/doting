@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <link rel="stylesheet" href="../css/style.css">
   <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <script src="../js/jquery-2.2.4.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
@@ -154,9 +155,16 @@
             </div>
             <div class="row">
               <div class="col">
-                <table class="table table-bordered table-hover text-center" data-toggle="table"
-                data-sort-class="table-active"
-                data-sortable="true">
+                <!-- 登入會員才顯示 -->
+                <div class="row">
+                  <div class="col text-right">
+                    <button class="btn text-danger"><i class="fas fa-bookmark"></i> 追蹤: 2</button>/
+                    <button class="btn text-success"><i class="fas fa-heart"></i> 擁有: 8</button>/
+                    <button class="btn">全部: 120個結果</button>
+                  </div>
+                </div>
+                <!-- style: table -->
+                <table class="table table-bordered table-hover text-center">
                   <thead>
                     <tr>
                       <th scope="col" data-field="name" data-sortable="true">名稱</th>
@@ -165,6 +173,7 @@
                       <th scope="col">種族</th>
                       <th scope="col">生日</th>
                       <th scope="col">口頭禪</th>
+                      <th style="width: 120px;"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -172,7 +181,7 @@
                       <td scope="row" data-field="name">
                         <a href="#" class="link">
                           <div class="table-img">
-                            <img src="../animal/icon/茶茶丸.png" alt="茶茶丸">
+                            <img src="../animal/茶茶丸.png" alt="茶茶丸">
                           </div>
                           <span>茶茶丸</span>
                         </a>
@@ -182,6 +191,12 @@
                       <td>綿羊</td>
                       <td>3.18</td>
                       <td>哇耶</td>
+                      <td>
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </td>
                     </tr>
                     <tr>
                       <td scope="row" data-field="name">
@@ -197,6 +212,12 @@
                       <td>綿羊</td>
                       <td>3.18</td>
                       <td>哇耶</td>
+                      <td>
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success current"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </td>
                     </tr>
                     <tr>
                       <td scope="row" data-field="name">
@@ -212,6 +233,12 @@
                       <td>綿羊</td>
                       <td>3.18</td>
                       <td>哇耶</td>
+                      <td>
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </td>
                     </tr>
                     <tr>
                       <td scope="row" data-field="name">
@@ -227,9 +254,108 @@
                       <td>綿羊</td>
                       <td>3.18</td>
                       <td>哇耶</td>
+                      <td>
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
+                <!-- style: list -->
+                <ul class="card-list">
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/彭花.png" class="img-fluid" alt="彭花">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/小潤.png" class="img-fluid" alt="小潤">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/kk.png" class="img-fluid" alt="kk">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success current"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/雪美.png" class="img-fluid" alt="雪美">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="card-list-item">
+                      <div class="card-list-img">
+                        <img src="../animal/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                      </div>
+                      <div class="card-list-title">茶茶丸 ♂</div>
+                      <div class="card-list-info">運動/綿羊/3.18</div>
+                      <div class="card-list-btn">
+                        <ul class="user-save-btn">
+                          <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i></button></li>
+                          <li><button class="btn btn-outline-success"><i class="fas fa-heart"></i></button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </section>

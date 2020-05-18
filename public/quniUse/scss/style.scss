@@ -3,6 +3,12 @@
 $developer: 0;
 $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helvetica Neue","Helvetica","Noto Sans TC","Microsoft JhengHei","Arial",sans-serif;
 
+* {
+  &:focus {
+    outline: 0 !important;
+  }
+}
+
 #donateMe {
   width: 100%;
   height: 40px;
@@ -255,6 +261,44 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     }
   }
 }
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 -.2rem;
+  li {
+    flex: 0 0 50%;
+    padding: .2rem;
+    .card-list-item {
+      text-align: center;
+      border: 1px solid $gray-200;
+      box-shadow: 0 0 0 rgba(0,0,0,0.1);
+      border-radius: 6px;
+      transition: all .3s ease;
+      cursor: pointer;
+      .card-list-img {
+        height: 140px;
+        padding: 1rem;
+        img {
+          max-height: 100%;
+        }
+      }
+      .card-list-title {
+        font-size: 1rem;
+        line-height: 1;
+        font-weight: bold;
+      }
+      .btn {
+        border-color: transparent !important;
+      }
+      &:hover {
+        box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      }
+    }
+  }
+}
+
 
 .collapse-analysis {
   position: relative;
@@ -833,26 +877,22 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   }
 }
 
-.user-save {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1060;
-  background-color: #fff;
-  border-top: 1px solid $gray-200;
-  ul {
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-      flex: 0 0 33.33%;
-      .btn {
-        padding: 0.75rem;
-        &.current {
-          color: $gray-500 !important;
+.user-save-wrap {
+  i {
+    margin-right: 4px;
+  }
+}
+ul.user-save-btn {
+  list-style: none;
+  padding: 0;
+  li {
+    display: inline-block;
+    .btn {
+      &:not(.current) {
+        color: $gray-700;
+        border-color: $gray-300;
+        &:hover {
+          color: #fff;
         }
       }
     }
@@ -1140,6 +1180,7 @@ a.link {
   background-color: rgba($danger, .1);
 }
 
+
 // card
 .card {
   border: 0;
@@ -1207,6 +1248,47 @@ a.link {
 }
 // <691px
 @include media-breakpoint-down(sm) {
+  .user-save {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1090;
+    background: #fff;
+    width: 100%;
+    height: 34px;
+    border-top: 1px solid $gray-300;
+    .user-save-wrap {
+      display: flex;
+    }
+    .btn-back {
+      display: block;
+      width: 60px;
+      height: 34px;
+      background-color: $gray-600;
+      mask-image: url('../../image/arrow-back-outline.svg');
+      mask-size: 40%;
+      mask-repeat: no-repeat;
+      mask-position: center center;
+    }
+    ul {
+      display: flex;
+      width: 100%;
+      margin: 0;
+      li {
+        flex: 0 0 50%;
+        margin: 0;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        border-radius: 0;
+        border-color: transparent;
+        &:not(.current) {
+          color: $gray-700;
+        }
+      }
+    }
+  }
   .analysis-fixed {
     margin-bottom: 120px;
   }
@@ -1286,8 +1368,20 @@ a.link {
     }
   }
 }
+
+@include media-breakpoint-up(sm) {
+  .card-list li {
+    flex: 0 0 33.33%;
+  }
+}
 // ≥768px
 @include media-breakpoint-up(md) {
+  .card-list li {
+    flex: 0 0 25%;
+  }
+  .user-save {
+    text-align: right;
+  }
   .header-wrap {
     max-width: 960px;
   }
@@ -1307,11 +1401,19 @@ a.link {
         padding: 0 1rem;
       }
       .sub-nav {
-        ion-icon {
-          position: relative;
-          top: 1px;
-          margin-left: 3px;
-          opacity: 0.5;
+        > a {
+          &:after {
+            content: '';
+            position: relative;
+            top: 2px;
+            display: inline-block;
+            width: .8rem;
+            height: .8rem;
+            background-color: $gray-500;
+            mask-image: url('../../image/chevron-down-outline.svg');
+            mask-size: cover;
+            margin-left: 2px;
+          }
         }
         ul {
           display: none;
@@ -1339,6 +1441,9 @@ a.link {
           }
           > a {
             color: $primary;
+            &:after {
+              background-color: $primary;
+            }
           }
         }
       }
@@ -1399,6 +1504,9 @@ a.link {
 
 // ≥992px
 @include media-breakpoint-up(lg) {
+  .card-list li {
+    flex: 0 0 20%;
+  }
   .first .first-season-list li {
     flex: 0 0 20%;
   }
@@ -1411,6 +1519,12 @@ a.link {
 
 // ≥1200px
 @include media-breakpoint-up(xl) {
+  .card-list {
+    margin: 0 -.5rem;
+    li {
+      padding: 0.5rem;
+    }
+  }
   .header-wrap {
     max-width: 1140px;
   }
