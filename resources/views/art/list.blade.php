@@ -11,6 +11,7 @@
         <li class="breadcrumb-item active" aria-current="page">藝術品</li>
       </ol>
     </nav>
+    @include('layouts.ads')
     <section>
       <div class="section-search row">
         <div class="col">

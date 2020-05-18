@@ -11,7 +11,7 @@
 		     $(document).ready(function(){
 		     	setTimeout(function(){
 		     		(adsbygoogle = window.adsbygoogle || []).push({})
-		     	 }, 300)
+		     	 }, 0)
 		     })
 		</script>
 	</div>

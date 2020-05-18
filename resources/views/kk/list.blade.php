@@ -10,6 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">唱片圖鑑</li>
       </ol>
     </nav>
+    @include('layouts.ads')
     <section>
       <div class="section-search row">
         <div class="col">

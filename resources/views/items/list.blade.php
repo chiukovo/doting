@@ -28,6 +28,7 @@
         @endif
       </ol>
     </nav>
+    @include('layouts.ads')
     <section>
       <div class="section-search row">
         <div class="col">
