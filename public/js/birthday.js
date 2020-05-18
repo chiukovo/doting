@@ -1,4 +1,4 @@
-var w = birthday.width = window.innerWidth,
+var w = birthday.width = window.innerWidth - 50,
     h = '350',
     ctx = birthday.getContext('2d'),
     hw = w / 2 + 50, // half-width
