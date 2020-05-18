@@ -51,7 +51,7 @@
           <nav class="navigation">
             <ul>
               <li class="sub-nav">
-                <a href="#">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="#">小動物</a>
                 <ul>
                   <li><a href="/animals/list">動物居民</a></li>
                   <li><a href="/npc/list">動物NPC</a></li>
@@ -59,7 +59,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="/museum/list">博物館</a>
                 <ul>
                   <li><a href="/fish/list">魚圖鑑</a></li>
                   <li><a href="/insect/list">昆蟲圖鑑</a></li>
@@ -68,7 +68,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="#">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="#">收藏</a>
                 <ul>
                   <li><a href="/diy/list">DIY方程式</a></li>
                   <li><a href="/apparel/list">家具</a></li>
@@ -78,7 +78,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="#">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="#">豆丁</a>
                 <ul>
                   <li><a href="/instructions">豆丁教學</a></li>
                   <li><a href="/update/version">更新資訊</a></li>
