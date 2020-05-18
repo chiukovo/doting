@@ -1,5 +1,5 @@
 <div class="row text-center mb-2">
-	<div class="col">
+	<div class="col" style="max-height: 200px">
 		<ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-2560043137442562"
@@ -10,7 +10,7 @@
 		     $(document).ready(function(){
 		     	setTimeout(function(){
 		     		(adsbygoogle = window.adsbygoogle || []).push({})
-		     	 }, 300)
+		     	 }, 100)
 		     })
 		</script>
 	</div>
