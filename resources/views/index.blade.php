@@ -122,7 +122,7 @@
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
     <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
+         $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
     </script>
     <div class="row">
       <div class="mt-3 col-12 col-md-4">
