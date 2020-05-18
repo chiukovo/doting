@@ -30,6 +30,16 @@
                 <p>因為對這個遊戲實在太有愛，所以就很熱血的寫了一個LINE機器人「豆丁森友會」！</p>
                 <p>動物森友會裡的動物居民、種族相當多，在無人島尋找喜歡的島民時會時常不知道他的個性、種族以及與其他居民的相容性，本來只是朋友之間的分享，但這麼方便的LINE機器人就分享給大家一起使用啦！</p>
                 <p>慢慢的加入朋友、網友們的意見，希望一起把豆丁森友會壯大！</p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h3 class="instructions-title">豆丁森友會 功能</h3>
                 <ul class="list-square">
                   <li>
@@ -230,6 +240,12 @@
                     <span>FB分享或複製分析結果</span>
                   </span>
                 </p>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
                 <h3 class="instructions-title">其他有趣小功能</h3>
                 <p>每天試試手氣，輸入「<span class="text-danger">抽</span>」來看看今天會不會抽到你心中的SSR角色！</p>
                 <p class="instructions-img">
