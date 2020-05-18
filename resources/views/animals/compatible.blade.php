@@ -10,6 +10,16 @@
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2560043137442562"
+         data-ad-slot="4286195067"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+    </script>
     <section class="post">
       <div id="select-div" class="row fixed-bottom analysis-tag" v-show="selected.length != 0">
         <div class="col-12 col-md-10">
@@ -214,6 +224,18 @@
             <button class="btn btn-outline-success" :data-clipboard-text="'https://doting.tw/animals/compatible?name=' + params">
               複製分析結果
             </button>
+          </div>
+          <!--ads-->
+          <div class="text-center">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- fix -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-2560043137442562"
+                 data-ad-slot="2355549181"></ins>
+            <script>
+              $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+            </script>
           </div>
         </div>
       </div>
