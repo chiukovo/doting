@@ -13,7 +13,7 @@
     @include('layouts.ads')
     <section class="post version">
       <div class="row justify-content-md-center">
-        <div class="col-12 col-lg-10">
+        <div class="col">
           <div class="post-body">
             <div class="alert alert-primary mt-2" role="alert">
               <h4 class="alert-heading">問題回復專區</h4>
