@@ -386,7 +386,7 @@ anim();
 
 window.addEventListener('resize', function() {
 
-    w = birthday.width = window.innerWidth;
+    w = birthday.width = window.innerWidth - 50
     h = '350';
 
     hw = w / 2;
