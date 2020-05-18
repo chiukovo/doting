@@ -10,6 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">豆丁搜尋排行榜</li>
       </ol>
     </nav>
+    @include('layouts.ads')
     <section>
       <div class="row">
         <div class="col">
@@ -19,7 +20,6 @@
           </ul>
         </div>
       </div>
-      @include('layouts.ads')
       <div class="row">
         <div class="col">
           <table class="table table-bordered table-hover text-center">
