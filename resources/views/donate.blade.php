@@ -54,7 +54,6 @@
               </div>
             </div>
             <div class="card">
-              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
               <ins class="adsbygoogle"
                    style="display:block"
                    data-ad-client="ca-pub-2560043137442562"
