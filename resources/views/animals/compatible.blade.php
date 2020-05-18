@@ -11,16 +11,7 @@
       </ol>
     </nav>
     <div class="mb-2">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-2560043137442562"
-           data-ad-slot="4286195067"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>
-           $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
-      </script>
+      @include('layouts.ads')
     </div>
     <section class="post">
       <div id="select-div" class="row fixed-bottom analysis-tag" v-show="selected.length != 0">
