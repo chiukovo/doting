@@ -101,7 +101,7 @@
     </div>
     <footer class="footer">
       <div class="copyright">
-        copyright © 豆丁森友會
+        copyright © 豆丁森友會 - LINE ID: @875uxytu
       </div>
     </footer>
   </div>
