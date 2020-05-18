@@ -113,7 +113,6 @@
     </ul>
   </div>
   <div class="first-container container">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 小橫條廣告 -->
     <ins class="adsbygoogle"
          style="display:block"
