@@ -91,8 +91,8 @@
                     </div>
                   </a>
                 </td>
-                <td>@{{ list.sex }}</td>
-                <td v-show="!isMobile()">@{{ list.personality }}</td>
+                <td v-show="!isMobile()">@{{ list.sex }}</td>
+                <td>@{{ list.personality }}</td>
                 <td>@{{ list.race }}</td>
                 @if($type != 'npc')
                 <td>@{{ list.bd }}</td>
