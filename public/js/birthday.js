@@ -385,12 +385,11 @@ for (var i = 0; i < opts.strings.length; ++i) {
 anim();
 
 window.addEventListener('resize', function() {
-
-    w = birthday.width = window.innerWidth - 50
+    w = birthday.width = window.innerWidth - 80
     h = '350';
 
-    hw = w / 2;
-    hh = h / 2;
+    hw = w / 2 + 50, // half-width
+    hh = h / 2 - 120,
 
     ctx.font = opts.charSize + 'px Verdana';
 })
