@@ -12,7 +12,7 @@
     </nav>
     <section class="post version">
       <div class="row justify-content-md-center">
-        <div class="col">
+        <div class="col-12 col-lg-10">
           <div class="post-body">
             <div class="alert alert-primary mt-2" role="alert">
               <h4 class="alert-heading">問題回復專區</h4>
@@ -237,6 +237,18 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-12 col-lg-2">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2560043137442562"
+               data-ad-slot="4286195067"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+          </script>
         </div>
       </div>
     </section>
