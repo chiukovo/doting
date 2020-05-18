@@ -10,16 +10,18 @@
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2560043137442562"
-         data-ad-slot="4286195067"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
-    </script>
+    <div class="mb-2">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2560043137442562"
+           data-ad-slot="4286195067"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+      </script>
+    </div>
     <section class="post">
       <div id="select-div" class="row fixed-bottom analysis-tag" v-show="selected.length != 0">
         <div class="col-12 col-md-10">
