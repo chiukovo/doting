@@ -112,13 +112,13 @@
       </li>
     </ul>
   </div>
-  <amp-ad width="100vw" height="320"
+  <amp-ad
+       layout="fixed"
+       width="728"
+       height="90"
        type="adsense"
        data-ad-client="ca-pub-2560043137442562"
-       data-ad-slot="4286195067"
-       data-auto-format="rspv"
-       data-full-width="">
-    <div overflow=""></div>
+       data-ad-slot="4286195067">
   </amp-ad>
   <div class="first-container container">
     <div class="row">
