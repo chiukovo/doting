@@ -1,5 +1,5 @@
 <div class="row text-center mb-2">
-	<div class="col" style="max-height: 200px">
+	<div class="col">
 		<ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-2560043137442562"
