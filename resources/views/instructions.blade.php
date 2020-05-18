@@ -171,6 +171,16 @@
                     <span>出現的時間以及當前是否可以捕捉</span>
                   </span>
                 </p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h5>更詳細的查詢方式，例如</h5>
                 <ul class="list-square">
                   <li>查名稱：$黑魚、$金</li>
@@ -240,12 +250,16 @@
                     <span>FB分享或複製分析結果</span>
                   </span>
                 </p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-2560043137442562"
                      data-ad-slot="4286195067"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h3 class="instructions-title">其他有趣小功能</h3>
                 <p>每天試試手氣，輸入「<span class="text-danger">抽</span>」來看看今天會不會抽到你心中的SSR角色！</p>
                 <p class="instructions-img">
