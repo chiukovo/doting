@@ -112,15 +112,16 @@
       </li>
     </ul>
   </div>
-  <amp-ad
-       layout="fixed"
-       width="728"
-       height="90"
-       type="adsense"
-       data-ad-client="ca-pub-2560043137442562"
-       data-ad-slot="4286195067">
-  </amp-ad>
   <div class="first-container container">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 小橫條廣告 -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-2560043137442562"
+         data-ad-slot="4286195067"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
     <div class="row">
       <div class="mt-3 col-12 col-md-4">
         <div class="card">
