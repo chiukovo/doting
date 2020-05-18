@@ -19,6 +19,7 @@
           </ul>
         </div>
       </div>
+      @include('layouts.ads')
       <div class="row">
         <div class="col">
           <table class="table table-bordered table-hover text-center">
