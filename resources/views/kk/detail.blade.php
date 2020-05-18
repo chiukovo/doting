@@ -30,6 +30,7 @@
                 </audio>
               </div>
             </div>
+            @include('layouts.ads')
           </div>
         </div>
       </div>

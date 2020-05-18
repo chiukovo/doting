@@ -171,6 +171,12 @@
                     <span>出現的時間以及當前是否可以捕捉</span>
                   </span>
                 </p>
+                <h5>更詳細的查詢方式，例如</h5>
+                <ul class="list-square">
+                  <li>查名稱：$黑魚、$金</li>
+                  <li>查月份：$南4月 魚、$北5月 蟲、$全5月 魚</li>
+                  <li class="text-danger">模糊查詢：$黑</li>
+                </ul>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <ins class="adsbygoogle"
                      style="display:block"
@@ -181,12 +187,6 @@
                 <script>
                      $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
                 </script>
-                <h5>更詳細的查詢方式，例如</h5>
-                <ul class="list-square">
-                  <li>查名稱：$黑魚、$金</li>
-                  <li>查月份：$南4月 魚、$北5月 蟲、$全5月 魚</li>
-                  <li class="text-danger">模糊查詢：$黑</li>
-                </ul>
                 <h3 class="instructions-title">【做】查詢DIY圖鑑</h3>
                 <p>與DIY方程式相關的，只要使用「<span class="text-danger">做+DIY方程式名稱</span>」，並且可使用材料反搜尋，例如： 「<span class="text-danger">做櫻花</span>」、「<span class="text-danger">做雜草</span>」</p>
                 <p class="instructions-img">
