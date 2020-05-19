@@ -405,8 +405,18 @@ class AnimalServices
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
+        if ($item->bd != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('生日: ' . $item->bd)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
+
         $components[] = TextComponentBuilder::builder()
-            ->setText('性別: ' . $item->sex)
+            ->setText('種族: ' . $item->race . ' (' . $item->sex . ')')
             ->setWrap(true)
             ->setAlign('center')
             ->setSize(ComponentFontSize::XS)
@@ -423,19 +433,21 @@ class AnimalServices
                 ->setFlex(0);
         }
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('種族: ' . $item->race)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        if ($item->say != '') {
+            $components[] = TextComponentBuilder::builder()
+                ->setText('口頭禪: ' . $item->say)
+                ->setWrap(true)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS)
+                ->setMargin(ComponentMargin::MD)
+                ->setFlex(0);
+        }
 
         if ($item->colors != '' && $item->colors != '[]') {
             $colors = json_decode($item->colors);
 
             if (is_array($colors)) {
-                $printColors = implode(",", $colors);
+                $printColors = implode("、", $colors);
                 $components[] = TextComponentBuilder::builder()
                     ->setText('顏色: ' . $printColors)
                     ->setWrap(true)
@@ -450,7 +462,7 @@ class AnimalServices
             $styles = json_decode($item->styles);
 
             if (is_array($styles)) {
-                $printStyles = implode(",", $styles);
+                $printStyles = implode("、", $styles);
                 $components[] = TextComponentBuilder::builder()
                     ->setText('風格: ' . $printStyles)
                     ->setWrap(true)
@@ -459,27 +471,6 @@ class AnimalServices
                     ->setMargin(ComponentMargin::MD)
                     ->setFlex(0);
             }
-        }
-
-
-        if ($item->bd != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('生日: ' . $item->bd)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->say != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('口頭禪: ' . $item->say)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
         }
 
         if ($item->info != '') {
