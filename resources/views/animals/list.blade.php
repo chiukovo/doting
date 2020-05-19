@@ -114,7 +114,7 @@
           <!-- style: list -->
           <ul class="card-list" v-if="!isList">
             <li v-for="list in lists">
-              <div class="card-list-item">
+              <div class="card-list-item" @click="goDetail(list)">
                 <div class="card-list-img">
                   <img class="img-fluid" :src="'/animal/' + list.name + '.png'" :alt="list.name">
                 </div>
@@ -167,6 +167,9 @@
       isMobile(){
         let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
         return flag;
+      },
+      goDetail(list) {
+        location.href = '/animals/detail?name=' + list.name
       },
       getAllType() {
         axios.get('/animals/getAllType?type=' + this.type, {
