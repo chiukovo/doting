@@ -431,6 +431,37 @@ class AnimalServices
             ->setMargin(ComponentMargin::MD)
             ->setFlex(0);
 
+        if ($item->colors != '' && $item->colors != '[]') {
+            $colors = json_decode($item->colors);
+
+            if (is_array($colors)) {
+                $printColors = implode(",", $colors);
+                $components[] = TextComponentBuilder::builder()
+                    ->setText('喜愛顏色: ' . $printColors)
+                    ->setWrap(true)
+                    ->setAlign('center')
+                    ->setSize(ComponentFontSize::XS)
+                    ->setMargin(ComponentMargin::MD)
+                    ->setFlex(0);
+            }
+        }
+
+        if ($item->styles != '' && $item->styles != '[]') {
+            $styles = json_decode($item->styles);
+
+            if (is_array($styles)) {
+                $printStyles = implode(",", $styles);
+                $components[] = TextComponentBuilder::builder()
+                    ->setText('喜愛性格: ' . $printStyles)
+                    ->setWrap(true)
+                    ->setAlign('center')
+                    ->setSize(ComponentFontSize::XS)
+                    ->setMargin(ComponentMargin::MD)
+                    ->setFlex(0);
+            }
+        }
+
+
         if ($item->bd != '') {
             $components[] = TextComponentBuilder::builder()
                 ->setText('生日: ' . $item->bd)
