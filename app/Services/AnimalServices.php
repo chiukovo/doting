@@ -449,7 +449,7 @@ class AnimalServices
             if (is_array($colors)) {
                 $printColors = implode("、", $colors);
                 $components[] = TextComponentBuilder::builder()
-                    ->setText('顏色: ' . $printColors)
+                    ->setText('喜歡的顏色: ' . $printColors)
                     ->setWrap(true)
                     ->setAlign('center')
                     ->setSize(ComponentFontSize::XS)
@@ -464,7 +464,7 @@ class AnimalServices
             if (is_array($styles)) {
                 $printStyles = implode("、", $styles);
                 $components[] = TextComponentBuilder::builder()
-                    ->setText('風格: ' . $printStyles)
+                    ->setText('喜歡的風格: ' . $printStyles)
                     ->setWrap(true)
                     ->setAlign('center')
                     ->setSize(ComponentFontSize::XS)
