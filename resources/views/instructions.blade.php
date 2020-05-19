@@ -74,7 +74,7 @@
                   </li>
                 </ul>
                 <h3 class="instructions-title">加入 「豆丁森友會」 LINE 機器人</h3>
-                <p>立即加入豆丁森友會快速查詢居民、DIY 方程式材料、KK唱片、魚類昆蟲價格、相容性分析，請在LINE加入好有的地方，輸入LINE ID「<span class="text-danger">@875uxytu</span>」。</p>
+                <p>立即加入豆丁森友會快速查詢居民、DIY 方程式材料、KK唱片、魚類昆蟲價格、相容性分析，請在LINE加入好友的地方，輸入LINE ID「<span class="text-danger">@875uxytu</span>」。</p>
                 <p class="instructions-img">
                   <img src="../image/instructions/doting_instructions_joinus_875uxytu.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
                 </p>
