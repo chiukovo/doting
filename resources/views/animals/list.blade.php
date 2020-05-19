@@ -119,7 +119,7 @@
                   <img class="img-fluid" :src="'/animal/' + list.name + '.png'" :alt="list.name">
                 </div>
                 <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
-                <div class="card-list-info" v-if="list.info == ''">
+                <div class="card-list-info" v-if="list.info == null">
                   @{{ list.personality }}/@{{ list.race }}/@{{ list.bd }}
                 </div>
                 <div class="card-list-info" v-else>
