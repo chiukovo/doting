@@ -252,7 +252,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
           background-color: $gray-100;
           &:before {
             content: '';
-            background: #fff url('../../image/checkmark-outline.svg') center no-repeat;
+            background: #fff url('../image/checkmark-outline.svg') center no-repeat;
             background-size: 100%;
             border-color: $gray-900;
           }
@@ -388,7 +388,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       height: 1rem;
       display: block;
       background-color: $primary;
-      mask-image: url('../../image/close-outline.svg');
+      mask-image: url('../image/close-outline.svg');
       mask-size: cover;
     }
     &:hover {
@@ -1268,7 +1268,7 @@ a.link {
       width: 60px;
       height: 34px;
       background-color: $gray-600;
-      mask-image: url('../../image/arrow-back-outline.svg');
+      mask-image: url('../image/arrow-back-outline.svg');
       mask-size: 40%;
       mask-repeat: no-repeat;
       mask-position: center center;
@@ -1413,7 +1413,7 @@ a.link {
             width: .8rem;
             height: .8rem;
             background-color: $gray-500;
-            mask-image: url('../../image/chevron-down-outline.svg');
+            mask-image: url('../image/chevron-down-outline.svg');
             mask-size: cover;
             margin-left: 2px;
           }
