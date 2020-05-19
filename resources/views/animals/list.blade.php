@@ -65,7 +65,17 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-bordered table-hover text-center">
+          <!-- 登入會員才顯示 -->
+          <div class="row">
+            <div class="col text-right mb-1">
+              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+              <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
+              <!-- table狀態顯示 fa-grip-horizontal
+                  列表狀態顯示 fa-list
+                -->
+            </div>
+          </div>
+          <table class="table table-bordered table-hover text-center" v-if="isList">
             <thead>
               <tr>
                 <th scope="col">名稱</th>
@@ -101,6 +111,23 @@
               </tr>
             </tbody>
           </table>
+          <!-- style: list -->
+          <ul class="card-list" v-if="!isList">
+            <li v-for="list in lists">
+              <div class="card-list-item">
+                <div class="card-list-img">
+                  <img class="img-fluid" :src="'/animal/' + list.name + '.png'" :alt="list.name">
+                </div>
+                <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
+                <div class="card-list-info" v-if="list.info == ''">
+                  @{{ list.personality }}/@{{ list.race }}/@{{ list.bd }}
+                </div>
+                <div class="card-list-info" v-else>
+                  @{{ list.race }}
+                </div>
+              </div>
+            </li>
+          </ul>
           <infinite-loading :identifier="infiniteId" @infinite="search">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
@@ -118,6 +145,7 @@
     data: {
       lists: [],
       page: 1,
+      isList: true,
       infiniteId: +new Date(),
       race: [],
       personality: [],
@@ -132,6 +160,7 @@
       }
     },
     mounted() {
+      this.isList = this.isMobile() ? false : true
       this.getAllType()
     },
     methods: {

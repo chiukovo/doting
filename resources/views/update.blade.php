@@ -22,6 +22,17 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.7.7</div>
+                <div class="card-header-date">2020/5/19</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>新增動物列表卡片模式</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.7.0</div>
                 <div class="card-header-date">2020/5/14</div>
               </div>

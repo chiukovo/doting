@@ -7,6 +7,7 @@
   <meta name="description" content="動物森友會 豆丁森友會 動物圖鑑 家具 服飾 相容性分析" />
   <link rel="stylesheet" href="/css/style.css?v={{ config('app.version') }}">
   <link rel="stylesheet" href="/css/lightbox.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <script src="/js/vue.min.js"></script>
   <script src="/js/axios.min.js"></script>
   <script src="/js/vue-infinite-loading.js"></script>
