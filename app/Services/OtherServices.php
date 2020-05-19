@@ -75,17 +75,23 @@ class OtherServices
                             $checkDate = explode('~', $data->time);
                             $start = isset($checkDate[0]) ? $checkDate[0] : 0;
                             $end = isset($checkDate[1]) ? $checkDate[1] : 0;
-                            $now = strtotime(date('Y-n-d H:i:s'));
-
-                            $start = strtotime(date('Y-m-d ' . $start . ':00:00'));
-                            $end = date('Y-m-d ' . $end . ':00:00');
+                            $now = date('H');
+                            $range1 = [];
+                            $range2 = [];
 
                             if ($start > $end) {
-                                $end =  strtotime($end . "+1 days");
+                                $range1 = range($start, 23);
+                                $range2 = range(0, $end);
+                            } else {
+                                $range1 = range($start, $end);
                             }
 
-                            if ($now >= $start && $now <= $end) {
-                                $format[] = $data;
+                            if (!empty($range1) && in_array($now, $range1)) {
+                                $class = 'has';
+                            }
+
+                            if (!empty($range2) && in_array($now, $range2)) {
+                                $class = 'has';
                             }
                         }
                     }
@@ -160,7 +166,11 @@ class OtherServices
 
     public static function createItemBubble($item)
     {
-        $url = env('APP_URL') . '/museum/list?text=' . urlencode($item->name);
+        if (isset($item->shadow)) {
+            $url = env('APP_URL') . '/fish/detail?name=' . urlencode($item->name);
+        } else {
+            $url = env('APP_URL') . '/insect/detail?name=' . urlencode($item->name);
+        }
 
         return $target = BubbleContainerBuilder::builder()
             ->setSize('kilo')
@@ -301,7 +311,7 @@ class OtherServices
         if ($item->m12 == $type || $item->m12 == '全') {
             $target[] = 12;
         }
-        
+
         sort($target);
         $groups = [];
         $string = '';
@@ -310,7 +320,7 @@ class OtherServices
             if ($i > 0 && ($target[$i - 1] == $target[$i] - 1)) {
                 array_push($groups[count($groups) - 1], $target[$i]);
             } else {
-                array_push($groups, array($target[$i])); 
+                array_push($groups, array($target[$i]));
             }
         }
 

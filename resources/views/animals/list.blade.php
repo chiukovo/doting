@@ -3,11 +3,21 @@
 @section('content')
 <div id="app" class="content-wrap" v-cloak>
   <div class="container">
-    <h2 class="content-title">動物居民</h2>
+    <h2 class="content-title">
+      @if($type == 'npc')
+        動物NPC
+      @else
+        動物居民
+      @endif
+    </h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">首頁</a></li>
-        <li class="breadcrumb-item active" aria-current="page">動物居民</li>
+        @if($type == 'npc')
+          <li class="breadcrumb-item active" aria-current="page">動物NPC</li>
+        @else
+          <li class="breadcrumb-item active" aria-current="page">動物居民</li>
+        @endif
       </ol>
     </nav>
     <section>
@@ -71,13 +81,13 @@
               <tr v-for="list in lists">
                 <td scope="row">
                   <a class="link" :href="'/animals/detail?name=' + list.name">
+                    <span>@{{ list.name }}</span>
                     <div class="table-img" v-if="list.info == null">
                       <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
                     </div>
                     <div class="table-img" v-else>
                       <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
                     </div>
-                    <span>@{{ list.name }}</span>
                   </a>
                 </td>
                 <td>@{{ list.race }}</td>

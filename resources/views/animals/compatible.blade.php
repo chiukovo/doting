@@ -1,12 +1,12 @@
 @extends('layouts.web')
-@section('title', '動物相容性分析')
+@section('title', '動物森友會 動物相容性分析')
 @section('content')
 <div id="app" class="content-wrap" v-cloak>
   <div class="container">
     <h2 class="content-title">動物相容性分析</h2>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="\">首頁</a></li>
+        <li class="breadcrumb-item"><a href="/">首頁</a></li>
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
@@ -35,15 +35,22 @@
                 <tr>
                   <td class="text-center" width="80">顯示隱藏</td>
                   <td>
-                    <button class="btn btn-search" @click="openAll">全部顯示</button>
-                    <button class="btn btn-search" @click="searchSelected = []">全部隱藏</button>
+                    <button class="btn btn-search" :class="racesSelected.length == 0 ? 'current' : ''" @click="openAll">全部顯示</button>
                   </td>
                 </tr>
                 <tr>
                   <td class="text-center">種族</td>
                   <td>
-                    <button class="btn btn-search" :class="searchSelected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
+                    <button class="btn btn-search" :class="racesSelected.indexOf(race) == '-1' ? '' : 'current'" v-for="race in races" @click="toggleRace(race)">
                       @{{ race }}
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center">個性</td>
+                  <td>
+                    <button class="btn btn-search" :class="personalitySelected.indexOf(per) == '-1' ? '' : 'current'" v-for="per in personality" @click="togglePersonality(per)">
+                      @{{ per }}
                     </button>
                   </td>
                 </tr>
@@ -60,12 +67,12 @@
           <div class="row my-2">
             <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~20人)</div>
           </div>
-          <div class="row" v-for="(animal, race) in animals" v-show="searchSelected.indexOf(race) != '-1' && checkShow(animal)">
+          <div class="row" v-for="(animal, race) in animals" v-show="checkShow(animal, race)">
             <div class="col">
               <div class="card mb-3">
                 <div class="card-header">@{{ race }}</div>
                 <ul class="post-card-list animal-list check-list">
-                  <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show">
+                  <li :class="selectedCurrent(detail.name)" v-for="detail in animal" @click="toggleSelected(detail.name)" v-show="detail.show && checkPer(detail.personality)">
                     <a href="javascript:void(0)">
                       <span>@{{ detail.name }}</span>
                       <div class="table-img">
@@ -123,8 +130,10 @@
             <p class="mb-0">診斷結果的值是通過從兼容對的數量中減去不兼容對的數量而獲得的數量。</p>
             <p class="mb-0">正值越大，居民的相容性越好。 相反，負值越大，居民的相容性越差。</p>
             <p class="mb-0">綠色框框代表相容性 <span class="text-success">高</span>，紅色框框代表相容性 <span class="text-danger">低</span></p>
+            <hr>
+            <p class="mb-0">貼心提醒: <span class="text-danger">此分析僅供參考</span>, 還是有相容性高相處不好, 相容性低相處融價的情況歐~~٩(^ᴗ^)۶</p>
           </div>
-          <div class="m-1" :class="isMobile() ? 'table-scroll' : ''">
+          <div class="m-1" :class="isMobile() ? 'table-scroll' : 'table-responsive'">
             <table class="table table-bordered table-analysis">
               <thead>
                 <tr>
@@ -141,7 +150,7 @@
                 <tr>
                   <th></th>
                   <th class="bg-light text-center"><h5>總分數: <strong>@{{ sum }}</strong></h5></th>
-                  <th class="bg-light" v-for="data in analysis">
+                  <th class="bg-light th-animal" v-for="data in analysis">
                     <a :href="'/animals/detail?name=' + data.name" class="link" target="_blank">
                       <div class="analysis-info top">
                         <div class="analysis-icon">
@@ -198,8 +207,13 @@
               </tbody>
             </table>
           </div>
-          <div class="text-center">
-            <iframe :src="'https://www.facebook.com/plugins/share_button.php?href=https://doting.tw/animals/compatible?name=' + params + '&layout=button_count&size=small&width=102&height=20&appId'" width="102" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+          <div class="text-center" style="margin: 10px">
+            <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://doting.tw/animals/compatible?name=' + params" target="_blank" onclick="window.open(this.href,'targetWindow','width=600,height=400'); return false">
+              <button type="button" class="btn btn-outline-primary"><i class="fa fa-facebook fa-2"></i>FB分享</button>
+            </a>
+            <button class="btn btn-outline-success" :data-clipboard-text="'https://doting.tw/animals/compatible?name=' + params">
+              複製分析結果
+            </button>
           </div>
         </div>
       </div>
@@ -310,7 +324,9 @@
       first: false,
       animals: [],
       races: [],
-      searchSelected: [],
+      racesSelected: [],
+      personality: [],
+      personalitySelected: [],
       selected: [],
       perArray: [],
       matchArray: [],
@@ -342,6 +358,11 @@
           this.goAnalysis()
         }
       }
+
+      clipboard = new ClipboardJS('.btn')
+      clipboard.on('success', function(e) {
+        alert('複製成功')
+      })
     },
     methods: {
       isMobile(){
@@ -369,9 +390,30 @@
           selected.classList.remove("fixed-selected")
         }
       },
-      checkShow(animal) {
+      checkPer(per) {
+        //個性
+        if (this.personalitySelected.length > 0) {
+          if (this.personalitySelected.indexOf(per) != '-1') {
+            return true
+          }
+
+          return false
+        }
+
+        return true
+      },
+      checkShow(animal, race, per) {
         let show = false
 
+        //種族
+        if (this.racesSelected.length > 0) {
+          if (this.racesSelected.indexOf(race) != '-1') {
+            return true
+          }
+
+          return false
+        }
+        
         animal.forEach(function(val) {
           if (val.show) {
             show = true
@@ -386,18 +428,29 @@
          }).then((response) => {
            this.animals = response.data.lists
            this.races = response.data.races
-           this.searchSelected = JSON.parse(JSON.stringify(this.races))
+           this.personality = response.data.personality
          })
       },
       toggleRace(race) {
-        const key = this.searchSelected.indexOf(race)
+        const key = this.racesSelected.indexOf(race)
 
         if (key == '-1') {
           //push
-          this.searchSelected.push(race)
+          this.racesSelected.push(race)
         } else {
           //add
-          this.searchSelected.splice(key, 1);
+          this.racesSelected.splice(key, 1);
+        }
+      },
+      togglePersonality(per) {
+        const key = this.personalitySelected.indexOf(per)
+
+        if (key == '-1') {
+          //push
+          this.personalitySelected.push(per)
+        } else {
+          //add
+          this.personalitySelected.splice(key, 1);
         }
       },
       toggleSelected(name) {
@@ -473,7 +526,8 @@
         })
       },
       openAll() {
-        this.searchSelected = JSON.parse(JSON.stringify(this.races))
+        this.racesSelected = []
+        this.personalitySelected = []
       }
     }
   })
@@ -513,6 +567,38 @@
   }
   .table-scroll thead tr:nth-child(2) th:nth-child(2) {
     z-index: 6;
+  }
+  .modal {
+    text-align: center;
+    padding: 0!important;
+  }
+
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .btn-facebook {
+    color: #fff;
+    background-color: #4C67A1;
+  }
+  .btn-facebook:hover {
+    color: #fff;
+    background-color: #405D9B;
+  }
+  .btn-facebook:focus {
+    color: #fff;
+  }
+  .table-scroll .th-animal {
+    min-width: 80px;
   }
 </style>
 @endsection

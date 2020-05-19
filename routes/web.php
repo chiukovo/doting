@@ -21,6 +21,8 @@ Route::group(['prefix' => 'filemanager', 'middleware' => []], function () {
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
+//line login
+Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');
@@ -75,11 +77,15 @@ Route::get('/animals/list', 'AnimalWebCrossingController@list');
 Route::get('/animals/detail', 'AnimalWebCrossingController@detail');
 Route::post('/animals/search', 'AnimalWebCrossingController@getAnimalSearch');
 Route::get('/animals/getAllType', 'AnimalWebCrossingController@getAllType');
+//print path
+Route::get('/animals/compatible/image', 'AnimalWebCrossingController@compatibleImage');
 
 //相容度分析
 Route::get('/animals/compatible', 'AnimalWebCrossingController@compatible')->name('analysis');
+Route::get('/animals/compatible/print', 'AnimalWebCrossingController@compatiblePrint');
 Route::post('/animals/getAnimalsGroupRace', 'AnimalWebCrossingController@getAnimalsGroupRace');
 Route::get('/animals/analysis', 'AnimalWebCrossingController@analysis');
+//Route::post('/animals/saveImg', 'AnimalWebCrossingController@saveImg');
 
 //npc
 Route::get('/npc/list', 'AnimalWebCrossingController@list')->name('npc');
@@ -95,10 +101,12 @@ Route::post('/art/search', 'ArtController@getArtSearch');
 
 //魚
 Route::get('/fish/list', 'FishController@list')->name('fish');
+Route::get('/fish/detail', 'FishController@detail');
 Route::post('/fish/search', 'FishController@getFishSearch');
 
 //昆蟲
 Route::get('/insect/list', 'InsectController@list')->name('insect');
+Route::get('/insect/detail', 'InsectController@detail');
 Route::post('/insect/search', 'InsectController@getInsectSearch');
 
 //化石
@@ -116,9 +124,11 @@ Route::get('/kk/detail', 'KKController@detail');
 
 //test
 Route::get('/test', 'AnimalCrossingController@index');
+Route::get('/getConstellation', 'ApiController@getConstellation');
 
 //爬蟲
-/*Route::get('/getKKZhName', 'ApiController@getKKZhName');
+/*Route::get('/getRecipes', 'ApiController@getRecipes');
+Route::get('/getKKZhName', 'ApiController@getKKZhName');
 Route::get('/getNewFurniture', 'ApiController@getNewFurniture');
 Route::get('/getAnimalIcon', 'ApiController@getAnimalIcon');
 Route::get('/getAnimalApi', 'ApiController@getAnimalApi');
@@ -140,7 +150,6 @@ Route::get('/getKK', 'ApiController@getKK');*/
 
 
 //admin
-
 Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function() {
 
 	Route::get('/login', function () {
@@ -163,5 +172,4 @@ Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function
 		Route::get('/animals/detail', 'AnimalController@detail');
 		Route::patch('/animals/edit/{id}', 'AnimalController@edit');
 	});
-
 });

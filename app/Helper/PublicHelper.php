@@ -13,6 +13,165 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('lingLoginUrl')) {
+
+    /**
+     * @return string
+     */
+    function lingLoginUrl()
+    {
+		$authCode = encrypt(env('APP_KEY') . 'lineLogin0121');
+
+		// 組成 Line Login Url
+		$url = config('lineLogin.authorize_base_url') . '?';
+		$url .= 'response_type=code';
+		$url .= '&client_id=' . config('lineLogin.channel_id');
+		$url .= '&redirect_uri=' . config('lineLogin.redirect_uri');
+		$url .= '&state=' . $authCode;
+		$url .= '&scope=openid%20profile';
+
+		return $url;
+    }
+}
+
+if (!function_exists('getRealConstellation')) {
+
+    /**
+     * 星座array
+     *
+     * @return array
+     */
+    function getRealConstellation()
+    {
+    	return [
+	    	'白羊座' => ['aries', '3/21-4/19'],
+	    	'金牛座' => ['taurus', '4/20-5/20'],
+	    	'雙子座' => ['gemini', '5/21-6/21'],
+	    	'巨蟹座' => ['cancer', '6/22-7/22'],
+	    	'獅子座' => ['leo', '7/23-8/22'],
+	    	'處女座' => ['virgo', '8/23-9/22'],
+	    	'天秤座' => ['libra', '9/23-10/23'],
+	    	'天蠍座' => ['scorpio', '10/24-11/22'],
+	    	'射手座' => ['sagittarius', '11/23-12/21'],
+	    	'魔羯座' => ['capricorn', '12/22-1/19'],
+	    	'水瓶座' => ['aquarius', '1/20-2/18'],
+	    	'雙魚座' => ['pisces', '2/19-3/20']
+    	];
+    }
+}
+
+if (!function_exists('printDoc')) {
+
+    /**
+     * Doc
+     * @return string
+     */
+    function printDoc()
+    {
+		$text = '你好 偶是豆丁' . "\n";
+		$text .= 'ε٩(๑> ₃ <)۶з' . "\n";
+		$text .= 'version ' . config('app.version') . "\n";
+		$text .= "\n";
+		$text .= '👇以下教您如何使用指令👇' . "\n";
+		$text .= '1.輸入【豆丁】，重新查詢教學指令' . "\n";
+		$text .= '範例 豆丁' . "\n";
+		$text .= "\n";
+		$text .= '2.【#】查詢島民、NPC相關資訊' . "\n";
+		$text .= '範例 查名稱：#茶茶丸、#Dom、#ちゃちゃまる、#曹賣' . "\n";
+		$text .= '範例 查個性：#運動' . "\n";
+		$text .= '範例 查種族：#小熊' . "\n";
+		$text .= '範例 查生日：#6、#1.21' . "\n";
+		$text .= '範例 查戰隊：#阿戰隊' . "\n";
+		$text .= '範例 查口頭禪：#哇耶' . "\n";
+		$text .= '範例 模糊查詢：#傑' . "\n";
+		$text .= "\n";
+		$text .= '3.【$】查詢魚、昆蟲圖鑑' . "\n";
+		$text .= '範例 查名稱：$黑魚、$金' . "\n";
+		$text .= '範例 查月份：$南4月 魚、$北5月 蟲、$全5月 魚' . "\n";
+		$text .= '範例 模糊查詢：$黑' . "\n";
+		$text .= "\n";
+		$text .= '4.【做】查詢DIY圖鑑' . "\n";
+		$text .= '範例 查名稱：做石斧頭、做櫻花' . "\n";
+		$text .= '範例 查反DIY：做雜草' . "\n";
+		$text .= '範例 模糊查詢：做圓木' . "\n";
+		$text .= "\n";
+		$text .= '5.【找】查詢家具、服飾、雨傘、地墊、植物' . "\n";
+		$text .= '範例 查名稱：找貓跳台、找咖啡杯' . "\n";
+		$text .= '範例 查名稱：找熱狗、找黃金' . "\n";
+		$text .= '範例 查名稱：找金色玫瑰' . "\n";
+		$text .= '範例 模糊查詢：找電腦' . "\n";
+		$text .= "\n";
+		$text .= '6.【查】查詢藝術品' . "\n";
+		$text .= '範例 查名稱：查充滿母愛的雕塑' . "\n";
+		$text .= '範例 查名稱：查名畫' . "\n";
+		$text .= "\n";
+		$text .= '7.【化石】查詢化石' . "\n";
+		$text .= '範例 查名稱：化石 三葉蟲' . "\n";
+		$text .= '範例 查名稱：化石 暴龍' . "\n";
+		$text .= '範例 模糊查詢：化石 暴龍' . "\n";
+		$text .= "\n";
+		$text .= '8.抽 amiibo卡片 (◑‿◐)' . "\n";
+		$text .= '範例 抽' . "\n";
+		$text .= "\n";
+		$text .= '9.豆丁搜尋排行榜' . "\n";
+		$text .= '範例 請輸入 搜尋排行榜' . "\n";
+		$text .= "\n";
+		$text .= '10.【#】動物相容性分析 (動物間需用空白隔開)' . "\n";
+		$text .= '範例 查名稱：#阿一 阿二 阿三 阿四' . "\n";
+		$text .= '範例 查名稱：#茶茶丸 傑客 美玲 小潤 章丸丸 草莓' . "\n";
+		$text .= "\n";
+		$text .= '👇 詳細圖文解說 👇' . "\n";
+		$text .= env('APP_URL') . '/instructions';
+
+		return $text;
+    }
+}
+
+if (!function_exists('checkTimeClass')) {
+
+    /**
+     * @return string
+     */
+    function checkTimeClass($time, $target)
+    {
+    	$class = '';
+
+    	if ($time == '全天') {
+    	    $class = 'has';
+    	} else {
+    	    $checkDate = explode('~', $time);
+    	    $start = isset($checkDate[0]) ? $checkDate[0] : 0;
+    	    $end = isset($checkDate[1]) ? $checkDate[1] : 0;
+    	    $range1 = [];
+    	    $range2 = [];
+
+			if ($start > $end) {
+				$range1 = range($start, 23);
+				$range2 = range(0, $end);
+			} else {
+				$range1 = range($start, $end);
+			}
+
+			if (!empty($range1) && in_array($target, $range1)) {
+				$class = 'has';
+			}
+
+			if (!empty($range2) && in_array($target, $range2)) {
+				$class = 'has';
+			}
+    	}
+
+    	$nowHour = date('H');
+
+    	if ($nowHour == $target) {
+    		$class .= ' current';
+    	}
+
+    	return $class;
+    }
+}
+
+
 if (!function_exists('constellation')) {
 
     /**
@@ -190,8 +349,8 @@ if (!function_exists('matchmaking')) {
 			'data' => $result,
 			'resultSum' => $resultSum,
 			'resultScore' => round($resultScore / 2),
-			'good' => $good,
-			'bad' => $bad,
+			'good' => round($good / 2),
+			'bad' => round($bad / 2),
 			'names' => $names,
 			'perArray' => computedPer([], [], true),
 			'matchArray' => computedMatch([], [], true),

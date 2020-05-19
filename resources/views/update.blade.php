@@ -17,7 +17,42 @@
             <div class="alert alert-primary mt-2" role="alert">
               <h4 class="alert-heading">問題回復專區</h4>
               <p class="mb-0">在意見回饋的問題都可以在這邊查詢並得到回復，感謝您的回饋，我們會盡力改善且盡可能幫助大家。</p>
-              <a href="#" target="_blank">https://reurl.cc/9ER9ya</a>
+              <a href="https://reurl.cc/9ER9ya" target="_blank">https://reurl.cc/9ER9ya</a>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.7.0</div>
+                <div class="card-header-date">2020/5/14</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>
+                    新增在LINE裡面也能分析相容性 使用【#】前贅字 動物用空白隔開<br>
+                    ex: #阿一 阿二 阿三 阿四<br>
+                    ex: #茶茶丸 傑客 美玲 小潤 章丸丸 草莓
+                  </li>
+                  <li>修正圖片錯誤問題</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.6.5</div>
+                <div class="card-header-date">2020/5/12</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>
+                    修正一堆BUG QAQ
+                  </li>
+                  <li>
+                    優化UI<br>
+                  </li>
+                  <li>
+                    新增魚圖鑑　昆蟲圖鑑詳細頁面
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">

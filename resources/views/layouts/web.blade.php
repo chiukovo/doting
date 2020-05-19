@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>豆丁森友會 - @yield('title')</title>
+  <title>豆丁森友會 - 動物森友會 @yield('title')</title>
   <meta name="description" content="動物森友會 豆丁森友會 動物圖鑑 家具 服飾 相容性分析" />
   <link rel="stylesheet" href="/css/style.css?v={{ config('app.version') }}">
   <link rel="stylesheet" href="/css/lightbox.min.css">
@@ -16,10 +16,15 @@
   <script src="/js/popper.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <script src="/js/clipboard.min.js"></script>
   <script data-ad-client="ca-pub-2560043137442562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <style>
     [v-cloak] {
       display: none;
+    }
+    #birthday {
+      position: absolute;
+      z-index: -1
     }
   </style>
 </head>

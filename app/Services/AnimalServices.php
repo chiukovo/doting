@@ -12,6 +12,7 @@ use LINE\LINEBot\Constant\Flex\ComponentImageSize;
 use LINE\LINEBot\Constant\Flex\ComponentLayout;
 use LINE\LINEBot\Constant\Flex\ComponentMargin;
 use LINE\LINEBot\Constant\Flex\ComponentSpacing;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
@@ -24,13 +25,105 @@ use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\TextComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
-
-use DB;
+use Spatie\Browsershot\Browsershot;
+use Log;
+use QL\QueryList;
+use Curl, DB, File;
 
 class AnimalServices
 {
+    public static function getConstellation()
+    {
+        $urls = [
+            'https://www.xzw.com/fortune/',
+            'https://www.xzw.com/fortune/',
+        ];
+
+        $starArray = [
+            'width:16px;' => '★',
+            'width:32px;' => '★★',
+            'width:48px;' => '★★★',
+            'width:64px;' => '★★★★',
+            'width:80px;' => '★★★★★',
+        ];
+
+        foreach ($urls as $key => $url) {
+            $date = $key == 0 ? date('Y-m-d') : date('Y-m-d', strtotime(date('Y-m-d') . "+1 days"));
+
+            //insert
+            $check = DB::table('constellation')
+                ->where('date', $date)
+                ->first();
+
+            if (!is_null($check)) {
+                continue;
+            }
+
+            foreach (getRealConstellation() as $name => $detail) {
+                $url1 = $url . $detail[0];
+                $url2 = $url . $detail[0] . '/1.html';
+
+                $baseUrl = $key == 0 ? $url1 : $url2;
+                $ql = QueryList::get($baseUrl);
+
+                $result = $ql->rules([
+                    'star1' => ['li:eq(0) em', 'style'],
+                    'star2' => ['li:eq(1) em', 'style'],
+                    'star3' => ['li:eq(2) em', 'style'],
+                    'star4' => ['li:eq(3) em', 'style'],
+                    'field1' => ['li:eq(4)', 'text'],
+                    'field2' => ['li:eq(5)', 'text'],
+                    'field3' => ['li:eq(6)', 'text'],
+                    'field4' => ['li:eq(7)', 'text'],
+                    'field5' => ['li:eq(8)', 'text'],
+                    'field6' => ['li:eq(9)', 'text'],
+                ])
+                ->range('#view dl ul')
+                ->queryData();
+
+                foreach ($result as $insertData) {
+                    $insertData = json_encode($insertData, JSON_UNESCAPED_UNICODE);
+
+                    if (!$insertData) {
+                        continue;
+                    }
+
+                    //get
+                    $target = Curl::to('http://api.zhconvert.org/convert?converter=Traditional&text=' . $insertData)->asJson()->get();
+                    $target = $target->data->text;
+                    $format = json_decode($target, true);
+                    $ranges = range(1, 4);
+
+                    foreach ($ranges as $range) {
+                        $format['star' . $range] = trim($format['star' . $range]);
+
+                        foreach ($starArray as $w => $t) {
+                            if ($w == $format['star' . $range]) {
+                                $format['star' . $range] = $t;
+                            }
+                        }
+                    }
+
+                    $insertFormat = json_encode($format, JSON_UNESCAPED_UNICODE);
+
+                    if (!$insertFormat) {
+                        continue;
+                    }
+
+                    //insert
+                    DB::table('constellation')->insert([
+                        'date' => $date,
+                        'name' => $name,
+                        'result' => $insertFormat,
+                    ]);
+                }
+            }
+        }
+    }
+
     public static function getRandomCard()
     {
+        $date = date('Y-m-d');
         $item = DB::table('animal')
             ->inRandomOrder()
             ->first();
@@ -45,7 +138,116 @@ class AnimalServices
             ->setContents($target);
         $multipleMessageBuilder->add($msg);
 
+        //星座廢話
+        if ($item->constellation != '') {
+            $constellation = $item->constellation;
+            $constellationData = DB::table('constellation')
+                ->where([
+                    'date' => $date,
+                    'name' => $constellation,
+                ])
+                ->first();
+
+            if (is_null($constellationData)) {
+                $constellationData = DB::table('constellation')
+                    ->where([
+                        'name' => $constellation,
+                    ])
+                    ->first();
+            }
+
+            if (!is_null($constellationData)) {
+                $result = json_decode($constellationData->result);
+                $str = '豆丁老師分析 <(ˉ^ˉ)>' . "\n";
+                $str .= "\n";
+                $str .= '恭喜你抽到 【' . $item->name . '】' . "\n";
+                $str .= '綜合運勢: ' . $result->star1 . "\n";
+                $str .= '愛情運勢: ' . $result->star2 . "\n";
+                $str .= '事業運勢: ' . $result->star3 . "\n";
+                $str .= '財富運勢: ' . $result->star4 . "\n";
+                $str .= $result->field1 . "\n";
+                $str .= $result->field2 . "\n";
+                $str .= $result->field3 . "\n";
+                $str .= $result->field4 . "\n";
+                $str .= $result->field5 . "\n";
+                $str .= "\n";
+                $str .= $result->field6 . "\n";
+
+                $message = new TextMessageBuilder($str);
+                $multipleMessageBuilder->add($message);
+            }
+        }
+
         return [$multipleMessageBuilder];
+    }
+
+    public static function compatiblePrint($target)
+    {
+        //判斷是否需要截圖
+        $explode = explode(" ", $target);
+
+        if (count($explode) < 2 && count($explode) > 20) {
+            return [
+                'status' => 'error',
+                'msg' => '格式錯誤 無法產生圖片 哇耶'
+            ];
+        }
+
+        //2次檢查
+        $animalsName = $target;
+        //去頭尾空白
+        $animalsName = trim($animalsName);
+        $names = $animalsName;
+        $array = explode(" ", $animalsName);
+
+        //get all animal
+        $lists = DB::table('animal')
+            ->whereIn('name', $array)
+            ->whereNull('info')
+            ->get(['id'])
+            ->toArray();
+
+        if (count($lists) < 2 || count($lists) > 20) {
+            return [
+                'status' => 'error',
+                'msg' => '動物只可選：2~20人 或找不到動物 (看是不是打錯字) 哇耶'
+            ];
+        }
+
+        $target = implode(",", $array);
+        $newsUrl = 'https://doting.tw/animals/compatible/print?name=' . $target;
+        $image = md5($target . env('APP_KEY'));
+        $date = date('Y-m-d');
+
+        $path = storage_path('print/' . $date) . '/';
+
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+
+        $fullFilePath = $path . $image . '.jpg';
+
+        try {
+            Browsershot::url($newsUrl)
+                ->userAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36')
+                ->touch()
+                ->fullPage()
+                ->noSandbox()
+                ->setDelay(100)
+                ->save($fullFilePath);
+        } catch (Exception $e) {
+            Log::error($e);
+        }
+
+        $sourceUrl = '詳情 ୧| ⁰ ᴥ ⁰ |୨' . "\n";
+        $sourceUrl .= 'https://doting.tw/animals/compatible?name=' . $target;
+
+        //real path
+        return [
+            'status' => 'success',
+            'url' => 'https://doting.tw/animals/compatible/image?date=' . $date . '&image=' . $image,
+            'source_url' => $sourceUrl,
+        ];
     }
 
     public static function getAllType($type)

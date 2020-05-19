@@ -395,6 +395,62 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     margin: .5rem 0;
   }
 }
+.instructions {
+  font-size: 1rem;
+  line-height: 1.6;
+  .card-title,
+  .card-subtitle {
+    font-family: $font-family;
+  }
+  .card-subtitle {
+    font-size: 1rem;
+    color: $gray-500;
+  }
+  .card-body {
+    > p {
+      margin-bottom: 0.5em;
+    }
+  }
+  .instructions-title {
+    position: relative;
+    font-size: 20px;
+    font-weight: bold;
+    background: $gray-100;
+    padding: 1rem;
+    margin: 3rem 0 1rem;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 4px;
+      height: 100%;
+      background: $primary;
+      border-radius: 10px;
+    }
+  }
+  .instructions-img {
+    text-align: center;
+    margin-bottom: 1rem;
+    img {
+      max-width: 320px;
+    }
+  }
+  .instructions-img-box {
+    display: inline-block;
+    margin: .2rem .5rem;
+    img {
+      max-width: 320px;
+    }
+    > span {
+      display: block;
+      font-size: 12px;
+      color: $gray-500;
+      margin-top: 0.5rem;
+    }
+  }
+}
 
 .first {
   .first-nav-wrap {
@@ -502,7 +558,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
           z-index: 1;
           width: 100px;
           height: 100px;
-          background-color: $gray-200;
+          background-color: lighten($gray-200, 3%);
           mask-size: cover;
           mask-repeat: no-repeat;
           margin-left: -50px;
@@ -610,6 +666,200 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     }
   }
 }
+
+// user
+.passport-warp {
+  background-color: $gray-100;
+  border: 1px solid $gray-200;
+  border-radius: 1rem;
+  padding: 1rem 0;
+  .passport-header {
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    color: lighten($primary, 10%);
+    background-image: linear-gradient(to right, $gray-200 10%, $gray-200 90%, transparent 50%);
+    background-size: 60px 1px;
+    background-repeat: repeat-x;
+    padding: 1.5rem 0;
+    > span {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        display: block;
+        width: 26%;
+        height: 1px;
+        background-color: lighten($primary, 10%);
+      }
+      &:before {
+        left: 0;
+      }
+      &:after {
+        right: 0;
+      }
+    }
+  }
+  .passport-body {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin: 0;
+  }
+  .passport-footer {
+    position: relative;
+    padding: 1rem 1rem 0 1rem;
+    &:after {
+      content: '<<<<<<<<<';
+      position: absolute;
+      top: 48%;
+      right: 1rem;
+      font-family: monospace, monospace;
+      letter-spacing: 3px;
+      font-size: 12px;
+      color: $gray-300;
+    }
+  }
+  .passport-hr {
+    border-bottom: 1px solid $gray-200;
+  }
+  .passport-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      padding: .5rem 1rem;
+    }
+    .passport-sw {
+      padding: .5rem 0;
+      > span {
+        display: block;
+        width: 100%;
+        max-width: 360px;
+        font-size: 13px;
+        font-weight: bold;
+        background: $gray-100;
+        border-radius: 30px;
+        box-shadow: inset 1px 1px 2px rgba($gray-900, 0.06);
+        padding: .5rem 1rem;
+      }
+    }
+  }
+  .passport-info-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .passport-info-top {
+    display: flex;
+    > div + div {
+      margin-left: 2rem;
+    }
+    .passport-info-island,
+    .passport-info-fruit {
+      position: relative;
+      padding-left: 2rem;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        display: inline-block;
+        height: 23px;
+        background-color: $gray-300;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+      }
+    }
+    .passport-info-island:before {
+      width: 21px;
+      mask-image: url('../image/icon/island.svg');
+    }
+    .passport-info-fruit:before {
+      width: 23px;
+      mask-image: url('../image/icon/apple.svg');
+    }
+  }
+  .passport-join {
+    color: $gray-600;
+  }
+}
+.user-header {
+  text-align: center;
+  padding-bottom: .5rem;
+  margin-bottom: .5rem;
+  h4 {
+    margin-bottom: .2rem;
+  }
+  small {
+    color: $gray-400;
+  }
+}
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  li {
+    text-align: center;
+    padding: 0.5rem;
+    &:hover {
+      a {
+        border-color: $gray-200;
+      }
+    }
+    .user-item {
+      .user-item-title {
+        display: block;
+        padding-top: 0.2rem;
+      }
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+  a {
+    display: block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: $gray-100;
+    border: 5px solid rgba($gray-200, .5);
+  }
+}
+
+.user-save {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1060;
+  background-color: #fff;
+  border-top: 1px solid $gray-200;
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      flex: 0 0 33.33%;
+      .btn {
+        padding: 0.75rem;
+        &.current {
+          color: $gray-500 !important;
+        }
+      }
+    }
+  }
+}
+
+
 
 
 .list-rank {
@@ -773,7 +1023,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     }
     &.has {
       .list-time-item {
-        background-color: $gray-100;
+        background-color: rgba($primary, .08);
       }
     }
     &.current {
@@ -831,6 +1081,9 @@ audio {
 .hidden {
   overflow: hidden;
 }
+.rounded {
+  border-radius: .25rem !important;
+}
 a.link {
   color: $primary !important;
   text-decoration: underline;
@@ -840,6 +1093,15 @@ a.link {
   line-height: 1.4;
   padding: 0 0 0 1rem;
   margin: 0;
+  li + li {
+    margin-top: 0.36rem;
+  }
+}
+.list-square {
+  list-style: square;
+  line-height: 1.4;
+  padding: 0 0 0 1rem;
+  margin: 0 0 1rem 0;
   li + li {
     margin-top: 0.36rem;
   }

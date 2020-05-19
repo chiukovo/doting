@@ -11,6 +11,7 @@ use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\JoinEvent;
 use LINE\LINEBot\Event\BaseEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\CarouselContainerBuilder;
@@ -98,7 +99,7 @@ class AnimalCrossingController extends Controller
                 }
 
                 if ($event instanceof JoinEvent) {
-                   $textExample = $this->instructionExample();
+                   $textExample = printDoc();
 
                    $message = new TextMessageBuilder($textExample);
 
@@ -132,6 +133,8 @@ class AnimalCrossingController extends Controller
     {
         //取得須回傳資料
         $dataArray = $this->formatMessage($text);
+        //去頭尾空白
+        $text = trim($text);
 
         if ($text == '抽') {
             $this->notFound = false;
@@ -141,6 +144,27 @@ class AnimalCrossingController extends Controller
 
         if ($dataArray == '') {
             return '';
+        }
+
+        //相容性 回圖片
+        if ($this->dbType == 'compatible') {
+            if ($dataArray['status'] == 'success') {
+                $imgUrl = $dataArray['url'];
+                $multipleMessageBuilder = new MultiMessageBuilder();
+
+                $imgBuilder = new ImageMessageBuilder($imgUrl, $imgUrl);
+                $multipleMessageBuilder->add($imgBuilder);
+
+                $message = new TextMessageBuilder($dataArray['source_url']);
+                $multipleMessageBuilder->add($message);
+
+                $this->isSend = true;
+                Log::info(json_encode($dataArray, JSON_UNESCAPED_UNICODE));
+
+                return $multipleMessageBuilder;
+            } else {
+                $dataArray = $dataArray['msg'];
+            }
         }
 
         if (is_array($dataArray)) {
@@ -358,66 +382,12 @@ class AnimalCrossingController extends Controller
         }
     }
 
-    public function instructionExample()
-    {
-        $text = '你好 偶是豆丁' . "\n";
-        $text .= 'ε٩(๑> ₃ <)۶з' . "\n";
-        $text .= 'version ' . config('app.version') . "\n";
-        $text .= "\n";
-        $text .= '👇以下教您如何使用指令👇' . "\n";
-        $text .= '1.輸入【豆丁】，重新查詢教學指令' . "\n";
-        $text .= '範例 豆丁' . "\n";
-        $text .= "\n";
-        $text .= '2.【#】查詢島民、NPC相關資訊' . "\n";
-        $text .= '範例 查名稱：#茶茶丸、#Dom、#ちゃちゃまる、#曹賣' . "\n";
-        $text .= '範例 查個性：#運動' . "\n";
-        $text .= '範例 查種族：#小熊' . "\n";
-        $text .= '範例 查生日：#6、#1.21' . "\n";
-        $text .= '範例 查戰隊：#阿戰隊' . "\n";
-        $text .= '範例 查口頭禪：#哇耶' . "\n";
-        $text .= "\n";
-        $text .= '3.【$】查詢魚、昆蟲圖鑑' . "\n";
-        $text .= '範例 查名稱：$黑魚、$金' . "\n";
-        $text .= '範例 查月份：$南4月 魚、$北5月 蟲、$全5月 魚' . "\n";
-        $text .= "\n";
-        $text .= '4.【做】查詢DIY圖鑑' . "\n";
-        $text .= '範例 查名稱：做石斧頭、做櫻花' . "\n";
-        $text .= '範例 查反DIY：做雜草' . "\n";
-        $text .= "\n";
-        $text .= '5.【找】查詢家具、服飾、雨傘、地墊、植物' . "\n";
-        $text .= '範例 查名稱：找貓跳台、找咖啡杯' . "\n";
-        $text .= '範例 查名稱：找熱狗、找黃金' . "\n";
-        $text .= '範例 查名稱：找金色玫瑰' . "\n";
-        $text .= "\n";
-        $text .= '6.【查】查詢藝術品' . "\n";
-        $text .= '範例 查名稱：查充滿母愛的雕塑' . "\n";
-        $text .= '範例 查名稱：查名畫' . "\n";
-        $text .= "\n";
-        $text .= '7.【化石】查詢化石' . "\n";
-        $text .= '範例 查名稱：化石 三葉蟲' . "\n";
-        $text .= '範例 查名稱：化石 暴龍' . "\n";
-        $text .= "\n";
-        $text .= '8.抽 amiibo卡片 (◑‿◐)' . "\n";
-        $text .= '範例 抽' . "\n";
-        $text .= "\n";
-        $text .= '9.豆丁搜尋排行榜' . "\n";
-        $text .= '範例 請輸入 搜尋排行榜' . "\n";
-        $text .= "\n";
-        $text .= '10.動物相容性分析' . "\n";
-        $text .= '範例 請輸入 動物相容性分析' . "\n";
-        $text .= "\n";
-        $text .= '歡迎提供缺漏或錯誤修正的資訊，以及功能建議。' . "\n";
-        $text .= env('APP_URL');
-
-        return $text;
-    }
-
     public function getFunny($text)
     {
         $returnText = '';
 
         if ($text == '哇耶') {
-            return '哇耶 (｀･ω･´)';
+            return '哇耶 { @❛ꈊ❛@ }';
         }
 
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
@@ -458,11 +428,13 @@ class AnimalCrossingController extends Controller
     {
         //去頭尾空白
         $text = trim($text);
+        $source = $text;
+
         //去除前後空白
         $text = preg_replace('/\s+/', '', $text);
 
         if ($text == '豆丁') {
-            return $this->instructionExample();
+            return printDoc();
         }
 
         //惡搞
@@ -476,9 +448,9 @@ class AnimalCrossingController extends Controller
         $target = mb_substr($text, 1);
 
         //化石
-        $checkFossil = mb_substr($text, 0, 2);
+        $checkTwoWord = mb_substr($text, 0, 2);
 
-        if ($checkFossil == '化石') {
+        if ($checkTwoWord == '化石') {
             $target = str_replace("化石", "", $text);
             $target = trim($target);
 
@@ -486,6 +458,26 @@ class AnimalCrossingController extends Controller
             $this->realText = $target;
 
             return FossilServices::getDataByMessage($target);
+        }
+
+        //相容性判斷
+        if ($checkTwoWord == '##') {
+            return '##已移除 改成只需一個# 哇耶';
+        }
+
+        if ($type == '#') {
+            $source = str_replace("#", "", $source);
+            $source = trim($source);
+            $explode = explode(" ", $source);
+
+            if (count($explode) >= 2) {
+                if ($explode[0] != '' && $explode[1] != '') {
+                    $this->dbType = 'compatible';
+                    $this->realText = $source;
+
+                    return AnimalServices::compatiblePrint($source);
+                }
+            }
         }
 
         switch ($type) {

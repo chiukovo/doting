@@ -87,13 +87,13 @@
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>座右銘</label>
-                        <span>{{ $detail->motto }}</span>
+                        <span>{{ $detail->target }}</span>
                       </div>
                     </div>
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>目標</label>
-                        <span>{{ $detail->target }}</span>
+                        <span>{{ $detail->motto }}</span>
                       </div>
                     </div>
                     @endif

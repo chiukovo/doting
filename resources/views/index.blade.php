@@ -1,12 +1,13 @@
 @extends('layouts.web')
-@section('title', '豆丁森友會')
+@section('title', 'LINE機器人')
 @section('content')
+<canvas id="birthday"></canvas>
 <div id="app" class="content-wrap first" v-cloak>
   <div class="first-birthday" v-if="birthday != null">
     <div class="first-birthday-img" :class="show ? 'show' : ''">
       <img class="img-fluid" :src="'/animal/' + birthday.name + '.png'" :alt="birthday.name" v-if="typeof birthday.name !== 'undefined'">
     </div>
-    <div class="first-birthday-text">
+    <div class="first-birthday-text" style="margin-top: 60px">
       <span>今天是 @{{ date }}</span>
       <span>是 <a :href="'/animals/detail?name=' + birthday.name">@{{ birthday.name }}</a> 的生日！</span>
     </div>
@@ -154,7 +155,7 @@
           <div class="card-body">
             <ul class="first-season-list" v-show="isFish && isNorth">
               <li v-for="list in northFish">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/fish/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -164,7 +165,7 @@
             </ul>
             <ul class="first-season-list" v-show="isFish && !isNorth">
               <li v-for="list in southFish">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/fish/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -174,7 +175,7 @@
             </ul>
             <ul class="first-season-list" v-show="!isFish && isNorth">
               <li v-for="list in northInsect">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/insect/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -184,7 +185,7 @@
             </ul>
             <ul class="first-season-list" v-show="!isFish && !isNorth">
               <li v-for="list in southInsect">
-                <a :href="'/other/' + list.name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                <a :href="'/insect/detail?name=' + list.name" class="link">
                   <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                   <div class="table-img">
                     <img :src="'/other/' + list.name + '.png'" :alt="list.name">
@@ -197,6 +198,7 @@
     </div>
   </div>
 </div>
+<script src="/js/birthday.js"></script>
 <script>
   Vue.use(GoTop);
   new Vue({
