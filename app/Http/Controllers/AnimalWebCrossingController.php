@@ -62,6 +62,22 @@ class AnimalWebCrossingController extends Controller
             return redirect('animals/list');
         }
 
+        if ($detail->colors != '' && $detail->colors != '[]') {
+            $colors = json_decode($detail->colors);
+
+            if (is_array($colors)) {
+                $detail->colors = implode("、", $colors);
+            }
+        }
+
+        if ($detail->styles != '' && $detail->styles != '[]') {
+            $styles = json_decode($detail->styles);
+
+            if (is_array($styles)) {
+                $detail->styles = implode("、", $styles);
+            }
+        }
+
         //同種族
         $sameRaceArray = DB::table('animal')
             ->where('race', $detail->race)

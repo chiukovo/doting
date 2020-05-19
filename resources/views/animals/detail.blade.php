@@ -80,7 +80,7 @@
                     @if($detail->info == '')
                     <div class="post-info-group">
                       <div class="post-info-item">
-                        <label>口頭禪</label>
+                        <label >口頭禪</label>
                         <span>{{ $detail->say }}</span>
                       </div>
                     </div>
@@ -88,6 +88,18 @@
                       <div class="post-info-item">
                         <label>座右銘</label>
                         <span>{{ $detail->target }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label style="width: 80px">喜歡的顏色</label>
+                        <span>{{ $detail->colors }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label style="width: 80px">喜歡的風格</label>
+                        <span>{{ $detail->styles }}</span>
                       </div>
                     </div>
                     <div class="post-info-group">
