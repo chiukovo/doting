@@ -1232,6 +1232,9 @@ a.link {
 
 // <518px
 @include media-breakpoint-down(xs) {
+  .instructions .instructions-img img {
+    max-width: 100%;
+  }
   .first {
     .first-nav-list {
       padding: 0 .5rem;
