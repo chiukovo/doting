@@ -10,7 +10,7 @@
 		     $(document).ready(function(){
 		     	setTimeout(function(){
 		     		(adsbygoogle = window.adsbygoogle || []).push({})
-		     	 }, 100)
+		     	 }, 500)
 		     })
 		</script>
 	</div>
