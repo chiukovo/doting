@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>豆丁森友會</title>
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -26,14 +27,14 @@
           <nav class="navigation">
             <ul>
               <li class="sub-nav">
-                <a href="">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">小動物</a>
                 <ul>
                   <li><a href="/animals/list">動物居民</a></li>
                   <li><a href="/npc/list">動物NPC</a></li>
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="/museum/list">博物館</a>
                 <ul>
                   <li><a href="">魚圖鑑</a></li>
                   <li><a href="">昆蟲圖鑑</a></li>
@@ -42,7 +43,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">收藏</a>
                 <ul>
                   <li><a href="/diy/list">DIY方程式</a></li>
                   <li><a href="/apparel/list">家具</a></li>
@@ -52,7 +53,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">豆丁</a>
                 <ul>
                   <li><a href="/instructions">豆丁教學</a></li>
                   <li><a href="/update/version">更新資訊</a></li>
@@ -60,7 +61,19 @@
                   <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
                 </ul>
               </li>
-              <li><a href="#">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">南半球</a>
+                    <a class="dropdown-item" href="#">北半球</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">登出</a>
+                  </div>
+                </div>
+              </li>
             </ul>
           </nav>
         </div>
@@ -109,38 +122,110 @@
                     <small>Residents of OAO</small>
                   </div>
                   <div class="user-body">
-                    <ul class="user-list">
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/彭花.png" class="img-fluid">
-                        </a>
+                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(2)</a>
+                        <!-- 上限10 -->
                       </li>
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/茶茶丸.png" class="img-fluid">
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/傑克.png" class="img-fluid">
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/雪花.png" class="img-fluid">
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/雪美.png" class="img-fluid">
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="user-item">
-                          <img src="../animal/icon/番茄醬.png" class="img-fluid">
-                        </a>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(8)</a>
+                        <!-- 無上限？ -->
                       </li>
                     </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="animals1">
+                        <ul class="card-list">
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/彭花.png" class="img-fluid" alt="彭花">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/阿一.png" class="img-fluid" alt="阿一">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/雪美.png" class="img-fluid" alt="雪美">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-pane fade" id="animals2">
+                        <ul class="card-list">
+                          <li>
+                            <div class="card-list-item">
+                              <div class="card-list-img">
+                                <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                              </div>
+                              <div class="card-list-title">茶茶丸 ♂</div>
+                              <div class="card-list-info">運動/綿羊/3.18</div>
+                              <div class="card-list-btn">
+                                <ul class="user-save-btn">
+                                  <li><button class="btn btn-outline-secondary current"><i class="fas fa-bookmark"></i>取消追蹤</button></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -163,6 +248,18 @@
                       <li>
                         <a href="#" class="user-item">
                           <img src="../other/大白斑蝶.png" class="img-fluid">
+                          <span class="user-item-title">0 / 80</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="user-item">
+                          <img src="../itemsNew/雨衣_0.png" class="img-fluid">
+                          <span class="user-item-title">0 / 80</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="user-item">
+                          <img src="../itemsNew/大熊熊_20.png" class="img-fluid">
                           <span class="user-item-title">0 / 80</span>
                         </a>
                       </li>

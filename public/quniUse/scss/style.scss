@@ -267,7 +267,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   list-style: none;
   padding: 0;
   margin: 0 -.2rem;
-  li {
+  > li {
     flex: 0 0 50%;
     padding: .2rem;
     .card-list-item {
@@ -275,6 +275,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       border: 1px solid $gray-200;
       box-shadow: 0 0 0 rgba(0,0,0,0.1);
       border-radius: 6px;
+      padding-bottom: .3rem;
       transition: all .3s ease;
       cursor: pointer;
       .card-list-img {
@@ -285,12 +286,18 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
         }
       }
       .card-list-title {
-        font-size: 1rem;
-        line-height: 1;
+        font-size: .8rem;
+        line-height: 1.2;
         font-weight: bold;
+      }
+      .card-list-info {
+        color: $gray-700;
       }
       .btn {
         border-color: transparent !important;
+        i {
+          margin-right: 4px;
+        }
       }
       &:hover {
         box-shadow: 0 0 12px rgba(0,0,0,0.1);
@@ -876,6 +883,17 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     border: 5px solid rgba($gray-200, .5);
   }
 }
+.user-body {
+  .nav-tabs {
+    margin-bottom: 0.5rem;
+  }
+  .card-list li .card-list-item {
+    .card-list-img {
+      height: 80px;
+      padding: .5rem 1rem;
+    }
+  }
+}
 
 .user-save-wrap {
   i {
@@ -888,6 +906,7 @@ ul.user-save-btn {
   li {
     display: inline-block;
     .btn {
+      font-size: 12px;
       &:not(.current) {
         color: $gray-700;
         border-color: $gray-300;
@@ -1146,6 +1165,11 @@ a.link {
     margin-top: 0.36rem;
   }
 }
+.nav-item {
+  a {
+    color: $gray-700;
+  }
+}
 .nav-pills .nav-link,
 .btn {
   white-space: nowrap;
@@ -1179,6 +1203,45 @@ a.link {
 .bg-danger-light {
   background-color: rgba($danger, .1);
 }
+
+// .color-chip {
+//   &:before {
+//     content: '';
+//     position: relative;
+//     top: 2px;
+//     display: inline-block;
+//     width: 14px;
+//     height: 14px;
+//     border-radius: 50px;
+//     margin-right: 3px;
+//   }
+//   &.color-red:before {
+//     background-color: rgb(228, 91, 63);
+//   }
+//   &.color-colorful:before {
+//     background-image: linear-gradient( 135deg, #81FFEF 10%, #f09494 50%, #35399c 100%);
+//   }
+//   &.color-pink:before {
+//     background-color: rgb(255, 113, 131);
+//   }
+//   &.color-white:before {
+//     background-color: #fff;
+//     border: 1px solid $gray-300;
+//   }
+//   &.color-blue:before {
+//     background-color: rgb(78, 121, 204);
+//   }
+//   &.color-lightblue:before {
+//     background-color: rgb(130, 215, 220);
+//   }
+//   &.color-purple:before {
+//     background-color: rgb(124, 81, 187);
+//   }
+//   &.color-yellow:before {
+//     background-color: rgb(244, 191, 66);
+//   }
+// }
+
 
 
 // card
@@ -1524,7 +1587,7 @@ a.link {
 @include media-breakpoint-up(xl) {
   .card-list {
     margin: 0 -.5rem;
-    li {
+    > li {
       padding: 0.5rem;
     }
   }
