@@ -208,13 +208,13 @@ class OtherServices
             ->setText('位置')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
-            ->setWrap(true)
             ->setFlex(1);
 
         $box1Inline[] = TextComponentBuilder::builder()
             ->setText($item->position)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
+            ->setWrap(true)
             ->setFlex(2);
 
         if (isset($item->shadow)) {
@@ -260,7 +260,6 @@ class OtherServices
             ->setText($north)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
-            ->setWrap(true)
             ->setFlex(2);
 
         $box[] = BoxComponentBuilder::builder()
@@ -279,7 +278,6 @@ class OtherServices
             ->setText($south)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
-            ->setWrap(true)
             ->setFlex(2);
 
         $box[] = BoxComponentBuilder::builder()
