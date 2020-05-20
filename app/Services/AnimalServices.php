@@ -542,13 +542,13 @@ class AnimalServices
             $boxInfoInline = [];
             $boxInfoInline[] = TextComponentBuilder::builder()
                 ->setText('介紹')
-                ->setSize(ComponentFontSize::SM)
+                ->setSize(ComponentFontSize::XS)
                 ->setColor('#aaaaaa')
                 ->setFlex(1);
 
             $boxInfoInline[] = TextComponentBuilder::builder()
                 ->setText($item->info)
-                ->setSize(ComponentFontSize::SM)
+                ->setSize(ComponentFontSize::XS)
                 ->setColor('#666666')
                 ->setWrap(true)
                 ->setFlex(2);
