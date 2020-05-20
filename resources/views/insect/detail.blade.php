@@ -67,7 +67,7 @@
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
                           <span>AM</span>
-                          <span>12</span>
+                          <span>0</span>
                         </div>
                         <div class="list-time-item"></div>
                       </li>
@@ -90,7 +90,7 @@
                       @if($time == 12)
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
-                          <span>AM</span>
+                          <span>PM</span>
                           <span>12</span>
                         </div>
                         <div class="list-time-item"></div>
@@ -98,7 +98,7 @@
                       @elseif($time == 18)
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
-                          <span>6</span>
+                          <span>18</span>
                         </div>
                         <div class="list-time-item"></div>
                       </li>
