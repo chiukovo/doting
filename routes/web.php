@@ -129,7 +129,8 @@ Route::group(['middleware' => ['webAuth']], function() {
 });
 
 //爬蟲
-/*Route::get('/getRecipes', 'ApiController@getRecipes');
+/*Route::get('/getMuseum', 'ApiController@getMuseum');
+Route::get('/getRecipes', 'ApiController@getRecipes');
 Route::get('/getKKZhName', 'ApiController@getKKZhName');
 Route::get('/getNewFurniture', 'ApiController@getNewFurniture');
 Route::get('/getAnimalIcon', 'ApiController@getAnimalIcon');

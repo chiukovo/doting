@@ -36,7 +36,16 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-bordered table-hover text-center">
+          <div class="row">
+            <div class="col text-right mb-1">
+              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+              <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
+              <!-- table狀態顯示 fa-grip-horizontal
+                  列表狀態顯示 fa-list
+                -->
+            </div>
+          </div>
+          <table class="table table-bordered table-hover text-center" v-if="isList">
             <thead>
               <tr>
                 <th class="table-label" scope="col">名稱</th>
@@ -46,10 +55,10 @@
             <tbody>
               <tr v-for="list in lists">
                 <td scope="row">
-                  <a :href="'/fossil/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <a :href="'/fossil/' + list.img_name + '.png?v=' + version" :data-lightbox="list.name" :data-title="list.name" class="link">
                     <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                     <div class="table-img">
-                      <img :src="'/fossil/' + list.img_name + '.png'" :alt="list.name">
+                      <img :src="'/fossil/' + list.img_name + '.png?v=' + version" :alt="list.name">
                     </div>
                   </a>
                 </td>
@@ -57,6 +66,22 @@
               </tr>
             </tbody>
           </table>
+          <!-- style: list -->
+          <ul class="card-list" v-if="!isList">
+            <li v-for="list in lists">
+              <div class="card-list-item">
+                <a :href="'/fossil/' + list.img_name + '.png?v=' + version" :data-lightbox="list.name" :data-title="list.name" class="link">
+                  <div class="card-list-img">
+                    <img class="img-fluid" :src="'/fossil/' + list.name + '.png?v=' + version" :alt="list.name">
+                  </div>
+                </a>
+                <div class="card-list-title">@{{ list.name }}</div>
+                <div class="card-list-info">
+                  <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.sell) }}</h5>
+                </div>
+              </div>
+            </li>
+          </ul>
           <infinite-loading :identifier="infiniteId" @infinite="search">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
@@ -75,6 +100,8 @@
     data: {
       lists: [],
       page: 1,
+      version: "{{ config('app.version') }}",
+      isList: false,
       infiniteId: +new Date(),
       searchData: {
         text: "{{ $text }}",

@@ -40,7 +40,16 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-bordered table-hover text-center">
+          <div class="row">
+            <div class="col text-right mb-1">
+              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+              <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
+              <!-- table狀態顯示 fa-grip-horizontal
+                  列表狀態顯示 fa-list
+                -->
+            </div>
+          </div>
+          <table class="table table-bordered table-hover text-center"  v-if="isList">
             <thead>
               <tr>
                 <th class="table-label" scope="col">名稱</th>
@@ -57,13 +66,13 @@
                   <a :href="'/fish/detail?name=' + list.name" class="link" v-if="list.shadow">
                     <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                     <div class="table-img">
-                      <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                      <img :src="'/other/' + list.name + '.png?v=' + version" :alt="list.name">
                     </div>
                   </a>
                   <a :href="'/insect/detail?name=' + list.name" class="link" v-else>
                     <span>@{{ list.name }}<br>$@{{ formatPrice(list.sell) }}</span>
                     <div class="table-img">
-                      <img :src="'/other/' + list.name + '.png'" :alt="list.name">
+                      <img :src="'/other/' + list.name + '.png?v=' + version" :alt="list.name">
                     </div>
                   </a>
                 </td>
@@ -75,6 +84,26 @@
               </tr>
             </tbody>
           </table>
+          <!-- style: list -->
+          <ul class="card-list" v-if="!isList">
+            <li v-for="list in lists">
+              <div class="card-list-item" @click="goDetail(list)">
+                <div class="card-list-img">
+                  <img class="img-fluid" :src="'/other/' + list.name + '.png?v=' + version" :alt="list.name">
+                </div>
+                <div class="card-list-title">@{{ list.name }}</div>
+                <div class="card-list-info">
+                  <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.sell) }}</h5>
+                </div>
+                <div class="card-list-info" v-if="list.shadow">
+                  @{{ list.shadow }} / @{{ list.position }} / @{{ list.time }} 時
+                </div>
+                <div class="card-list-info" v-else>
+                  @{{ list.position }} / @{{ list.time }} 時
+                </div>
+              </div>
+            </li>
+          </ul>
           <infinite-loading :identifier="infiniteId" @infinite="search">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
@@ -92,7 +121,9 @@
     el: '#app',
     data: {
       lists: [],
+      isList: false,
       page: 1,
+      version: "{{ config('app.version') }}",
       infiniteId: +new Date(),
       searchData: {
         text: "{{ $text }}",
@@ -104,6 +135,13 @@
       isMobile(){
         let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
         return flag;
+      },
+      goDetail(list) {
+        if (list.shadow) {
+          location.href = '/fish/detail?name=' + list.name
+        } else {
+          location.href = '/insect/detail?name=' + list.name
+        }
       },
       formatPrice(money) {
         if (money == null) {
