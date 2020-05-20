@@ -55,7 +55,16 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-bordered table-hover text-center">
+          <div class="row">
+            <div class="col text-right mb-1">
+              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+              <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
+              <!-- table狀態顯示 fa-grip-horizontal
+                  列表狀態顯示 fa-list
+                -->
+            </div>
+          </div>
+          <table class="table table-bordered table-hover text-center" v-if="isList">
             <thead>
               <tr>
                 <th scope="col">名稱</th>
@@ -68,10 +77,10 @@
             <tbody>
               <tr v-for="list in lists">
                 <td class="link" scope="row">
-                  <a :href="'/itemsNew/' + list.img_name + '.png'" :data-lightbox="list.name" :data-title="list.name">
+                  <a :href="'/itemsNew/' + list.img_name + '.png?v=' + version" :data-lightbox="list.name" :data-title="list.name">
                     <span>@{{ list.name }}</span>
                     <div class="table-img">
-                      <img :src="'/itemsNew/' + list.img_name + '.png'" :alt="list.name">
+                      <img :src="'/itemsNew/' + list.img_name + '.png?v=' + version" :alt="list.name">
                     </div>
                   </a>
                 </td>
@@ -82,6 +91,24 @@
               </tr>
             </tbody>
           </table>
+          <!-- style: list -->
+          <ul class="card-list" v-if="!isList">
+            <li v-for="list in lists">
+              <div class="card-list-item">
+                <div class="card-list-img">
+                  <img class="img-fluid" :src="'/itemsNew/' + list.img_name + '.png?v=' + version" :alt="list.name">
+                </div>
+                <div class="card-list-title">@{{ list.name }}</div>
+                <div class="card-list-info" v-if="list.buy != null">
+                  <h5 class="text-danger font-weight-bold m-1">@{{ formatPrice(list.buy) }}</h5>
+                </div>
+                <div class="card-list-info" v-else>
+                  無法購買
+                </div>
+                <div class="card-list-info">@{{ list.category }} <span v-if="list.size != null">(@{{ list.size }})</span></div>
+              </div>
+            </li>
+          </ul>
           <infinite-loading :identifier="infiniteId" @infinite="search">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
@@ -99,7 +126,9 @@
     el: '#app',
     data: {
       lists: [],
+      isList: false,
       page: 1,
+      version: "{{ config('app.version') }}",
       infiniteId: +new Date(),
       category: [],
       buyType: [],

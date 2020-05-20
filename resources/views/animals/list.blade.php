@@ -65,7 +65,6 @@
       </div>
       <div class="row">
         <div class="col">
-          <!-- 登入會員才顯示 -->
           <div class="row">
             <div class="col text-right mb-1">
               <button class="btn">全部: @{{ lists.length }} 個結果</button>
@@ -94,10 +93,10 @@
                   <a class="link" :href="'/animals/detail?name=' + list.name">
                     <span>@{{ list.name }}</span>
                     <div class="table-img" v-if="list.info == null">
-                      <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
+                      <img :src="'/animal/icon/' + list.name + '.png?v=' + version" :alt="list.name">
                     </div>
                     <div class="table-img" v-else>
-                      <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
+                      <img :src="'/animal/' + list.name + '.png?v=' + version" :alt="list.name">
                     </div>
                   </a>
                 </td>
@@ -116,11 +115,11 @@
             <li v-for="list in lists">
               <div class="card-list-item" @click="goDetail(list)">
                 <div class="card-list-img">
-                  <img class="img-fluid" :src="'/animal/' + list.name + '.png'" :alt="list.name">
+                  <img class="img-fluid" :src="'/animal/' + list.name + '.png?v=' + version" :alt="list.name">
                 </div>
                 <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
                 <div class="card-list-info" v-if="list.info == null">
-                  @{{ list.personality }}/@{{ list.race }}/@{{ list.bd }}
+                  @{{ list.personality }} / @{{ list.race }} / @{{ list.bd }}
                 </div>
                 <div class="card-list-info" v-else>
                   @{{ list.race }}
@@ -145,7 +144,8 @@
     data: {
       lists: [],
       page: 1,
-      isList: true,
+      version: "{{ config('app.version') }}",
+      isList: false,
       infiniteId: +new Date(),
       race: [],
       personality: [],
@@ -160,7 +160,6 @@
       }
     },
     mounted() {
-      this.isList = this.isMobile() ? false : true
       this.getAllType()
     },
     methods: {
