@@ -100,10 +100,10 @@
                 </div>
                 <div class="card-list-title">@{{ list.name }}</div>
                 <div class="card-list-info" v-if="list.buy != null">
-                  <h5 class="text-danger font-weight-bold m-1">@{{ formatPrice(list.buy) }}</h5>
+                  <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.buy) }}</h5>
                 </div>
                 <div class="card-list-info" v-else>
-                  無法購買
+                  -
                 </div>
                 <div class="card-list-info">@{{ list.category }} <span v-if="list.size != null">(@{{ list.size }})</span></div>
               </div>
