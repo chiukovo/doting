@@ -595,6 +595,7 @@ class AnimalServices
             ->setSpacing(ComponentSpacing::SM)
             ->setContents($box1Inline);
 
+        //line
         $box[] = SeparatorComponentBuilder::builder()
             ->setMargin(ComponentMargin::MD);
 
@@ -604,6 +605,7 @@ class AnimalServices
         $box[] = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::BASELINE)
             ->setContents($spacer);
+            //line end
 
         //box3
         $boxInfoInline[] = TextComponentBuilder::builder()
