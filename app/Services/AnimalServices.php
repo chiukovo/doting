@@ -407,25 +407,25 @@ class AnimalServices
         $box1Inline = [];
         $box1Inline[] = TextComponentBuilder::builder()
             ->setText('種族')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $box1Inline[] = TextComponentBuilder::builder()
             ->setText($item->race)
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#666666')
             ->setFlex(2);
 
         $box1Inline[] = TextComponentBuilder::builder()
             ->setText('個性')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $box1Inline[] = TextComponentBuilder::builder()
             ->setText($item->personality)
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#666666')
             ->setFlex(2);
 
@@ -438,25 +438,25 @@ class AnimalServices
         $box2Inline = [];
         $box2Inline[] = TextComponentBuilder::builder()
             ->setText('性別')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $box2Inline[] = TextComponentBuilder::builder()
             ->setText($item->sex)
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#666666')
             ->setFlex(2);
 
         $box2Inline[] = TextComponentBuilder::builder()
             ->setText('生日')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $box2Inline[] = TextComponentBuilder::builder()
             ->setText($item->bd)
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#666666')
             ->setFlex(2);
 
@@ -469,13 +469,13 @@ class AnimalServices
         $box3Inline = [];
         $box3Inline[] = TextComponentBuilder::builder()
             ->setText('口頭禪')
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $box3Inline[] = TextComponentBuilder::builder()
             ->setText($item->say)
-            ->setSize(ComponentFontSize::SM)
+            ->setSize(ComponentFontSize::XS)
             ->setColor('#666666')
             ->setFlex(2);
 
@@ -488,7 +488,7 @@ class AnimalServices
             $box4Inline = [];
             $box4Inline[] = TextComponentBuilder::builder()
                 ->setText('喜歡的顏色')
-                ->setSize(ComponentFontSize::SM)
+                ->setSize(ComponentFontSize::XS)
                 ->setColor('#aaaaaa')
                 ->setFlex(1);
 
@@ -500,7 +500,7 @@ class AnimalServices
                     $printColors = implode("、", $colors);
                     $box4Inline[] = TextComponentBuilder::builder()
                         ->setText($printColors)
-                        ->setSize(ComponentFontSize::SM)
+                        ->setSize(ComponentFontSize::XS)
                         ->setColor('#666666')
                         ->setFlex(2);
                 }
