@@ -397,97 +397,184 @@ class AnimalServices
 
     public static function createItemBodyBlock($item)
     {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setWeight(ComponentFontWeight::BOLD)
-            ->setSize(ComponentFontSize::MD);
+        $item->personality = $item->personality != '' ? $item->personality : ' ';
+        $item->race = $item->race != '' ? $item->race : ' ';
+        $item->bd = $item->bd != '' ? $item->bd : ' ';
+        $item->say = $item->say != '' ? $item->say : ' ';
 
-        if ($item->bd != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('生日: ' . $item->bd)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $box = [];
+        //box1
+        $box1Inline = [];
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText('種族')
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('種族: ' . $item->race . ' (' . $item->sex . ')')
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText($item->race)
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#666666')
+            ->setFlex(2);
 
-        if ($item->personality != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('個性: ' . $item->personality)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText('個性')
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
 
-        if ($item->say != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('口頭禪: ' . $item->say)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText($item->personality)
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#666666')
+            ->setFlex(2);
 
-        if ($item->colors != '' && $item->colors != '[]') {
-            $colors = json_decode($item->colors);
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($box1Inline);
 
-            if (is_array($colors)) {
-                $printColors = implode("、", $colors);
-                $components[] = TextComponentBuilder::builder()
-                    ->setText('喜歡的顏色: ' . $printColors)
-                    ->setWrap(true)
-                    ->setAlign('center')
-                    ->setSize(ComponentFontSize::XS)
-                    ->setMargin(ComponentMargin::MD)
-                    ->setFlex(0);
+        //box2
+        $box2Inline = [];
+        $box2Inline[] = TextComponentBuilder::builder()
+            ->setText('性別')
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $box2Inline[] = TextComponentBuilder::builder()
+            ->setText($item->sex)
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#666666')
+            ->setFlex(2);
+
+        $box2Inline[] = TextComponentBuilder::builder()
+            ->setText('生日')
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $box2Inline[] = TextComponentBuilder::builder()
+            ->setText($item->bd)
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#666666')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($box2Inline);
+
+        //box3
+        $box3Inline = [];
+        $box3Inline[] = TextComponentBuilder::builder()
+            ->setText('口頭禪')
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $box3Inline[] = TextComponentBuilder::builder()
+            ->setText($item->say)
+            ->setSize(ComponentFontSize::SM)
+            ->setColor('#666666')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($box3Inline);
+
+        if ($item->info == '') {
+            //box4
+            $box4Inline = [];
+            $box4Inline[] = TextComponentBuilder::builder()
+                ->setText('喜歡的顏色')
+                ->setSize(ComponentFontSize::SM)
+                ->setColor('#aaaaaa')
+                ->setFlex(1);
+
+
+            if ($item->colors != '' && $item->colors != '[]') {
+                $colors = json_decode($item->colors);
+
+                if (is_array($colors)) {
+                    $printColors = implode("、", $colors);
+                    $box4Inline[] = TextComponentBuilder::builder()
+                        ->setText($printColors)
+                        ->setSize(ComponentFontSize::SM)
+                        ->setColor('#666666')
+                        ->setFlex(2);
+                }
             }
-        }
 
-        if ($item->styles != '' && $item->styles != '[]') {
-            $styles = json_decode($item->styles);
+            $box[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setContents($box4Inline);
 
-            if (is_array($styles)) {
-                $printStyles = implode("、", $styles);
-                $components[] = TextComponentBuilder::builder()
-                    ->setText('喜歡的風格: ' . $printStyles)
-                    ->setWrap(true)
-                    ->setAlign('center')
-                    ->setSize(ComponentFontSize::XS)
-                    ->setMargin(ComponentMargin::MD)
-                    ->setFlex(0);
+            //box5
+            $box5Inline = [];
+            $box5Inline[] = TextComponentBuilder::builder()
+                ->setText('喜歡的風格')
+                ->setSize(ComponentFontSize::SM)
+                ->setColor('#aaaaaa')
+                ->setFlex(1);
+
+
+            if ($item->styles != '' && $item->styles != '[]') {
+                $styles = json_decode($item->styles);
+
+                if (is_array($styles)) {
+                    $printStyles = implode("、", $styles);
+                    $box5Inline[] = TextComponentBuilder::builder()
+                        ->setText($printStyles)
+                        ->setSize(ComponentFontSize::SM)
+                        ->setColor('#666666')
+                        ->setFlex(2);
+                }
             }
+
+            $box[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setContents($box5Inline);
         }
 
         if ($item->info != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('介紹: ' . $item->info)
+            //box3
+            $boxInfoInline = [];
+            $boxInfoInline[] = TextComponentBuilder::builder()
+                ->setText('介紹')
+                ->setSize(ComponentFontSize::SM)
+                ->setColor('#aaaaaa')
+                ->setFlex(1);
+
+            $boxInfoInline[] = TextComponentBuilder::builder()
+                ->setText($item->info)
+                ->setSize(ComponentFontSize::SM)
+                ->setColor('#666666')
                 ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
+                ->setFlex(2);
+
+            $box[] = BoxComponentBuilder::builder()
+                ->setLayout(ComponentLayout::BASELINE)
+                ->setContents($boxInfoInline);
         }
+
+        $texts = TextComponentBuilder::builder()
+            ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $outBox = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentMargin::LG)
+            ->setContents($box);
+
+        $result = [$texts, $outBox];
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
+            ->setContents($result);
     }
 
     public static function createItemFooterBlock($item)
