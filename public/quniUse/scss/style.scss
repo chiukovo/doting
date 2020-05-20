@@ -1456,6 +1456,25 @@ a.link {
     display: none;
   }
   .navigation {
+    .sub-login {
+      .btn-group {
+        height: 100%;
+      }
+      .sub-login-img-wrap {
+        display: flex;
+        align-items: center;
+        > a {
+          display: block;
+          .sub-login-img {
+            width: 40px;
+            height: 40px;
+            background: $gray-200 top center no-repeat;
+            background-size: 100%;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
     > ul {
       display: flex;
       list-style: none;
