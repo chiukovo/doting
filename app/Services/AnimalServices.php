@@ -514,7 +514,7 @@ class AnimalServices
             $box5Inline = [];
             $box5Inline[] = TextComponentBuilder::builder()
                 ->setText('喜歡的風格')
-                ->setSize(ComponentFontSize::SM)
+                ->setSize(ComponentFontSize::XS)
                 ->setColor('#aaaaaa')
                 ->setFlex(1);
 
@@ -526,7 +526,7 @@ class AnimalServices
                     $printStyles = implode("、", $styles);
                     $box5Inline[] = TextComponentBuilder::builder()
                         ->setText($printStyles)
-                        ->setSize(ComponentFontSize::SM)
+                        ->setSize(ComponentFontSize::XS)
                         ->setColor('#666666')
                         ->setFlex(2);
                 }
