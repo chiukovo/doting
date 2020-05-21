@@ -399,10 +399,10 @@ class AnimalServices
 
     public static function createItemBodyBlock($item)
     {
-        $item->personality = $item->personality != '' ? $item->personality : ' ';
-        $item->race = $item->race != '' ? $item->race : ' ';
-        $item->bd = $item->bd != '' ? $item->bd : ' ';
-        $item->say = $item->say != '' ? $item->say : ' ';
+        $item->personality = $item->personality != '' ? $item->personality : '-';
+        $item->race = $item->race != '' ? $item->race : '-';
+        $item->bd = $item->bd != '' ? $item->bd : '-';
+        $item->say = $item->say != '' ? $item->say : '-';
 
         //npc
         if ($item->info != '') {
@@ -489,6 +489,25 @@ class AnimalServices
         $box[] = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::BASELINE)
             ->setContents($box3Inline);
+
+        //box3
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('座右銘')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->target)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
 
         //box4
         $box4Inline = [];
