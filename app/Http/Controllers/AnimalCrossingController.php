@@ -327,6 +327,7 @@ class AnimalCrossingController extends Controller
         //error
         if (!$response->isSucceeded()) {
             Log::debug($response->getRawBody());
+            Log::debug($this->realText);
         }
     }
 
