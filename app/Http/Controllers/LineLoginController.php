@@ -53,7 +53,7 @@ class LineLoginController extends Controller
                 $pictureUrl = $userProfile->pictureUrl;
 
                 //do login
-                if ($userId != '') {
+                if ($userId != '' && !is_null($userId)) {
                     $auth = LineLoginServices::doLogin($userId, $displayName, $pictureUrl);
 
                     if (!$auth) {

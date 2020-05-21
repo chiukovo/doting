@@ -67,8 +67,8 @@
         <div class="col">
           <div class="row">
             <div class="col text-right mb-1">
-              <button class="btn text-danger"><i class="fas fa-bookmark"></i> 追蹤: 2</button>/
-              <button class="btn text-success"><i class="fas fa-heart"></i> 擁有: 8</button>/
+              <button class="btn text-danger"><i class="fas fa-bookmark"></i> 追蹤: @{{ trackCount }}</button>/
+              <button class="btn text-success"><i class="fas fa-heart"></i> 擁有: @{{ likeCount }}</button>/
               <button class="btn">全部: @{{ lists.length }} 個結果</button>
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
               <!-- table狀態顯示 fa-grip-horizontal
@@ -113,10 +113,10 @@
                 <td>
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list.id)"><i class="fas fa-bookmark"></i></button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
                     </li>
                     <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list.id)"><i class="fas fa-heart"></i></button>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
                     </li>
                   </ul>
                 </td>
@@ -140,10 +140,10 @@
                 <div class="card-list-btn">
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list.id)"><i class="fas fa-bookmark"></i></button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
                     </li>
                     <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list.id)"><i class="fas fa-heart"></i></button>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
                     </li>
                   </ul>
                 </div>
@@ -159,6 +159,7 @@
     </section>
   </div>
   @include('layouts.goTop')
+  @include('layouts.modal')
 </div>
 <script>
   Vue.use(GoTop);
@@ -174,6 +175,8 @@
       personality: [],
       bd: [],
       likeType: 'animal',
+      likeCount: 0,
+      trackCount: 0,
       type: "{{ $type }}",
       moreSearch: false,
       searchData: {
@@ -185,6 +188,7 @@
     },
     mounted() {
       this.getAllType()
+      this.getLikeCount()
     },
     methods: {
       isMobile(){
@@ -200,6 +204,15 @@
            this.race = response.data.race
            this.personality = response.data.personality
            this.bd = response.data.bd
+         })
+      },
+      getLikeCount() {
+        axios.get('/like/count?likeType=' + this.likeType, {
+         }).then((response) => {
+            const result = response.data
+
+            this.trackCount = result.trackCount
+            this.likeCount = result.likeCount
          })
       },
       search($state) {
@@ -220,13 +233,22 @@
            }
          })
       },
-      toggleLike(target, id) {
+      toggleLike(target, list) {
         axios.post('/toggleLike', {
            likeType: this.likeType,
            likeTarget: target,
-           id: id,
+           token: list.token,
          }).then((response) => {
-          console.log(response)
+          const result = response.data
+          if (result.code == -1) {
+            $('#lineLoginModel').modal()
+          }
+
+          if (result.code == 1) {
+            list[target] = !list[target]
+            this.trackCount = result.count.trackCount
+            this.likeCount = result.count.likeCount
+          }
          })
       },
       clearAll() {

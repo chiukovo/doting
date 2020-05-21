@@ -127,6 +127,7 @@ Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //toggleLike
 Route::post('/toggleLike', 'LikeController@toggleLike');
+Route::get('/like/count', 'LikeController@getCount');
 
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');

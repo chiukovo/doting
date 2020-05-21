@@ -13,6 +13,20 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('allLikeTypeTarget')) {
+
+    /**
+     * @return []
+     */
+    function allLikeTypeTarget()
+    {
+        return [
+        	'type' => ['animal'],
+        	'target' => ['like', 'track'],
+        ];
+    }
+}
+
 if (!function_exists('isWebLogin')) {
 
     /**

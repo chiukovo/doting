@@ -139,6 +139,12 @@ class AnimalWebCrossingController extends Controller
             ->paginate(30)
             ->toArray();
 
+        //encode id and like current
+        foreach ($lists['data'] as $key => $value) {
+           $lists['data'][$key]->token = encrypt($value->id);
+           $lists['data'][$key]->like = false;
+           $lists['data'][$key]->track = false;
+        }
 
         return $lists['data'];
     }
