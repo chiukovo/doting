@@ -47,6 +47,25 @@
           <h2>動物森友會</h2>
           <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
         </a>
+        @if($isLogin)
+        <div class="sub-login btn-user">
+          <div class="btn-group">
+            <div class="sub-login-img-wrap">
+              <a href="/user">
+                <div class="sub-login-img" style="background-image: url('{{ getUserData('pictureUrl') }}');"></div>
+              </a>
+            </div>
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ getUserData('displayName') }}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="/user">收藏資訊</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/logout">登出</a>
+            </div>
+          </div>
+        </div>
+        @endif
         <button class="btn btn-nav" @click="menuShow = !menuShow"><ion-icon name="menu-outline"></ion-icon></button>
         <!-- <button class="btn btn-user"><ion-icon name="person-outline"></ion-icon></button> -->
         <div class="navigation-wrap" :class="menuShow ? 'show' : ''">
@@ -90,8 +109,25 @@
               </li>
               <li><a href="/statistics">搜尋排行榜</a></li>
               @if(!$isLogin)
-              <!--<li><a href="{{ lingLoginUrl() }}">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>-->
+                <li><a href="{{ lingLoginUrl() }}">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>
               @else
+                <li class="sub-login">
+                  <div class="btn-group">
+                    <div class="sub-login-img-wrap">
+                      <a href="/user">
+                        <div class="sub-login-img" style="background-image: url('{{ getUserData('pictureUrl') }}');"></div>
+                      </a>
+                    </div>
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ getUserData('displayName') }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/user">收藏資訊</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/logout">登出</a>
+                    </div>
+                  </div>
+                </li>
               @endif
             </ul>
           </nav>

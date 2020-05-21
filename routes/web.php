@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
-//line login
-Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');
@@ -123,7 +121,13 @@ Route::get('/kk/detail', 'KKController@detail');
 Route::get('/test', 'AnimalCrossingController@index');
 Route::get('/getConstellation', 'ApiController@getConstellation');
 
-//auth
+//line login
+Route::get('/logout', 'LineLoginController@logout');
+Route::get('/line/login/callback', 'LineLoginController@callback');
+
+//toggleLike
+Route::post('/toggleLike', 'LikeController@toggleLike');
+
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');
 });

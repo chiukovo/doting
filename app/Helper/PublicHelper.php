@@ -44,6 +44,25 @@ if (!function_exists('isWebLogin')) {
     }
 }
 
+if (!function_exists('getUserData')) {
+
+    /**
+     * @return []
+     */
+    function getUserData($params)
+    {
+    	$loginData = session('web');
+
+    	if (!is_null($loginData)) {
+    		if (isset($loginData[$params])) {
+    			return $loginData[$params];
+    		}
+    	}
+
+    	return '';
+    }
+}
+
 if (!function_exists('lingLoginUrl')) {
 
     /**

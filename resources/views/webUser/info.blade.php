@@ -43,38 +43,110 @@
               <small>Residents of OAO</small>
             </div>
             <div class="user-body">
-              <ul class="user-list">
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/彭花.png" class="img-fluid">
-                  </a>
+              <ul class="nav nav-tabs nav-fill" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(2)</a>
+                  <!-- 上限10 -->
                 </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/茶茶丸.png" class="img-fluid">
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/傑克.png" class="img-fluid">
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/雪花.png" class="img-fluid">
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/雪美.png" class="img-fluid">
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="/animal/icon/番茄醬.png" class="img-fluid">
-                  </a>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(8)</a>
+                  <!-- 無上限？ -->
                 </li>
               </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="animals1">
+                  <ul class="card-list">
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/彭花.png" class="img-fluid" alt="彭花">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/阿一.png" class="img-fluid" alt="阿一">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/雪美.png" class="img-fluid" alt="雪美">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="tab-pane fade" id="animals2">
+                  <ul class="card-list">
+                    <li>
+                      <div class="card-list-item">
+                        <div class="card-list-img">
+                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                        </div>
+                        <div class="card-list-title">茶茶丸 ♂</div>
+                        <div class="card-list-info">運動/綿羊/3.18</div>
+                        <div class="card-list-btn">
+                          <ul class="user-save-btn">
+                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-bookmark"></i>取消追蹤</button></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -90,19 +162,31 @@
               <ul class="user-list">
                 <li>
                   <a href="#" class="user-item">
-                    <img src="/other/鯊魚.png" class="img-fluid">
+                    <img src="../other/鯊魚.png" class="img-fluid">
                     <span class="user-item-title">0 / 80</span>
                   </a>
                 </li>
                 <li>
                   <a href="#" class="user-item">
-                    <img src="/other/大白斑蝶.png" class="img-fluid">
+                    <img src="../other/大白斑蝶.png" class="img-fluid">
                     <span class="user-item-title">0 / 80</span>
                   </a>
                 </li>
                 <li>
                   <a href="#" class="user-item">
-                    <img src="/kk/Hypno_K.K..png" class="img-fluid">
+                    <img src="../itemsNew/雨衣_0.png" class="img-fluid">
+                    <span class="user-item-title">0 / 80</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="user-item">
+                    <img src="../itemsNew/大熊熊_20.png" class="img-fluid">
+                    <span class="user-item-title">0 / 80</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="user-item">
+                    <img src="../kk/Hypno_K.K..png" class="img-fluid">
                     <span class="user-item-title">0 / 20</span>
                   </a>
                 </li>

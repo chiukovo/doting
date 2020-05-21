@@ -57,8 +57,8 @@
           <form>
             <div class="form-search">
               <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
-              <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
-              <button class="btn btn-default" :class="checkAllCurrent()" @click.prevent="clearAll">清除搜尋</button>
+              <button class="btn btn-primary" native-type="submit" @click.prevent.stop="searchDefault">搜尋</button>
+              <button class="btn btn-default" :class="checkAllCurrent()" @click.prevent.stop="clearAll">清除搜尋</button>
             </div>
           </form>
         </div>
@@ -67,6 +67,8 @@
         <div class="col">
           <div class="row">
             <div class="col text-right mb-1">
+              <button class="btn text-danger"><i class="fas fa-bookmark"></i> 追蹤: 2</button>/
+              <button class="btn text-success"><i class="fas fa-heart"></i> 擁有: 8</button>/
               <button class="btn">全部: @{{ lists.length }} 個結果</button>
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
               <!-- table狀態顯示 fa-grip-horizontal
@@ -84,6 +86,7 @@
                 @if($type != 'npc')
                 <th scope="col">生日</th>
                 <th scope="col" v-show="!isMobile()">口頭禪</th>
+                <th></th>
                 @endif
               </tr>
             </thead>
@@ -107,6 +110,16 @@
                 <td>@{{ list.bd }}</td>
                 <td v-show="!isMobile()">@{{ list.say }}</td>
                 @endif
+                <td>
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list.id)"><i class="fas fa-bookmark"></i></button>
+                    </li>
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list.id)"><i class="fas fa-heart"></i></button>
+                    </li>
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -123,6 +136,16 @@
                 </div>
                 <div class="card-list-info" v-else>
                   @{{ list.race }}
+                </div>
+                <div class="card-list-btn">
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list.id)"><i class="fas fa-bookmark"></i></button>
+                    </li>
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list.id)"><i class="fas fa-heart"></i></button>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </li>
@@ -150,6 +173,7 @@
       race: [],
       personality: [],
       bd: [],
+      likeType: 'animal',
       type: "{{ $type }}",
       moreSearch: false,
       searchData: {
@@ -194,6 +218,15 @@
            } else {
              $state.complete();
            }
+         })
+      },
+      toggleLike(target, id) {
+        axios.post('/toggleLike', {
+           likeType: this.likeType,
+           likeTarget: target,
+           id: id,
+         }).then((response) => {
+          console.log(response)
          })
       },
       clearAll() {

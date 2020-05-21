@@ -84,4 +84,9 @@ class LineLoginServices
 
         return false;
     }
+
+    public static function doLogout()
+    {
+        Session::forget('web');
+    }
 }

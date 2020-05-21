@@ -68,4 +68,11 @@ class LineLoginController extends Controller
             Log::error($e);
         }
     }
+
+    public function logout()
+    {
+        LineLoginServices::doLogout();
+
+        return redirect('/');
+    }
 }
