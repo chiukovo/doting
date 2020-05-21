@@ -403,6 +403,7 @@ class AnimalServices
         $item->race = $item->race != '' ? $item->race : '-';
         $item->bd = $item->bd != '' ? $item->bd : '-';
         $item->say = $item->say != '' ? $item->say : '-';
+        $item->sex = $item->sex != '' ? $item->sex : '-';
         $item->target = $item->target != '' ? $item->target : '-';
 
         //npc
