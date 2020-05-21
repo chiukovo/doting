@@ -48,6 +48,10 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
+        /*$target = $this->getSendBuilder('$大藍閃');
+        $test = $target[0]->buildMessage()[0]['contents']['contents'][0];
+
+        dd(json_encode($test));*/
     	echo 'hi';
     }
 
@@ -323,6 +327,7 @@ class AnimalCrossingController extends Controller
         //error
         if (!$response->isSucceeded()) {
             Log::debug($response->getRawBody());
+            Log::debug($this->realText);
         }
     }
 

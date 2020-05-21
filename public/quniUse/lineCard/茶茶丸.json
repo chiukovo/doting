@@ -1,0 +1,170 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "茶茶丸 dom ちゃちゃまる",
+        "weight": "bold",
+        "size": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "種族",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "綿羊",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "個性",
+                "flex": 1,
+                "size": "xs",
+                "color": "#aaaaaa"
+              },
+              {
+                "type": "text",
+                "text": "運動",
+                "flex": 2,
+                "color": "#444444",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "性別",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "♂",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "生日",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "3.18",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "口頭禪",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "哇耶",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "喜歡的顏色",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "紅色、彩色",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "喜歡的風格",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "活力、可愛",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

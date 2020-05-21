@@ -1,0 +1,158 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "鑄鐵木矮櫃",
+        "weight": "bold",
+        "size": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "分類",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "家具",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "是否改造",
+                "flex": 2,
+                "size": "xs",
+                "color": "#aaaaaa"
+              },
+              {
+                "type": "text",
+                "text": "是(6包)",
+                "flex": 2,
+                "color": "#444444",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "spacer",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "商店販售價",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "9,300",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "商店回收價",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "2,325",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "spacer",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "DIY材料",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "木材*4 鐵礦石*3 鑄鐵木矮櫃*1 切菜板*1",
+                "size": "xs"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

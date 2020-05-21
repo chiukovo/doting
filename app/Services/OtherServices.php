@@ -15,6 +15,8 @@ use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SeparatorComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SpacerComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
@@ -199,65 +201,125 @@ class OtherServices
 
     public static function createItemBodyBlock($item)
     {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name . ' $' . number_format($item->sell))
+        $box = [];
+        //box1
+        $box1Inline = [];
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText('位置')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $box1Inline[] = TextComponentBuilder::builder()
+            ->setText($item->position)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
             ->setWrap(true)
-            ->setAlign('center')
+            ->setFlex(2);
+
+        if (isset($item->shadow)) {
+            $box1Inline[] = TextComponentBuilder::builder()
+                ->setText('影子')
+                ->setSize(ComponentFontSize::XS)
+                ->setColor('#aaaaaa')
+                ->setFlex(1);
+
+            $box1Inline[] = TextComponentBuilder::builder()
+                ->setText($item->shadow)
+                ->setSize(ComponentFontSize::XS)
+                ->setColor('#444444')
+                ->setFlex(2);
+        }
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($box1Inline);
+
+        //line
+        $box[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($spacer);
+        //line end
+
+        $north = self::getMonthFormat($item, '北');
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('北半球月份')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($north)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $south = self::getMonthFormat($item, '南');
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('南半球月份')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($south)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('時間')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->time)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+
+        $texts = TextComponentBuilder::builder()
+            ->setText($item->name . ' $' . number_format($item->sell))
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
-        if (isset($item->shadow)) {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('影子: ' . $item->shadow)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $outBox = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentMargin::LG)
+            ->setContents($box);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('位置: ' . $item->position)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        $result = [$texts, $outBox];
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('時間: ' . $item->time)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $south = self::getMonthFormat($item, '南');
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('南半球月份: ' . $south)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
-
-        $north = self::getMonthFormat($item, '北');
-
-        $components[] = TextComponentBuilder::builder()
-            ->setText('北半球月份: ' . $north)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
+            ->setContents($result);
     }
 
     public static function getMonthFormat($item, $type)
@@ -315,6 +377,7 @@ class OtherServices
         sort($target);
         $groups = [];
         $string = '';
+        $pre = '';
 
         for($i = 0; $i < count($target); $i++) {
             if ($i > 0 && ($target[$i - 1] == $target[$i] - 1)) {
@@ -325,10 +388,12 @@ class OtherServices
         }
 
         foreach($groups as $group) {
+            $pre = $string == '' ? '' : '、';
+
             if(count($group) == 1) {
-                $string .= ' ' . $group[0] . '月' . "\n";
+                $string .= $pre . $group[0] . '月' . "\n";
             } else {
-                $string .=  ' ' . $group[0] . "~" . $group[count($group) - 1] . '月' . "\n";
+                $string .=  $pre . $group[0] . "~" . $group[count($group) - 1] . '月' . "\n";
             }
         }
 
