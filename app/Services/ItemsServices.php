@@ -147,6 +147,7 @@ class ItemsServices
         $item->buy = $item->buy != '' ? $item->buy : '-';
         $item->sell = $item->sell != '' ? $item->sell : '-';
         $item->size = $item->size != '' ? $item->size : '-';
+        $item->category = $item->category != '' ? $item->category : '-';
 
         $box = [];
         //box1
