@@ -182,6 +182,7 @@ class DiyServices
         $boxInline[] = TextComponentBuilder::builder()
             ->setText($item->diy)
             ->setSize(ComponentFontSize::XS)
+            ->setWrap(true)
             ->setColor('#444444')
             ->setFlex(2);
 
