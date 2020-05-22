@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
+
 if (!function_exists('testHelper')) {
 
     /**
@@ -74,6 +76,49 @@ if (!function_exists('getUserData')) {
     	}
 
     	return '';
+    }
+}
+
+if (!function_exists('computedMainData')) {
+
+    /**
+     * @return []
+     */
+    function computedMainData($lists, $type)
+    {
+    	$lineId = getUserData('lineId');
+    	//like
+    	$like = Redis::hGetAll($lineId);
+
+    	//default
+    	foreach ($lists as $key => $value) {
+    	   $lists[$key]->token = encrypt($value->id);
+    	   $lists[$key]->like = false;
+    	   $lists[$key]->track = false;
+    	}
+
+    	foreach ($lists as $key => $value) {
+    		foreach ($like as $full => $likeData) {
+    			$explode = explode("_", $full);
+    			$likeId = isset($explode[0]) ? $explode[0] : '';
+    			$likeType = isset($explode[1]) ? $explode[1] : '';
+    			$likeTarget = isset($explode[2]) ? $explode[2] : '';
+    			if ($value->id == $likeId && $likeType == $type) {
+    				switch ($likeTarget) {
+    					case 'like':
+    						$value->like = true;
+    						break;
+    					case 'track':
+    						$value->track = true;
+    						break;
+    				}
+    			}
+    		}
+
+    		$lists[$key] = $value;
+    	}
+
+    	return $lists;
     }
 }
 
