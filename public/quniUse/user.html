@@ -109,53 +109,81 @@
                 <div class="passport-warp">
                   <div class="passport-header">
                     <span>PASSPORT</span>
-                    <button class="btn btn-default btn-outline-secondary ">編輯</button>
                   </div>
                   <div class="passport-body row">
                     <div class="passport-info-img text-center col-12 col-sm-4">
                       <img src="../other/鱘魚.png" class="img-fluid bg-light border rounded p-2">
                     </div>
+                    <!-- 預設狀態 -->
+                    <!-- <ul class="passport-info col-12 col-sm-8">
+                      <li>
+                        <div class="passport-info-item passport-sw">
+                          <div class="label">護照號碼</div>
+                          <div class="data">SW-1234-1234-1234</div>
+                        </div>
+                        <button class="btn btn-sm btn-default btn-outline-secondary">編輯</button>
+                      </li>
+                      <li>
+                        <div class="passport-info-item-group">
+                          <div class="passport-info-item">
+                            <div class="label">島名</div>
+                            <div class="data">OAO島</div>
+                          </div>
+                          <div class="passport-info-item">
+                            <div class="label">特產</div>
+                            <div class="data">桃子</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="passport-info-item">
+                          <div class="label">所屬半球</div>
+                          <div class="data">無</div>
+                        </div>
+                        <div class="passport-info-tip">
+                          <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
+                        </div>
+                      </li>
+                    </ul> -->
+                    <!-- 預設狀態 -->
                     <ul class="passport-info col-12 col-sm-8">
-                      <li class="passport-sw">
-                        <label>護照號碼</label>
-                        <span>
-                          SW-1234-1234-1234
-                          <!-- <input type="text" class="form-control form-control-sm" placeholder="SW-1234-1234-1234"> -->
-                        </span>
-                      </li>
-                      <li class="passport-info-top passport-hr">
-                        <div class="passport-info-island">
-                          OAO島
-                          <!-- <input type="text" class="form-control form-control-sm" placeholder="島名"> -->
+                      <li>
+                        <div class="passport-info-item passport-sw">
+                          <div class="label">護照號碼</div>
+                          <div class="data"><input type="text" class="form-control form-control-sm"></div>
                         </div>
-                        <div class="passport-info-fruit">
-                          桃子
-                          <!-- <select class="form-control form-control-sm">
-                            <option>桃子</option>
-                            <option>蘋果</option>
-                            <option>梨子</option>
-                            <option>櫻桃</option>
-                            <option>橘子</option>
-                          </select> -->
+                        <button class="btn btn-sm btn-primary">儲存</button>
+                      </li>
+                      <li>
+                        <div class="passport-info-item-group">
+                          <div class="passport-info-item">
+                            <div class="label">島名</div>
+                            <div class="data"><input type="text" class="form-control form-control-sm"></div>
+                          </div>
+                          <div class="passport-info-item">
+                            <div class="label">特產</div>
+                            <div class="data">
+                              <select class="form-control form-control-sm">
+                                <option>桃子</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
                       </li>
-                      <li class="passport-info-name passport-hr">
-                        豆丁
-                        <!-- <input type="text" class="form-control form-control-sm" placeholder="豆丁"> -->
-                      </li>
-                      <li class="passport-info-birthday passport-hr">
-                        1月21日出生
-                        <!-- <div class="d-flex birthday-edit">
-                          <select class="form-control form-control-sm">
-                            <option>1月</option>
-                          </select>
-                          <select class="form-control form-control-sm">
-                            <option>1日</option>
-                          </select>
-                        </div> -->
-                      </li>
-                      <li class="passport-info-earth">
-                        南半球
+                      <li>
+                        <div class="passport-info-item">
+                          <div class="label">所屬半球</div>
+                          <div class="data">
+                            <select class="form-control form-control-sm">
+                              <option>請選擇</option>
+                              <option>南半球</option>
+                              <option>北半球</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="passport-info-tip">
+                          <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
+                        </div>
                       </li>
                     </ul>
                   </div>
