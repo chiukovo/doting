@@ -217,7 +217,7 @@
                   </span>
                 </p>
                 <h3 class="instructions-title">【化石】查詢化石</h3>
-                <p>與化石相關，只要輸入「<span class="text-danger">化石+名稱</span>」，例如： 「<span class="text-danger">化石 暴龍</span>」</p>
+                <p>與化石相關，只要輸入「<span class="text-danger">化石+名稱</span>」，例如： 「<span class="text-danger">化石 琥珀</span>」</p>
                 <p class="instructions-img">
                   <span class="instructions-img-box">
                     <img src="../image/instructions/doting_instructions_fossil.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
@@ -290,7 +290,7 @@
                   </span>
                 </p>
                 <h3 class="instructions-title">將「豆丁森友會」加入群組、聊天群</h3>
-                <p>LINE 機器人也可以家到群組使用，直接邀請就會自動加入，要注意 LINE 規範是一個群組、聊天群僅能有一個機器人，如果無法加入請在重複嘗試看看。</p>
+                <p>LINE 機器人也可以加到群組使用，直接邀請就會自動加入，要注意 LINE 規範是一個群組、聊天群僅能有一個機器人，如果無法加入請再重複嘗試看看。</p>
                 <p>祝您使用愉快！</p>
                 <p>歡迎提供缺漏或錯誤修正的資訊，以及功能建議。</p>
                 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" class="btn btn-primary" target="_blank">意見回饋</a>

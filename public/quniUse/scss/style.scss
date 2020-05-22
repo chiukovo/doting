@@ -292,6 +292,8 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     flex: 0 0 50%;
     padding: .2rem;
     .card-list-item {
+      width: 100%;
+      height: 100%;
       text-align: center;
       border: 1px solid $gray-200;
       box-shadow: 0 0 0 rgba(0,0,0,0.1);
@@ -300,10 +302,35 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       transition: all .3s ease;
       cursor: pointer;
       .card-list-img {
+        position: relative;
         height: 140px;
         padding: 1rem;
         img {
           max-height: 100%;
+        }
+        .card-list-get {
+          position: absolute;
+          top: 6px;
+          left: 10px;
+          img {
+            height: 26px;
+          }
+          &.right {
+            left: auto;
+            right: 10px;
+          }
+        }
+        .card-list-size {
+          position: absolute;
+          left: 10px;
+          bottom: 6px;
+          img {
+            height: 16px;
+          }
+        }
+        &.card-list-icon {
+          background: $gray-100;
+          margin-bottom: 0.5rem;
         }
       }
       .card-list-title {
@@ -1241,6 +1268,13 @@ audio {
 }
 .rounded {
   border-radius: .25rem !important;
+}
+.badge-light {
+  border: 1px solid $gray-200;
+  &.current {
+    background-color: rgba($primary, .08);
+    border-color: rgba($primary, .2);
+  }
 }
 a.link {
   color: $primary !important;
