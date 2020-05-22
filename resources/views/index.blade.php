@@ -114,15 +114,17 @@
   </div>
   <div class="first-container container">
     <!-- 小橫條廣告 -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2560043137442562"
-         data-ad-slot="4286195067"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
-    </script>
+    <div style="min-height: 280px">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2560043137442562"
+           data-ad-slot="4286195067"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+      </script>
+    </div>
     <div class="row">
       <div class="mt-3 col-12 col-md-4">
         <div class="card">
