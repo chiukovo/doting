@@ -66,14 +66,16 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col text-right mb-1">
-              <button class="btn text-danger"><i class="fas fa-bookmark"></i> 追蹤: @{{ trackCount }}</button>/
-              <button class="btn text-success"><i class="fas fa-heart"></i> 擁有: @{{ likeCount }}</button>/
-              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+            <div class="col text-right">
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1">已追蹤:@{{ trackCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1">未擁有:87
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1">已擁有:@{{ likeCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1">未追蹤:0
+              </button>
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
-              <!-- table狀態顯示 fa-grip-horizontal
-                  列表狀態顯示 fa-list
-                -->
             </div>
           </div>
           <table class="table table-bordered table-hover text-center" v-if="isList">
@@ -113,10 +115,10 @@
                 <td>
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
                     </li>
                     <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
                     </li>
                   </ul>
                 </td>
@@ -140,10 +142,10 @@
                 <div class="card-list-btn">
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
                     </li>
                     <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
                     </li>
                   </ul>
                 </div>
@@ -199,7 +201,10 @@
         location.href = '/animals/detail?name=' + list.name
       },
       getAllType() {
-        axios.get('/animals/getAllType?type=' + this.type, {
+        axios.get('/animals/getAllType', {
+          params: {
+            likeType: this.likeType,
+          }
          }).then((response) => {
            this.race = response.data.race
            this.personality = response.data.personality
@@ -207,7 +212,11 @@
          })
       },
       getLikeCount() {
-        axios.get('/like/count?likeType=' + this.likeType, {
+        axios.get('/like/count', {
+          params: {
+            likeType: this.likeType,
+            type: this.type,
+          }
          }).then((response) => {
             const result = response.data
 

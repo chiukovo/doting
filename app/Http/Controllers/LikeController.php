@@ -22,6 +22,7 @@ class LikeController extends Controller
 
     	$likeType = $request->input('likeType', '');
     	$likeTarget = $request->input('likeTarget', '');
+        $type = $request->input('type', '');
     	$id = '';
     	$token = $request->input('token', '');
 
@@ -71,18 +72,20 @@ class LikeController extends Controller
     	return [
     		'code' => '1',
     		'msg' => 'success',
-    		'count' => $this->computedCount($likeType)
+    		'count' => $this->computedCount($likeType),
+            'countAll' => $countAll,
     	];
     }
 
     public function getCount(Request $request)
     {
     	$likeType = $request->input('likeType', '');
+        $type = $request->input('type', '');
 
-    	return $this->computedCount($likeType);
+    	return $this->computedCount($likeType, $type);
     }
 
-    public function computedCount($likeType)
+    public function computedCount($likeType, $type)
     {
     	$likeCount = 0;
     	$trackCount = 0;
@@ -111,9 +114,24 @@ class LikeController extends Controller
     		}
     	}
 
+        $countAll = 0;
+
+        switch ($likeType) {
+            case 'animal':
+                if ($type == '') {
+                    $countAll = DB::table($likeType)->whereNull('info')->count();
+                } else {
+                    $countAll = DB::table($likeType)->where('info', '!=', '')->count();
+                }
+
+                break;
+        }
+
     	return [
     		'likeCount' => $likeCount,
     		'trackCount' => $trackCount,
+            'noLikeCount' => $countAll - $likeCount,
+            'noTrackCount' => $countAll - $trackCount,
     	];
     }
 }
