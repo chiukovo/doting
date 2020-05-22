@@ -90,7 +90,7 @@ class ArtServices
 
     public static function createItemHeroBlock($item, $img)
     {
-        $imgPath = env('APP_URL') . '/art/' . urlencode($img) . '.png';
+        $imgPath = env('APP_URL') . '/art/' . urlencode($img) . '.png?v=' . config('app.version');
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

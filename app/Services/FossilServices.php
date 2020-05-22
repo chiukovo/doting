@@ -63,7 +63,7 @@ class FossilServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = env('APP_URL') . '/fossil/' . urlencode($item->name) . '.png';
+        $imgPath = env('APP_URL') . '/fossil/' . urlencode($item->name) . '.png?v=' . config('app.version');
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
