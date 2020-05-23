@@ -170,6 +170,7 @@ class ItemsServices
             ->setText('樣式')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
+            ->setWrap(true)
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
