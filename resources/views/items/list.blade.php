@@ -68,10 +68,10 @@
             <thead>
               <tr>
                 <th scope="col">名稱</th>
+                <th scope="col">樣式</th>
                 <th scope="col">價格</th>
                 <th scope="col">賣出</th>
                 <th scope="col">類型</th>
-                <th scope="col">尺寸</th>
               </tr>
             </thead>
             <tbody>
@@ -84,10 +84,10 @@
                     </div>
                   </a>
                 </td>
+                <td>@{{ list.color }}</td>
                 <td>@{{ formatPrice(list.buy) }}</td>
                 <td>@{{ formatPrice(list.sell) }}</td>
-                <td>@{{ list.category }}</td>
-                <td>@{{ list.size }}</td>
+                <td>@{{ list.category }}(@{{ list.size }})</td>
               </tr>
             </tbody>
           </table>
@@ -105,6 +105,7 @@
                 <div class="card-list-info" v-else>
                   -
                 </div>
+                <div class="card-list-info">@{{ list.color }}</div>
                 <div class="card-list-info">@{{ list.category }} <span v-if="list.size != null">(@{{ list.size }})</span></div>
               </div>
             </li>

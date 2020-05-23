@@ -148,6 +148,7 @@ class ItemsServices
         $item->sell = $item->sell != '' ? $item->sell : '-';
         $item->size = $item->size != '' ? $item->size : '-';
         $item->category = $item->category != '' ? $item->category : '-';
+        $item->color = $item->color != '' ? $item->color : '-';
 
         $box = [];
         //box1
@@ -159,20 +160,20 @@ class ItemsServices
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText($item->category)
+            ->setText($item->category . ' ' . $item->size)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setWrap(true)
             ->setFlex(2);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText('size')
+            ->setText('樣式')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText($item->size)
+            ->setText($item->color)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setFlex(2);
