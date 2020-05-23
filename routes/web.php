@@ -153,4 +153,5 @@ Route::get('/getAnimalCard', 'ApiController@getAnimalCard');
 Route::get('/getArtwork', 'ApiController@getArtwork');
 Route::get('/getFossil', 'ApiController@getFossil');
 Route::get('/getPlant', 'ApiController@getPlant');
-Route::get('/getKK', 'ApiController@getKK');*/
+Route::get('/getKK', 'ApiController@getKK');
+Route::get('/transData', 'ApiController@transData');*/
