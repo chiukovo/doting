@@ -27,7 +27,7 @@ class LikeController extends Controller
     	$token = $request->input('token', '');
 
     	//檢查
-    	if ($likeType == '' || $likeTarget == '' || $token == '') {
+    	if ($likeType == '' || $likeTarget == '' || $token == '' || $type == '') {
     		return [
     			'code' => 0,
     			'msg' => 'params fail',
@@ -36,7 +36,7 @@ class LikeController extends Controller
 
     	//檢查type
     	$allType = allLikeTypeTarget();
-    	if (!in_array($likeType, $allType['type']) || !in_array($likeTarget, $allType['target'])) {
+    	if (!in_array($likeType, $allType['likeType']) || !in_array($likeTarget, $allType['target']) || !in_array($type, $allType['type'])) {
     		return [
     			'code' => 0,
     			'msg' => 'unknown',
@@ -61,19 +61,18 @@ class LikeController extends Controller
     	}
 
     	//like
-    	$like = Redis::hGet($lineId, $id . '_' . $likeType . '_' . $likeTarget);
+    	$like = Redis::hGet($lineId, $id . '_' . $likeType . '_' . $type . '_' . $likeTarget);
 
     	if ($like) {
-    		Redis::hdel($lineId, $id . '_' . $likeType . '_' . $likeTarget);
+    		Redis::hdel($lineId, $id . '_' . $likeType . '_' . $type . '_' . $likeTarget);
     	} else {
-    		Redis::hSet($lineId, $id . '_' . $likeType . '_' . $likeTarget, $likeTarget);
+    		Redis::hSet($lineId, $id . '_' . $likeType . '_' . $type . '_' . $likeTarget, $likeTarget);
     	}
 
     	return [
     		'code' => '1',
     		'msg' => 'success',
-    		'count' => $this->computedCount($likeType),
-            'countAll' => $countAll,
+    		'count' => computedCount($likeType, $type),
     	];
     }
 
@@ -82,56 +81,6 @@ class LikeController extends Controller
     	$likeType = $request->input('likeType', '');
         $type = $request->input('type', '');
 
-    	return $this->computedCount($likeType, $type);
-    }
-
-    public function computedCount($likeType, $type)
-    {
-    	$likeCount = 0;
-    	$trackCount = 0;
-
-    	$lineId = getUserData('lineId');
-
-    	//檢查type
-    	$allType = allLikeTypeTarget();
-    	if (!in_array($likeType, $allType['type'])) {
-    		return [
-    			'likeCount' => $likeCount,
-    			'trackCount' => $trackCount,
-    		];
-    	}
-
-    	//like
-    	$like = Redis::hGetAll($lineId);
-
-    	foreach ($like as $data) {
-    		if ($data == 'like') {
-    			$likeCount++;
-    		}
-
-    		if ($data == 'track') {
-    			$trackCount++;
-    		}
-    	}
-
-        $countAll = 0;
-
-        switch ($likeType) {
-            case 'animal':
-                if ($type == '') {
-                    $countAll = DB::table($likeType)->whereNull('info')->count();
-                } else {
-                    $countAll = DB::table($likeType)->where('info', '!=', '')->count();
-                }
-
-                break;
-        }
-
-    	return [
-    		'likeCount' => $likeCount,
-    		'trackCount' => $trackCount,
-            'noLikeCount' => $countAll - $likeCount,
-            'noTrackCount' => $countAll - $trackCount,
-    	];
+    	return computedCount($likeType, $type);
     }
 }

@@ -85,11 +85,33 @@ class FishController extends Controller
     {
         $result = [];
         $text = $request->input('text', '');
+        $type = 'fish';
+        $target = $request->input('target', '');
 
         $fish = DB::table('fish');
 
         if ($text != '') {
            $fish->where('name', 'like', '%' . $text . '%');
+        }
+
+        //check target
+        if ($target != '') {
+            $getCount = computedCount($type, $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $fish->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $fish->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $fish->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $fish->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
         }
 
         $fish = $fish->select()
@@ -104,6 +126,9 @@ class FishController extends Controller
 
             $result[] = $data;
         }
+
+        //encode id and like current
+        $result = computedMainData($result, $type, $type);
 
         return $result;
     }

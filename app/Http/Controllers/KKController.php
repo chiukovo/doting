@@ -21,6 +21,8 @@ class KKController extends Controller
     {
         $result = [];
         $text = $request->input('text', '');
+        $type = $request->input('type', '');
+        $target = $request->input('target', '');
 
         $kk = DB::table('kk');
 
@@ -28,9 +30,32 @@ class KKController extends Controller
            $kk->where('name', 'like', '%' . $text . '%');
         }
 
+        //check target
+        if ($target != '') {
+            $getCount = computedCount($type, $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $kk->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $kk->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $kk->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $kk->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
+        }
+
         $kk = $kk->select()
             ->paginate(30)
             ->toArray();
+
+        //encode id and like current
+        $kk['data'] = computedMainData($kk['data'], $type, $type);
 
         return $kk['data'];
     }

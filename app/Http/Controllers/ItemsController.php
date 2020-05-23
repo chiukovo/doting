@@ -27,6 +27,7 @@ class ItemsController extends Controller
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
         $type = $request->input('type', 'apparel');
+        $target = $request->input('target', '');
 
         if ($text != '') {
             $result = ItemsServices::getDataByMessage($text, $page, $type);
@@ -53,10 +54,32 @@ class ItemsController extends Controller
             $lists->whereIn('category', $category);
         }
 
+        //check target
+        if ($target != '') {
+            $getCount = computedCount($type, $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $lists->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $lists->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $lists->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $lists->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
+        }
+
         $lists = $lists->select()
             ->paginate(30)
             ->toArray();
 
+        //encode id and like current
+        $lists['data'] = computedMainData($lists['data'], $type, $type);
 
         return $lists['data'];
     }

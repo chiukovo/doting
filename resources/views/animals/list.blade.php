@@ -67,14 +67,16 @@
         <div class="col">
           <div class="row">
             <div class="col text-right">
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1">已追蹤:@{{ trackCount }}
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'track' ? 'current' : ''" @click="searchTarget('track')">已追蹤:@{{ trackCount }}
               </button>
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1">未擁有:87
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noTrack' ? 'current' : ''" @click="searchTarget('noTrack')">未追蹤:@{{ noTrackCount }}
               </button>
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1">已擁有:@{{ likeCount }}
+              @if($type != 'npc')
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已擁有:@{{ likeCount }}
               </button>
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1">未追蹤:0
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noLike' ? 'current' : ''" @click="searchTarget('noLike')">未擁有:@{{ noLikeCount }}
               </button>
+              @endif
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
             </div>
           </div>
@@ -88,7 +90,7 @@
                 @if($type != 'npc')
                 <th scope="col">生日</th>
                 <th scope="col" v-show="!isMobile()">口頭禪</th>
-                <th></th>
+                <th style="width: 120px;">追蹤/擁有</th>
                 @endif
               </tr>
             </thead>
@@ -115,11 +117,13 @@
                 <td>
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
                     </li>
+                    @if($type != 'npc')
                     <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
                     </li>
+                    @endif
                   </ul>
                 </td>
               </tr>
@@ -144,9 +148,11 @@
                     <li>
                       <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
                     </li>
+                    @if($type != 'npc')
                     <li>
                       <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
                     </li>
+                    @endif
                   </ul>
                 </div>
               </div>
@@ -178,13 +184,16 @@
       bd: [],
       likeType: 'animal',
       likeCount: 0,
+      noLikeCount: 0,
       trackCount: 0,
+      noTrackCount: 0,
       type: "{{ $type }}",
       moreSearch: false,
       searchData: {
         race: [],
         personality: [],
         bd: [],
+        target: '',
         text: "{{ $text }}",
       }
     },
@@ -222,6 +231,8 @@
 
             this.trackCount = result.trackCount
             this.likeCount = result.likeCount
+            this.noTrackCount = result.noTrackCount
+            this.noLikeCount = result.noLikeCount
          })
       },
       search($state) {
@@ -231,6 +242,7 @@
            personality: this.searchData.personality,
            bd: this.searchData.bd,
            text: this.searchData.text,
+           target: this.searchData.target,
            type: this.type
          }).then((response) => {
            if (response.data.length) {
@@ -245,6 +257,7 @@
       toggleLike(target, list) {
         axios.post('/toggleLike', {
            likeType: this.likeType,
+           type: this.type,
            likeTarget: target,
            token: list.token,
          }).then((response) => {
@@ -256,7 +269,9 @@
           if (result.code == 1) {
             list[target] = !list[target]
             this.trackCount = result.count.trackCount
+            this.noTrackCount = result.count.noTrackCount
             this.likeCount = result.count.likeCount
+            this.noLikeCount = result.count.noLikeCount
           }
          })
       },
@@ -313,6 +328,15 @@
         this.page = 1;
         this.lists = [];
         this.infiniteId += 1;
+      },
+      searchTarget(target) {
+        if (target == this.searchData.target) {
+          this.searchData.target = ''
+        } else {
+          this.searchData.target = target
+        }
+
+        this.searchDefault()
       },
       checkAllCurrent() {
         if (this.searchData.race.length == 0 && this.searchData.personality.length == 0 && this.searchData.bd.length == 0) {

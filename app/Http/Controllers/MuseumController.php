@@ -23,8 +23,9 @@ class MuseumController extends Controller
         $result = [];
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
+        $target = $request->input('target', '');
 
-        $museum = OtherServices::getDataByMessage($text, $page);
+        $museum = OtherServices::getDataByMessage($text, $page, false, $target);
 
         if (!is_array($museum)) {
             return [];

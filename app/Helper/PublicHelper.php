@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Redis;
+use App\Services\ItemsServices;
 
 if (!function_exists('testHelper')) {
 
@@ -23,9 +24,127 @@ if (!function_exists('allLikeTypeTarget')) {
     function allLikeTypeTarget()
     {
         return [
-        	'type' => ['animal'],
+        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk'],
+        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk'],
         	'target' => ['like', 'track'],
         ];
+    }
+}
+
+if (!function_exists('computedCount')) {
+
+    /**
+     * @return []
+     */
+    function computedCount($likeType, $type, $needIds = false)
+    {
+		$likeCount = 0;
+		$trackCount = 0;
+
+		$lineId = getUserData('lineId');
+
+		//檢查type
+		$allType = allLikeTypeTarget();
+		if (!in_array($likeType, $allType['likeType']) || !in_array($type, $allType['type'])) {
+			return [
+				'likeCount' => $likeCount,
+				'trackCount' => $trackCount,
+			];
+		}
+
+		//like
+		$like = Redis::hGetAll($lineId);
+	    $likeIds = [];
+	    $trackIds = [];
+
+		foreach ($like as $checkKey => $data) {
+	        $explode = explode('_', $checkKey);
+
+	        $id = isset($explode[0]) ? $explode[0] : '';
+	        $checkLikeType = isset($explode[1]) ? $explode[1] : '';
+	        $checkType = isset($explode[2]) ? $explode[2] : '';
+
+	        if ($likeType == $checkLikeType && $type == $checkType) {
+	            if ($data == 'like') {
+	                $likeIds[] = $id;
+	                $likeCount++;
+	            }
+
+	            if ($data == 'track') {
+	                $trackIds[] = $id;
+	                $trackCount++;
+	            }
+	        }
+
+	        //for 博物館
+	        if ($likeType == 'museum' && ($checkLikeType == 'fish' || $checkLikeType == 'insect')) {
+	            if ($data == 'like') {
+	                $likeIds[] = $id;
+	                $likeCount++;
+	            }
+
+	            if ($data == 'track') {
+	                $trackIds[] = $id;
+	                $trackCount++;
+	            }
+	        }
+		}
+
+	    $countAll = 0;
+
+	    switch ($likeType) {
+	        case 'animal':
+	            if ($type == 'animal') {
+	                $countAll = DB::table($likeType)->whereNull('info')->count();
+	            } else {
+	                $countAll = DB::table($likeType)->where('info', '!=', '')->count();
+	            }
+            case 'fish':
+            case 'insect':
+            case 'fossil':
+            case 'art':
+            case 'diy':
+            case 'kk':
+                $countAll = DB::table($likeType)->count();
+	            break;
+            case 'museum':
+                $countAll1 = DB::table('fish')->count();
+                $countAll2 = DB::table('insect')->count();
+
+                $countAll = $countAll1 + $countAll2;
+	            break;
+	        case 'items':
+	        	$countAll = DB::table('items_new');
+
+	        	//家具
+	        	if ($type == 'furniture') {
+	        	    $countAll->whereIn('category', ItemsServices::getFurnitureAllType());
+	        	} else if ($type == 'apparel') {
+	        	    $countAll->whereNotIn('category', ItemsServices::getFurnitureAllType());
+	        	} else if ($type == 'plant') {
+	        	    $countAll->where('category', '植物');
+	        	}
+
+	        	$countAll = $countAll->count();
+	    }
+
+	    if ($needIds) {
+    		return [
+    			'likeCount' => $likeCount,
+    			'likeIds' => $likeIds,
+    			'trackCount' => $trackCount,
+    			'trackIds' => $trackIds,
+    	        'noLikeCount' => $countAll - $likeCount,
+    	        'noTrackCount' => $countAll - $trackCount,
+    		];
+	    }
+
+		return [
+			'likeCount' => $likeCount,
+			'trackCount' => $trackCount,
+	        'noLikeCount' => $countAll - $likeCount,
+	        'noTrackCount' => $countAll - $trackCount,
+		];
     }
 }
 
@@ -84,7 +203,7 @@ if (!function_exists('computedMainData')) {
     /**
      * @return []
      */
-    function computedMainData($lists, $type)
+    function computedMainData($lists, $checkLikeType, $checkType)
     {
     	$lineId = getUserData('lineId');
     	//like
@@ -102,8 +221,9 @@ if (!function_exists('computedMainData')) {
     			$explode = explode("_", $full);
     			$likeId = isset($explode[0]) ? $explode[0] : '';
     			$likeType = isset($explode[1]) ? $explode[1] : '';
-    			$likeTarget = isset($explode[2]) ? $explode[2] : '';
-    			if ($value->id == $likeId && $likeType == $type) {
+    			$type = isset($explode[2]) ? $explode[2] : '';
+    			$likeTarget = isset($explode[3]) ? $explode[3] : '';
+    			if ($value->id == $likeId && $likeType == $checkLikeType && $checkType == $type) {
     				switch ($likeTarget) {
     					case 'like':
     						$value->like = true;
