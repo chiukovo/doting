@@ -158,7 +158,7 @@
               </div>
             </li>
           </ul>
-          <infinite-loading :identifier="infiniteId" @infinite="search">
+          <infinite-loading :identifier="infiniteId" @infinite="search" v-show="lists.length == 0">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
