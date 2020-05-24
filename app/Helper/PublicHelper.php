@@ -289,7 +289,7 @@ if (!function_exists('getCountItems')) {
 						case 'art':
 							$name = '藝術品';
 							$has = '捐贈';
-							$imgUrl = '/art/充滿母愛的雕塑0.png';
+							$imgUrl = '/art/神祕的雕塑0.png';
 							$href = '/art/list?target=';
 							break;
 						case 'diy':
