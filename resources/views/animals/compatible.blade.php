@@ -10,9 +10,6 @@
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
-    <div class="mb-2">
-      @include('layouts.ads')
-    </div>
     <section class="post">
       <div id="select-div" class="row fixed-bottom analysis-tag" v-show="selected.length != 0">
         <div class="col-12 col-md-10">
