@@ -1,7 +1,7 @@
 @extends('layouts.web')
 @section('title', '島民資訊')
 @section('content')
-<div id="app" class="content-wrap">
+<div id="app" class="content-wrap" v-cloak>
   <section class="post">
     <div class="container">
       <div class="row justify-content-md-center mt-3 mb-5">
