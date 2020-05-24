@@ -103,109 +103,45 @@
         <div class="col-12 col-md-10  col-lg-8">
           <div class="user-wrap">
             <div class="user-header">
-              <h4>OAO島的居民</h4>
-              <small>Residents of OAO</small>
+              <h4 v-if="info.island_name != ''">@{{ info.island_name }}的居民</h4>
+              <h4 v-else>我的居民</h4>
+              <small v-if="info.island_name != ''">Residents of @{{ info.island_name }}</small>
+              <small v-else>Residents of My</small>
             </div>
             <div class="user-body">
-              <ul class="nav nav-tabs nav-fill" role="tablist">
+              <ul class="nav nav-tabs nav-fill" role="tablist" v-if="animalLike.length != 0 && animalTrack.length != 0">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(2)</a>
+                  <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(@{{ animalLike.length }})</a>
                   <!-- 上限10 -->
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(8)</a>
+                  <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(@{{ animalTrack.length }})</a>
                   <!-- 無上限？ -->
                 </li>
               </ul>
-              <div class="tab-content">
+              <div class="tab-content" v-if="animalLike.length != 0 && animalTrack.length != 0">
                 <div class="tab-pane fade show active" id="animals1">
                   <ul class="card-list">
-                    <li>
+                    <li v-for="list in animalLike" @click="goDetail(list)">
                       <div class="card-list-item">
                         <div class="card-list-img">
-                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                          <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
                         </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="card-list-item">
-                        <div class="card-list-img">
-                          <img src="../animal/icon/彭花.png" class="img-fluid" alt="彭花">
-                        </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="card-list-item">
-                        <div class="card-list-img">
-                          <img src="../animal/icon/阿一.png" class="img-fluid" alt="阿一">
-                        </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="card-list-item">
-                        <div class="card-list-img">
-                          <img src="../animal/icon/雪美.png" class="img-fluid" alt="雪美">
-                        </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="card-list-item">
-                        <div class="card-list-img">
-                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
-                        </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-heart"></i>取消擁有</button></li>
-                          </ul>
-                        </div>
+                        <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
+                        <div class="card-list-info">@{{ list.personality }} / @{{ list.race }} / @{{ list.bd }}</div>
                       </div>
                     </li>
                   </ul>
                 </div>
                 <div class="tab-pane fade" id="animals2">
                   <ul class="card-list">
-                    <li>
+                    <li v-for="list in animalTrack" @click="goDetail(list)">
                       <div class="card-list-item">
                         <div class="card-list-img">
-                          <img src="../animal/icon/茶茶丸.png" class="img-fluid" alt="茶茶丸">
+                          <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
                         </div>
-                        <div class="card-list-title">茶茶丸 ♂</div>
-                        <div class="card-list-info">運動/綿羊/3.18</div>
-                        <div class="card-list-btn">
-                          <ul class="user-save-btn">
-                            <li><button class="btn btn-outline-secondary current"><i class="fas fa-bookmark"></i>取消追蹤</button></li>
-                          </ul>
-                        </div>
+                        <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
+                        <div class="card-list-info">@{{ list.personality }} / @{{ list.race }} / @{{ list.bd }}</div>
                       </div>
                     </li>
                   </ul>
@@ -223,36 +159,21 @@
               <small>Collection</small>
             </div>
             <div class="user-body">
-              <ul class="user-list">
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="../other/鯊魚.png" class="img-fluid">
-                    <span class="user-item-title">0 / 80</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="../other/大白斑蝶.png" class="img-fluid">
-                    <span class="user-item-title">0 / 80</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="../itemsNew/雨衣_0.png" class="img-fluid">
-                    <span class="user-item-title">0 / 80</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="../itemsNew/大熊熊_20.png" class="img-fluid">
-                    <span class="user-item-title">0 / 80</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="user-item">
-                    <img src="../kk/Hypno_K.K..png" class="img-fluid">
-                    <span class="user-item-title">0 / 20</span>
-                  </a>
+              <ul class="card-list user-card-list">
+                <li v-for="list in itemsData">
+                  <div class="card-list-item">
+                    <div class="card-list-img">
+                      <img :src="list.imgUrl" class="img-fluid" :alt="list.name">
+                    </div>
+                    <div class="card-list-title">@{{ list.name }}</div>
+                    <div class="card-list-btn">
+                      <ul class="user-save-btn">
+                        <li><button class="btn btn-sm btn-outline-danger"><div>@{{ list.track }}</div>追蹤
+                        </button></li>
+                        <li><button class="btn btm-sm btn-outline-success"><div>@{{ list.like }}</div>@{{ list.has }}</button></li>
+                      </ul>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -271,6 +192,9 @@
     data: {
       is_edit: false,
       info: [],
+      itemsData: [],
+      animalLike: [],
+      animalTrack: [],
     },
     mounted() {
       this.getUserInfo()
@@ -279,6 +203,9 @@
       isMobile(){
         let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
         return flag;
+      },
+      goDetail(list) {
+        location.href = '/animals/detail?name=' + list.name
       },
       getUserInfo() {
         axios.get('/user/info', {
@@ -291,6 +218,9 @@
 
           if (result.code == 1) {
             this.info = result.data
+            this.itemsData = result.itemsData
+            this.animalLike = result.animalInfo.like
+            this.animalTrack = result.animalInfo.track
           }
         })
       },
@@ -310,6 +240,7 @@
 
           if (result.code == 1) {
             this.is_edit = false
+            this.getUserInfo()
           }
         })
       }

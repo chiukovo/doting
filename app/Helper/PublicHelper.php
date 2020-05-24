@@ -179,6 +179,152 @@ if (!function_exists('computedCount')) {
     }
 }
 
+if (!function_exists('computedAllCount')) {
+
+    /**
+     * @return []
+     */
+    function computedAllCount()
+    {
+    	$result = [];
+
+		$lineId = getUserData('lineId');
+
+		//檢查type
+		$likeTypes = allLikeTypeTarget()['likeType'];
+		$types = allLikeTypeTarget()['type'];
+
+		//like
+		$like = Redis::hGetAll($lineId);
+
+		foreach ($likeTypes as $likeType) {
+			foreach ($types as $type) {
+				$likeIds = [];
+				$trackIds = [];
+
+				foreach ($like as $checkKey => $data) {
+			        $explode = explode('_', $checkKey);
+
+			        $id = isset($explode[0]) ? $explode[0] : '';
+			        $checkLikeType = isset($explode[1]) ? $explode[1] : '';
+			        $checkType = isset($explode[2]) ? $explode[2] : '';
+
+			        if ($likeType == $checkLikeType && $type == $checkType) {
+			            if ($data == 'like') {
+			                $likeIds[] = $id;
+			            }
+
+			            if ($data == 'track') {
+			                $trackIds[] = $id;
+			            }
+			        }
+				}
+
+				if (!empty($likeIds)) {
+					$result[$type]['likeIds'] = $likeIds;
+					$result[$type]['likeCount'] = count($likeIds);
+				}
+
+				if (!empty($trackIds)) {
+					$result[$type]['trackIds'] = $trackIds;
+					$result[$type]['trackCount'] = count($trackIds);
+				}
+			}
+		}
+
+		foreach ($types as $type) {
+			$needInsert = true;
+			foreach ($result as $key => $data) {
+				if ($key == $type) {
+					$needInsert = false;
+				}
+			}
+
+			if ($needInsert) {
+				$result[$type] = [
+					'likeCount' => 0,
+					'trackCount' => 0,
+				];
+			}
+		}
+
+		return $result;
+    }
+}
+
+if (!function_exists('getCountItems')) {
+
+    function getCountItems($target)
+    {
+    	$result = [];
+    	$types = ['fish', 'insect', 'fossil', 'art', 'diy', 'apparel', 'furniture', 'plant', 'kk'];
+
+    	foreach ($types as $type) {
+	    	foreach ($target as $checkType => $detail) {
+	    		if ($type == $checkType) {
+	    			$name = '';
+	    			$has = '擁有';
+	    			$imgUrl = '';
+
+					switch ($type) {
+						case 'fish':
+							$name = '魚';
+							$has = '捐贈';
+							$imgUrl = '/other/鯊魚.png';
+							break;
+						case 'insect':
+							$name = '昆蟲';
+							$has = '捐贈';
+							$imgUrl = '/other/大白斑蝶.png';
+							break;
+						case 'fossil':
+							$name = '化石';
+							$has = '捐贈';
+							$imgUrl = '/fossil/琥珀.png';
+							break;
+						case 'art':
+							$name = '藝術品';
+							$has = '捐贈';
+							$imgUrl = '/art/充滿母愛的雕塑0.png';
+							break;
+						case 'diy':
+							$name = 'DIY方程式';
+							$imgUrl = '/diy/鑄鐵木矮櫃.png';
+							break;
+						case 'apparel':
+							$name = '家具';
+							$imgUrl = '/itemsNew/大熊熊_20.png';
+							break;
+						case 'furniture':
+							$name = '服飾';
+							$imgUrl = '/itemsNew/雨衣_0.png';
+							break;
+						case 'plant':
+							$name = '植物';
+							$imgUrl = '/itemsNew/蘋果.png';
+							break;
+						case 'kk':
+							$name = '唱片';
+							$imgUrl = '/kk/Hypno_K.K..png';
+							break;
+					}
+
+
+					$result[] = [
+						'name' => $name,
+						'imgUrl' => $imgUrl,
+						'has' => $has,
+						'like' => $detail['likeCount'],
+						'track' => $detail['trackCount'],
+					];
+	    		}
+	    	}
+    	}
+
+    	return $result;
+    }
+}
+
 if (!function_exists('isWebLogin')) {
 
     /**

@@ -41,9 +41,52 @@ class WebUserController extends Controller
     	$user->fruit_name = fruitName($user->fruit);
     	$user->position_name = positionName($user->position);
 
+    	//找出所有集合
+    	$countData = computedAllCount();
+    	$countData['animalInfo'] = [
+    		'track' => [],
+    		'like' => [],
+    	];
+
+    	//動物
+    	if (isset($countData['animal'])) {
+	    	if (isset($countData['animal']['trackIds'])) {
+	    		$animalTrack = DB::table('animal')
+	    		    ->whereIn('id', $countData['animal']['trackIds'])
+	    		    ->get([
+	    		    	'name',
+	    		    	'sex',
+	    		    	'personality',
+	    		    	'race',
+	    		    	'bd',
+	    		    ])->toArray();
+
+	    		$countData['animalInfo']['track'] = $animalTrack;
+	    	}
+
+	    	if (isset($countData['animal']['likeIds'])) {
+	    		$animalLike = DB::table('animal')
+	    		    ->whereIn('id', $countData['animal']['likeIds'])
+	    		    ->get([
+	    		    	'name',
+	    		    	'sex',
+	    		    	'personality',
+	    		    	'race',
+	    		    	'bd',
+	    		    ])->toArray();
+
+	    		$countData['animalInfo']['like'] = $animalLike;
+	    	}
+    	}
+
+    	//get all items
+    	$countItems = getCountItems($countData);
+
     	return [
     		'code' => 1,
     		'data' => $user,
+    		'itemsData' => $countItems,
+    		'animalInfo' => $countData['animalInfo'],
     	];
     }
 
