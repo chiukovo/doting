@@ -1013,10 +1013,38 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   .nav-tabs {
     margin-bottom: 0.5rem;
   }
+  .tab-content-scroll {
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
   .card-list li .card-list-item {
     .card-list-img {
       height: 80px;
       padding: .5rem 1rem;
+    }
+  }
+  .user-card-list {
+    > li {
+      .card-list-item {
+        padding-bottom: 0;
+      }
+    }
+    .card-list-title {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid $gray-200;
+    }
+    .user-save-btn {
+      display: flex;
+      justify-content: space-around;
+      li {
+        flex: 0 0 43%;
+        margin: 0.2rem 0;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+      }
     }
   }
 }
