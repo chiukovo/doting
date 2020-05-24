@@ -272,6 +272,24 @@
             this.noTrackCount = result.count.noTrackCount
             this.likeCount = result.count.likeCount
             this.noLikeCount = result.count.noLikeCount
+
+            let message
+            let prex = ''
+
+            if (!list[target]) {
+              prex = '取消'
+            }
+
+            if (target == 'track') {
+              message = '已' + prex + '追蹤'
+            } else if (target == 'like') {
+              message = '已' + prex + '捐贈'
+            }
+
+            $('#hint-message .message').text(message)
+            $('#hint-message').addClass('show')
+
+            window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
           }
          })
       },

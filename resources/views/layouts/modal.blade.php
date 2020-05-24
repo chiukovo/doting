@@ -14,6 +14,6 @@
   </div>
 </div>
 <!--tips-->
-<div class="tips">
-  <span id="tips-message"></span>
+<div id="hint-message" class="hint-message">
+  <div class="message"></div>
 </div>
