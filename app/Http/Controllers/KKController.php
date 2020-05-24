@@ -94,7 +94,7 @@ class KKController extends Controller
         return view('kk.detail', [
             'type' => $type,
             'token' => $token,
-            'detail' => $detail
+            'detail' => $result[0]
         ]);
     }
 

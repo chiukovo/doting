@@ -76,11 +76,18 @@ class ArtController extends Controller
             ->first();
 
         if (is_null($detail)) {
-            return redirect('animals/list');
+            return redirect('art/list');
         }
 
+        $type = 'art';
+        $token = encrypt($detail->id);
+        //encode id and like current
+        $result = computedMainData([$detail], $type, $type);
+
         return view('art.detail', [
-            'detail' => $detail
+            'detail' => $result[0],
+            'type' => $type,
+            'token' => $token,
         ]);
     }
 }

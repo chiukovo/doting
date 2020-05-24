@@ -23,7 +23,7 @@
             </div>
             <div id="user-save" class="user-save">
               <div class="user-save-wrap">
-                <a href="#" class="btn-back"></a>
+                <a onclick="history.go(-1)" class="btn-back"></a>
                 <ul class="user-save-btn">
                   <li onclick="toggleLike('track')">
                     @if($detail->track)
