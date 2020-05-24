@@ -1,7 +1,7 @@
 @extends('layouts.web')
 @section('title', '島民資訊')
 @section('content')
-<div class="content-wrap">
+<div id="app" class="content-wrap">
   <section class="post">
     <div class="container">
       <div class="row justify-content-md-center mt-3 mb-5">
@@ -12,24 +12,88 @@
             </div>
             <div class="passport-body row">
               <div class="passport-info-img text-center col-12 col-sm-4">
-                <img src="/other/鱘魚.png" class="img-fluid bg-light border rounded p-2">
+                <img :src="info.picture_url" class="img-fluid bg-light border rounded p-2">
               </div>
-              <ul class="passport-info col-12 col-sm-8">
-                <li class="passport-sw">
-                  <span>SW-1234-1234-1234</span>
+              <ul class="passport-info col-12 col-sm-8" v-if="!is_edit">
+                <li>
+                  <div class="passport-info-item passport-sw">
+                    <div class="label">護照號碼</div>
+                    <div class="data">@{{ info.passport }}</div>
+                  </div>
+                  <button class="btn btn-sm btn-default btn-outline-secondary" @click="is_edit = true">編輯</button>
                 </li>
-                <li class="passport-info-top passport-hr">
-                  <div class="passport-info-island">OAO島</div>
-                  <div class="passport-info-fruit">桃子</div>
+                <li>
+                  <div class="passport-info-item-group">
+                    <div class="passport-info-item">
+                      <div class="label">島名</div>
+                      <div class="data">@{{ info.island_name }}</div>
+                    </div>
+                    <div class="passport-info-item">
+                      <div class="label">特產</div>
+                      <div class="data">@{{ info.fruit_name }}</div>
+                    </div>
+                  </div>
                 </li>
-                <li class="passport-info-name passport-hr">豆丁</li>
-                <li class="passport-info-birthday">1月21日出生</li>
+                <li>
+                  <div class="passport-info-item">
+                    <div class="label">所屬半球</div>
+                    <div class="data">@{{ info.position_name }}</div>
+                  </div>
+                  <div class="passport-info-tip">
+                    <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
+                  </div>
+                </li>
+              </ul>
+              <ul class="passport-info col-12 col-sm-8" v-else>
+                <li>
+                  <div class="passport-info-item passport-sw">
+                    <div class="label">護照號碼</div>
+                    <div class="data"><input type="text" class="form-control form-control-sm" v-model="info.passport"></div>
+                  </div>
+                  <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
+                </li>
+                <li>
+                  <div class="passport-info-item-group">
+                    <div class="passport-info-item">
+                      <div class="label">島名</div>
+                      <div class="data"><input type="text" class="form-control form-control-sm" v-model="info.island_name"></div>
+                    </div>
+                    <div class="passport-info-item">
+                      <div class="label">特產</div>
+                      <div class="data">
+                        <select class="form-control form-control-sm" v-model="info.fruit">
+                          <option value="0">請選擇</option>
+                          <option value="1">桃子</option>
+                          <option value="2">蘋果</option>
+                          <option value="3">梨子</option>
+                          <option value="4">櫻桃</option>
+                          <option value="5">橘子</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="passport-info-item">
+                    <div class="label">所屬半球</div>
+                    <div class="data">
+                      <select class="form-control form-control-sm" v-model="info.position">
+                        <option value="0">請選擇</option>
+                        <option value="1">南半球</option>
+                        <option value="2">北半球</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="passport-info-tip">
+                    <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="passport-footer">
               <div class="passport-join">
                 <label class="passport-join-title">登陸日</label>
-                <span>2020年3月26日</span>
+                <span>@{{ info.date }}</span>
               </div>
             </div>
           </div>
@@ -197,5 +261,59 @@
       </div>
     </div>
   </section>
+  @include('layouts.goTop')
 </div>
+
+<script>
+  Vue.use(GoTop);
+  new Vue({
+    el: '#app',
+    data: {
+      is_edit: false,
+      info: [],
+    },
+    mounted() {
+      this.getUserInfo()
+    },
+    methods: {
+      isMobile(){
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
+      getUserInfo() {
+        axios.get('/user/info', {
+         }).then((response) => {
+          const result = response.data
+
+          if (result.code == -1) {
+            location.href = '/'
+          }
+
+          if (result.code == 1) {
+            this.info = result.data
+          }
+        })
+      },
+      saveUserInfo() {
+        axios.post('/user/save', {
+          info: this.info
+         }).then((response) => {
+          const result = response.data
+
+          if (result.code == -1) {
+            location.href = '/'
+          }
+
+          if (result.code == -2) {
+            alert(result.msg)
+          }
+
+          if (result.code == 1) {
+            this.is_edit = false
+          }
+        })
+      }
+    }
+  })
+</script>
 @endsection

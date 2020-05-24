@@ -16,6 +16,37 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('fruitName')) {
+
+    function fruitName($fruitId)
+    {
+        $allFruit = [
+        	'-',
+        	'桃子',
+        	'蘋果',
+        	'梨子',
+        	'櫻桃',
+        	'橘子',
+        ];
+
+        return isset($allFruit[$fruitId]) ? $allFruit[$fruitId] : '';
+    }
+}
+
+if (!function_exists('positionName')) {
+
+    function positionName($positionId)
+    {
+        $allPosition = [
+        	'-',
+        	'南半球',
+        	'北半球',
+        ];
+
+        return isset($allPosition[$positionId]) ? $allPosition[$positionId] : '';
+    }
+}
+
 if (!function_exists('allLikeTypeTarget')) {
 
     /**

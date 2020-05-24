@@ -131,6 +131,8 @@ Route::get('/like/count', 'LikeController@getCount');
 
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');
+	Route::get('/user/info', 'WebUserController@info');
+	Route::post('/user/save', 'WebUserController@editInfo');
 });
 
 //爬蟲
