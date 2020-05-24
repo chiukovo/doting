@@ -325,8 +325,8 @@ if (!function_exists('getCountItems')) {
 						'imgUrl' => $imgUrl,
 						'has' => $has,
 						'href' => $href,
-						'like' => $detail['likeCount'],
-						'track' => $detail['trackCount'],
+						'like' => isset($detail['likeCount']) ? $detail['likeCount'] : 0,
+						'track' => isset($detail['trackCount']) ? $detail['trackCount'] : 0,
 					];
 	    		}
 	    	}
