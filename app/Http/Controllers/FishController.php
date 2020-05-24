@@ -12,9 +12,11 @@ class FishController extends Controller
     public function list(Request $request)
     {
         $text = $request->input('text', '');
+        $target = $request->input('target', '');
 
         return view('fish.list', [
             'text' => $text,
+            'target' => $target,
         ]);
     }
 
@@ -73,9 +75,16 @@ class FishController extends Controller
         $dateRange1 = range(0, 11);
         $dateRange2 = range(12, 23);
 
+        $type = 'fish';
+        $token = encrypt($detail['id']);
+        //encode id and like current
+        $result = computedMainData([(object)$detail], $type, $type);
+
         return view('fish.detail', [
-            'detail' => $detail,
+            'detail' => (array)$result[0],
             'months' => $months,
+            'type' => $type,
+            'token' => $token,
             'dateRange1' => $dateRange1,
             'dateRange2' => $dateRange2,
         ]);
@@ -85,11 +94,33 @@ class FishController extends Controller
     {
         $result = [];
         $text = $request->input('text', '');
+        $type = 'fish';
+        $target = $request->input('target', '');
 
         $fish = DB::table('fish');
 
         if ($text != '') {
            $fish->where('name', 'like', '%' . $text . '%');
+        }
+
+        //check target
+        if ($target != '') {
+            $getCount = computedCount($type, $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $fish->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $fish->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $fish->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $fish->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
         }
 
         $fish = $fish->select()
@@ -104,6 +135,9 @@ class FishController extends Controller
 
             $result[] = $data;
         }
+
+        //encode id and like current
+        $result = computedMainData($result, $type, $type);
 
         return $result;
     }

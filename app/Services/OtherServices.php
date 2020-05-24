@@ -28,7 +28,7 @@ use DB;
 
 class OtherServices
 {
-    public static function getDataByMessage($message, $page = '', $onlyNow = false)
+    public static function getDataByMessage($message, $page = '', $onlyNow = false, $target = '')
     {
     	$other = [];
     	$notFound = '找不到捏 哇耶...(¬_¬)';
@@ -110,6 +110,26 @@ class OtherServices
     	//找蟲
         $insect = DB::table('insect')->where('name', 'like', '%' . $message . '%');
 
+        //check target
+        if ($target != '') {
+            $getCount = computedCount('insect', 'insect', true);
+
+            switch ($target) {
+                case 'like':
+                    $insect->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $insect->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $insect->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $insect->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
+        }
+
         if ($page != '') {
             $insect = $insect
                 ->orderBy('sell', 'desc')
@@ -118,6 +138,9 @@ class OtherServices
                 ->toArray();
 
             $insect = $insect['data'];
+            foreach ($insect as $key => $value) {
+                $insect[$key]->type = 'insect';
+            }
         } else {
             $insect = $insect
                 ->orderBy('sell', 'desc')
@@ -128,6 +151,26 @@ class OtherServices
         //找魚
         $fish = DB::table('fish')->where('name', 'like', '%' . $message . '%');
 
+        //check target
+        if ($target != '') {
+            $getCount = computedCount('fish', 'fish', true);
+
+            switch ($target) {
+                case 'like':
+                    $fish->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $fish->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $fish->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $fish->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
+        }
+
         if ($page != '') {
             $fish = $fish
                 ->orderBy('sell', 'desc')
@@ -136,12 +179,20 @@ class OtherServices
                 ->toArray();
 
             $fish = $fish['data'];
+
+            foreach ($fish as $key => $value) {
+                $fish[$key]->type = 'fish';
+            }
         } else {
             $fish = $fish
                 ->orderBy('sell', 'desc')
                 ->get()
                 ->toArray();
         }
+
+        //encode id and like current
+        $fish = computedMainData($fish, 'fish', 'fish');
+        $insect = computedMainData($insect, 'insect', 'insect');
 
         $other = array_merge($fish, $insect);
 

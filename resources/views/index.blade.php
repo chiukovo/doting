@@ -218,7 +218,7 @@
     data: {
       date: '',
       show: false,
-      isNorth: true,
+      isNorth: 0,
       isFish: true,
       birthday: {},
       ranking: [],
@@ -252,6 +252,7 @@
           this.southFish = data.southFish
           this.northInsect = data.northInsect
           this.southInsect = data.southInsect
+          this.isNorth = data.isNorth
           window.setTimeout(( () => this.show = true ), 200)
         })
       }

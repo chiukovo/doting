@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
-//line login
-Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');
@@ -123,9 +121,18 @@ Route::get('/kk/detail', 'KKController@detail');
 Route::get('/test', 'AnimalCrossingController@index');
 Route::get('/getConstellation', 'ApiController@getConstellation');
 
-//auth
+//line login
+Route::get('/logout', 'LineLoginController@logout');
+Route::get('/line/login/callback', 'LineLoginController@callback');
+
+//toggleLike
+Route::post('/toggleLike', 'LikeController@toggleLike');
+Route::get('/like/count', 'LikeController@getCount');
+
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');
+	Route::get('/user/info', 'WebUserController@info');
+	Route::post('/user/save', 'WebUserController@editInfo');
 });
 
 //爬蟲
@@ -148,4 +155,5 @@ Route::get('/getAnimalCard', 'ApiController@getAnimalCard');
 Route::get('/getArtwork', 'ApiController@getArtwork');
 Route::get('/getFossil', 'ApiController@getFossil');
 Route::get('/getPlant', 'ApiController@getPlant');
-Route::get('/getKK', 'ApiController@getKK');*/
+Route::get('/getKK', 'ApiController@getKK');
+Route::get('/transData', 'ApiController@transData');*/

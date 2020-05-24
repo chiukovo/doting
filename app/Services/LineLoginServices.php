@@ -69,11 +69,23 @@ class LineLoginServices
                     ]);
             }
 
+            //在取得一次
+            $user = DB::table('web_user')
+                ->where('line_id', $userId)
+                ->first(['position']);
+
+            $position = 0;
+
+            if (!is_null($user)) {
+                $position = $user->position;
+            }
+
             //logining
             Session::put('web', [
                 'lineId' => $userId,
                 'displayName' => $displayName,
                 'pictureUrl' => $pictureUrl,
+                'position' => $position,
                 'token' => $token,
             ]);
 
@@ -83,5 +95,10 @@ class LineLoginServices
         }
 
         return false;
+    }
+
+    public static function doLogout()
+    {
+        Session::forget('web');
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
+use App\Services\ItemsServices;
+
 if (!function_exists('testHelper')) {
 
     /**
@@ -10,6 +13,326 @@ if (!function_exists('testHelper')) {
     function testHelper()
     {
         return 'ok';
+    }
+}
+
+if (!function_exists('fruitName')) {
+
+    function fruitName($fruitId)
+    {
+        $allFruit = [
+        	'-',
+        	'桃子',
+        	'蘋果',
+        	'梨子',
+        	'櫻桃',
+        	'橘子',
+        ];
+
+        return isset($allFruit[$fruitId]) ? $allFruit[$fruitId] : '';
+    }
+}
+
+if (!function_exists('positionName')) {
+
+    function positionName($positionId)
+    {
+        $allPosition = [
+        	'-',
+        	'南半球',
+        	'北半球',
+        ];
+
+        return isset($allPosition[$positionId]) ? $allPosition[$positionId] : '';
+    }
+}
+
+if (!function_exists('allLikeTypeTarget')) {
+
+    /**
+     * @return []
+     */
+    function allLikeTypeTarget()
+    {
+        return [
+        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk'],
+        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk'],
+        	'target' => ['like', 'track'],
+        ];
+    }
+}
+
+if (!function_exists('computedCount')) {
+
+    /**
+     * @return []
+     */
+    function computedCount($likeType, $type, $needIds = false)
+    {
+		$likeCount = 0;
+		$trackCount = 0;
+
+		$lineId = getUserData('lineId');
+
+		//檢查type
+		$allType = allLikeTypeTarget();
+		if (!in_array($likeType, $allType['likeType']) || !in_array($type, $allType['type'])) {
+			return [
+				'likeCount' => $likeCount,
+				'trackCount' => $trackCount,
+			];
+		}
+
+		//like
+		$like = Redis::hGetAll($lineId);
+	    $likeIds = [];
+	    $trackIds = [];
+
+		foreach ($like as $checkKey => $data) {
+	        $explode = explode('_', $checkKey);
+
+	        $id = isset($explode[0]) ? $explode[0] : '';
+	        $checkLikeType = isset($explode[1]) ? $explode[1] : '';
+	        $checkType = isset($explode[2]) ? $explode[2] : '';
+
+	        if ($likeType == $checkLikeType && $type == $checkType) {
+	            if ($data == 'like') {
+	                $likeIds[] = $id;
+	                $likeCount++;
+	            }
+
+	            if ($data == 'track') {
+	                $trackIds[] = $id;
+	                $trackCount++;
+	            }
+	        }
+
+	        //for 博物館
+	        if ($likeType == 'museum' && ($checkLikeType == 'fish' || $checkLikeType == 'insect')) {
+	            if ($data == 'like') {
+	                $likeIds[] = $id;
+	                $likeCount++;
+	            }
+
+	            if ($data == 'track') {
+	                $trackIds[] = $id;
+	                $trackCount++;
+	            }
+	        }
+		}
+
+	    $countAll = 0;
+
+	    switch ($likeType) {
+	        case 'animal':
+	            if ($type == 'animal') {
+	                $countAll = DB::table($likeType)->whereNull('info')->count();
+	            } else {
+	                $countAll = DB::table($likeType)->where('info', '!=', '')->count();
+	            }
+            case 'fish':
+            case 'insect':
+            case 'fossil':
+            case 'art':
+            case 'diy':
+            case 'kk':
+                $countAll = DB::table($likeType)->count();
+	            break;
+            case 'museum':
+                $countAll1 = DB::table('fish')->count();
+                $countAll2 = DB::table('insect')->count();
+
+                $countAll = $countAll1 + $countAll2;
+	            break;
+	        case 'items':
+	        	$countAll = DB::table('items_new');
+
+	        	//家具
+	        	if ($type == 'furniture') {
+	        	    $countAll->whereIn('category', ItemsServices::getFurnitureAllType());
+	        	} else if ($type == 'apparel') {
+	        	    $countAll->whereNotIn('category', ItemsServices::getFurnitureAllType());
+	        	} else if ($type == 'plant') {
+	        	    $countAll->where('category', '植物');
+	        	}
+
+	        	$countAll = $countAll->count();
+	    }
+
+	    if ($needIds) {
+    		return [
+    			'likeCount' => $likeCount,
+    			'likeIds' => $likeIds,
+    			'trackCount' => $trackCount,
+    			'trackIds' => $trackIds,
+    	        'noLikeCount' => $countAll - $likeCount,
+    	        'noTrackCount' => $countAll - $trackCount,
+    		];
+	    }
+
+		return [
+			'likeCount' => $likeCount,
+			'trackCount' => $trackCount,
+	        'noLikeCount' => $countAll - $likeCount,
+	        'noTrackCount' => $countAll - $trackCount,
+		];
+    }
+}
+
+if (!function_exists('computedAllCount')) {
+
+    /**
+     * @return []
+     */
+    function computedAllCount()
+    {
+    	$result = [];
+
+		$lineId = getUserData('lineId');
+
+		//檢查type
+		$likeTypes = allLikeTypeTarget()['likeType'];
+		$types = allLikeTypeTarget()['type'];
+
+		//like
+		$like = Redis::hGetAll($lineId);
+
+		foreach ($likeTypes as $likeType) {
+			foreach ($types as $type) {
+				$likeIds = [];
+				$trackIds = [];
+
+				foreach ($like as $checkKey => $data) {
+			        $explode = explode('_', $checkKey);
+
+			        $id = isset($explode[0]) ? $explode[0] : '';
+			        $checkLikeType = isset($explode[1]) ? $explode[1] : '';
+			        $checkType = isset($explode[2]) ? $explode[2] : '';
+
+			        if ($likeType == $checkLikeType && $type == $checkType) {
+			            if ($data == 'like') {
+			                $likeIds[] = $id;
+			            }
+
+			            if ($data == 'track') {
+			                $trackIds[] = $id;
+			            }
+			        }
+				}
+
+				if (!empty($likeIds)) {
+					$result[$type]['likeIds'] = $likeIds;
+					$result[$type]['likeCount'] = count($likeIds);
+				}
+
+				if (!empty($trackIds)) {
+					$result[$type]['trackIds'] = $trackIds;
+					$result[$type]['trackCount'] = count($trackIds);
+				}
+			}
+		}
+
+		foreach ($types as $type) {
+			$needInsert = true;
+			foreach ($result as $key => $data) {
+				if ($key == $type) {
+					$needInsert = false;
+				}
+			}
+
+			if ($needInsert) {
+				$result[$type] = [
+					'likeCount' => 0,
+					'trackCount' => 0,
+				];
+			}
+		}
+
+		return $result;
+    }
+}
+
+if (!function_exists('getCountItems')) {
+
+    function getCountItems($target)
+    {
+    	$result = [];
+    	$types = ['fish', 'insect', 'fossil', 'art', 'diy', 'apparel', 'furniture', 'plant', 'kk'];
+
+    	foreach ($types as $type) {
+	    	foreach ($target as $checkType => $detail) {
+	    		if ($type == $checkType) {
+	    			$name = '';
+	    			$has = '擁有';
+	    			$imgUrl = '';
+	    			$href = '';
+
+					switch ($type) {
+						case 'fish':
+							$name = '魚';
+							$has = '捐贈';
+							$imgUrl = '/other/鯊魚.png';
+							$href = '/fish/list?target=';
+							break;
+						case 'insect':
+							$name = '昆蟲';
+							$has = '捐贈';
+							$imgUrl = '/other/大白斑蝶.png';
+							$href = '/insect/list?target=';
+							break;
+						case 'fossil':
+							$name = '化石';
+							$has = '捐贈';
+							$imgUrl = '/fossil/琥珀.png';
+							$href = '/fossil/list?target=';
+							break;
+						case 'art':
+							$name = '藝術品';
+							$has = '捐贈';
+							$imgUrl = '/art/充滿母愛的雕塑0.png';
+							$href = '/art/list?target=';
+							break;
+						case 'diy':
+							$name = 'DIY方程式';
+							$imgUrl = '/diy/鑄鐵木矮櫃.png';
+							$href = '/diy/list?target=';
+							break;
+						case 'apparel':
+							$name = '家具';
+							$imgUrl = '/itemsNew/大熊熊_20.png';
+							$href = '/apparel/list?target=';
+							break;
+						case 'furniture':
+							$name = '服飾';
+							$imgUrl = '/itemsNew/雨衣_0.png';
+							$href = '/furniture/list?target=';
+							break;
+						case 'plant':
+							$name = '植物';
+							$imgUrl = '/itemsNew/蘋果.png';
+							$href = '/plant/list?target=';
+							break;
+						case 'kk':
+							$name = '唱片';
+							$imgUrl = '/kk/Hypno_K.K..png';
+							$href = '/kk/list?target=';
+							break;
+					}
+
+
+					$result[] = [
+						'name' => $name,
+						'imgUrl' => $imgUrl,
+						'has' => $has,
+						'href' => $href,
+						'like' => $detail['likeCount'],
+						'track' => $detail['trackCount'],
+					];
+	    		}
+	    	}
+    	}
+
+    	return $result;
     }
 }
 
@@ -41,6 +364,69 @@ if (!function_exists('isWebLogin')) {
   		}
 
   		return false;
+    }
+}
+
+if (!function_exists('getUserData')) {
+
+    /**
+     * @return []
+     */
+    function getUserData($params)
+    {
+    	$loginData = session('web');
+
+    	if (!is_null($loginData)) {
+    		if (isset($loginData[$params])) {
+    			return $loginData[$params];
+    		}
+    	}
+
+    	return '';
+    }
+}
+
+if (!function_exists('computedMainData')) {
+
+    /**
+     * @return []
+     */
+    function computedMainData($lists, $checkLikeType, $checkType)
+    {
+    	$lineId = getUserData('lineId');
+    	//like
+    	$like = Redis::hGetAll($lineId);
+
+    	//default
+    	foreach ($lists as $key => $value) {
+    	   $lists[$key]->token = encrypt($value->id);
+    	   $lists[$key]->like = false;
+    	   $lists[$key]->track = false;
+    	}
+
+    	foreach ($lists as $key => $value) {
+    		foreach ($like as $full => $likeData) {
+    			$explode = explode("_", $full);
+    			$likeId = isset($explode[0]) ? $explode[0] : '';
+    			$likeType = isset($explode[1]) ? $explode[1] : '';
+    			$type = isset($explode[2]) ? $explode[2] : '';
+    			$likeTarget = isset($explode[3]) ? $explode[3] : '';
+    			if ($value->id == $likeId && $likeType == $checkLikeType && $checkType == $type) {
+    				switch ($likeTarget) {
+    					case 'like':
+    						$value->like = true;
+    						break;
+    					case 'track':
+    						$value->track = true;
+    						break;
+    				}
+    			}
+    		}
+
+    		$lists[$key] = $value;
+    	}
+
+    	return $lists;
     }
 }
 

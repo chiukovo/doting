@@ -14,7 +14,7 @@ class AnimalWebCrossingController extends Controller
     {
         $text = $request->input('text', '');
         $type = $request->route()->getName();
-        $type = is_null($type) ? '' : $type;
+        $type = is_null($type) ? 'animal' : $type;
 
         return view('animals.list', [
             'type' => $type,
@@ -25,6 +25,7 @@ class AnimalWebCrossingController extends Controller
     public function detail(Request $request)
     {
         $name = $request->input('name');
+        $type = $request->route()->getName();
 
         if ($name == '') {
             return redirect('animals/list');
@@ -86,8 +87,15 @@ class AnimalWebCrossingController extends Controller
             ->get()
             ->toArray();
 
+        $type = $detail->info == '' ? 'animal' : 'npc';
+        $token = encrypt($detail->id);
+        //encode id and like current
+        $result = computedMainData([$detail], 'animal', $type);
+
         return view('animals.detail', [
-            'detail' => $detail,
+            'detail' => $result[0],
+            'type' => $type,
+            'token' => $token,
             'sameRaceArray' => $sameRaceArray,
         ]);
     }
@@ -100,6 +108,7 @@ class AnimalWebCrossingController extends Controller
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
         $type = $request->input('type', '');
+        $target = $request->input('target', '');
 
         if ($text != '') {
             $result = AnimalServices::getDataByMessage($text, $page, $type);
@@ -135,10 +144,32 @@ class AnimalWebCrossingController extends Controller
             $lists->whereIn('bd_m', $bd);
         }
 
+        //check target
+        if ($target != '') {
+            $getCount = computedCount('animal', $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $lists->whereIn('id', $getCount['likeIds']);
+                    break;
+                case 'noLike':
+                    $lists->whereNotIn('id', $getCount['likeIds']);
+                    break;
+                case 'track':
+                    $lists->whereIn('id', $getCount['trackIds']);
+                    break;
+                case 'noTrack':
+                    $lists->whereNotIn('id', $getCount['trackIds']);
+                    break;
+            }
+        }
+
         $lists = $lists->select()
             ->paginate(30)
             ->toArray();
 
+        //encode id and like current
+        $lists['data'] = computedMainData($lists['data'], 'animal', $type);
 
         return $lists['data'];
     }

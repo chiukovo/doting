@@ -57,8 +57,8 @@
           <form>
             <div class="form-search">
               <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
-              <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
-              <button class="btn btn-default" :class="checkAllCurrent()" @click.prevent="clearAll">清除搜尋</button>
+              <button class="btn btn-primary" native-type="submit" @click.prevent.stop="searchDefault">搜尋</button>
+              <button class="btn btn-default" :class="checkAllCurrent()" @click.prevent.stop="clearAll">清除搜尋</button>
             </div>
           </form>
         </div>
@@ -66,12 +66,18 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col text-right mb-1">
-              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+            <div class="col text-right">
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'track' ? 'current' : ''" @click="searchTarget('track')">已追蹤:@{{ trackCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noTrack' ? 'current' : ''" @click="searchTarget('noTrack')">未追蹤:@{{ noTrackCount }}
+              </button>
+              @if($type != 'npc')
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已擁有:@{{ likeCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noLike' ? 'current' : ''" @click="searchTarget('noLike')">未擁有:@{{ noLikeCount }}
+              </button>
+              @endif
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
-              <!-- table狀態顯示 fa-grip-horizontal
-                  列表狀態顯示 fa-list
-                -->
             </div>
           </div>
           <table class="table table-bordered table-hover text-center" v-if="isList">
@@ -84,6 +90,7 @@
                 @if($type != 'npc')
                 <th scope="col">生日</th>
                 <th scope="col" v-show="!isMobile()">口頭禪</th>
+                <th style="width: 120px;">追蹤/擁有</th>
                 @endif
               </tr>
             </thead>
@@ -107,14 +114,26 @@
                 <td>@{{ list.bd }}</td>
                 <td v-show="!isMobile()">@{{ list.say }}</td>
                 @endif
+                <td>
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
+                    </li>
+                    @if($type != 'npc')
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
+                    </li>
+                    @endif
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>
           <!-- style: list -->
           <ul class="card-list" v-if="!isList">
             <li v-for="list in lists">
-              <div class="card-list-item" @click="goDetail(list)">
-                <div class="card-list-img">
+              <div class="card-list-item">
+                <div class="card-list-img" @click="goDetail(list)">
                   <img class="img-fluid" :src="'/animal/' + list.name + '.png?v=' + version" :alt="list.name">
                 </div>
                 <div class="card-list-title">@{{ list.name }} @{{ list.sex }}</div>
@@ -123,6 +142,18 @@
                 </div>
                 <div class="card-list-info" v-else>
                   @{{ list.race }}
+                </div>
+                <div class="card-list-btn">
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
+                    </li>
+                    @if($type != 'npc')
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
+                    </li>
+                    @endif
+                  </ul>
                 </div>
               </div>
             </li>
@@ -136,6 +167,7 @@
     </section>
   </div>
   @include('layouts.goTop')
+  @include('layouts.modal')
 </div>
 <script>
   Vue.use(GoTop);
@@ -150,17 +182,24 @@
       race: [],
       personality: [],
       bd: [],
+      likeType: 'animal',
+      likeCount: 0,
+      noLikeCount: 0,
+      trackCount: 0,
+      noTrackCount: 0,
       type: "{{ $type }}",
       moreSearch: false,
       searchData: {
         race: [],
         personality: [],
         bd: [],
+        target: '',
         text: "{{ $text }}",
       }
     },
     mounted() {
       this.getAllType()
+      this.getLikeCount()
     },
     methods: {
       isMobile(){
@@ -171,11 +210,29 @@
         location.href = '/animals/detail?name=' + list.name
       },
       getAllType() {
-        axios.get('/animals/getAllType?type=' + this.type, {
+        axios.get('/animals/getAllType', {
+          params: {
+            likeType: this.likeType,
+          }
          }).then((response) => {
            this.race = response.data.race
            this.personality = response.data.personality
            this.bd = response.data.bd
+         })
+      },
+      getLikeCount() {
+        axios.get('/like/count', {
+          params: {
+            likeType: this.likeType,
+            type: this.type,
+          }
+         }).then((response) => {
+            const result = response.data
+
+            this.trackCount = result.trackCount
+            this.likeCount = result.likeCount
+            this.noTrackCount = result.noTrackCount
+            this.noLikeCount = result.noLikeCount
          })
       },
       search($state) {
@@ -185,6 +242,7 @@
            personality: this.searchData.personality,
            bd: this.searchData.bd,
            text: this.searchData.text,
+           target: this.searchData.target,
            type: this.type
          }).then((response) => {
            if (response.data.length) {
@@ -194,6 +252,45 @@
            } else {
              $state.complete();
            }
+         })
+      },
+      toggleLike(target, list) {
+        axios.post('/toggleLike', {
+           likeType: this.likeType,
+           type: this.type,
+           likeTarget: target,
+           token: list.token,
+         }).then((response) => {
+          const result = response.data
+          if (result.code == -1) {
+            $('#lineLoginModel').modal()
+          }
+
+          if (result.code == 1) {
+            list[target] = !list[target]
+            this.trackCount = result.count.trackCount
+            this.noTrackCount = result.count.noTrackCount
+            this.likeCount = result.count.likeCount
+            this.noLikeCount = result.count.noLikeCount
+
+            let message
+            let prex = ''
+
+            if (!list[target]) {
+              prex = '取消'
+            }
+
+            if (target == 'track') {
+              message = '已' + prex + '追蹤'
+            } else if (target == 'like') {
+              message = '已' + prex + '捐贈'
+            }
+
+            $('#hint-message .message').text(message)
+            $('#hint-message').addClass('show')
+
+            window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
+          }
          })
       },
       clearAll() {
@@ -249,6 +346,15 @@
         this.page = 1;
         this.lists = [];
         this.infiniteId += 1;
+      },
+      searchTarget(target) {
+        if (target == this.searchData.target) {
+          this.searchData.target = ''
+        } else {
+          this.searchData.target = target
+        }
+
+        this.searchDefault()
       },
       checkAllCurrent() {
         if (this.searchData.race.length == 0 && this.searchData.personality.length == 0 && this.searchData.bd.length == 0) {

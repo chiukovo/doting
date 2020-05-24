@@ -37,12 +37,16 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col text-right mb-1">
-              <button class="btn">全部: @{{ lists.length }} 個結果</button>
+            <div class="col text-right">
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'track' ? 'current' : ''" @click="searchTarget('track')">已追蹤:@{{ trackCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noTrack' ? 'current' : ''" @click="searchTarget('noTrack')">未追蹤:@{{ noTrackCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已捐贈:@{{ likeCount }}
+              </button>
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noLike' ? 'current' : ''" @click="searchTarget('noLike')">未捐贈:@{{ noLikeCount }}
+              </button>
               <button class="btn btn-default" @click="isList = !isList"><i class="fas" :class="isList ? 'fa-list' : 'fa-grip-horizontal'"></i></button>
-              <!-- table狀態顯示 fa-grip-horizontal
-                  列表狀態顯示 fa-list
-                -->
             </div>
           </div>
           <table class="table table-bordered table-hover text-center" v-if="isList">
@@ -50,6 +54,7 @@
               <tr>
                 <th class="table-label" scope="col">名稱</th>
                 <th scope="col">介紹</th>
+                <th style="width: 120px;">追蹤/捐贈</th>
               </tr>
             </thead>
             <tbody>
@@ -63,6 +68,16 @@
                   </a>
                 </td>
                 <td>@{{ list.info }}</td>
+                <td>
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i></button>
+                    </li>
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i></button>
+                    </li>
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -79,6 +94,16 @@
                 <div class="card-list-info">
                   <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.sell) }}</h5>
                 </div>
+                <div class="card-list-btn">
+                  <ul class="user-save-btn">
+                    <li>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
+                    </li>
+                    <li>
+                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>捐贈</button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </li>
           </ul>
@@ -91,6 +116,7 @@
     </section>
   </div>
   @include('layouts.goTop')
+  @include('layouts.modal')
 </div>
 
 <script>
@@ -100,14 +126,22 @@
     data: {
       lists: [],
       page: 1,
+      likeType: 'fossil',
+      likeCount: 0,
+      noLikeCount: 0,
+      trackCount: 0,
+      noTrackCount: 0,
+      type: 'fossil',
       version: "{{ config('app.version') }}",
       isList: false,
       infiniteId: +new Date(),
       searchData: {
         text: "{{ $text }}",
+        target: "{{ $target }}",
       }
     },
     mounted() {
+      this.getLikeCount()
     },
     methods: {
       formatPrice(money) {
@@ -117,10 +151,75 @@
 
         return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
       },
+      getLikeCount() {
+        axios.get('/like/count', {
+          params: {
+            likeType: this.likeType,
+            type: this.type,
+          }
+         }).then((response) => {
+            const result = response.data
+
+            this.trackCount = result.trackCount
+            this.likeCount = result.likeCount
+            this.noTrackCount = result.noTrackCount
+            this.noLikeCount = result.noLikeCount
+         })
+      },
+      searchTarget(target) {
+        if (target == this.searchData.target) {
+          this.searchData.target = ''
+        } else {
+          this.searchData.target = target
+        }
+
+        this.searchDefault()
+      },
+      toggleLike(target, list) {
+        axios.post('/toggleLike', {
+           likeType: this.likeType,
+           type: this.type,
+           likeTarget: target,
+           token: list.token,
+         }).then((response) => {
+          const result = response.data
+          if (result.code == -1) {
+            $('#lineLoginModel').modal()
+          }
+
+          if (result.code == 1) {
+            list[target] = !list[target]
+            this.trackCount = result.count.trackCount
+            this.noTrackCount = result.count.noTrackCount
+            this.likeCount = result.count.likeCount
+            this.noLikeCount = result.count.noLikeCount
+
+            let message
+            let prex = ''
+
+            if (!list[target]) {
+              prex = '取消'
+            }
+
+            if (target == 'track') {
+              message = '已' + prex + '追蹤'
+            } else if (target == 'like') {
+              message = '已' + prex + '捐贈'
+            }
+
+            $('#hint-message .message').text(message)
+            $('#hint-message').addClass('show')
+
+            window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
+          }
+         })
+      },
       search($state) {
         axios.post('/fossil/search', {
            page: this.page,
            text: this.searchData.text,
+           target: this.searchData.target,
+           type: this.type
          }).then((response) => {
            if (response.data.length) {
              this.page += 1;
