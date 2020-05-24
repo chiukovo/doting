@@ -265,47 +265,57 @@ if (!function_exists('getCountItems')) {
 	    			$name = '';
 	    			$has = '擁有';
 	    			$imgUrl = '';
+	    			$href = '';
 
 					switch ($type) {
 						case 'fish':
 							$name = '魚';
 							$has = '捐贈';
 							$imgUrl = '/other/鯊魚.png';
+							$href = '/fish/list?target=';
 							break;
 						case 'insect':
 							$name = '昆蟲';
 							$has = '捐贈';
 							$imgUrl = '/other/大白斑蝶.png';
+							$href = '/insect/list?target=';
 							break;
 						case 'fossil':
 							$name = '化石';
 							$has = '捐贈';
 							$imgUrl = '/fossil/琥珀.png';
+							$href = '/fossil/list?target=';
 							break;
 						case 'art':
 							$name = '藝術品';
 							$has = '捐贈';
 							$imgUrl = '/art/充滿母愛的雕塑0.png';
+							$href = '/art/list?target=';
 							break;
 						case 'diy':
 							$name = 'DIY方程式';
 							$imgUrl = '/diy/鑄鐵木矮櫃.png';
+							$href = '/diy/list?target=';
 							break;
 						case 'apparel':
 							$name = '家具';
 							$imgUrl = '/itemsNew/大熊熊_20.png';
+							$href = '/apparel/list?target=';
 							break;
 						case 'furniture':
 							$name = '服飾';
 							$imgUrl = '/itemsNew/雨衣_0.png';
+							$href = '/furniture/list?target=';
 							break;
 						case 'plant':
 							$name = '植物';
 							$imgUrl = '/itemsNew/蘋果.png';
+							$href = '/plant/list?target=';
 							break;
 						case 'kk':
 							$name = '唱片';
 							$imgUrl = '/kk/Hypno_K.K..png';
+							$href = '/kk/list?target=';
 							break;
 					}
 
@@ -314,6 +324,7 @@ if (!function_exists('getCountItems')) {
 						'name' => $name,
 						'imgUrl' => $imgUrl,
 						'has' => $has,
+						'href' => $href,
 						'like' => $detail['likeCount'],
 						'track' => $detail['trackCount'],
 					];

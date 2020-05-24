@@ -14,10 +14,12 @@ class ItemsController extends Controller
         $text = $request->input('text', '');
         $type = $request->route()->getName();
         $type = is_null($type) ? 'apparel' : $type;
+        $target = $request->input('target', '');
 
         return view('items.list', [
             'type' => $type,
             'text' => $text,
+            'target' => $target,
         ]);
     }
 

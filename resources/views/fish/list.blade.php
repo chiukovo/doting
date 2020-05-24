@@ -145,7 +145,7 @@
       version: "{{ config('app.version') }}",
       infiniteId: +new Date(),
       searchData: {
-        target: '',
+        target: "{{ $target }}",
         text: "{{ $text }}",
       }
     },

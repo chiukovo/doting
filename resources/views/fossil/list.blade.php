@@ -137,6 +137,7 @@
       infiniteId: +new Date(),
       searchData: {
         text: "{{ $text }}",
+        target: "{{ $target }}",
       }
     },
     mounted() {

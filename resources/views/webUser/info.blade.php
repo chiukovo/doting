@@ -12,7 +12,7 @@
             </div>
             <div class="passport-body row">
               <div class="passport-info-img text-center col-12 col-sm-4">
-                <img :src="info.picture_url" class="img-fluid bg-light border rounded p-2">
+                <img :src="info.picture_url" class="img-fluid bg-light border rounded p-2" v-if="info.picture_url != ''">
               </div>
               <ul class="passport-info col-12 col-sm-8" v-if="!is_edit">
                 <li>
@@ -112,11 +112,9 @@
               <ul class="nav nav-tabs nav-fill" role="tablist" v-if="animalLike.length != 0 && animalTrack.length != 0">
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(@{{ animalLike.length }})</a>
-                  <!-- 上限10 -->
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(@{{ animalTrack.length }})</a>
-                  <!-- 無上限？ -->
                 </li>
               </ul>
               <div class="tab-content" v-if="animalLike.length != 0 && animalTrack.length != 0">
@@ -168,9 +166,13 @@
                     <div class="card-list-title">@{{ list.name }}</div>
                     <div class="card-list-btn">
                       <ul class="user-save-btn">
-                        <li><button class="btn btn-sm btn-outline-danger"><div>@{{ list.track }}</div>追蹤
-                        </button></li>
-                        <li><button class="btn btm-sm btn-outline-success"><div>@{{ list.like }}</div>@{{ list.has }}</button></li>
+                        <li @click="goHref(list.href, 'track')">
+                          <button class="btn btn-sm btn-outline-danger"><div>@{{ list.track }}</div>追蹤
+                        </button>
+                        </li>
+                        <li @click="goHref(list.href, 'like')">
+                          <button class="btn btm-sm btn-outline-success"><div>@{{ list.like }}</div>@{{ list.has }}</button>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -243,6 +245,9 @@
             this.getUserInfo()
           }
         })
+      },
+      goHref(href, target) {
+        location.href = href + target
       }
     }
   })

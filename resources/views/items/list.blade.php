@@ -179,6 +179,7 @@
         buyType: [],
         detailType: [],
         text: "{{ $text }}",
+        target: "{{ $target }}",
       }
     },
     mounted() {

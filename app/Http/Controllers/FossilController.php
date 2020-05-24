@@ -11,9 +11,11 @@ class FossilController extends Controller
     public function list(Request $request)
     {
         $text = $request->input('text', '');
+        $target = $request->input('target', '');
 
         return view('fossil.list', [
             'text' => $text,
+            'target' => $target,
         ]);
     }
 

@@ -67,8 +67,17 @@ class IndexController extends Controller
         $northInsect = OtherServices::getDataByMessage('北' . $month . '月蟲', '', true);
         $southInsect = OtherServices::getDataByMessage('南' . $month . '月蟲', '', true);
 
+        $isNorth = getUserData('position');
+
+        if ($isNorth == '' || $isNorth == 2) {
+            $isNorth = 1;
+        } else {
+            $isNorth = 0;
+        }
+
         return [
             'date' => $date,
+            'isNorth' => $isNorth,
             'birthday' => $birthday,
             'ranking' => $ranking,
             'northFish' => $northFish,

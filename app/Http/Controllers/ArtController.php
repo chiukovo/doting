@@ -12,9 +12,11 @@ class ArtController extends Controller
     public function list(Request $request)
     {
         $text = $request->input('text', '');
+        $target = $request->input('target', '');
 
         return view('art.list', [
             'text' => $text,
+            'target' => $target,
         ]);
     }
 

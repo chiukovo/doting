@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
+use DB, Session;
 
 class WebUserController extends Controller
 {
@@ -132,6 +132,11 @@ class WebUserController extends Controller
     	    	'position' => $position,
     	    	'fruit' => $fruit,
     	    ]);
+
+    	$user = session('web');
+    	$user['position'] = $position;
+
+    	Session::put('web', $user);
 
     	return [
     		'code' => 1,
