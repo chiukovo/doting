@@ -13,3 +13,7 @@
     </div>
   </div>
 </div>
+<!--tips-->
+<div class="tips">
+  <span id="tips-message"></span>
+</div>

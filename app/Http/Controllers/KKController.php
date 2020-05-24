@@ -80,12 +80,18 @@ class KKController extends Controller
             $detail->file_name = $detail->file_name . '_Live';
         }
 
+        $type = 'kk';
+        $token = encrypt($detail->id);
+        //encode id and like current
+        $result = computedMainData([$detail], $type, $type);
 
         if (is_null($detail)) {
             return redirect('kk/list');
         }
 
         return view('kk.detail', [
+            'type' => $type,
+            'token' => $token,
             'detail' => $detail
         ]);
     }

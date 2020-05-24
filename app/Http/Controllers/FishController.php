@@ -73,9 +73,16 @@ class FishController extends Controller
         $dateRange1 = range(0, 11);
         $dateRange2 = range(12, 23);
 
+        $type = 'fish';
+        $token = encrypt($detail['id']);
+        //encode id and like current
+        $result = computedMainData([(object)$detail], $type, $type);
+
         return view('fish.detail', [
-            'detail' => $detail,
+            'detail' => (array)$result[0],
             'months' => $months,
+            'type' => $type,
+            'token' => $token,
             'dateRange1' => $dateRange1,
             'dateRange2' => $dateRange2,
         ]);

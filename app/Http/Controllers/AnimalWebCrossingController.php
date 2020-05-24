@@ -25,6 +25,7 @@ class AnimalWebCrossingController extends Controller
     public function detail(Request $request)
     {
         $name = $request->input('name');
+        $type = $request->route()->getName();
 
         if ($name == '') {
             return redirect('animals/list');
@@ -86,8 +87,15 @@ class AnimalWebCrossingController extends Controller
             ->get()
             ->toArray();
 
+        $type = $detail->info == '' ? 'animal' : 'npc';
+        $token = encrypt($detail->id);
+        //encode id and like current
+        $result = computedMainData([$detail], 'animal', $type);
+
         return view('animals.detail', [
-            'detail' => $detail,
+            'detail' => $result[0],
+            'type' => $type,
+            'token' => $token,
             'sameRaceArray' => $sameRaceArray,
         ]);
     }

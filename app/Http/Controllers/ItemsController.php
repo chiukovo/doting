@@ -56,7 +56,7 @@ class ItemsController extends Controller
 
         //check target
         if ($target != '') {
-            $getCount = computedCount($type, $type, true);
+            $getCount = computedCount('items', $type, true);
 
             switch ($target) {
                 case 'like':
@@ -79,7 +79,7 @@ class ItemsController extends Controller
             ->toArray();
 
         //encode id and like current
-        $lists['data'] = computedMainData($lists['data'], $type, $type);
+        $lists['data'] = computedMainData($lists['data'], 'items', $type);
 
         return $lists['data'];
     }

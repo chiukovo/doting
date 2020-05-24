@@ -87,8 +87,8 @@
           <!-- style: list -->
           <ul class="card-list" v-if="!isList">
             <li v-for="list in lists">
-              <div class="card-list-item" @click="goDetail(list)">
-                <div class="card-list-img">
+              <div class="card-list-item">
+                <div class="card-list-img" @click="goDetail(list)">
                   <img class="img-fluid" :src="'/art/' + list.img0 + '.png?v=' + version" :alt="list.name">
                 </div>
                 <div class="card-list-title">@{{ list.name }}</div>
