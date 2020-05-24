@@ -160,7 +160,7 @@
               <ul class="card-list user-card-list">
                 <li v-for="list in itemsData">
                   <div class="card-list-item">
-                    <div class="card-list-img">
+                    <div class="card-list-img" @click="goHref(list.href, '')">
                       <img :src="list.imgUrl" class="img-fluid" :alt="list.name">
                     </div>
                     <div class="card-list-title">@{{ list.name }}</div>
