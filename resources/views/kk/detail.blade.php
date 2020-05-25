@@ -52,7 +52,7 @@
                 </audio>
               </div>
             </div>
-            @include('layouts.ads2')
+            @include('layouts.ads3')
           </div>
         </div>
       </div>

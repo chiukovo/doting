@@ -133,7 +133,7 @@
                 </div>
               </div>
             </div>
-            @include('layouts.ads2')
+            @include('layouts.ads3')
             <div class="card">
               <div class="card-header">其他資訊</div>
               <div class="card-body">
