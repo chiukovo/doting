@@ -38,7 +38,7 @@
                   <div class="passport-info-item-group">
                     <div class="passport-info-item">
                       <div class="label">島名</div>
-                      <div class="data">@{{ info.island_name }}</div>
+                      <div class="data">@{{ info.island_name }}島</div>
                     </div>
                     <div class="passport-info-item">
                       <div class="label">特產</div>
