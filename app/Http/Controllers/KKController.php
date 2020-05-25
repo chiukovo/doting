@@ -30,6 +30,7 @@ class KKController extends Controller
 
         if ($text != '') {
            $kk->where('name', 'like', '%' . $text . '%');
+           $kk->orWhere('cn_name', 'like', '%' . $text . '%');
         }
 
         //check target
