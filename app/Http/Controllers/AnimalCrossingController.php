@@ -493,6 +493,8 @@ class AnimalCrossingController extends Controller
         //我的居民
         if ($text == '我的居民') {
             $this->dbType = 'animal';
+            $this->realText = $text;
+
             return AnimalServices::myAnimals($this->userId);
         }
 
