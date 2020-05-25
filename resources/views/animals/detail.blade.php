@@ -167,7 +167,7 @@
               </div>
             </div>
             @endif
-            @include('layouts.ads')
+            @include('layouts.ads2')
             @if($detail->amiibo != '')
             <div class="card">
               <div class="card-header">Amiibo Card</div>

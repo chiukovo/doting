@@ -48,7 +48,7 @@
                 <span>{{ $detail->info }}</span>
               </div>
             </div>
-            @include('layouts.ads')
+            @include('layouts.ads2')
             @if($detail->img1 != '')
             <div class="card">
               <div class="card-header">圖片1</div>

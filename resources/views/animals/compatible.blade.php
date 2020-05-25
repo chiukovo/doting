@@ -310,7 +310,7 @@
       </div>
       <!--ads-->
       <div class="text-center">
-        @include('layouts.ads')
+        @include('layouts.ads2')
       </div>
     </section>
   </div>
