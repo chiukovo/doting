@@ -162,7 +162,7 @@
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
-          <div class="card">
+          <div class="card not-found">
             <div class="card-body text-center" v-show="lists.length == 0 && !loading">
               找不到捏 哇耶...(¬_¬) 
             </div>

@@ -28,6 +28,9 @@
       position: absolute;
       z-index: -1
     }
+    .not-found {
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
