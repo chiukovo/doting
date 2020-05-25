@@ -407,7 +407,7 @@ class AnimalCrossingController extends Controller
         }
 
         if ($text == '我的居民') {
-            return '你是不是要查我的島民 哇耶 ಠ_ಠ';
+            return '你是不是要查 【我的島民】 哇耶 ಠ_ಠ?';
         }
 
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
