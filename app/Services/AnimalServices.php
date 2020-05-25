@@ -59,7 +59,7 @@ class AnimalServices
             ->get()
             ->toArray();
 
-        if (empty($lineId)) {
+        if (empty($lists)) {
             return $text;
         }
 
