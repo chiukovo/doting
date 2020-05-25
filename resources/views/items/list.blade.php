@@ -146,7 +146,12 @@
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
-          @include('layouts.ads')
+          <div class="card">
+            <div class="card-body text-center" v-show="lists.length == 0 && !loading">
+              找不到捏 哇耶...(¬_¬) 
+            </div>
+          </div>
+          @include('layouts.ads2')
         </div>
       </div>
     </section>
@@ -163,6 +168,7 @@
       lists: [],
       isList: false,
       page: 1,
+      loading: false,
       likeType: 'items',
       likeCount: 0,
       noLikeCount: 0,
@@ -258,6 +264,7 @@
          })
       },
       search($state) {
+        this.loading = true
         axios.post('/items/search', {
            page: this.page,
            category: this.searchData.category,
@@ -272,6 +279,8 @@
            } else {
              $state.complete();
            }
+
+           this.loading = false
          })
       },
       formatPrice(money) {

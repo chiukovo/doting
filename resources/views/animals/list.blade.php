@@ -163,7 +163,7 @@
             <div slot="no-results"></div>
           </infinite-loading>
           <div class="card">
-            <div class="card-body text-center" v-show="lists.length == 0">
+            <div class="card-body text-center" v-show="lists.length == 0 && !loading">
               找不到捏 哇耶...(¬_¬) 
             </div>
           </div>
@@ -182,6 +182,7 @@
     data: {
       lists: [],
       page: 1,
+      loading: false,
       version: "{{ config('app.version') }}",
       isList: false,
       infiniteId: +new Date(),
@@ -242,6 +243,7 @@
          })
       },
       search($state) {
+        this.loading = true
         axios.post('/animals/search', {
            page: this.page,
            race: this.searchData.race,
@@ -258,6 +260,8 @@
            } else {
              $state.complete();
            }
+
+           this.loading = false
          })
       },
       toggleLike(target, list) {

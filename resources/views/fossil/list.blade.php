@@ -111,7 +111,12 @@
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
-          @include('layouts.ads')
+          <div class="card">
+            <div class="card-body text-center" v-show="lists.length == 0 && !loading">
+              找不到捏 哇耶...(¬_¬) 
+            </div>
+          </div>
+          @include('layouts.ads2')
         </div>
       </div>
     </section>
@@ -127,6 +132,7 @@
     data: {
       lists: [],
       page: 1,
+      loading: false,
       likeType: 'fossil',
       likeCount: 0,
       noLikeCount: 0,
@@ -216,6 +222,7 @@
          })
       },
       search($state) {
+        this.loading = true
         axios.post('/fossil/search', {
            page: this.page,
            text: this.searchData.text,
@@ -229,6 +236,8 @@
            } else {
              $state.complete();
            }
+
+           this.loading = false
          })
       },
       clearAll() {
