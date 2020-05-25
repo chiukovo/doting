@@ -68,7 +68,7 @@ class AnimalServices
         $info = $user->display_name . "\n";
 
         if ($user->island_name != '') {
-            $info .= '島名: ' . $user->island_name . '島' . "\n";
+            $info .= $user->island_name . '島的島民' . "\n";
         } else {
             $info .= '偶的島民' . "\n";
         }
