@@ -106,7 +106,7 @@ class WebUserController extends Controller
         $flower = isset($postData['info']['flower']) ? $postData['info']['flower'] : '';
 
     	//判斷字串長度
-    	if (strlen($passport) > 40 || strlen($islandName) > 40 || strlen($info) > 40 || strlen($nickName) > 40 || strlen($flower) > 40) {
+    	if (strlen($islandName) > 40 || strlen($info) > 40 || strlen($nickName) > 40 || strlen($flower) > 40) {
     		return [
     			'code' => -2,
     			'msg' => '字串過長 母湯'
@@ -119,6 +119,21 @@ class WebUserController extends Controller
     			'msg' => '非正確參數'
     		];
     	}
+
+        if ($passport != '') {
+            //判斷護照
+            if (strlen($passport) != 12) {
+                return [
+                    'code' => -2,
+                    'msg' => '護照格式錯誤 ex: 0000-1111-2222'
+                ];
+            }
+
+            $str1 = mb_substr($passport, 0, 4);
+            $str2 = mb_substr($passport, 4, 4);
+            $str3 = mb_substr($passport, 8, 5);
+            $passport = $str1 . '-' . $str2 . '-' . $str3;
+        }
 
     	//update
     	$lineId = getUserData('lineId');

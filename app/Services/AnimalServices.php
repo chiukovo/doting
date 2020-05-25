@@ -200,7 +200,7 @@ class AnimalServices
             ->setContents($box);
 
         $texts = TextComponentBuilder::builder()
-            ->setText($user->passport)
+            ->setText('SW-' . $user->passport)
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 

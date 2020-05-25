@@ -1,6 +1,12 @@
 @extends('layouts.web')
 @section('title', '島民資訊')
 @section('content')
+
+<!-- cleave.js -->
+<script src="/js/cleave.js"></script>
+<!-- Lastly add this package -->
+<script src="/js/vue-cleave-component.js"></script>
+
 <div id="app" class="content-wrap" v-cloak>
   <section class="post">
     <div class="container">
@@ -18,7 +24,7 @@
                 <li>
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
-                    <div class="data">@{{ info.passport }}</div>
+                    <div class="data">SW-@{{ info.passport }}</div>
                   </div>
                   <button class="btn btn-sm btn-default btn-outline-secondary" @click="is_edit = true">編輯</button>
                 </li>
@@ -66,7 +72,9 @@
                 <li>
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
-                    <div class="data"><input type="text" class="form-control form-control-sm" v-model="info.passport"></div>
+                    <div class="data">
+                      SW-<cleave v-model="info.passport" :options="options"></cleave>
+                    </div>
                   </div>
                   <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
                 </li>
@@ -231,6 +239,7 @@
 
 <script>
   Vue.use(GoTop);
+  Vue.use(VueCleave);
   new Vue({
     el: '#app',
     data: {
@@ -239,6 +248,10 @@
       itemsData: [],
       animalLike: [],
       animalTrack: [],
+      options: {
+        blocks: [4, 4, 4],
+        delimiter: '-'
+      }
     },
     mounted() {
       this.getUserInfo()
