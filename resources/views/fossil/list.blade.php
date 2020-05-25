@@ -111,6 +111,7 @@
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
+          @include('layouts.ads')
         </div>
       </div>
     </section>

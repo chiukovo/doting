@@ -28,9 +28,6 @@
       position: absolute;
       z-index: -1
     }
-    .infinite-loading-container {
-      min-height: 360px;
-    }
   </style>
 </head>
 <body>
