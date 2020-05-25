@@ -36,9 +36,9 @@
                   </li>
                   <li onclick="toggleLike('like')">
                     @if($detail['like'])
-                      <button id="like" class="btn btn-outline-success current"><i class="fas fa-bookmark"></i>擁有</button>
+                      <button id="like" class="btn btn-outline-success current"><i class="fas fa-heart"></i>捐贈</button>
                     @else
-                      <button id="like" class="btn btn-outline-success"><i class="fas fa-bookmark"></i>擁有</button>
+                      <button id="like" class="btn btn-outline-success"><i class="fas fa-heart"></i>捐贈</button>
                     @endif
                   </li>
                 </ul>
