@@ -447,6 +447,14 @@ class AnimalCrossingController extends Controller
             return printDoc();
         }
 
+        //我的居民
+        if ($text == '我的居民') {
+            $this->dbType = 'animal';
+            $this->realText = $text;
+
+            return AnimalServices::myAnimals($this->userId);
+        }
+
         //惡搞
         $funny = $this->getFunny($text);
 
@@ -488,14 +496,6 @@ class AnimalCrossingController extends Controller
                     return AnimalServices::compatiblePrint($source);
                 }
             }
-        }
-
-        //我的居民
-        if ($text == '我的居民') {
-            $this->dbType = 'animal';
-            $this->realText = $text;
-
-            return AnimalServices::myAnimals($this->userId);
         }
 
         switch ($type) {
