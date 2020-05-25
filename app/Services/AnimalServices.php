@@ -43,8 +43,7 @@ class AnimalServices
 
         $user = DB::table('web_user')
             ->where('line_id', $lineId)
-            ->where('id', 0)
-            ->first(['island_name']);
+            ->first(['island_name', 'display_name']);
 
         if (is_null($lineId)) {
             return $text;
@@ -61,6 +60,31 @@ class AnimalServices
 
         if (empty($lists)) {
             return $text;
+        }
+
+
+        $multipleMessageBuilder = new MultiMessageBuilder();
+
+        //text
+        $info = $user->display_name . "\n";
+
+        if ($user->island_name == '') {
+            $info .= $user->island_name . '島的島民' . "\n";
+        } else {
+            $info .= '偶的島民' . "\n";
+        }
+
+        $message = new TextMessageBuilder($info);
+        $multipleMessageBuilder->add($message);
+
+        foreach ($lists as $item) {
+            $result[] = self::createItemBubble($item, true);
+
+            $target = new CarouselContainerBuilder($result);
+            $msg = FlexMessageBuilder::builder()
+                ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+                ->setContents($target);
+            $multipleMessageBuilder->add($msg);
         }
 
         return $lists;
