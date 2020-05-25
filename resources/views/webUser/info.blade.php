@@ -28,6 +28,10 @@
                       <div class="label">暱稱</div>
                       <div class="data">@{{ info.nick_name }}</div>
                     </div>
+                    <div class="passport-info-item">
+                      <div class="label">島花</div>
+                      <div class="data">@{{ info.flower }}</div>
+                    </div>
                   </div>
                 </li>
                 <li>
@@ -67,10 +71,18 @@
                   <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
                 </li>
                 <li>
-                  <div class="passport-info-item">
-                    <div class="label">暱稱</div>
-                    <div class="data">
-                      <input type="text" class="form-control form-control-sm" v-model="info.nick_name">
+                  <div class="passport-info-item-group">
+                    <div class="passport-info-item">
+                      <div class="label">暱稱</div>
+                      <div class="data">
+                        <input type="text" class="form-control form-control-sm" v-model="info.nick_name">
+                      </div>
+                    </div>
+                    <div class="passport-info-item">
+                      <div class="label">島花</div>
+                      <div class="data">
+                        <input type="text" class="form-control form-control-sm" v-model="info.flower">
+                      </div>
                     </div>
                   </div>
                 </li>

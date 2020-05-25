@@ -28,6 +28,7 @@ class WebUserController extends Controller
                 'nick_name',
     	    	'fruit',
                 'info',
+                'flower',
     	    	'position',
     	    	'created_at'
     	    ]);
@@ -102,9 +103,10 @@ class WebUserController extends Controller
     	$fruit = isset($postData['info']['fruit']) ? $postData['info']['fruit'] : '';
     	$position = isset($postData['info']['position']) ? $postData['info']['position'] : '';
         $nickName = isset($postData['info']['nick_name']) ? $postData['info']['nick_name'] : '';
+        $flower = isset($postData['info']['flower']) ? $postData['info']['flower'] : '';
 
     	//判斷字串長度
-    	if (strlen($passport) > 40 || strlen($islandName) > 40 || strlen($info) > 40 || strlen($nickName) > 40) {
+    	if (strlen($passport) > 40 || strlen($islandName) > 40 || strlen($info) > 40 || strlen($nickName) > 40 || strlen($flower) > 40) {
     		return [
     			'code' => -2,
     			'msg' => '字串過長 母湯'
@@ -137,6 +139,7 @@ class WebUserController extends Controller
     	    	'position' => $position,
     	    	'fruit' => $fruit,
                 'info' => $info,
+                'flower' => $flower,
     	    ]);
 
     	$user = session('web');

@@ -50,6 +50,7 @@ class AnimalServices
                 'passport',
                 'island_name',
                 'info',
+                'flower',
                 'fruit',
                 'position',
             ]);
@@ -65,6 +66,7 @@ class AnimalServices
         $user->nick_name = $user->nick_name != '' ? $user->nick_name : '-';
         $user->island_name = $user->island_name != '' ? $user->island_name : '-';
         $user->info = $user->info != '' ? $user->info : '-';
+        $user->flower = $user->flower != '' ? $user->flower : '-';
         $user->fruit = $user->fruit != '' ? $user->fruit : 0;
         $user->position = $user->position != '' ? $user->position : 0;
 
@@ -80,6 +82,24 @@ class AnimalServices
             ->setLayout(ComponentLayout::BASELINE)
             ->setContents($spacer);
         //line end
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('島名')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($user->island_name)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(5);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($boxInline);
+
         $boxInline = [];
         $boxInline[] = TextComponentBuilder::builder()
             ->setText('暱稱')
@@ -95,13 +115,13 @@ class AnimalServices
             ->setFlex(2);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText('島名')
+            ->setText('所屬')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText($user->island_name)
+            ->setText(positionName($user->position))
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setWrap(true)
@@ -127,14 +147,14 @@ class AnimalServices
             ->setFlex(2);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText('所屬')
+            ->setText('島花')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setWrap(true)
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText(positionName($user->position))
+            ->setText(positionName($user->flower))
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setFlex(2);
