@@ -62,7 +62,6 @@ class AnimalServices
             return $text;
         }
 
-
         $multipleMessageBuilder = new MultiMessageBuilder();
 
         //text
@@ -87,7 +86,7 @@ class AnimalServices
             $multipleMessageBuilder->add($msg);
         }
 
-        return $lists;
+        return [$multipleMessageBuilder];
     }
 
     public static function getConstellation()

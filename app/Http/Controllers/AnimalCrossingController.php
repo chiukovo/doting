@@ -177,6 +177,12 @@ class AnimalCrossingController extends Controller
         }
 
         if (is_array($dataArray)) {
+            if ($text == '我的島民') {
+                $this->notFound = false;
+
+                return $dataArray;
+            }
+
             $more = count($dataArray) > 20 ? true : false;
             $formatData = [];
 
