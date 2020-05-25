@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Curl, DB, Session;
+use Curl, DB, Session, Log;
 
 class LineLoginServices
 {
@@ -91,6 +91,7 @@ class LineLoginServices
 
             return true;
         } catch (Exception $e) {
+            Log::error($e);
             return false;
         }
 
