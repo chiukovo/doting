@@ -406,12 +406,16 @@ class AnimalCrossingController extends Controller
             return '哇耶 { @❛ꈊ❛@ }';
         }
 
+        if ($text == '我的居民') {
+            return '你是不是要查我的島民 哇耶 ಠ_ಠ';
+        }
+
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
-            return ' 醒醒吧你只有左右手 哇耶';
+            return '醒醒吧你只有左右手 哇耶';
         }
 
         if ($text == '找妹妹') {
-            return ' 醒醒吧你根本沒有妹妹 哇耶';
+            return '醒醒吧你根本沒有妹妹 哇耶';
         }
 
         if ($text == '豆丁笨蛋') {
