@@ -95,7 +95,7 @@ class AnimalServices
             ->setFlex(2);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText('島民')
+            ->setText('島名')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
             ->setFlex(1);
@@ -167,7 +167,7 @@ class AnimalServices
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setWrap(true)
-            ->setFlex(2);
+            ->setFlex(5);
 
         $box[] = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::BASELINE)
