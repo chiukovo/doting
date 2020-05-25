@@ -154,7 +154,7 @@ class AnimalServices
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText(positionName($user->flower))
+            ->setText($user->flower)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setFlex(2);
