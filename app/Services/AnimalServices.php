@@ -45,7 +45,7 @@ class AnimalServices
             ->where('line_id', $lineId)
             ->first(['island_name', 'display_name']);
 
-        if (is_null($lineId)) {
+        if (is_null($user)) {
             return $text;
         }
 

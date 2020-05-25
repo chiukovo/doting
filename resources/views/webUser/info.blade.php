@@ -43,6 +43,12 @@
                     <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
                   </div>
                 </li>
+                <li>
+                  <div class="passport-info-item">
+                    <div class="label">介紹</div>
+                    <div class="data">@{{ info.info }}</div>
+                  </div>
+                </li>
               </ul>
               <ul class="passport-info col-12 col-sm-8" v-else>
                 <li>
@@ -86,6 +92,14 @@
                   </div>
                   <div class="passport-info-tip">
                     <span>選擇所屬半球，只要登入就會將您的條件自動帶入。</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="passport-info-item">
+                    <div class="label">介紹</div>
+                    <div class="data">
+                      <input type="text" class="form-control form-control-sm" v-model="info.info">
+                    </div>
                   </div>
                 </li>
               </ul>

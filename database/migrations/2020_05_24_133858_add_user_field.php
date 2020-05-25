@@ -18,6 +18,7 @@ class AddUserField extends Migration
             $table->string('island_name', 150)->nullable()->after('passport');
             $table->integer('fruit')->default(0)->comment('1:桃子, 2:蘋果, 3:梨子, 4:櫻桃, 5:橘子')->after('island_name');
             $table->integer('position')->default(0)->comment('1:南, 2:北')->after('fruit');
+            $table->text('info')->nullable()->after('position');
         });
     }
 
