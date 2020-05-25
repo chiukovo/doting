@@ -114,6 +114,9 @@ class AnimalWebCrossingController extends Controller
             $result = AnimalServices::getDataByMessage($text, $page, $type);
 
             if (is_array($result)) {
+                //encode id and like current
+                $result = computedMainData($result, 'animal', $type);
+
                 return $result;
             }
 
