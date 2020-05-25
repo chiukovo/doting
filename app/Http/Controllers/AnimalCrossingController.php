@@ -55,6 +55,11 @@ class AnimalCrossingController extends Controller
     	echo 'hi';
     }
 
+    public function testMyAnimal()
+    {
+        return AnimalServices::myAnimals('U7cbf49ac38f334e5977af0d737c5bae0');
+    }
+
     public function message(Request $request)
     {
         $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
@@ -483,6 +488,11 @@ class AnimalCrossingController extends Controller
                     return AnimalServices::compatiblePrint($source);
                 }
             }
+        }
+
+        //我的居民
+        if ($text == '我的居民') {
+            return AnimalServices::myAnimals($this->userId);
         }
 
         switch ($type) {

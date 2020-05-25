@@ -34,6 +34,38 @@ use Curl, DB, File;
 
 class AnimalServices
 {
+    public static function myAnimals($lineId)
+    {
+        $text = '查無任何居民歐' . "\n";
+        $text .= '需先登入->動物居民->按下擁有 哇耶' . "\n";
+        $text .= "\n";
+        $text .= 'https://doting.tw/animals/list' . "\n";
+
+        $user = DB::table('web_user')
+            ->where('line_id', $lineId)
+            ->where('id', 0)
+            ->first(['island_name']);
+
+        if (is_null($lineId)) {
+            return $text;
+        }
+
+        $lists = DB::table('animal');
+        $getCount = computedCount('animal', 'animal', true);
+        $lists->whereIn('id', $getCount['likeIds']);
+
+        $lists = $lists
+            ->take(10)
+            ->get()
+            ->toArray();
+
+        if (empty($lineId)) {
+            return $text;
+        }
+
+        return $lists;
+    }
+
     public static function getConstellation()
     {
         $urls = [
