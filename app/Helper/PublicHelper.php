@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Redis;
 use App\Services\ItemsServices;
+use App\Services\AnimalServices;
 
 if (!function_exists('testHelper')) {
 
@@ -13,6 +14,22 @@ if (!function_exists('testHelper')) {
     function testHelper()
     {
         return 'ok';
+    }
+}
+
+if (!function_exists('testMyAnimals')) {
+
+    function testMyAnimals()
+    {
+        return AnimalServices::myAnimals('U7cbf49ac38f334e5977af0d737c5bae0');
+    }
+}
+
+if (!function_exists('testMyPossport')) {
+
+    function testMyPossport()
+    {
+        return AnimalServices::myPassport('U7cbf49ac38f334e5977af0d737c5bae0');
     }
 }
 

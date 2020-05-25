@@ -37,7 +37,7 @@ class ItemsController extends Controller
             if (is_array($result)) {
                 //encode id and like current
                 $result = computedMainData($result, 'items', $type);
-                
+
                 return $result;
             }
 

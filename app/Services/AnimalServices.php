@@ -34,6 +34,169 @@ use Curl, DB, File;
 
 class AnimalServices
 {
+    public static function myPassport($lineId)
+    {
+        $text = '查無護照資訊 (護照為必填)' . "\n";
+        $text .= '需先登入->到使用者設定 哇耶' . "\n";
+        $text .= "\n";
+        $text .= 'https://doting.tw/user' . "\n";
+
+        $user = DB::table('web_user')
+            ->where('line_id', $lineId)
+            ->first([
+                'nick_name',
+                'island_name',
+                'display_name',
+                'passport',
+                'island_name',
+                'info',
+                'fruit',
+                'position',
+            ]);
+
+        if (is_null($user)) {
+            return $text;
+        }
+
+        if ($user->passport == '') {
+            return $text;
+        }
+
+        $user->nick_name = $user->nick_name != '' ? $user->nick_name : '-';
+        $user->island_name = $user->island_name != '' ? $user->island_name : '-';
+        $user->info = $user->info != '' ? $user->info : '-';
+        $user->fruit = $user->fruit != '' ? $user->fruit : 0;
+        $user->position = $user->position != '' ? $user->position : 0;
+
+        $box = [];
+        //line
+        $box[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($spacer);
+        //line end
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('暱稱')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($user->nick_name)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('島民')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($user->island_name)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($boxInline);
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('特產')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText(fruitName($user->fruit))
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('所屬')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setWrap(true)
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText(positionName($user->position))
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($boxInline);
+
+        //line
+        $box[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($spacer);
+        //line end
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('介紹')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($user->info)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $outBox = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentMargin::LG)
+            ->setContents($box);
+
+        $texts = TextComponentBuilder::builder()
+            ->setText($user->passport)
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::MD);
+
+        $result = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setBackgroundColor('#f1f1f1')
+            ->setContents([$texts, $outBox]);
+
+        $all = BubbleContainerBuilder::builder()
+            ->setSize('kilo')
+            ->setHero(null)
+            ->setBody($result);
+
+        return [$all];
+    }
+
     public static function myAnimals($lineId)
     {
         $text = '查無任何居民歐' . "\n";
@@ -70,7 +233,7 @@ class AnimalServices
         if ($user->island_name != '') {
             $info .= $user->island_name . '島的島民' . "\n";
         } else {
-            $info .= '偶的島民' . "\n";
+            $info .= '偶的島民';
         }
 
         $message = new TextMessageBuilder($info);

@@ -55,11 +55,6 @@ class AnimalCrossingController extends Controller
     	echo 'hi';
     }
 
-    public function testMyAnimal()
-    {
-        return AnimalServices::myAnimals('U7cbf49ac38f334e5977af0d737c5bae0');
-    }
-
     public function message(Request $request)
     {
         $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
@@ -177,7 +172,7 @@ class AnimalCrossingController extends Controller
         }
 
         if (is_array($dataArray)) {
-            if ($text == '我的島民') {
+            if ($text == '我的島民' || $text == '我的護照') {
                 $this->notFound = false;
 
                 return $dataArray;
@@ -463,6 +458,11 @@ class AnimalCrossingController extends Controller
             $this->realText = $text;
 
             return AnimalServices::myAnimals($this->userId);
+        }
+
+        //我的護照
+        if ($text == '我的護照') {
+            return AnimalServices::myPassport($this->userId);
         }
 
         //惡搞

@@ -25,6 +25,14 @@
                 <li>
                   <div class="passport-info-item-group">
                     <div class="passport-info-item">
+                      <div class="label">暱稱</div>
+                      <div class="data">@{{ info.nick_name }}</div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="passport-info-item-group">
+                    <div class="passport-info-item">
                       <div class="label">島名</div>
                       <div class="data">@{{ info.island_name }}</div>
                     </div>
@@ -57,6 +65,14 @@
                     <div class="data"><input type="text" class="form-control form-control-sm" v-model="info.passport"></div>
                   </div>
                   <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
+                </li>
+                <li>
+                  <div class="passport-info-item">
+                    <div class="label">暱稱</div>
+                    <div class="data">
+                      <input type="text" class="form-control form-control-sm" v-model="info.nick_name">
+                    </div>
+                  </div>
                 </li>
                 <li>
                   <div class="passport-info-item-group">
