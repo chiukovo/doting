@@ -77,7 +77,7 @@ class AnimalServices
         $multipleMessageBuilder->add($message);
 
         foreach ($lists as $item) {
-            $result[] = self::createItemBubble($item, true);
+            $result[] = self::createItemBubble($item);
         }
 
         $target = new CarouselContainerBuilder($result);
