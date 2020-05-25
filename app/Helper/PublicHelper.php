@@ -67,12 +67,14 @@ if (!function_exists('computedCount')) {
     /**
      * @return []
      */
-    function computedCount($likeType, $type, $needIds = false)
+    function computedCount($likeType, $type, $needIds = false, $lineId = false)
     {
 		$likeCount = 0;
 		$trackCount = 0;
 
-		$lineId = getUserData('lineId');
+		if (!$lineId) {
+			$lineId = getUserData('lineId');
+		}
 
 		//檢查type
 		$allType = allLikeTypeTarget();

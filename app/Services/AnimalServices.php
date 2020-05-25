@@ -51,7 +51,7 @@ class AnimalServices
         }
 
         $lists = DB::table('animal');
-        $getCount = computedCount('animal', 'animal', true);
+        $getCount = computedCount('animal', 'animal', true, $lineId);
         $lists->whereIn('id', $getCount['likeIds']);
 
         $lists = $lists
