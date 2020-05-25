@@ -102,6 +102,24 @@
       //success
       if (result.code == 1) {
         $('#' + target).toggleClass('current')
+
+        let message
+        let prex = ''
+
+        if (!$('#' + target).hasClass("current")) {
+          prex = '取消'
+        }
+
+        if (target == 'track') {
+          message = '已' + prex + '追蹤'
+        } else if (target == 'like') {
+          message = '已' + prex + '捐贈'
+        }
+
+        $('#hint-message .message').text(message)
+        $('#hint-message').addClass('show')
+
+        window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
       }
      })
   }

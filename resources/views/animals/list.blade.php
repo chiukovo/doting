@@ -293,7 +293,7 @@
             if (target == 'track') {
               message = '已' + prex + '追蹤'
             } else if (target == 'like') {
-              message = '已' + prex + '捐贈'
+              message = '已' + prex + '擁有'
             }
 
             $('#hint-message .message').text(message)
