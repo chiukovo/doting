@@ -68,8 +68,6 @@ class AnimalServices
         $user->fruit = $user->fruit != '' ? $user->fruit : 0;
         $user->position = $user->position != '' ? $user->position : 0;
 
-        $multipleMessageBuilder = new MultiMessageBuilder();
-
         $box = [];
         //line
         $box[] = SeparatorComponentBuilder::builder()
@@ -196,7 +194,8 @@ class AnimalServices
             ->setHero(null)
             ->setBody($result);
 
-        $target = new CarouselContainerBuilder($all);
+        $multipleMessageBuilder = new MultiMessageBuilder();
+        $target = new CarouselContainerBuilder([$all]);
         $msg = FlexMessageBuilder::builder()
             ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
             ->setContents($target);
