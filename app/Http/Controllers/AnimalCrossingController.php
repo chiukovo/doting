@@ -453,8 +453,8 @@ class AnimalCrossingController extends Controller
             return printDoc();
         }
 
-        //我的居民
-        if ($text == '我的居民') {
+        //我的島民
+        if ($text == '我的島民') {
             $this->dbType = 'animal';
             $this->realText = $text;
 
