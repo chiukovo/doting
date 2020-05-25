@@ -78,13 +78,13 @@ class AnimalServices
 
         foreach ($lists as $item) {
             $result[] = self::createItemBubble($item, true);
-
-            $target = new CarouselContainerBuilder($result);
-            $msg = FlexMessageBuilder::builder()
-                ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
-                ->setContents($target);
-            $multipleMessageBuilder->add($msg);
         }
+
+        $target = new CarouselContainerBuilder($result);
+        $msg = FlexMessageBuilder::builder()
+            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+            ->setContents($target);
+        $multipleMessageBuilder->add($msg);
 
         return [$multipleMessageBuilder];
     }
