@@ -68,6 +68,8 @@ class AnimalServices
         $user->fruit = $user->fruit != '' ? $user->fruit : 0;
         $user->position = $user->position != '' ? $user->position : 0;
 
+        $multipleMessageBuilder = new MultiMessageBuilder();
+
         $box = [];
         //line
         $box[] = SeparatorComponentBuilder::builder()
@@ -194,7 +196,13 @@ class AnimalServices
             ->setHero(null)
             ->setBody($result);
 
-        return [$all];
+        $target = new CarouselContainerBuilder($all);
+        $msg = FlexMessageBuilder::builder()
+            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+            ->setContents($target);
+        $multipleMessageBuilder->add($msg);
+
+        return [$multipleMessageBuilder];
     }
 
     public static function myAnimals($lineId)
@@ -227,13 +235,13 @@ class AnimalServices
 
         $multipleMessageBuilder = new MultiMessageBuilder();
 
-        //text
-        $info = $user->display_name . "\n";
+        $info = '';
 
+        //text
         if ($user->island_name != '') {
-            $info .= $user->island_name . '島的島民' . "\n";
+            $info .= $user->island_name . '島的島民';
         } else {
-            $info .= '偶的島民';
+            $info .= $user->display_name . '的島民';
         }
 
         $message = new TextMessageBuilder($info);
