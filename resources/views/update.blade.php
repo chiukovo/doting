@@ -22,6 +22,20 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.9.0</div>
+                <div class="card-header-date">2020/5/26</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>新增 登入功能 收藏 擁有</li>
+                  <li>新增 我的島民</li>
+                  <li>新增 我的護照</li>
+                  <li>會找時間再寫一篇教學文章><</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.8.0</div>
                 <div class="card-header-date">2020/5/20</div>
               </div>
