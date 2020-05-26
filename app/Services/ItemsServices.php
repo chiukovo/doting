@@ -76,8 +76,12 @@ class ItemsServices
             return '(*´∀`)~♥';
         }
 
-        $items = DB::table('items_new')
-    	    ->where('name', 'like', '%' . $message . '%');
+        $items = DB::table('items_new');
+
+        $items->where(function($q) use ($message) {
+          $q->where('name', 'like', '%' . $message . '%')
+            ->orWhere('color', 'like', '%' . $message . '%');
+        });
 
         //家具
         if ($type == 'furniture') {

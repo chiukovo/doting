@@ -46,7 +46,7 @@
           </div>
           <form>
             <div class="form-search">
-              <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
+              <input type="text" class="form-control" placeholder="請輸入關鍵字(或顏色)" v-model="searchData.text">
               <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
               <button class="btn btn-default" @click.prevent="clearAll">清除搜尋</button>
             </div>
