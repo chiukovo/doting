@@ -24,7 +24,12 @@
                 <li>
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
-                    <div class="data">SW-@{{ info.passport }}</div>
+                    <div class="data" v-if="info.passport != ''">
+                      SW-@{{ info.passport }}
+                    </div>
+                    <div class="data" v-else>
+                      尚未填寫 哇耶
+                    </div>
                   </div>
                   <button class="btn btn-sm btn-default btn-outline-secondary" @click="is_edit = true">編輯</button>
                 </li>
@@ -32,11 +37,13 @@
                   <div class="passport-info-item-group">
                     <div class="passport-info-item">
                       <div class="label">暱稱</div>
-                      <div class="data">@{{ info.nick_name }}</div>
+                      <div class="data" v-if="info.nick_name != ''">@{{ info.nick_name }}</div>
+                      <div class="data" v-else>尚未填寫 哇耶</div>
                     </div>
                     <div class="passport-info-item">
                       <div class="label">島花</div>
-                      <div class="data">@{{ info.flower }}</div>
+                      <div class="data" v-if="info.flower != ''">@{{ info.flower }}</div>
+                      <div class="data" v-else>尚未填寫 哇耶</div>
                     </div>
                   </div>
                 </li>
@@ -44,7 +51,8 @@
                   <div class="passport-info-item-group">
                     <div class="passport-info-item">
                       <div class="label">島名</div>
-                      <div class="data">@{{ info.island_name }}島</div>
+                      <div class="data" v-if="info.island_name != ''">@{{ info.island_name }}島</div>
+                      <div class="data" v-else>尚未填寫 哇耶</div>
                     </div>
                     <div class="passport-info-item">
                       <div class="label">特產</div>
@@ -64,7 +72,8 @@
                 <li>
                   <div class="passport-info-item">
                     <div class="label">介紹</div>
-                    <div class="data">@{{ info.info }}</div>
+                    <div class="data" v-if="info.info != ''">@{{ info.info }}</div>
+                    <div class="data" v-else>尚未填寫 哇耶</div>
                   </div>
                 </li>
               </ul>

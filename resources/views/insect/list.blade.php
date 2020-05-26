@@ -23,6 +23,25 @@
                   @include('layouts.museum-tabs')
                 </td>
               </tr>
+              <tr>
+                <td class="text-center">所屬半球</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.position == '南' ? 'current' : ''" @click="addPosition('南')">
+                    南半球
+                  </button>
+                  <button class="btn btn-search" :class="searchData.position == '北' ? 'current' : ''" @click="addPosition('北')">
+                    北半球
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">月份</td>
+                <td>
+                  <button class="btn btn-search" :class="searchData.month.indexOf(key + 1) == '-1' ? '' : 'current'" v-for="(data, key) in month" @click="addMonth(key + 1)">
+                    @{{ data }}
+                  </button>
+                </td>
+              </tr>
             </table>
           </div>
           <form>
@@ -150,15 +169,35 @@
       trackCount: 0,
       noTrackCount: 0,
       type: 'insect',
+      nowMounth: "{{ date('m') * 1 }}",
+      month: [
+        '一月',
+        '二月',
+        '三月',
+        '四月',
+        '五月',
+        '六月',
+        '七月',
+        '八月',
+        '九月',
+        '十月',
+        '十一月',
+        '十二月'
+      ],
       version: "{{ config('app.version') }}",
       infiniteId: +new Date(),
       searchData: {
-        text: "{{ $text }}",
         target: "{{ $target }}",
+        text: "{{ $text }}",
+        position: "{{ $position }}",
+        month: [],
       }
     },
     mounted() {
       this.getLikeCount()
+      if (this.searchData.position != '') {
+        this.searchData.month.push(parseInt(this.nowMounth))
+      }
     },
     methods: {
       isMobile(){
@@ -241,10 +280,12 @@
       search($state) {
         this.loading = true
         axios.post('/insect/search', {
-           page: this.page,
-           text: this.searchData.text,
-           target: this.searchData.target,
-           type: this.type
+          page: this.page,
+          text: this.searchData.text,
+          target: this.searchData.target,
+          month: this.searchData.month,
+          position: this.searchData.position,
+          type: this.type
          }).then((response) => {
            if (response.data.length) {
              this.page += 1;
@@ -260,6 +301,40 @@
       clearAll() {
         this.searchData = {
           text: '',
+          month: [],
+          position: '',
+        }
+
+        this.searchDefault()
+      },
+      addMonth(month) {
+        const key = this.searchData.month.indexOf(month)
+
+        if (key == '-1') {
+          //push
+          this.searchData.month.push(month)
+        } else {
+          //add
+          this.searchData.month.splice(key, 1);
+        }
+
+        this.searchDefault()
+      },
+      addPosition(position) {
+        let needAddMonth = false
+
+        if (this.searchData.month.length == 0) {
+          needAddMonth = true
+        }
+
+        if (position == this.searchData.position) {
+          this.searchData.position = ''
+        } else {
+          this.searchData.position = position
+
+          if (needAddMonth) {
+            this.searchData.month.push(parseInt(this.nowMounth))
+          }
         }
 
         this.searchDefault()

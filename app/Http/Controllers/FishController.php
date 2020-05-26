@@ -13,10 +13,16 @@ class FishController extends Controller
     {
         $text = $request->input('text', '');
         $target = $request->input('target', '');
+        $position = getUserData('position');
+
+        if ($position != '') {
+            $position = $position == 1 ? '南' : '北';
+        }
 
         return view('fish.list', [
             'text' => $text,
             'target' => $target,
+            'position' => $position,
         ]);
     }
 
@@ -96,11 +102,28 @@ class FishController extends Controller
         $text = $request->input('text', '');
         $type = 'fish';
         $target = $request->input('target', '');
+        $months = $request->input('month', []);
+        $position = $request->input('position', '');
 
         $fish = DB::table('fish');
 
         if ($text != '') {
            $fish->where('name', 'like', '%' . $text . '%');
+        }
+
+        if (is_array($months) && !empty($months)) {
+            $monthRange = range(1, 12);
+
+            foreach ($months as $month) {
+                if ($position != '') {
+                    $fish->where(function($q) use ($month, $position) {
+                      $q->where('m' . $month, $position)
+                        ->orWhere('m' . $month, '全');
+                    });
+                } else {
+                    $fish->where('m' . $month, '!=', '');
+                }
+            }
         }
 
         //check target

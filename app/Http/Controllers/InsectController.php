@@ -13,10 +13,16 @@ class InsectController extends Controller
     {
         $text = $request->input('text', '');
         $target = $request->input('target', '');
+        $position = getUserData('position');
+
+        if ($position != '') {
+            $position = $position == 1 ? '南' : '北';
+        }
 
         return view('insect.list', [
             'text' => $text,
             'target' => $target,
+            'position' => $position,
         ]);
     }
 
@@ -96,11 +102,28 @@ class InsectController extends Controller
         $text = $request->input('text', '');
         $type = $request->input('type', '');
         $target = $request->input('target', '');
+        $months = $request->input('month', []);
+        $position = $request->input('position', '');
 
         $insect = DB::table('insect');
 
         if ($text != '') {
            $insect->where('name', 'like', '%' . $text . '%');
+        }
+
+        if (is_array($months) && !empty($months)) {
+            $monthRange = range(1, 12);
+
+            foreach ($months as $month) {
+                if ($position != '') {
+                    $insect->where(function($q) use ($month, $position) {
+                      $q->where('m' . $month, $position)
+                        ->orWhere('m' . $month, '全');
+                    });
+                } else {
+                    $insect->where('m' . $month, '!=', '');
+                }
+            }
         }
 
         //check target
