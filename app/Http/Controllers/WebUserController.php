@@ -84,12 +84,25 @@ class WebUserController extends Controller
 
     	//get all items
     	$countItems = getCountItems($countData);
+        $compatibleUrl = '';
+        $names = [];
+
+        foreach ($countData['animalInfo']['like'] as $data) {
+            $names[] = $data->name;
+        }
+
+        $nameStr = implode(",", $names);
+
+        if ($nameStr != '') {
+            $compatibleUrl = env('APP_URL') . '/animals/compatible?name=' . $nameStr;
+        }
 
     	return [
     		'code' => 1,
     		'data' => $user,
     		'itemsData' => $countItems,
     		'animalInfo' => $countData['animalInfo'],
+            'compatibleUrl' => $compatibleUrl,
     	];
     }
 
