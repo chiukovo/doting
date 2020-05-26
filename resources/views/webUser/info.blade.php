@@ -190,7 +190,7 @@
                     </li>
                   </ul>
                   <div class="text-center">
-                    <a :href="compatibleUrl" class="btn btn-primary btn-sm m-2">我的島民相容性分析</a>
+                    <a :href="compatibleUrl" class="btn btn-primary btn-sm m-2 text-white">我的島民相容性分析</a>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="animals2">
