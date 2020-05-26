@@ -50,7 +50,7 @@ class LineLoginController extends Controller
             if (!isset($response->error)) {
                 $userId = $userProfile->userId;
                 $displayName = $userProfile->displayName;
-                $pictureUrl = $userProfile->pictureUrl;
+                $pictureUrl = isset($userProfile->pictureUrl) ? $userProfile->pictureUrl : '';
 
                 //do login
                 if ($userId != '' && !is_null($userId)) {
