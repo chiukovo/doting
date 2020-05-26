@@ -1415,47 +1415,6 @@ a.link {
 }
 // <691px
 @include media-breakpoint-down(sm) {
-  .user-save {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    z-index: 1090;
-    background: #fff;
-    width: 100%;
-    height: 34px;
-    border-top: 1px solid $gray-300;
-    .user-save-wrap {
-      display: flex;
-    }
-    .btn-back {
-      display: block;
-      width: 60px;
-      height: 34px;
-      background-color: $gray-600;
-      mask-image: url('../image/arrow-back-outline.svg');
-      mask-size: 40%;
-      mask-repeat: no-repeat;
-      mask-position: center center;
-    }
-    ul {
-      display: flex;
-      width: 100%;
-      margin: 0;
-      li {
-        flex: 0 0 50%;
-        margin: 0;
-      }
-      .btn {
-        display: block;
-        width: 100%;
-        border-radius: 0;
-        border-color: transparent;
-        &:not(.current) {
-          color: $gray-700;
-        }
-      }
-    }
-  }
   .analysis-fixed {
     margin-bottom: 120px;
   }
