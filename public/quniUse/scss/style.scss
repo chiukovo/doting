@@ -963,6 +963,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
 }
 
 .user-save-wrap {
+  text-align: right;
   i {
     margin-right: 4px;
   }
@@ -1514,9 +1515,6 @@ a.link {
 @include media-breakpoint-up(md) {
   .card-list li {
     flex: 0 0 25%;
-  }
-  .user-save {
-    text-align: right;
   }
   .header-wrap {
     max-width: 960px;
