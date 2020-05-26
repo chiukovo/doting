@@ -54,7 +54,7 @@
           <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
         </a>
         @if($isLogin)
-        <div class="sub-login btn-user">
+        <div class="sub-login">
           <div class="btn-group">
             <div class="sub-login-img-wrap">
               <a href="/user">
