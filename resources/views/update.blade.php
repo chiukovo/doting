@@ -22,8 +22,8 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
-                <div class="card-header-title">更新 v3.9.0</div>
-                <div class="card-header-date">2020/5/26</div>
+                <div class="card-header-title">更新 v3.9.4</div>
+                <div class="card-header-date">2020/5/27</div>
               </div>
               <div class="card-body">
                 <h3>更新資訊</h3>
