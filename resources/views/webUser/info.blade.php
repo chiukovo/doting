@@ -162,8 +162,8 @@
         <div class="col-12 col-md-10  col-lg-8">
           <div class="user-wrap">
             <div class="user-header">
-              <h4 v-if="info.island_name != ''">@{{ info.island_name }}的居民</h4>
-              <h4 v-else>我的居民</h4>
+              <h4 v-if="info.island_name != ''">@{{ info.island_name }}的島民</h4>
+              <h4 v-else>我的島民</h4>
               <small v-if="info.island_name != ''">Residents of @{{ info.island_name }}</small>
               <small v-else>Residents of My</small>
             </div>
@@ -189,6 +189,9 @@
                       </div>
                     </li>
                   </ul>
+                  <div class="text-center">
+                    <a :href="compatibleUrl" class="btn btn-primary btn-sm m-2">我的島民相容性分析</a>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="animals2">
                   <ul class="card-list">
@@ -257,6 +260,7 @@
       itemsData: [],
       animalLike: [],
       animalTrack: [],
+      compatibleUrl: '',
       options: {
         blocks: [4, 4, 4],
         delimiter: '-'
@@ -287,6 +291,7 @@
             this.itemsData = result.itemsData
             this.animalLike = result.animalInfo.like
             this.animalTrack = result.animalInfo.track
+            this.compatibleUrl = result.compatibleUrl
           }
         })
       },
