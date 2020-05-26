@@ -51,10 +51,9 @@
         <a href="/" class="logo">
           <h1>豆丁森友會 Doting Animal crossing</h1>
           <h2>動物森友會</h2>
-          <!-- <img src="../image/logo.png" alt="豆丁森友會"> -->
         </a>
         @if($isLogin)
-        <div class="sub-login">
+        <div class="sub-login mobile-login">
           <div class="btn-group">
             <div class="sub-login-img-wrap">
               <a href="/user">
