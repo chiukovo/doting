@@ -558,6 +558,8 @@ if (!function_exists('printDoc')) {
 		$text .= '範例 我的島民' . "\n";
 		$text .= '範例 我的護照' . "\n";
 		$text .= "\n";
+		$text .= '👇 更新資訊 👇' . "\n";
+		$text .= env('APP_URL') . '/update/version' . "\n";
 		$text .= '👇 詳細圖文解說 👇' . "\n";
 		$text .= env('APP_URL') . '/instructions';
 
