@@ -824,6 +824,14 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       color: $gray-300;
     }
   }
+  .passport-info-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-width: 140px;
+    }
+  }
   .passport-info {
     list-style: none;
     padding: 0;
@@ -868,101 +876,6 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       }
     }
   }
-  // .passport-hr {
-  //   border-bottom: 1px solid $gray-200;
-  // }
-  // .passport-info {
-  //   list-style: none;
-  //   padding: 0;
-  //   margin: 0;
-  //   input {
-  //     border: 0;
-  //   }
-  //   li {
-  //     padding: .5rem 1rem;
-  //   }
-  //   .passport-sw {
-  //     padding: .5rem 0;
-  //     > span {
-  //       display: block;
-  //       width: 100%;
-  //       max-width: 360px;
-  //       font-size: 13px;
-  //       font-weight: bold;
-  //       background: $gray-100;
-  //       border-radius: 30px;
-  //       box-shadow: inset 1px 1px 2px rgba($gray-900, 0.06);
-  //       padding: .5rem 1rem;
-  //     }
-  //   }
-  // }
-  // .passport-info-img {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
-  // .passport-info-name {
-  //   input {
-  //     margin: 0 -1rem;
-  //   }
-  // }
-  // .passport-info-birthday{
-  //   .birthday-edit {
-  //     margin: 0 -1rem;
-  //     &:after {
-  //       content: '出生';
-  //       display: inline-block;
-  //       margin-left: 6px;
-  //       position: relative;
-  //       top: 2px;
-  //     }
-  //     .form-control {
-  //       width: 80px;
-  //       + .form-control {
-  //         margin-left: 6px;
-  //       }
-  //     }
-  //   }
-  // }
-  // .passport-info-top {
-  //   display: flex;
-  //   > div + div {
-  //     margin-left: 2rem;
-  //   }
-  //   input, select {
-  //     width: 100%;
-  //     max-width: 120px;
-  //     border-radius: 0;
-  //   }
-  //   .passport-info-island,
-  //   .passport-info-fruit {
-  //     position: relative;
-  //     display: flex;
-  //     align-items: center;
-  //     padding-left: 2rem;
-  //     &:before {
-  //       content: '';
-  //       position: absolute;
-  //       left: 0;
-  //       display: inline-block;
-  //       height: 23px;
-  //       background-color: $gray-300;
-  //       mask-size: contain;
-  //       mask-repeat: no-repeat;
-  //     }
-  //   }
-  //   .passport-info-island:before {
-  //     width: 21px;
-  //     mask-image: url('../image/icon/island.svg');
-  //   }
-  //   .passport-info-fruit:before {
-  //     width: 23px;
-  //     mask-image: url('../image/icon/apple.svg');
-  //   }
-  // }
-  // .passport-join {
-  //   color: $gray-600;
-  // }
 }
 .user-header {
   text-align: center;
@@ -1550,11 +1463,12 @@ a.link {
     position: fixed;
     z-index: 1090;
     width: 100%;
-    .btn-nav {
+    .btn-nav,
+    .btn-user {
       width: 50px;
       height: 50px;
       padding: 0;
-      > .icon-menu {
+      > .icon {
         display: block;
         width: 100%;
         height: 100%;
@@ -1564,21 +1478,27 @@ a.link {
         mask-repeat: no-repeat;
         mask-position: center;
         margin-left: 2px;
+        &.icon-menu {
+          mask-image: url('../image/menu-outline.svg');
+        }
+        &.icon-user {
+          mask-image: url('../image/person-outline.svg');
+        }
       }
     }
   }
   .navigation {
     position: absolute;
-    right: 0;
+    left: 0;
     width: 80%;
     max-width: 220px;
     height: 100vh;
     padding-bottom: 30vh;
     background-color: #fff;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-shadow: 0 12px 38px 1px rgba($gray-900, 0.05);
-    transform: translateX(100%);
+    transform: translateX(-100%);
     -webkit-overflow-scrolling: touch;
     transition: all .5s;
     ul {
