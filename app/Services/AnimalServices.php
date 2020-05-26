@@ -150,13 +150,13 @@ class AnimalServices
             ->setText('島花')
             ->setSize(ComponentFontSize::XS)
             ->setColor('#aaaaaa')
-            ->setWrap(true)
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
             ->setText($user->flower)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
+            ->setWrap(true)
             ->setFlex(2);
 
         $box[] = BoxComponentBuilder::builder()
