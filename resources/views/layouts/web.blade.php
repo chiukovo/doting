@@ -45,6 +45,9 @@
         <a href="/donate">贊助豆丁，豆丁要活下去*.。(๑･∀･๑)*.。</a>
       </div>
       <div class="header-wrap">
+        <button class="btn btn-nav" @click="menuShow = !menuShow">
+          <i class="icon icon-menu"></i>
+        </button>
         <a href="/" class="logo">
           <h1>豆丁森友會 Doting Animal crossing</h1>
           <h2>動物森友會</h2>
@@ -59,7 +62,6 @@
               </a>
             </div>
             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ getUserData('displayName') }}
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="/user">收藏資訊</a>
@@ -68,9 +70,9 @@
             </div>
           </div>
         </div>
+        @else
+          <a class="btn btn-user" href="{{ lingLoginUrl() }}"><i class="icon icon-user"></i></a>
         @endif
-        <button class="btn btn-nav" @click="menuShow = !menuShow"><ion-icon name="menu-outline"></ion-icon></button>
-        <!-- <button class="btn btn-user"><ion-icon name="person-outline"></ion-icon></button> -->
         <div class="navigation-wrap" :class="menuShow ? 'show' : ''">
           <nav class="navigation">
             <ul>
