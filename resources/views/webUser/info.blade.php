@@ -159,7 +159,7 @@
               <small v-else>Residents of My</small>
             </div>
             <div class="user-body">
-              <ul class="nav nav-tabs nav-fill" role="tablist" v-if="animalLike.length != 0 && animalTrack.length != 0">
+              <ul class="nav nav-tabs nav-fill" role="tablist" v-if="animalLike.length != 0 || animalTrack.length != 0">
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#animals1">擁有(@{{ animalLike.length }})</a>
                 </li>
@@ -167,7 +167,7 @@
                   <a class="nav-link" data-toggle="tab" href="#animals2">追蹤(@{{ animalTrack.length }})</a>
                 </li>
               </ul>
-              <div class="tab-content" v-if="animalLike.length != 0 && animalTrack.length != 0">
+              <div class="tab-content" v-if="animalLike.length != 0 || animalTrack.length != 0">
                 <div class="tab-pane fade show active" id="animals1">
                   <ul class="card-list">
                     <li v-for="list in animalLike" @click="goDetail(list)">
