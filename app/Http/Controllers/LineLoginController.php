@@ -76,6 +76,6 @@ class LineLoginController extends Controller
     {
         LineLoginServices::doLogout();
 
-        return redirect('/');
+        return redirect()->back();
     }
 }
