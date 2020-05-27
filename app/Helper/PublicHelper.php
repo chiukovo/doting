@@ -84,7 +84,7 @@ if (!function_exists('computedCount')) {
     /**
      * @return []
      */
-    function computedCount($likeType, $type, $needIds = false, $lineId = false)
+    function computedCount($likeType, $type, $needIds = false, $lineId = false, $likeRedis = [])
     {
 		$likeCount = 0;
 		$trackCount = 0;
@@ -102,8 +102,15 @@ if (!function_exists('computedCount')) {
 			];
 		}
 
+        $like = [];
+
 		//like
-		$like = Redis::hGetAll($lineId);
+        if (empty($likeRedis)) {
+            $like = Redis::hGetAll($lineId);
+        } else {
+            $like = $likeRedis;
+        }
+
 	    $likeIds = [];
 	    $trackIds = [];
 
@@ -149,6 +156,9 @@ if (!function_exists('computedCount')) {
 	            } else {
 	                $countAll = DB::table($likeType)->where('info', '!=', '')->count();
 	            }
+
+                $likeCount = DB::table($likeType)->whereIn('id', $likeIds)->count();
+                $trackCount = DB::table($likeType)->whereIn('id', $trackIds)->count();
             case 'fish':
             case 'insect':
             case 'fossil':
@@ -156,12 +166,23 @@ if (!function_exists('computedCount')) {
             case 'diy':
             case 'kk':
                 $countAll = DB::table($likeType)->count();
+
+                $likeCount = DB::table($likeType)->whereIn('id', $likeIds)->count();
+                $trackCount = DB::table($likeType)->whereIn('id', $trackIds)->count();
 	            break;
             case 'museum':
                 $countAll1 = DB::table('fish')->count();
                 $countAll2 = DB::table('insect')->count();
 
                 $countAll = $countAll1 + $countAll2;
+
+                $likeCount1 = DB::table('fish')->whereIn('id', $likeIds)->count();
+                $likeCount2 = DB::table('insect')->whereIn('id', $likeIds)->count();
+                $trackCount1 = DB::table('fish')->whereIn('id', $trackIds)->count();
+                $trackCount2 = DB::table('insect')->whereIn('id', $trackIds)->count();
+
+                $likeCount = $likeCount1 + $likeCount2;
+                $trackCount = $trackCount1 + $trackCount2;
 	            break;
 	        case 'items':
 	        	$countAll = DB::table('items_new');
@@ -176,6 +197,9 @@ if (!function_exists('computedCount')) {
 	        	}
 
 	        	$countAll = $countAll->count();
+
+                $likeCount = DB::table('items_new')->whereIn('id', $likeIds)->count();
+                $trackCount = DB::table('items_new')->whereIn('id', $trackIds)->count();
 	    }
 
 	    if ($needIds) {
@@ -239,14 +263,16 @@ if (!function_exists('computedAllCount')) {
 			        }
 				}
 
+                $countData = computedCount($likeType, $type, false, false, $like);
+
 				if (!empty($likeIds)) {
 					$result[$type]['likeIds'] = $likeIds;
-					$result[$type]['likeCount'] = count($likeIds);
+					$result[$type]['likeCount'] = $countData['likeCount'];
 				}
 
 				if (!empty($trackIds)) {
 					$result[$type]['trackIds'] = $trackIds;
-					$result[$type]['trackCount'] = count($trackIds);
+					$result[$type]['trackCount'] = $countData['trackCount'];
 				}
 			}
 		}
@@ -337,7 +363,6 @@ if (!function_exists('getCountItems')) {
 							$href = '/kk/list?target=';
 							break;
 					}
-
 
 					$result[] = [
 						'name' => $name,
