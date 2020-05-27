@@ -24,7 +24,8 @@ class LineLoginController extends Controller
             $checkState = '';
 
             if ($code == '' || $state == '') {
-                return '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
+                $errorMsg = '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
+                echo '<script>alert("' . $errorMsg . '");location.href="/"</script>';
             }
 
             try {
