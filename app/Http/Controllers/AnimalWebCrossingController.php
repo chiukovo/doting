@@ -368,11 +368,19 @@ class AnimalWebCrossingController extends Controller
             ->get()
             ->toArray();
 
+        //找已追蹤動物
+        $getCount = computedCount('animal', 'animal', true);
+        $trackIds = $getCount['trackIds'];
+        $trackLists = [];
+
         foreach ($lists as $key => $value) {
             $value->show = true;
             $lists[$key] = $value;
-        }
 
+            if (in_array($value->id, $trackIds)) {
+                $trackLists[] = $value;
+            }
+        }
 
         $personality = collect($lists)->groupBy('personality')->keys()->toArray();
         $lists = collect($lists)->groupBy('race')->toArray();
@@ -382,6 +390,7 @@ class AnimalWebCrossingController extends Controller
             'lists' => $lists,
             'races' => $races,
             'personality' => $personality,
+            'trackLists' => $trackLists,
         ];
     }
 
