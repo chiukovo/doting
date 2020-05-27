@@ -63,10 +63,10 @@ class AnimalServices
             return $text;
         }
 
-        $user->nick_name = $user->nick_name != '' ? $user->nick_name : '-';
-        $user->island_name = $user->island_name != '' ? $user->island_name : '-';
-        $user->info = $user->info != '' ? $user->info : '-';
-        $user->flower = $user->flower != '' ? $user->flower : '-';
+        $user->nick_name = $user->nick_name != '' ? $user->nick_name : '尚未填寫 哇耶';
+        $user->island_name = $user->island_name != '' ? $user->island_name . '島' : '尚未填寫 哇耶';
+        $user->info = $user->info != '' ? $user->info : '尚未填寫 哇耶';
+        $user->flower = $user->flower != '' ? $user->flower : '尚未填寫 哇耶';
         $user->fruit = $user->fruit != '' ? $user->fruit : 0;
         $user->position = $user->position != '' ? $user->position : 0;
 
@@ -89,7 +89,7 @@ class AnimalServices
             ->setFlex(1);
 
         $boxInline[] = TextComponentBuilder::builder()
-            ->setText($user->island_name . '島')
+            ->setText($user->island_name)
             ->setSize(ComponentFontSize::XS)
             ->setColor('#444444')
             ->setWrap(true)
