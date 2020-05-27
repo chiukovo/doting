@@ -24,7 +24,7 @@ class LineLoginController extends Controller
             $checkState = '';
 
             if ($code == '' || $state == '') {
-                return 'params error';
+                return '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
             }
 
             try {
