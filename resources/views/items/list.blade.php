@@ -83,7 +83,7 @@
               <tr v-for="list in lists">
                 <td class="link" scope="row">
                   <a :href="'/itemsNew/' + list.img_name + '.png?v=' + version" :data-lightbox="list.name" :data-title="list.name">
-                    <span>@{{ list.name }}</span>
+                    <span>@{{ list.name }}<br>@{{ list.jp_name }}</span>
                     <div class="table-img">
                       <img :src="'/itemsNew/' + list.img_name + '.png?v=' + version" :alt="list.name">
                     </div>
@@ -120,7 +120,7 @@
                   </div>
                   <img class="img-fluid" :src="'/itemsNew/' + list.img_name + '.png?v=' + version" :alt="list.name">
                 </div>
-                <div class="card-list-title">@{{ list.name }}</div>
+                <div class="card-list-title">@{{ list.name }}<br>@{{ list.jp_name }}</div>
                 <div class="card-list-info" v-if="list.buy != null">
                   <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.buy) }}</h5>
                 </div>

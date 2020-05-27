@@ -80,6 +80,7 @@ class ItemsServices
 
         $items->where(function($q) use ($message) {
           $q->where('name', 'like', '%' . $message . '%')
+            ->orWhere('jp_name', 'like', '%' . $message . '%')
             ->orWhere('color', 'like', '%' . $message . '%');
         });
 
@@ -239,13 +240,18 @@ class ItemsServices
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
+        $subTexts = TextComponentBuilder::builder()
+            ->setText($item->jp_name)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::XS);
+
         $outBox = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setSpacing(ComponentSpacing::SM)
             ->setMargin(ComponentMargin::LG)
             ->setContents($box);
 
-        $result = [$texts, $outBox];
+        $result = [$texts, $subTexts, $outBox];
 
 
         return BoxComponentBuilder::builder()
