@@ -154,6 +154,7 @@ class ItemsServices
         $item->size = $item->size != '' ? $item->size : '-';
         $item->category = $item->category != '' ? $item->category : '-';
         $item->color = $item->color != '' ? $item->color : '-';
+        $item->jp_name = $item->jp_name != '' ? $item->jp_name : '-';
 
         $box = [];
         //box1
