@@ -23,8 +23,10 @@ class MuseumController extends Controller
         $result = [];
         $text = $request->input('text', '');
         $page = $request->input('page', 1);
+        $target = $request->input('target', '');
+        $type = $request->input('type', '');
 
-        $museum = OtherServices::getDataByMessage($text, $page);
+        $museum = OtherServices::getDataByMessage($text, $page, false, $target);
 
         if (!is_array($museum)) {
             return [];
@@ -36,7 +38,6 @@ class MuseumController extends Controller
 
             $result[] = $data;
         }
-
 
         return $result;
     }

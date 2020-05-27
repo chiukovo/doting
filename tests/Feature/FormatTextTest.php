@@ -26,6 +26,20 @@ class FormatTextTest extends TestCase
             }
         }
 
+        //test my animail
+        $result = testMyAnimals();
+
+        if (!is_array($result)) {
+            $this->assertTrue(false);
+        }
+
+        //test my animail
+        $result = testMyPossport();
+
+        if (!is_array($result)) {
+            $this->assertTrue(false);
+        }
+
         $this->assertTrue(true);
     }
 

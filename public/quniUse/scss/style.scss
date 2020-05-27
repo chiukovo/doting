@@ -3,6 +3,12 @@
 $developer: 0;
 $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helvetica Neue","Helvetica","Noto Sans TC","Microsoft JhengHei","Arial",sans-serif;
 
+* {
+  &:focus {
+    outline: 0 !important;
+  }
+}
+
 #donateMe {
   width: 100%;
   height: 40px;
@@ -51,8 +57,40 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     justify-content: space-between;
     height: 100%;
   }
+  .icon-signin {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    mask-image: url('../image/arrow-forward-outline.svg');
+    background-color: $gray-900;
+    mask-size: 50%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    margin-left: 2px;
+  }
 }
-
+.sub-login {
+  .btn-group {
+    height: 100%;
+  }
+  .sub-login-img-wrap {
+    display: flex;
+    align-items: center;
+    + .btn {
+      padding-left: .35rem;
+    }
+    > a {
+      display: block;
+      .sub-login-img {
+        width: 34px;
+        height: 34px;
+        background: $gray-200 top center no-repeat;
+        background-size: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+}
 
 
 
@@ -246,7 +284,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
           background-color: $gray-100;
           &:before {
             content: '';
-            background: #fff url('../../image/checkmark-outline.svg') center no-repeat;
+            background: #fff url('../image/checkmark-outline.svg') center no-repeat;
             background-size: 100%;
             border-color: $gray-900;
           }
@@ -255,6 +293,78 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     }
   }
 }
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 -.2rem;
+  > li {
+    flex: 0 0 50%;
+    padding: .2rem;
+    .card-list-item {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      border: 1px solid $gray-200;
+      box-shadow: 0 0 0 rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding-bottom: .3rem;
+      transition: all .3s ease;
+      cursor: pointer;
+      .card-list-img {
+        position: relative;
+        height: 140px;
+        padding: 1rem;
+        img {
+          max-height: 100%;
+        }
+        .card-list-get {
+          position: absolute;
+          top: 6px;
+          left: 10px;
+          img {
+            height: 26px;
+          }
+          &.right {
+            left: auto;
+            right: 10px;
+          }
+        }
+        .card-list-size {
+          position: absolute;
+          left: 10px;
+          bottom: 6px;
+          img {
+            height: 16px;
+          }
+        }
+        &.card-list-icon {
+          background: $gray-100;
+          margin-bottom: 0.5rem;
+        }
+      }
+      .card-list-title {
+        font-size: .8rem;
+        line-height: 1.2;
+        font-weight: bold;
+      }
+      .card-list-info {
+        color: $gray-700;
+      }
+      .btn {
+        border-color: transparent !important;
+        i {
+          margin-right: 4px;
+        }
+      }
+      &:hover {
+        box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      }
+    }
+  }
+}
+
 
 .collapse-analysis {
   position: relative;
@@ -344,7 +454,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       height: 1rem;
       display: block;
       background-color: $primary;
-      mask-image: url('../../image/close-outline.svg');
+      mask-image: url('../image/close-outline.svg');
       mask-size: cover;
     }
     &:hover {
@@ -391,7 +501,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
 
 .version {
   .img-fluid {
-    width: 400px;
+    width: 320px;
     margin: .5rem 0;
   }
 }
@@ -674,6 +784,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
   border-radius: 1rem;
   padding: 1rem 0;
   .passport-header {
+    position: relative;
     width: 100%;
     text-align: center;
     align-content: center;
@@ -681,7 +792,7 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     background-image: linear-gradient(to right, $gray-200 10%, $gray-200 90%, transparent 50%);
     background-size: 60px 1px;
     background-repeat: repeat-x;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     > span {
       position: relative;
       display: block;
@@ -724,67 +835,57 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
       color: $gray-300;
     }
   }
-  .passport-hr {
-    border-bottom: 1px solid $gray-200;
+  .passport-info-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-width: 140px;
+    }
   }
   .passport-info {
     list-style: none;
     padding: 0;
     margin: 0;
     li {
-      padding: .5rem 1rem;
-    }
-    .passport-sw {
-      padding: .5rem 0;
-      > span {
-        display: block;
-        width: 100%;
-        max-width: 360px;
-        font-size: 13px;
-        font-weight: bold;
-        background: $gray-100;
-        border-radius: 30px;
-        box-shadow: inset 1px 1px 2px rgba($gray-900, 0.06);
-        padding: .5rem 1rem;
-      }
-    }
-  }
-  .passport-info-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .passport-info-top {
-    display: flex;
-    > div + div {
-      margin-left: 2rem;
-    }
-    .passport-info-island,
-    .passport-info-fruit {
       position: relative;
-      padding-left: 2rem;
-      &:before {
-        content: '';
+      border-bottom: 1px solid $gray-200;
+      .btn {
         position: absolute;
-        left: 0;
-        display: inline-block;
-        height: 23px;
-        background-color: $gray-300;
-        mask-size: contain;
-        mask-repeat: no-repeat;
+        right: 0;
+        top: 50%;
+        transform: translateY(-12px);
       }
     }
-    .passport-info-island:before {
-      width: 21px;
-      mask-image: url('../image/icon/island.svg');
+    .passport-info-item {
+      display: flex;
+      align-items: center;
+      height: 3rem;
+      .label {
+        width: 74px;
+        text-align: center;
+        color: $gray-500;
+        background: $gray-100;
+        border-radius: 15px;
+        padding: 2px 10px;
+        margin-right: 10px;
+      }
     }
-    .passport-info-fruit:before {
-      width: 23px;
-      mask-image: url('../image/icon/apple.svg');
+    .passport-info-tip {
+      position: relative;
+      top: -8px;
+      color: $gray-500;
+      margin-left: 10px;
     }
-  }
-  .passport-join {
-    color: $gray-600;
+    .passport-info-item-group {
+      display: flex;
+      .passport-info-item {
+        flex: 0 0 50%;
+        + .passport-info-item {
+          margin-left: 10px;
+        }
+      }
+    }
   }
 }
 .user-header {
@@ -832,27 +933,64 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     border: 5px solid rgba($gray-200, .5);
   }
 }
-
-.user-save {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1060;
-  background-color: #fff;
-  border-top: 1px solid $gray-200;
-  ul {
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-      flex: 0 0 33.33%;
+.user-body {
+  .nav-tabs {
+    margin-bottom: 0.5rem;
+  }
+  .tab-content-scroll {
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .card-list li .card-list-item {
+    .card-list-img {
+      height: 80px;
+      padding: .5rem 1rem;
+    }
+  }
+  .user-card-list {
+    > li {
+      .card-list-item {
+        padding-bottom: 0;
+      }
+    }
+    .card-list-title {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid $gray-200;
+    }
+    .user-save-btn {
+      display: flex;
+      justify-content: space-around;
+      li {
+        flex: 0 0 43%;
+        margin: 0.2rem 0;
+      }
       .btn {
-        padding: 0.75rem;
-        &.current {
-          color: $gray-500 !important;
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.user-save-wrap {
+  text-align: right;
+  i {
+    margin-right: 4px;
+  }
+}
+ul.user-save-btn {
+  list-style: none;
+  padding: 0;
+  li {
+    display: inline-block;
+    .btn {
+      font-size: 12px;
+      &:not(.current) {
+        color: $gray-700;
+        border-color: $gray-300;
+        &:hover {
+          color: #fff;
         }
       }
     }
@@ -1084,6 +1222,13 @@ audio {
 .rounded {
   border-radius: .25rem !important;
 }
+.badge-light {
+  border: 1px solid $gray-200;
+  &.current {
+    background-color: rgba($primary, .08);
+    border-color: rgba($primary, .2);
+  }
+}
 a.link {
   color: $primary !important;
   text-decoration: underline;
@@ -1104,6 +1249,11 @@ a.link {
   margin: 0 0 1rem 0;
   li + li {
     margin-top: 0.36rem;
+  }
+}
+.nav-item {
+  a {
+    color: $gray-700;
   }
 }
 .nav-pills .nav-link,
@@ -1139,6 +1289,73 @@ a.link {
 .bg-danger-light {
   background-color: rgba($danger, .1);
 }
+
+.hint-message {
+  position: relative;
+  z-index: 1100;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: all .3s ease;
+  .message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: none;
+    color: #fff;
+    background: rgba($gray-900, .9);
+    border-radius: .25rem;
+    padding: .5rem 1rem;
+    transform: translate(-50%, -50%);
+  }
+  &.show {
+    opacity: 1;
+    .message {
+      display: block;
+    }
+  }
+}
+
+// .color-chip {
+//   &:before {
+//     content: '';
+//     position: relative;
+//     top: 2px;
+//     display: inline-block;
+//     width: 14px;
+//     height: 14px;
+//     border-radius: 50px;
+//     margin-right: 3px;
+//   }
+//   &.color-red:before {
+//     background-color: rgb(228, 91, 63);
+//   }
+//   &.color-colorful:before {
+//     background-image: linear-gradient( 135deg, #81FFEF 10%, #f09494 50%, #35399c 100%);
+//   }
+//   &.color-pink:before {
+//     background-color: rgb(255, 113, 131);
+//   }
+//   &.color-white:before {
+//     background-color: #fff;
+//     border: 1px solid $gray-300;
+//   }
+//   &.color-blue:before {
+//     background-color: rgb(78, 121, 204);
+//   }
+//   &.color-lightblue:before {
+//     background-color: rgb(130, 215, 220);
+//   }
+//   &.color-purple:before {
+//     background-color: rgb(124, 81, 187);
+//   }
+//   &.color-yellow:before {
+//     background-color: rgb(244, 191, 66);
+//   }
+// }
+
+
 
 // card
 .card {
@@ -1191,6 +1408,9 @@ a.link {
 
 // <518px
 @include media-breakpoint-down(xs) {
+  .instructions .instructions-img img {
+    max-width: 100%;
+  }
   .first {
     .first-nav-list {
       padding: 0 .5rem;
@@ -1214,31 +1434,41 @@ a.link {
     position: fixed;
     z-index: 1090;
     width: 100%;
-    .btn-user,
-    .btn-nav {
+    .btn-nav,
+    .btn-user {
       width: 50px;
       height: 50px;
       padding: 0;
-      ion-icon {
-        position: relative;
-        top: 2px;
-        width: 22px;
-        height: 22px;
+      > .icon {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: $gray-900;
+        mask-size: 50%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        margin-left: 2px;
+        &.icon-menu {
+          mask-image: url('../image/menu-outline.svg');
+        }
+        &.icon-user {
+          mask-image: url('../image/person-outline.svg');
+        }
       }
     }
   }
   .navigation {
     position: absolute;
-    right: 0;
+    left: 0;
     width: 80%;
     max-width: 220px;
     height: 100vh;
     padding-bottom: 30vh;
     background-color: #fff;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-shadow: 0 12px 38px 1px rgba($gray-900, 0.05);
-    transform: translateX(100%);
+    transform: translateX(-100%);
     -webkit-overflow-scrolling: touch;
     transition: all .5s;
     ul {
@@ -1286,11 +1516,21 @@ a.link {
     }
   }
 }
+
+@include media-breakpoint-up(sm) {
+  .card-list li {
+    flex: 0 0 33.33%;
+  }
+}
 // ≥768px
 @include media-breakpoint-up(md) {
+  .card-list li {
+    flex: 0 0 25%;
+  }
   .header-wrap {
     max-width: 960px;
   }
+  .mobile-login,
   .btn-user,
   .btn-nav {
     display: none;
@@ -1302,16 +1542,26 @@ a.link {
       padding: 0;
       margin: 0;
       > li > a {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         line-height: 50px;
         padding: 0 1rem;
       }
       .sub-nav {
-        ion-icon {
-          position: relative;
-          top: 1px;
-          margin-left: 3px;
-          opacity: 0.5;
+        > a {
+          &:after {
+            content: '';
+            position: relative;
+            top: 2px;
+            display: inline-block;
+            width: .8rem;
+            height: .8rem;
+            background-color: $gray-500;
+            mask-image: url('../image/chevron-down-outline.svg');
+            mask-size: cover;
+            margin-left: 2px;
+          }
         }
         ul {
           display: none;
@@ -1339,6 +1589,9 @@ a.link {
           }
           > a {
             color: $primary;
+            &:after {
+              background-color: $primary;
+            }
           }
         }
       }
@@ -1399,6 +1652,9 @@ a.link {
 
 // ≥992px
 @include media-breakpoint-up(lg) {
+  .card-list li {
+    flex: 0 0 20%;
+  }
   .first .first-season-list li {
     flex: 0 0 20%;
   }
@@ -1411,6 +1667,12 @@ a.link {
 
 // ≥1200px
 @include media-breakpoint-up(xl) {
+  .card-list {
+    margin: 0 -.5rem;
+    > li {
+      padding: 0.5rem;
+    }
+  }
   .header-wrap {
     max-width: 1140px;
   }

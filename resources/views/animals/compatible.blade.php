@@ -10,6 +10,9 @@
         <li class="breadcrumb-item active" aria-current="page">動物相容性分析</li>
       </ol>
     </nav>
+    <div class="mb-2">
+      @include('layouts.ads')
+    </div>
     <section class="post">
       <div id="select-div" class="row fixed-bottom analysis-tag" v-show="selected.length != 0">
         <div class="col-12 col-md-10">
@@ -36,6 +39,12 @@
                   <td class="text-center" width="80">顯示隱藏</td>
                   <td>
                     <button class="btn btn-search" :class="racesSelected.length == 0 ? 'current' : ''" @click="openAll">全部顯示</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center" width="80">顯示隱藏</td>
+                  <td>
+                    <button class="btn btn-search" :class="trackSelected ? 'current' : ''" @click="trackSelected = !trackSelected">我追蹤的動物們</button>
                   </td>
                 </tr>
                 <tr>
@@ -66,6 +75,30 @@
           </div>
           <div class="row my-2">
             <div class="col">選擇要診斷的居民，點擊診斷分析按鈕進行分析(人數可選：2~20人)</div>
+          </div>
+          <div class="row" v-show="trackSelected">
+            <div class="col">
+              <div class="card mb-3">
+                <div class="card-header">我追蹤的動物們</div>
+                <ul class="post-card-list animal-list check-list">
+                  <li :class="selectedCurrent(detail.name)" v-for="detail in trackLists" @click="toggleSelected(detail.name)" v-show="detail.show && checkPer(detail.personality)">
+                    <a href="javascript:void(0)">
+                      <span>@{{ detail.name }}</span>
+                      <div class="table-img">
+                        <img :src="'/animal/icon/' + detail.name + '.png'" :alt="detail.name">
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+                <div class="p-2 text-center" style="border: 1px solid #e9ecef;" v-if="trackLists.length == 0">
+                  @if(!isWebLogin())
+                    <a href="{{ lingLoginUrl() }}">前往登入</a>
+                  @else
+                    <span>空空如也 ಠ_ಠ</span>
+                  @endif
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row" v-for="(animal, race) in animals" v-show="checkShow(animal, race)">
             <div class="col">
@@ -305,6 +338,10 @@
           </div>
         </div>
       </div>
+      <!--ads-->
+      <div class="text-center">
+        @include('layouts.ads2')
+      </div>
     </section>
   </div>
   <go-top
@@ -322,6 +359,7 @@
     data: {
       loading: false,
       first: false,
+      trackSelected: false,
       animals: [],
       races: [],
       racesSelected: [],
@@ -330,6 +368,7 @@
       selected: [],
       perArray: [],
       matchArray: [],
+      trackLists: [],
       collapseShow: true,
       score: 0,
       sum: 0,
@@ -429,6 +468,7 @@
            this.animals = response.data.lists
            this.races = response.data.races
            this.personality = response.data.personality
+           this.trackLists = response.data.trackLists
          })
       },
       toggleRace(race) {

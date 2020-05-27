@@ -23,6 +23,27 @@
             </div>
           </div>
           <div class="post-body">
+            <div id="user-save" class="user-save">
+              <div class="user-save-wrap">
+                <a href="#" class="btn-back"></a>
+                <ul class="user-save-btn">
+                  <li onclick="toggleLike('track')">
+                    @if($detail['track'])
+                      <button id="track" class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i>已追蹤</button>
+                    @else
+                      <button id="track" class="btn btn-outline-danger"><i class="fas fa-bookmark"></i>追蹤</button>
+                    @endif
+                  </li>
+                  <li onclick="toggleLike('like')">
+                    @if($detail['like'])
+                      <button id="like" class="btn btn-outline-success current"><i class="fas fa-heart"></i>已捐贈</button>
+                    @else
+                      <button id="like" class="btn btn-outline-success"><i class="fas fa-heart"></i>捐贈</button>
+                    @endif
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div class="card">
               <div class="card-header">季節性</div>
               <div class="card-group">
@@ -67,7 +88,7 @@
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
                           <span>AM</span>
-                          <span>12</span>
+                          <span>0</span>
                         </div>
                         <div class="list-time-item"></div>
                       </li>
@@ -90,7 +111,7 @@
                       @if($time == 12)
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
-                          <span>AM</span>
+                          <span>PM</span>
                           <span>12</span>
                         </div>
                         <div class="list-time-item"></div>
@@ -98,7 +119,7 @@
                       @elseif($time == 18)
                       <li class="{{ checkTimeClass($detail['time'], $time) }}">
                         <div class="list-time-title">
-                          <span>6</span>
+                          <span>18</span>
                         </div>
                         <div class="list-time-item"></div>
                       </li>
@@ -112,6 +133,7 @@
                 </div>
               </div>
             </div>
+            @include('layouts.ads3')
             <div class="card">
               <div class="card-header">其他資訊</div>
               <div class="card-body">
@@ -136,5 +158,44 @@
       </div>
     </section>
   </div>
+  @include('layouts.modal')
 </div>
+<script>
+  function toggleLike(target) {
+    axios.post('/toggleLike', {
+       likeType: 'fish',
+       type: "{{ $type }}",
+       likeTarget: target,
+       token: "{{ $token }}",
+     }).then((response) => {
+      const result = response.data
+      if (result.code == -1) {
+        $('#lineLoginModel').modal()
+      }
+
+      //success
+      if (result.code == 1) {
+        $('#' + target).toggleClass('current')
+        
+        let message
+        let prex = ''
+
+        if (!$('#' + target).hasClass("current")) {
+          prex = '取消'
+        }
+
+        if (target == 'track') {
+          message = '已' + prex + '追蹤'
+        } else if (target == 'like') {
+          message = '已' + prex + '捐贈'
+        }
+
+        $('#hint-message .message').text(message)
+        $('#hint-message').addClass('show')
+
+        window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
+      }
+     })
+  }
+</script>
 @endsection

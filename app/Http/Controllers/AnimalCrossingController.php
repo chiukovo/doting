@@ -48,6 +48,10 @@ class AnimalCrossingController extends Controller
 
     public function index(Request $request)
     {
+        /*$target = $this->getSendBuilder('$大藍閃');
+        $test = $target[0]->buildMessage()[0]['contents']['contents'][0];
+
+        dd(json_encode($test));*/
     	echo 'hi';
     }
 
@@ -168,6 +172,12 @@ class AnimalCrossingController extends Controller
         }
 
         if (is_array($dataArray)) {
+            if ($text == '我的島民' || $text == '我的護照') {
+                $this->notFound = false;
+
+                return $dataArray;
+            }
+
             $more = count($dataArray) > 20 ? true : false;
             $formatData = [];
 
@@ -323,6 +333,7 @@ class AnimalCrossingController extends Controller
         //error
         if (!$response->isSucceeded()) {
             Log::debug($response->getRawBody());
+            Log::debug($this->realText);
         }
     }
 
@@ -390,12 +401,16 @@ class AnimalCrossingController extends Controller
             return '哇耶 { @❛ꈊ❛@ }';
         }
 
+        if ($text == '我的居民') {
+            return '你是不是要查 【我的島民】 哇耶 ಠ_ಠ?';
+        }
+
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
-            return ' 醒醒吧你只有左右手 哇耶';
+            return '醒醒吧你只有左右手 哇耶';
         }
 
         if ($text == '找妹妹') {
-            return ' 醒醒吧你根本沒有妹妹 哇耶';
+            return '醒醒吧你根本沒有妹妹 哇耶';
         }
 
         if ($text == '豆丁笨蛋') {
@@ -435,6 +450,19 @@ class AnimalCrossingController extends Controller
 
         if ($text == '豆丁') {
             return printDoc();
+        }
+
+        //我的島民
+        if ($text == '我的島民') {
+            $this->dbType = 'animal';
+            $this->realText = $text;
+
+            return AnimalServices::myAnimals($this->userId);
+        }
+
+        //我的護照
+        if ($text == '我的護照') {
+            return AnimalServices::myPassport($this->userId);
         }
 
         //惡搞

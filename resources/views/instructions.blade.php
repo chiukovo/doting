@@ -30,6 +30,16 @@
                 <p>因為對這個遊戲實在太有愛，所以就很熱血的寫了一個LINE機器人「豆丁森友會」！</p>
                 <p>動物森友會裡的動物居民、種族相當多，在無人島尋找喜歡的島民時會時常不知道他的個性、種族以及與其他居民的相容性，本來只是朋友之間的分享，但這麼方便的LINE機器人就分享給大家一起使用啦！</p>
                 <p>慢慢的加入朋友、網友們的意見，希望一起把豆丁森友會壯大！</p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h3 class="instructions-title">豆丁森友會 功能</h3>
                 <ul class="list-square">
                   <li>
@@ -64,7 +74,7 @@
                   </li>
                 </ul>
                 <h3 class="instructions-title">加入 「豆丁森友會」 LINE 機器人</h3>
-                <p>立即加入豆丁森友會快速查詢居民、DIY 方程式材料、KK唱片、魚類昆蟲價格、相容性分析，請在LINE加入好有的地方，輸入LINE ID「<span class="text-danger">@875uxytu</span>」。</p>
+                <p>立即加入豆丁森友會快速查詢居民、DIY 方程式材料、KK唱片、魚類昆蟲價格、相容性分析，請在LINE加入好友的地方，輸入LINE ID「<span class="text-danger">@875uxytu</span>」。</p>
                 <p class="instructions-img">
                   <img src="../image/instructions/doting_instructions_joinus_875uxytu.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
                 </p>
@@ -91,6 +101,8 @@
                   <li>生日</li>
                   <li>口頭禪</li>
                   <li>座右銘</li>
+                  <li>喜歡的顏色</li>
+                  <li>喜歡的風格</li>
                   <li>目標</li>
                   <li>最喜歡的歌曲</li>
                   <li>家的外觀</li>
@@ -167,6 +179,16 @@
                   <li>查月份：$南4月 魚、$北5月 蟲、$全5月 魚</li>
                   <li class="text-danger">模糊查詢：$黑</li>
                 </ul>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h3 class="instructions-title">【做】查詢DIY圖鑑</h3>
                 <p>與DIY方程式相關的，只要使用「<span class="text-danger">做+DIY方程式名稱</span>」，並且可使用材料反搜尋，例如： 「<span class="text-danger">做櫻花</span>」、「<span class="text-danger">做雜草</span>」</p>
                 <p class="instructions-img">
@@ -197,7 +219,7 @@
                   </span>
                 </p>
                 <h3 class="instructions-title">【化石】查詢化石</h3>
-                <p>與化石相關，只要輸入「<span class="text-danger">化石+名稱</span>」，例如： 「<span class="text-danger">化石 暴龍</span>」</p>
+                <p>與化石相關，只要輸入「<span class="text-danger">化石+名稱</span>」，例如： 「<span class="text-danger">化石 琥珀</span>」</p>
                 <p class="instructions-img">
                   <span class="instructions-img-box">
                     <img src="../image/instructions/doting_instructions_fossil.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
@@ -230,10 +252,25 @@
                     <span>FB分享或複製分析結果</span>
                   </span>
                 </p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2560043137442562"
+                     data-ad-slot="4286195067"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+                </script>
                 <h3 class="instructions-title">其他有趣小功能</h3>
                 <p>每天試試手氣，輸入「<span class="text-danger">抽</span>」來看看今天會不會抽到你心中的SSR角色！</p>
                 <p class="instructions-img">
-                  <img src="../image/instructions/doting_instructions_amiibo.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  <span class="instructions-img-box">
+                    <img src="../image/instructions/doting_instructions_amiibo01.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </span>
+                  <span class="instructions-img-box">
+                    <img src="../image/instructions/doting_instructions_amiibo02.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </span>
                 </p>
                 <p>也可以輸入「<span class="text-danger">搜尋排行榜</span>」看看大家都輸入些什麼關鍵字查詢</p>
                 <p class="instructions-img">
@@ -260,7 +297,7 @@
                   </span>
                 </p>
                 <h3 class="instructions-title">將「豆丁森友會」加入群組、聊天群</h3>
-                <p>LINE 機器人也可以家到群組使用，直接邀請就會自動加入，要注意 LINE 規範是一個群組、聊天群僅能有一個機器人，如果無法加入請在重複嘗試看看。</p>
+                <p>LINE 機器人也可以加到群組使用，直接邀請就會自動加入，要注意 LINE 規範是一個群組、聊天群僅能有一個機器人，如果無法加入請再重複嘗試看看。</p>
                 <p>祝您使用愉快！</p>
                 <p>歡迎提供缺漏或錯誤修正的資訊，以及功能建議。</p>
                 <a href="https://forms.gle/Q7StMmonyGdL4rCFA" class="btn btn-primary" target="_blank">意見回饋</a>

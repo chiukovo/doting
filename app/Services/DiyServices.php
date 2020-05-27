@@ -18,6 +18,8 @@ use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SeparatorComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SpacerComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
@@ -32,7 +34,7 @@ class DiyServices
     public static function getDataByMessage($message)
     {
     	$message = strtolower($message);
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = '';
 
     	$dbAnimal = DB::table('diy')
     	    ->where('name', 'like', '%' . $message . '%')
@@ -105,7 +107,7 @@ class DiyServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = env('APP_URL') . '/diy/' . urlencode($item->name) . '.png';
+        $imgPath = env('APP_URL') . '/diy/' . urlencode($item->name) . '.png?v=' . config('app.version');
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
@@ -116,42 +118,95 @@ class DiyServices
 
     public static function createItemBodyBlock($item)
     {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name)
+        $item->type = $item->type != '' ? $item->type : '-';
+        $item->get = $item->get != '' ? $item->get : '-';
+        $item->diy = $item->diy != '' ? $item->diy : '-';
+
+        $box = [];
+        //box1
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('類型')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->type)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
             ->setWrap(true)
-            ->setAlign('center')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($boxInline);
+
+        //line
+        $box[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($spacer);
+        //line end
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('取得方式')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->get)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('製作方式')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->diy)
+            ->setSize(ComponentFontSize::XS)
+            ->setWrap(true)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $texts = TextComponentBuilder::builder()
+            ->setText($item->name)
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('類型: ' . $item->type)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        $outBox = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentMargin::LG)
+            ->setContents($box);
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('取得: ' . $item->get)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
+        $result = [$texts, $outBox];
 
-        $components[] = TextComponentBuilder::builder()
-            ->setText('diy: ' . $item->diy)
-            ->setWrap(true)
-            ->setAlign('center')
-            ->setSize(ComponentFontSize::XS)
-            ->setMargin(ComponentMargin::MD)
-            ->setFlex(0);
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
+            ->setContents($result);
     }
 }

@@ -53,6 +53,17 @@
                 <p class="mb-0">當然，如果您只是想看看網頁瀏覽我們的廣告也是可以，完全不會影響瀏覽網站的功能， 原則上只要能力許可，我們仍會繼續維持網站的運作。</p>
               </div>
             </div>
+            <div class="card">
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-2560043137442562"
+                   data-ad-slot="4286195067"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script>
+                   $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})})
+              </script>
+            </div>
             <div class="card donate">
               <div class="card-header">贊助名單 由衷感謝你們 ٩(●˙▿˙●)۶…⋆ฺ</div>
               <div class="card-body">

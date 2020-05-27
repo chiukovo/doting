@@ -21,8 +21,6 @@ Route::group(['prefix' => 'filemanager', 'middleware' => []], function () {
 
 //main
 Route::post('/message', 'AnimalCrossingController@message');
-//line login
-Route::get('/line/login/callback', 'LineLoginController@callback');
 
 //statistics
 Route::get('/statistics', 'AnimalWebCrossingController@statistics');
@@ -126,8 +124,23 @@ Route::get('/kk/detail', 'KKController@detail');
 Route::get('/test', 'AnimalCrossingController@index');
 Route::get('/getConstellation', 'ApiController@getConstellation');
 
+//line login
+Route::get('/logout', 'LineLoginController@logout');
+Route::get('/line/login/callback', 'LineLoginController@callback');
+
+//toggleLike
+Route::post('/toggleLike', 'LikeController@toggleLike');
+Route::get('/like/count', 'LikeController@getCount');
+
+Route::group(['middleware' => ['webAuth']], function() {
+	Route::get('/user', 'WebUserController@index');
+	Route::get('/user/info', 'WebUserController@info');
+	Route::post('/user/save', 'WebUserController@editInfo');
+});
+
 //爬蟲
-/*Route::get('/getRecipes', 'ApiController@getRecipes');
+/*Route::get('/getMuseum', 'ApiController@getMuseum');
+Route::get('/getRecipes', 'ApiController@getRecipes');
 Route::get('/getKKZhName', 'ApiController@getKKZhName');
 Route::get('/getNewFurniture', 'ApiController@getNewFurniture');
 Route::get('/getAnimalIcon', 'ApiController@getAnimalIcon');
@@ -178,3 +191,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function
 		});
 	});
 });
+
+Route::get('/getKK', 'ApiController@getKK');
+Route::get('/transData', 'ApiController@transData');

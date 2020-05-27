@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>豆丁森友會</title>
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -26,14 +27,14 @@
           <nav class="navigation">
             <ul>
               <li class="sub-nav">
-                <a href="">小動物<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">小動物</a>
                 <ul>
                   <li><a href="/animals/list">動物居民</a></li>
                   <li><a href="/npc/list">動物NPC</a></li>
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="/museum/list">博物館<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="/museum/list">博物館</a>
                 <ul>
                   <li><a href="">魚圖鑑</a></li>
                   <li><a href="">昆蟲圖鑑</a></li>
@@ -42,7 +43,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="">收藏<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">收藏</a>
                 <ul>
                   <li><a href="/diy/list">DIY方程式</a></li>
                   <li><a href="/apparel/list">家具</a></li>
@@ -52,7 +53,7 @@
                 </ul>
               </li>
               <li class="sub-nav">
-                <a href="">豆丁<ion-icon name="chevron-down-outline"></ion-icon></a>
+                <a href="">豆丁</a>
                 <ul>
                   <li><a href="/instructions">豆丁教學</a></li>
                   <li><a href="/update/version">更新資訊</a></li>
@@ -78,18 +79,6 @@
             </ol>
           </nav>
           <section class="post">
-            <div id="user-save" class="user-save">
-              <div class="user-save-wrap">
-                <ul>
-                  <li><button class="btn btn-block text-success current">捐贈</button></li>
-                  <li><button class="btn btn-block">追蹤</button></li>
-                  <li><button class="btn btn-block text-primary current">擁有</button></li>
-                </ul>
-                <!-- 捐贈 => 取消捐贈
-                    追蹤 => 取消追蹤
-                    擁有 => 已擁有 -->
-              </div>
-            </div>
             <div class="row justify-content-md-center">
               <div class="col col-lg-9">
                 <div class="post-header">
@@ -101,6 +90,15 @@
                   </div>
                 </div>
                 <div class="post-body">
+                  <div id="user-save" class="user-save">
+                    <div class="user-save-wrap">
+                      <a href="#" class="btn-back"></a>
+                      <ul class="user-save-btn">
+                        <li><button class="btn btn-outline-danger"><i class="fas fa-bookmark"></i>追蹤</button></li>
+                        <li><button class="btn btn-outline-success current"><i class="fas fa-heart"></i>已擁有</button></li>
+                      </ul>
+                    </div>
+                  </div>
                   <div class="card">
                     <div class="card-header">季節性</div>
                     <div class="card-group">

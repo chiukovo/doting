@@ -15,6 +15,8 @@ use LINE\LINEBot\Constant\Flex\ComponentSpacing;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\Uri\AltUriBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SeparatorComponentBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\SpacerComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ButtonComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\ImageComponentBuilder;
@@ -68,14 +70,19 @@ class ItemsServices
     public static function getDataByMessage($message, $page = '', $type = '')
     {
     	$message = strtolower($message);
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = '';
 
         if ($message == '豆丁') {
             return '(*´∀`)~♥';
         }
 
-        $items = DB::table('items_new')
-    	    ->where('name', 'like', '%' . $message . '%');
+        $items = DB::table('items_new');
+
+        $items->where(function($q) use ($message) {
+          $q->where('name', 'like', '%' . $message . '%')
+            ->orWhere('jp_name', 'like', '%' . $message . '%')
+            ->orWhere('color', 'like', '%' . $message . '%');
+        });
 
         //家具
         if ($type == 'furniture') {
@@ -131,7 +138,7 @@ class ItemsServices
 
     public static function createItemHeroBlock($item)
     {
-        $imgPath = env('APP_URL') . '/itemsNew/' . urlencode($item->img_name) . '.png';
+        $imgPath = env('APP_URL') . '/itemsNew/' . urlencode($item->img_name) . '.png?v=' . config('app.version');
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)
@@ -142,69 +149,115 @@ class ItemsServices
 
     public static function createItemBodyBlock($item)
     {
-        $components = [];
-        $components[] = TextComponentBuilder::builder()
-            ->setText($item->name)
+        $item->buy = $item->buy != '' ? $item->buy : '-';
+        $item->sell = $item->sell != '' ? $item->sell : '-';
+        $item->size = $item->size != '' ? $item->size : '-';
+        $item->category = $item->category != '' ? $item->category : '-';
+        $item->color = $item->color != '' ? $item->color : '-';
+        $item->jp_name = $item->jp_name != '' ? $item->jp_name : '-';
+
+        $box = [];
+        //box1
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('分類')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->category . ' ' . $item->size)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
             ->setWrap(true)
-            ->setAlign('center')
+            ->setFlex(2);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('樣式')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setWrap(true)
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->color)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setContents($boxInline);
+
+        //line
+        $box[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($spacer);
+        //line end
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('商店販售價')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->buy)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $boxInline = [];
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText('商店回收價')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        $boxInline[] = TextComponentBuilder::builder()
+            ->setText($item->sell)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($boxInline);
+
+        $texts = TextComponentBuilder::builder()
+            ->setText($item->name)
             ->setWeight(ComponentFontWeight::BOLD)
             ->setSize(ComponentFontSize::MD);
 
+        $subTexts = TextComponentBuilder::builder()
+            ->setText($item->jp_name)
+            ->setWrap(true)
+            ->setSize(ComponentFontSize::XS);
 
-        if ($item->category != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('類型: ' . $item->category)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $outBox = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentMargin::LG)
+            ->setContents($box);
 
-        if ($item->buy != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('價格: $' . number_format($item->buy))
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
+        $result = [$texts, $subTexts, $outBox];
 
-        if ($item->sell != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('賣出: $' . number_format($item->sell))
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->info != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('配方: ' . $item->info)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
-
-        if ($item->size != '') {
-            $components[] = TextComponentBuilder::builder()
-                ->setText('尺寸: ' . $item->size)
-                ->setWrap(true)
-                ->setAlign('center')
-                ->setSize(ComponentFontSize::XS)
-                ->setMargin(ComponentMargin::MD)
-                ->setFlex(0);
-        }
 
         return BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setBackgroundColor('#f1f1f1')
-            ->setSpacing(ComponentSpacing::SM)
-            ->setContents($components);
+            ->setContents($result);
     }
 }

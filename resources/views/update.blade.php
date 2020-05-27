@@ -10,6 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">更新資訊</li>
       </ol>
     </nav>
+    @include('layouts.ads')
     <section class="post version">
       <div class="row justify-content-md-center">
         <div class="col">
@@ -18,6 +19,127 @@
               <h4 class="alert-heading">問題回復專區</h4>
               <p class="mb-0">在意見回饋的問題都可以在這邊查詢並得到回復，感謝您的回饋，我們會盡力改善且盡可能幫助大家。</p>
               <a href="https://reurl.cc/9ER9ya" target="_blank">https://reurl.cc/9ER9ya</a>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.9.5</div>
+                <div class="card-header-date">2020/5/27</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>移除 LINE查詢【找】【查】【做】【化石】查不到會回應的情形, 改成只有找到關鍵字才會回應 (以免影響群組對話)</li>
+                  <li>新增我的居民快速性格分析 (需登入會員)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.9.4</div>
+                <div class="card-header-date">2020/5/27</div>
+              </div>
+              <div class="card-body">
+                <h3>更新資訊</h3>
+                <ul class="list-decimal">
+                  <li>新增雲端記錄功能: 收藏/擁有/捐贈</li>
+                  <li>新增 動物森友會 LINE機器人 - 豆丁指令: 「<span class="text-danger">我的護照</span>」、「<span class="text-danger">我的島民</span>」</li>
+                  <li>家具類: 新增取得方式以及是否可改造提示</li>
+                </ul>
+                <h4 class="mt-4">新增雲端記錄功能：收藏/擁有/捐贈</h4>
+                <p>豆丁網頁選單改至左側，右側可點擊登入會員功能</p>
+                <p>
+                  <div class="row text-center">
+                    <div class="col-12 col-sm-4">
+                      <img src="/update/animalcrossing_20200526_01.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                    </div>
+                    <div class="col-12 col-sm-4">
+                      <img src="/update/animalcrossing_20200526_02.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                    </div>
+                  </div>
+                </p>
+                <p>登入前後動物居民、博物館、DIY方程式、家具、服飾、植物、唱片 皆可加入收藏，加入收藏後可進階搜尋以及追蹤、擁有、捐贈篩選。</p>
+                <p>
+                  <div class="row text-center">
+                    <div class="col-12 col-sm-4">
+                      <img src="/update/animalcrossing_20200526_03.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                    </div>
+                    <div class="col-12 col-sm-4">
+                      <img src="/update/animalcrossing_20200526_04.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                    </div>
+                  </div>
+                </p>
+                <p>透過Line點擊進動物居民、魚、昆蟲圖鑑也可再詳細頁面添加</p>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_05.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+                <p class="mt-2">點擊右上角大頭照或是右側箭頭下拉，可進入收藏資訊。</p>
+                <p>可自行編輯護照號碼、暱稱、島名、島花、特產、所屬半球以及介紹，透過 動物森友會 LINE機器人 - 豆丁森友會 指令「<span class="text-danger">我的護照</span>」 快速分享個人資訊。</p>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_06.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_07.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+                <p>往下拖拉更可看到已擁有、追蹤的居民。</p>
+                <p>並且也能透過 動物森友會 LINE機器人 - 豆丁森友會 指令「<span class="text-danger">我的島民</span>」 分享我的可愛居民哦！</p>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_08.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_09.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_10.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+                <p>往下拖拉更多可看到更多收藏資訊，點擊追蹤或收藏按鈕，即可直接引導到該項目</p>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_11.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_12.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+                <p>在標籤篩選器上，重複點擊即會取消篩選，則可看所有項目。</p>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_13.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+                <h4 class="mt-4">家具類: 新增取得方式以及是否可改造提示</h4>
+                <div class="row text-center">
+                  <div class="col-12 col-sm-4">
+                    <img src="/update/animalcrossing_20200526_14.jpg" alt="動物森友會 LINE 機器人 | 豆丁森友會 | @875uxytu" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.8.0</div>
+                <div class="card-header-date">2020/5/20</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>優化UI</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.7.7</div>
+                <div class="card-header-date">2020/5/19</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>新增動物列表卡片模式</li>
+                </ul>
+              </div>
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">

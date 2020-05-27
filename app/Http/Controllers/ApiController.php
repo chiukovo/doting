@@ -10,6 +10,109 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function transData()
+    {
+        $ranges = range(1, 51);
+        $items = DB::table('items_new')
+            ->get()
+            ->toArray();
+
+        foreach ($ranges as $range) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $range . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'en_real_name' => ['td:eq(3)', 'text'],
+                'name' => ['td:eq(14)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            $transAll[] = $trans;
+        }
+
+        foreach ($items as $target) {
+            //翻譯
+            $name = '';
+
+            $explode = explode('&', $target->color);
+
+            foreach ($transAll as $trans) {
+                foreach ($trans as $tran) {
+                    if (strtolower($tran['en_real_name']) == strtolower($target->color)) {
+                        $name = $tran['name'];
+                    }
+                }
+            }
+
+            if ($name == '') {
+                continue;
+            }
+
+            DB::table('items_new')
+                ->where('id', $target->id)
+                ->update([
+                    'color' => $name,
+                ]);
+        }
+    }
+
+    public function getMuseum()
+    {
+        $ranges = range(1, 51);
+        $result = Curl::to('https://api.nookplaza.net/items?category=Museum')->asJson()->get();
+        $result = $result->results;
+        $transAll = [];
+
+        foreach ($ranges as $range) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $range . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'jp_name' => ['td:eq(14)', 'text'],
+                'name' => ['td:eq(13)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            $transAll[] = $trans;
+        }
+
+        foreach ($result as $target) {
+            //翻譯
+            $name = '';
+
+            if ($target->category != 'Fossils') {
+                continue;
+            }
+
+            foreach ($transAll as $trans) {
+                foreach ($trans as $tran) {
+                    if (strtolower($tran['en_name']) == strtolower($target->name)) {
+                        $name = $tran['name'];
+                    }
+                }
+            }
+
+            if ($name == '') {
+                continue;
+            }
+
+            $img = $target->content->image;
+            $fileIsset = false;
+
+            $headers = get_headers($img);
+            $code = substr($headers[0], 9, 3);
+
+            if ($code == 200) {
+                $content = file_get_contents($img);
+                Storage::disk('fossil')->put($name . '.png', $content);
+            }
+        }
+    }
+
     public function formatAnimalConstellation()
     {
         $datas = DB::table('animal')

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Services\OtherServices;
+use App\Services\LineLoginServices;
 use Curl, Log, DB;
 
 class IndexController extends Controller
@@ -66,8 +67,17 @@ class IndexController extends Controller
         $northInsect = OtherServices::getDataByMessage('北' . $month . '月蟲', '', true);
         $southInsect = OtherServices::getDataByMessage('南' . $month . '月蟲', '', true);
 
+        $isNorth = getUserData('position');
+
+        if ($isNorth == '' || $isNorth == 2) {
+            $isNorth = 1;
+        } else {
+            $isNorth = 0;
+        }
+
         return [
             'date' => $date,
+            'isNorth' => $isNorth,
             'birthday' => $birthday,
             'ranking' => $ranking,
             'northFish' => $northFish,

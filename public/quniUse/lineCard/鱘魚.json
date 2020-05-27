@@ -1,0 +1,126 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "鱘魚 $10,000",
+        "weight": "bold",
+        "size": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "影子",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "特大",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              },
+              {
+                "type": "text",
+                "text": "位置",
+                "flex": 1,
+                "size": "xs",
+                "color": "#aaaaaa"
+              },
+              {
+                "type": "text",
+                "text": "出海口",
+                "flex": 2,
+                "color": "#444444",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "spacer",
+                "size": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "北半球月份",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "1-3月、9-12月",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "南半球月份",
+                "color": "#aaaaaa",
+                "size": "xs",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "3-9月",
+                "wrap": true,
+                "color": "#444444",
+                "size": "xs",
+                "flex": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

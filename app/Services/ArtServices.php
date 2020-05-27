@@ -29,7 +29,7 @@ class ArtServices
     public static function getDataByMessage($message, $page = '')
     {
     	$other = [];
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = '';
 
         $art = DB::table('art')->where('name', 'like', '%' . $message . '%');
 
@@ -90,7 +90,7 @@ class ArtServices
 
     public static function createItemHeroBlock($item, $img)
     {
-        $imgPath = env('APP_URL') . '/art/' . urlencode($img) . '.png';
+        $imgPath = env('APP_URL') . '/art/' . urlencode($img) . '.png?v=' . config('app.version');
 
         return ImageComponentBuilder::builder()
             ->setUrl($imgPath)

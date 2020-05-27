@@ -16,26 +16,28 @@ class LineLoginController extends Controller
             $error = $request->input('error', false);
 
             if ($error) {
+                $clientIp = request()->ip();
+                Log::error($clientIp);
                 Log::error($request->all());
+                $errorMsg = '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
+                echo '<script>alert("' . $errorMsg . '");location.href="/"</script>';
             }
 
             $code = $request->input('code', '');
             $state = $request->input('state', '');
-            $checkState = '';
+            $returnUrl = '';
 
             if ($code == '' || $state == '') {
                 return 'params error';
             }
 
             try {
-                $checkState = decrypt($state);
+                $returnUrl = decrypt($state);
             } catch (DecryptException $e) {
                 return 'decode error';
             }
 
-            $resultState = env('APP_KEY') . 'lineLogin0121';
-
-            if ($checkState != $resultState) {
+            if ($returnUrl == '') {
                 return 'auth error';
             }
 
@@ -50,12 +52,33 @@ class LineLoginController extends Controller
             if (!isset($response->error)) {
                 $userId = $userProfile->userId;
                 $displayName = $userProfile->displayName;
-                $pictureUrl = $userProfile->pictureUrl;
+                $pictureUrl = isset($userProfile->pictureUrl) ? $userProfile->pictureUrl : '';
 
                 //do login
+                if ($userId != '' && !is_null($userId)) {
+                    $auth = LineLoginServices::doLogin($userId, $displayName, $pictureUrl);
+
+                    if (!$auth) {
+                        return 'login error';
+                    }
+
+                    if (!preg_match("/doting/i", $returnUrl)) {
+                        return redirect('/');
+                    }
+
+                    //success
+                    return redirect($returnUrl);
+                }
             }
         } catch (Exception $e) {
             Log::error($e);
         }
+    }
+
+    public function logout()
+    {
+        LineLoginServices::doLogout();
+
+        return redirect()->back();
     }
 }

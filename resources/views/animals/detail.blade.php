@@ -33,6 +33,27 @@
                 </div>
               </div>
               <div class="col-12 col-md-8">
+                <div id="user-save" class="user-save">
+                  <div class="user-save-wrap">
+                    <a onclick="history.go(-1)" class="btn-back"></a>
+                    <ul class="user-save-btn">
+                      <li onclick="toggleLike('track')">
+                        @if($detail->track)
+                          <button id="track" class="btn btn-outline-danger current"><i class="fas fa-bookmark"></i>已追蹤</button>
+                        @else
+                          <button id="track" class="btn btn-outline-danger"><i class="fas fa-bookmark"></i>追蹤</button>
+                        @endif
+                      </li>
+                      <li onclick="toggleLike('like')">
+                        @if($detail->like)
+                          <button id="like" class="btn btn-outline-success current"><i class="fas fa-heart"></i>已擁有</button>
+                        @else
+                          <button id="like" class="btn btn-outline-success"><i class="fas fa-heart"></i>擁有</button>
+                        @endif
+                      </li>
+                    </ul>
+                  </div>
+                </div>
                 <div class="post-card">
                   <div class="post-card-info">
                     <div class="post-info-group">
@@ -80,7 +101,7 @@
                     @if($detail->info == '')
                     <div class="post-info-group">
                       <div class="post-info-item">
-                        <label>口頭禪</label>
+                        <label >口頭禪</label>
                         <span>{{ $detail->say }}</span>
                       </div>
                     </div>
@@ -88,6 +109,18 @@
                       <div class="post-info-item">
                         <label>座右銘</label>
                         <span>{{ $detail->target }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label style="width: 80px">喜歡的顏色</label>
+                        <span>{{ $detail->colors }}</span>
+                      </div>
+                    </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label style="width: 80px">喜歡的風格</label>
+                        <span>{{ $detail->styles }}</span>
                       </div>
                     </div>
                     <div class="post-info-group">
@@ -134,6 +167,7 @@
               </div>
             </div>
             @endif
+            @include('layouts.ads3')
             @if($detail->amiibo != '')
             <div class="card">
               <div class="card-header">Amiibo Card</div>
@@ -170,5 +204,44 @@
       </div>
     </section>
   </div>
+  @include('layouts.modal')
 </div>
+<script>
+  function toggleLike(target) {
+    axios.post('/toggleLike', {
+       likeType: 'animal',
+       type: "{{ $type }}",
+       likeTarget: target,
+       token: "{{ $token }}",
+     }).then((response) => {
+      const result = response.data
+      if (result.code == -1) {
+        $('#lineLoginModel').modal()
+      }
+
+      //success
+      if (result.code == 1) {
+        $('#' + target).toggleClass('current')
+
+        let message
+        let prex = ''
+
+        if (!$('#' + target).hasClass("current")) {
+          prex = '取消'
+        }
+
+        if (target == 'track') {
+          message = '已' + prex + '追蹤'
+        } else if (target == 'like') {
+          message = '已' + prex + '擁有'
+        }
+
+        $('#hint-message .message').text(message)
+        $('#hint-message').addClass('show')
+
+        window.setTimeout(( () => $('#hint-message').removeClass('show') ), 1000)
+      }
+     })
+  }
+</script>
 @endsection
