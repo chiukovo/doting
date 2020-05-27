@@ -17,6 +17,8 @@ class LineLoginController extends Controller
 
             if ($error) {
                 Log::error($request->all());
+                $errorMsg = '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
+                echo '<script>alert("' . $errorMsg . '");location.href="/"</script>';
             }
 
             $code = $request->input('code', '');
@@ -24,6 +26,7 @@ class LineLoginController extends Controller
             $returnUrl = '';
 
             if ($code == '' || $state == '') {
+                Log::error($request->all());
                 $errorMsg = '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
                 echo '<script>alert("' . $errorMsg . '");location.href="/"</script>';
             }
