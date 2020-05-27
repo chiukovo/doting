@@ -59,6 +59,10 @@ class LineLoginController extends Controller
                         return 'login error';
                     }
 
+                    if (!preg_match("/doting/i", $returnUrl)) {
+                        return redirect('/');
+                    }
+
                     //success
                     return redirect($returnUrl);
                 }
