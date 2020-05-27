@@ -22,6 +22,18 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.9.5</div>
+                <div class="card-header-date">2020/5/27</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>移除 LINE查詢 【找】 【做】 查不到會回應的情形, 改成只有找到關鍵字才會回應 (以免影響群組對話)</li>
+                  <li>新增我的居民快速性格分析 (需登入會員)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.9.4</div>
                 <div class="card-header-date">2020/5/27</div>
               </div>
