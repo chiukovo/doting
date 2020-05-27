@@ -112,7 +112,7 @@
               </li>
               <li><a href="/statistics">搜尋排行榜</a></li>
               @if(!$isLogin)
-                <li><a href="{{ lingLoginUrl() }}">Sign In <ion-icon name="arrow-forward-outline"></ion-icon></a></li>
+                <li><a href="{{ lingLoginUrl() }}">Sign In <i class="icon icon-signin"></i></a></li>
               @else
                 <li class="sub-login">
                   <div class="btn-group">
