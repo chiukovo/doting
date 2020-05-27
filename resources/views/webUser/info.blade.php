@@ -242,6 +242,9 @@
               </ul>
             </div>
           </div>
+          <div class="m-2">
+            @include('layouts.ads2')
+          </div>
         </div>
       </div>
     </div>
