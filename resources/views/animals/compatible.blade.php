@@ -90,7 +90,7 @@
                     </a>
                   </li>
                 </ul>
-                <div class="p-2 text-center" style="border: 1px solid #e9ecef;">
+                <div class="p-2 text-center" style="border: 1px solid #e9ecef;" v-if="trackLists.length == 0">
                   @if(!isWebLogin())
                     <a href="{{ lingLoginUrl() }}">前往登入</a>
                   @else
