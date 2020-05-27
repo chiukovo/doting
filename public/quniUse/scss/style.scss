@@ -57,6 +57,17 @@ $font-family: "SF Pro TC","SF Pro Display","SF Pro Icons","PingFang TC","Helveti
     justify-content: space-between;
     height: 100%;
   }
+  .icon-signin {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    mask-image: url('../image/arrow-forward-outline.svg');
+    background-color: $gray-900;
+    mask-size: 50%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    margin-left: 2px;
+  }
 }
 .sub-login {
   .btn-group {
@@ -1531,7 +1542,9 @@ a.link {
       padding: 0;
       margin: 0;
       > li > a {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         line-height: 50px;
         padding: 0 1rem;
       }
