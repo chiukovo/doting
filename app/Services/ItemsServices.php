@@ -70,7 +70,7 @@ class ItemsServices
     public static function getDataByMessage($message, $page = '', $type = '')
     {
     	$message = strtolower($message);
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = '';
 
         if ($message == '豆丁') {
             return '(*´∀`)~♥';
