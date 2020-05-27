@@ -29,7 +29,7 @@ class FossilServices
     public static function getDataByMessage($message, $page = '')
     {
     	$other = [];
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = '';
 
         $result = DB::table('fossil')
             ->where('name', 'like', '%' . $message . '%')

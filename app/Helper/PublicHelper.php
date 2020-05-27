@@ -563,7 +563,7 @@ if (!function_exists('printDoc')) {
 		$text .= '👇 詳細圖文解說 👇' . "\n";
 		$text .= env('APP_URL') . '/instructions' . "\n";
 		$text .= "\n";
-		$text .= '註記: 移除 【找】 【做】 查不到會回應的情形' . "\n";
+		$text .= '註記: 移除【找】【查】【做】【化石】查不到會回應的情形' . "\n";
 		$text .= '改成只有找到關鍵字才會回應 (以免影響群組對話) 謝謝大家 ><';
 
 		return $text;
