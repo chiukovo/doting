@@ -82,7 +82,7 @@
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
                     <div class="data">
-                      SW-<cleave v-model="info.passport" :options="options"></cleave>
+                      <span>SW-</span><cleave class="form-control form-control-sm" v-model="info.passport" :options="options" style="width: 120px;display: unset;"></cleave>
                     </div>
                   </div>
                   <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
