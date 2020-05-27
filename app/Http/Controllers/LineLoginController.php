@@ -21,7 +21,7 @@ class LineLoginController extends Controller
 
             $code = $request->input('code', '');
             $state = $request->input('state', '');
-            $checkState = '';
+            $returnUrl = '';
 
             if ($code == '' || $state == '') {
                 $errorMsg = '必須允許 個人檔案(必要資訊), 用戶識別資訊(必要資訊)';
@@ -29,14 +29,12 @@ class LineLoginController extends Controller
             }
 
             try {
-                $checkState = decrypt($state);
+                $returnUrl = decrypt($state);
             } catch (DecryptException $e) {
                 return 'decode error';
             }
 
-            $resultState = env('APP_KEY') . 'lineLogin0121';
-
-            if ($checkState != $resultState) {
+            if ($returnUrl == '') {
                 return 'auth error';
             }
 
@@ -62,7 +60,7 @@ class LineLoginController extends Controller
                     }
 
                     //success
-                    return redirect('/');
+                    return redirect($returnUrl);
                 }
             }
         } catch (Exception $e) {

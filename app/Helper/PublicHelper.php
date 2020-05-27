@@ -454,14 +454,14 @@ if (!function_exists('lingLoginUrl')) {
      */
     function lingLoginUrl()
     {
-		$authCode = encrypt(env('APP_KEY') . 'lineLogin0121');
+		$urlCode = encrypt(url()->current());
 
 		// 組成 Line Login Url
 		$url = config('lineLogin.authorize_base_url') . '?';
 		$url .= 'response_type=code';
 		$url .= '&client_id=' . config('lineLogin.channel_id');
 		$url .= '&redirect_uri=' . config('lineLogin.redirect_uri');
-		$url .= '&state=' . $authCode;
+		$url .= '&state=' . $urlCode;
 		$url .= '&scope=openid%20profile&prompt=consent';
 
 		return $url;
