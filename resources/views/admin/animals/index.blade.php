@@ -49,6 +49,7 @@
               <input type="text" class="form-control" placeholder="請輸入關鍵字" v-model="searchData.text">
               <button class="btn btn-primary" native-type="submit" @click.prevent="searchDefault">搜尋</button>
               <button class="btn btn-default" :class="checkAllCurrent()" @click.prevent="clearAll">清除搜尋</button>
+              <button class="btn btn-success" native-type="submit" @click.prevent="location.href='/{{env('ADMIN_PREFIX')}}/animals/add'">新增</button>
             </div>
           </form>
         </div>
@@ -65,6 +66,7 @@
                 @if($type != 'npc')
                 <th scope="col">生日</th>
                 <th scope="col" v-show="!isMobile()">口頭禪</th>
+                <th scope="col">狀態</th>
                 @endif
               </tr>
             </thead>
@@ -73,10 +75,10 @@
                 <td scope="row">
                   <a class="link" :href="'/{{env('ADMIN_PREFIX')}}/animals/detail?name=' + list.name">
                     <div class="table-img" v-if="list.info == null">
-                      <img :src="'/animal/icon/' + list.name + '.png'" :alt="list.name">
+                      <img :src="(list.avatar_url) ? '/'+list.avatar_url : '/animal/icon/' + list.name + '.png'" :alt="list.name">
                     </div>
                     <div class="table-img" v-else>
-                      <img :src="'/animal/' + list.name + '.png'" :alt="list.name">
+                      <img :src="(list.avatar_url) ? '/'+list.avatar_url : '/animal/' + list.name + '.png'" :alt="list.name">
                     </div>
                     <span>@{{ list.name }}</span>
                   </a>
@@ -88,6 +90,8 @@
                 <td>@{{ list.bd }}</td>
                 <td v-show="!isMobile()">@{{ list.say }}</td>
                 @endif
+
+                <td :style="(list.status == 1) ? '' : { color: 'red' }">@{{ (list.status == 1) ? '啟用' : '停用' }}</td>
               </tr>
             </tbody>
           </table>

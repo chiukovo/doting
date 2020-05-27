@@ -492,6 +492,11 @@ mark,
   height: auto;
 }
 
+.avatar{
+  width: 150px;
+  height: 150px;
+}
+
 .figure {
   display: inline-block;
 }

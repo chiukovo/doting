@@ -1,46 +1,45 @@
 @extends('layouts.admin')
 
-@section('title', '編輯')
+@section('title', '新增')
 @section('content')
 
 <div class="container-fluid">
 
 	<div class="row">
 	    <div class="card col-md-6">
-	      <div class="card-header"><strong>動物居民</strong> 編輯</div>
+	      <div class="card-header"><strong>動物居民</strong> 新增</div>
 	      <div class="card-body">
-	         <form class="form-horizontal" action="/{{ env('ADMIN_PREFIX') }}/animals/edit/{{ $detail->id }}" method="post" enctype="multipart/form-data">
+	         <form class="form-horizontal" action="/{{ env('ADMIN_PREFIX') }}/animals/add" method="post" enctype="multipart/form-data">
 	            {{ csrf_field() }}
-	            {{ method_field('PATCH') }}
-	            <input type="hidden" name="id" value="{{ $detail->id }}">
 
 	            <div class="form-group row">
 	               	<div class="col-md-12">
 	               		<input type="hidden" name="avatar_url_base64">
-                        <input type="file" id="avatar" name="avatar_url">
+                        <input type="file" id="avatar" name="avatar_url" required>
 
-	                  	<img id="avatar_url" src="{{ ($detail->avatar_url) ? '/'.$detail->avatar_url : '/animal/'.$detail->name.'.png' }}" name="avatar_url" class="img-thumbnail avatar"/>
+	                  	<img id="avatar_url" src="/image/icon/animals.svg" name="avatar_url" class="img-thumbnail avatar"/>
 	               	</div>
                	</div>
-
+              
 	            <div class="form-group row">
 	               <label class="col-md-3 col-form-label" for="text-input">中文名稱</label>
 	               <div class="col-md-9">
-	                  <input class="form-control" id="text-input" type="text" name="name" placeholder="請填寫" value="{{ $detail->name }}" readonly>
+	                  <input class="form-control" id="text-input" type="text" name="name" placeholder="請填寫" value="">
 	               </div>
 	            </div>
 
 	            <div class="form-group row">
+
 	               <label class="col-md-3 col-form-label" for="text-input">日文名稱</label>
 	               <div class="col-md-9">
-	                  <input class="form-control" id="text-input" type="text" name="jp_name" placeholder="請填寫" value="{{ $detail->jp_name }}">
+	                  <input class="form-control" id="text-input" type="text" name="jp_name" placeholder="請填寫" value="">
 	               </div>
 	            </div>
 
 	            <div class="form-group row">
 	               <label class="col-md-3 col-form-label" for="text-input">英文名稱</label>
 	               <div class="col-md-9">
-	                  <input class="form-control" id="text-input" type="text" name="en_name" placeholder="請填寫" value="{{ $detail->en_name }}">
+	                  <input class="form-control" id="text-input" type="text" name="en_name" placeholder="請填寫" value="">
 	               </div>
 	            </div>
 
@@ -48,11 +47,11 @@
 	               <label class="col-md-3 col-form-label">性別</label>
 	               <div class="col-md-9 col-form-label">
 	                  <div class="form-check form-check-inline mr-1">
-	                     <input class="form-check-input" id="inline-radio1" type="radio" value="♂" name="sex" @if($detail->sex == '♂') checked @endif>
+	                     <input class="form-check-input" id="inline-radio1" type="radio" value="♂" name="sex" checked>
 	                     <label class="form-check-label" for="inline-radio1">♂</label>
 	                  </div>
 	                  <div class="form-check form-check-inline mr-1">
-	                     <input class="form-check-input" id="inline-radio2" type="radio" value="♀" name="sex" @if($detail->sex == '♀') checked @endif>
+	                     <input class="form-check-input" id="inline-radio2" type="radio" value="♀" name="sex">
 	                     <label class="form-check-label" for="inline-radio2">♀</label>
 	                  </div>
 	               </div>
@@ -64,7 +63,7 @@
 	                  <select class="form-control form-control-lg" name="personality">
 	                     	<option value="">請選擇</option>
 	                   		@foreach(config('animal_attribute.personality') as $val)
-	                   			<option value="{{ $val }}" @if($val == $detail->personality) selected @endif>{{ $val }}</option>
+	                   			<option value="{{ $val }}">{{ $val }}</option>
 	                   		@endforeach
 	                  </select>
 	               </div>
@@ -76,7 +75,7 @@
 	                  <select class="form-control form-control-lg" name="race">
 	                     	<option value="0">請選擇</option>
 	                     	@foreach(config('animal_attribute.race') as $val)
-	                   			<option value="{{ $val }}" @if($val == $detail->race) selected @endif>{{ $val }}</option>
+	                   			<option value="{{ $val }}">{{ $val }}</option>
 	                   		@endforeach
 	                  </select>
 	               </div>
@@ -88,7 +87,7 @@
 	                  	<select class="form-control" name="bd_m">
 		                    <option value="0">月</option>
 		                    @for($i=1; $i<=12; $i++)
-		                    	<option value="{{ $i }}" @if($i == $detail->bd_m) selected @endif >{{ $i }}</option>
+		                    	<option value="{{ $i }}">{{ $i }}</option>
 		                    @endfor
 		                 </select>
 	             	</div>
@@ -96,7 +95,7 @@
 		                <select class="form-control" name="bd_d">
 		                    <option value="0">日</option>
 		                    @for($i=1; $i<=31; $i++)
-		                    	<option value="{{ $i }}" @if($i == $detail->bd_d) selected @endif >{{ $i }}</option>
+		                    	<option value="{{ $i }}">{{ $i }}</option>
 		                    @endfor
 		                </select>
 	                </div>
@@ -105,21 +104,21 @@
 	            <div class="form-group row">
 	               <label class="col-md-3 col-form-label" for="textarea-input">口頭禪</label>
 	               <div class="col-md-9">
-	                  <textarea class="form-control" id="textarea-input" name="say" rows="9" placeholder="請填寫" value="{{ $detail->say }}">{{ $detail->say }}</textarea>
+	                  <textarea class="form-control" id="textarea-input" name="say" rows="9" placeholder="請填寫"></textarea>
 	               </div>
 	            </div>
 
 	            <div class="form-group row">
 	               <label class="col-md-3 col-form-label" for="textarea-input">目標</label>
 	               <div class="col-md-9">
-	                  <textarea class="form-control" id="textarea-input" name="target" rows="9" placeholder="請填寫" value="{{ $detail->target }}">{{ $detail->target }}</textarea>
+	                  <textarea class="form-control" id="textarea-input" name="target" rows="9" placeholder="請填寫"></textarea>
 	               </div>
 	            </div>
 	      
 	            <div class="form-group row">
 	               <label class="col-md-3 col-form-label" for="text-input">KK</label>
 	               <div class="col-md-9">
-	                  <input class="form-control" id="text-input" type="text" name="kk" placeholder="請填寫" value="{{ $detail->kk }}">
+	                  <input class="form-control" id="text-input" type="text" name="kk" placeholder="請填寫" value="">
 	               </div>
 	            </div>
 
@@ -127,11 +126,11 @@
 	               <label class="col-md-3 col-form-label">啟用</label>
 	               <div class="col-md-9 col-form-label">
 	                  <div class="form-check form-check-inline mr-1">
-	                     <input class="form-check-input" id="inline-radio1" type="radio" value="1" name="status" @if($detail->status == '1') checked @endif>
+	                     <input class="form-check-input" id="inline-radio1" type="radio" value="1" name="status" checked>
 	                     <label class="form-check-label" for="inline-radio1">啟用</label>
 	                  </div>
 	                  <div class="form-check form-check-inline mr-1">
-	                     <input class="form-check-input" id="inline-radio2" type="radio" value="0" name="status" @if($detail->status == '0') checked @endif>
+	                     <input class="form-check-input" id="inline-radio2" type="radio" value="0" name="status">
 	                     <label class="form-check-label" for="inline-radio2">停用</label>
 	                  </div>
 	               </div>
@@ -149,6 +148,12 @@
 
 <script type="text/javascript">
 	(function(){
+        $('form').submit(function(){
+            if(!$('input[name=avatar_url]').val().trim()){
+                return false;
+            }
+        })
+
         $('input[name=avatar_url]').change(function(event) {  
             readURL(this);
         });

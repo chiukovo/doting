@@ -159,17 +159,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => env('ADMIN_PREFIX')], function
 	Route::post('/login', 'AdminController@login')->name('login');
 	Route::post('/logout', 'AdminController@logout');
 
-	Route::group(['middleware' => 'auth'], function () {
+	Route::group(['middleware' => 'auth:admin'], function () {
 		Route::get('/', function () {
 		  return view('admin.index');
 		});
 
-		//動物居民
-		Route::get('/animals', 'AnimalController@index');
-		Route::post('/animals/search', 'AnimalController@getAnimalSearch');
 
-		//編輯動物
-		Route::get('/animals/detail', 'AnimalController@detail');
-		Route::patch('/animals/edit/{id}', 'AnimalController@edit');
+		Route::group(['prefix' => 'animals'], function () {
+			Route::get('/', 'AnimalController@index');
+			Route::post('search', 'AnimalController@getAnimalSearch');
+			Route::get('detail', 'AnimalController@detail');
+			Route::patch('edit/{id}', 'AnimalController@edit');
+			Route::get('add', function () {
+			  return view('admin.animals.add');
+			});
+
+			Route::post('add', 'AnimalController@add');
+		});
 	});
 });

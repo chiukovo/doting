@@ -31,6 +31,9 @@
   <script src="/js/lightbox.min.js"></script>
   <script src="/js/popper.min.js"></script>
 
+  <link rel="stylesheet" href="/css/sweetalert2.css">
+  <script type="text/javascript" src="/js/sweetalert2.min.js"></script>
+
   <style>
     [v-cloak] {
       display: none;
@@ -236,6 +239,23 @@
 
   <!-- Page level custom scripts -->
   <script src="/adminData/js/demo/datatables-demo.js"></script>
+
+  @if(session()->has('success'))
+      <script type="text/javascript">
+        swal("{{ session()->get('success') }}", "", "success");
+      </script>
+  @endif
+
+  @if(session()->has('error'))
+      <script type="text/javascript">
+        swal("{{ session()->get('error') }}", "", "error");
+      </script>
+  @endif
+
+  @php 
+    session()->forget('success');
+    session()->forget('error');
+  @endphp
 
 </body>
 

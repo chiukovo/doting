@@ -142,12 +142,11 @@ class AnimalController extends Controller
 
     public function edit($id, Request $request)
     {
-
         $bd = $request->bd_m.'.'.$request->bd_d;
 
         $request->bd = $bd;
         
-        $columns = ['name', 'en_name', 'jp_name', 'sex', 'personality', 'race', 'name', 'bd', 'bd_d', 'bd_m', 'say', 'info', 'target', 'motto', 'kk', 'amiibo', 'level'];
+        $columns = ['name', 'en_name', 'jp_name', 'sex', 'personality', 'race', 'name', 'bd', 'bd_d', 'bd_m', 'say', 'info', 'target', 'motto', 'kk', 'amiibo', 'level', 'status'];
 
         $update_data = [];
         foreach ($columns as $key => $val) {
@@ -156,9 +155,64 @@ class AnimalController extends Controller
             }
         }
 
+        if($request->file('avatar_url')){
+            $location = 'avatars/'.$id.'/';
+            $file_name = 'avatar.jpg';
+            $file = $request->file('avatar_url');
+            if(!$file->move($location, $file_name)){
+                return redirect('/'.env('ADMIN_PREFIX').'/animals/')->with('error', '頭像上傳失敗');
+            }
+
+            $update_data['avatar_url'] = $location.$file_name;
+        }
+
         DB::table('animal')->where('id', $id)->update($update_data);
 
         return redirect('/'.env('ADMIN_PREFIX').'/animals/detail?name='.$request->name);
+    }
+
+
+    public function add(Request $request)
+    {
+        if(!$request->file('avatar_url')){
+            return redirect('/'.env('ADMIN_PREFIX').'/animals/')->with('error', '請上傳頭像');
+        }
+        
+        $bd = $request->bd_m.'.'.$request->bd_d;
+
+        $request->bd = $bd;
+
+        $columns = ['name', 'en_name', 'jp_name', 'sex', 'personality', 'race', 'name', 'bd', 'bd_d', 'bd_m', 'say', 'info', 'target', 'motto', 'kk', 'amiibo', 'level'];
+
+        $insert_data = [];
+        foreach ($columns as $key => $val) {
+            if($request->$val){
+                $insert_data[$val] = $request->$val;
+            }
+        }
+
+        try{
+            DB::beginTransaction();
+
+            $id = DB::table('animal')->insertGetId($insert_data);
+
+            $location = 'avatars/'.$id.'/';
+            $file_name = 'avatar.jpg';
+            $file = $request->file('avatar_url');
+            if(!$file->move($location, $file_name)){
+                return redirect('/'.env('ADMIN_PREFIX').'/animals/')->with('error', '頭像上傳失敗');
+            }
+
+            DB::table('animal')->where('id', $id)->update(['avatar_url' => $location.$file_name]);
+
+            DB::commit();
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect('/'.env('ADMIN_PREFIX').'/animals/')->with('error', 'syntax error');
+        }
+
+        return redirect('/'.env('ADMIN_PREFIX').'/animals/')->with('message', '新增成功');
     }
 
 }
