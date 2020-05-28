@@ -102,79 +102,81 @@ class AnimalWebCrossingController extends Controller
 
     public function getAnimalSearch(Request $request)
     {
-        $race = $request->input('race', []);
-        $personality = $request->input('personality', []);
-        $bd = $request->input('bd', []);
-        $text = $request->input('text', '');
-        $page = $request->input('page', 1);
-        $type = $request->input('type', '');
-        $target = $request->input('target', '');
+    	$race = $request->input('race', []);
+    	$personality = $request->input('personality', []);
+    	$bd = $request->input('bd', []);
+    	$text = $request->input('text', '');
+    	$page = $request->input('page', 1);
+    	$type = $request->input('type', '');
+    	$target = $request->input('target', '');
 
-        if ($text != '') {
-            $result = AnimalServices::getDataByMessage($text, $page, $type);
+    	if ($text != '') {
+    		$result = AnimalServices::getDataByMessage($text, $page, $type);
 
-            if (is_array($result)) {
-                //encode id and like current
-                $result = computedMainData($result, 'animal', $type);
+    		if (is_array($result)) {
+    			//encode id and like current
+    			$result = computedMainData($result, 'animal', $type);
 
-                return $result;
-            }
+    			return $result;
+    		}
 
-            return [];
-        }
+    		return [];
+    	}
 
-        $lists = DB::table('animal');
+    	$lists = DB::table('animal');
 
-        if ($type == 'npc') {
-            $lists = $lists->where('info', '!=', '');
-        }
+    	if ($type == 'npc') {
+    		$lists = $lists->where('info', '!=', '');
+    	}
 
-        if (!empty($race) && is_array($race)) {
-            $lists->whereIn('race', $race);
-        }
+    	if (!empty($race) && is_array($race)) {
+    		$lists->whereIn('race', $race);
+    	}
 
-        if (!empty($personality) && is_array($personality)) {
-            foreach ($personality as $key => $data) {
-                $lists->where('personality', 'like', '%' . $data . '%');
+    	if (!empty($personality) && is_array($personality)) {
+    		$lists->where(function($q) use ($personality) {
+    			foreach ($personality as $key => $data) {
+    				if ($key != 0) {
+    					$q->orWhere('personality', 'like', '%' . $data . '%');
+    				} else {
+    					$q->where('personality', 'like', '%' . $data . '%');
+    				}
+    			}
+    		});
+    	}
 
-                if ($key != 0) {
-                    $lists->orWhere('personality', 'like', '%' . $data . '%');
-                }
-            }
-        }
+    	if (!empty($bd) && is_array($bd)) {
+    		$lists->whereIn('bd_m', $bd);
+    	}
 
-        if (!empty($bd) && is_array($bd)) {
-            $lists->whereIn('bd_m', $bd);
-        }
+    	//check target
+    	if ($target != '') {
+    		$getCount = computedCount('animal', $type, true);
 
-        //check target
-        if ($target != '') {
-            $getCount = computedCount('animal', $type, true);
+    		switch ($target) {
+    			case 'like':
+    				$lists->whereIn('id', $getCount['likeIds']);
+    				break;
+    			case 'noLike':
+    				$lists->whereNotIn('id', $getCount['likeIds']);
+    				break;
+    			case 'track':
+    				$lists->whereIn('id', $getCount['trackIds']);
+    				break;
+    			case 'noTrack':
+    				$lists->whereNotIn('id', $getCount['trackIds']);
+    				break;
+    		}
+    	}
 
-            switch ($target) {
-                case 'like':
-                    $lists->whereIn('id', $getCount['likeIds']);
-                    break;
-                case 'noLike':
-                    $lists->whereNotIn('id', $getCount['likeIds']);
-                    break;
-                case 'track':
-                    $lists->whereIn('id', $getCount['trackIds']);
-                    break;
-                case 'noTrack':
-                    $lists->whereNotIn('id', $getCount['trackIds']);
-                    break;
-            }
-        }
+    	$lists = $lists->select()
+    		->paginate(30)
+    		->toArray();
 
-        $lists = $lists->select()
-            ->paginate(30)
-            ->toArray();
+    	//encode id and like current
+    	$lists['data'] = computedMainData($lists['data'], 'animal', $type);
 
-        //encode id and like current
-        $lists['data'] = computedMainData($lists['data'], 'animal', $type);
-
-        return $lists['data'];
+    	return $lists['data'];
     }
 
     public function getAllType(Request $request)
