@@ -485,7 +485,7 @@ if (!function_exists('lingLoginUrl')) {
 		$url .= '&client_id=' . config('lineLogin.channel_id');
 		$url .= '&redirect_uri=' . config('lineLogin.redirect_uri');
 		$url .= '&state=' . $urlCode;
-		$url .= '&scope=openid%20profile&prompt=consent';
+		$url .= '&scope=openid%20profile';
 
 		return $url;
     }
