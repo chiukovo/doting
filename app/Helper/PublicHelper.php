@@ -400,7 +400,7 @@ if (!function_exists('isWebLogin')) {
                 ->where('line_id', $userId)
                 ->first(['remember_token', 'login_ip']);
 
-            if (!is_null($user) && $user->remember_token == $token) {
+            if (!is_null($user)) {
               return true;
             }
   		}
