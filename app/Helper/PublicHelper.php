@@ -390,14 +390,12 @@ if (!function_exists('isWebLogin')) {
     function isWebLogin()
     {
   		$webLogin = session('web');
-  		$clientIp = request()->ip();
 
-  		if (!is_null($webLogin)) {
-  			$token = isset($webLogin['token']) ?? '';
-  			$userId = isset($webLogin['userId']) ?? '';
+  		if (!is_null($webLogin) && !empty($webLogin)) {
+  			$lineId = isset($webLogin['lineId']) ? $webLogin['lineId'] : '';
 
   			$user = DB::table('web_user')
-                ->where('line_id', $userId)
+                ->where('line_id', $lineId)
                 ->first(['remember_token', 'login_ip']);
 
             if (!is_null($user)) {
