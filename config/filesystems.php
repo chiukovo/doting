@@ -42,6 +42,10 @@ return [
     */
 
     'disks' => [
+        'expression' => [
+            'driver' => 'local',
+            'root' => public_path('expression'),
+        ],
         'kk' => [
             'driver' => 'local',
             'root' => public_path('kk'),

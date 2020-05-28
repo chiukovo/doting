@@ -58,6 +58,78 @@ class ApiController extends Controller
         }
     }
 
+    public function getExpression()
+    {
+        $ranges = range(1, 51);
+        $result = Curl::to('https://api.nookplaza.net/items?category=Reactions')->asJson()->get();
+        $result = $result->results;
+        $transAll = [];
+
+        foreach ($ranges as $range) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $range . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'jp_name' => ['td:eq(14)', 'text'],
+                'name' => ['td:eq(13)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            $transAll[] = $trans;
+        }
+
+        foreach ($result as $target) {
+            //翻譯
+            $name = '';
+            $jpName = '';
+            $obtainedFrom = $target->content->obtainedFrom;
+            $obtainedCn = [];
+
+            foreach ($transAll as $trans) {
+                foreach ($trans as $tran) {
+                    if (strtolower($tran['en_name']) == strtolower($target->name)) {
+                        $name = $tran['name'];
+                        $jpName = $tran['jp_name'];
+                    }
+
+                    foreach ($obtainedFrom as $key => $obtained) {
+                        if (strtolower($obtained) == strtolower($tran['en_name'])) {
+                            $obtainedFrom[$key] = $tran['name'];
+                        }
+                    }
+                }
+            }
+
+            if ($name == '') {
+                continue;
+            }
+
+            $img = $target->content->image;
+
+            $headers = get_headers($img);
+            $code = substr($headers[0], 9, 3);
+
+            if ($code == 200) {
+                $content = file_get_contents($img);
+                Storage::disk('expression')->put($target->name . '.png', $content);
+
+                //insert
+                DB::table('expression')->insert([
+                    'name' => $name,
+                    'en_name' => $target->name,
+                    'jp_name' => $jpName,
+                    'img_name' => $target->name,
+                    'from' => json_encode($obtainedFrom, JSON_UNESCAPED_UNICODE),
+                    'source' => isset($target->content->sourceNotes) ? $target->content->sourceNotes : ''
+                ]);
+
+                echo 'insert: ' . $name . '<br>';
+            }
+        }
+    }
+
     public function getMuseum()
     {
         $ranges = range(1, 51);
