@@ -1284,3 +1284,23 @@ if (!function_exists('computedRace')) {
 		return 2;
     }
 }
+
+
+if (!function_exists('notFoundData')) {
+
+    /**
+     * @return string
+     */
+    function notFoundData()
+    {
+    	$msg = DB::table('not_found_msg')
+    	    ->inRandomOrder()
+    	    ->first('msg');
+
+    	if (is_null($msg)) {
+    		return '';
+    	}
+
+    	return $msg->msg;
+    }
+}

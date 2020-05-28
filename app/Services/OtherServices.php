@@ -31,7 +31,7 @@ class OtherServices
     public static function getDataByMessage($message, $page = '', $onlyNow = false, $target = '')
     {
     	$other = [];
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = notFoundData();
 
     	//first
     	$first = mb_substr($message, 0, 1);

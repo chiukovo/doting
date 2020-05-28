@@ -29,7 +29,7 @@ class ArtServices
     public static function getDataByMessage($message, $page = '')
     {
     	$other = [];
-    	$notFound = '';
+    	$notFound = notFoundData();
 
         $art = DB::table('art')->where('name', 'like', '%' . $message . '%');
 

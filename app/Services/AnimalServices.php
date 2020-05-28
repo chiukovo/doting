@@ -556,7 +556,7 @@ class AnimalServices
     public static function getDataByMessage($message, $page = '', $type = '')
     {
     	$message = strtolower($message);
-    	$notFound = '找不到捏 哇耶...(¬_¬)';
+    	$notFound = notFoundData();
 
     	//阿戰隊
     	if ($message == '阿戰隊' && $type == '') {

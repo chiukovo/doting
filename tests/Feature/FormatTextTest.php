@@ -44,6 +44,25 @@ class FormatTextTest extends TestCase
     }
 
     /**
+     * 查詢not found
+     */
+    public function testNotFound()
+    {
+        $class = App::make('App\Http\Controllers\AnimalCrossingController');
+        $texts = ['$123', '#123'];
+
+        foreach ($texts as $text) {
+            $result = $class->getSendBuilder($text);
+
+            if (!is_object($result)) {
+                $this->assertTrue(false);
+            }
+        }
+
+        $this->assertTrue(true);
+    }
+
+    /**
      * 查詢魚、昆蟲圖鑑
      */
     public function testOther()
