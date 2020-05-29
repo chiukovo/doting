@@ -101,6 +101,7 @@
                   <li><a href="/kk/list">唱片</a></li>
                 </ul>
               </li>
+              <li><a href="/expression/list">表情</a></li>
               <li class="sub-nav">
                 <a href="#">豆丁</a>
                 <ul>
@@ -111,7 +112,6 @@
                 </ul>
               </li>
               <li><a href="/statistics">搜尋排行榜</a></li>
-              <li><a href="/expression/list">表情</a></li>
               @if(!$isLogin)
                 <li><a href="{{ lingLoginUrl() }}">Sign In <i class="icon icon-signin"></i></a></li>
               @else
