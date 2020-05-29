@@ -132,7 +132,7 @@
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>amiibo</label>
-                        <span>{{ $detail->amiibo }}</span>
+                        <span>{{ $detail->amiiboCard }}</span>
                       </div>
                     </div>
                     @endif

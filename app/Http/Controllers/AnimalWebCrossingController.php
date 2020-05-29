@@ -88,11 +88,13 @@ class AnimalWebCrossingController extends Controller
             ->toArray();
 
         $type = $detail->info == '' ? 'animal' : 'npc';
+
         if ($detail->amiibo != '') {
-            $detail->amiibo = mb_substr($detail->amiibo, 0, 3);
+            $detail->amiiboCard = mb_substr($detail->amiibo, 0, 3);
         } else {
-            $detail->amiibo = '-';
+            $detail->amiiboCard = '-';
         }
+
         $token = encrypt($detail->id);
         //encode id and like current
         $result = computedMainData([$detail], 'animal', $type);
