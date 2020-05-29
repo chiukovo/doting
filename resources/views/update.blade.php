@@ -22,6 +22,18 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v3.9.7</div>
+                <div class="card-header-date">2020/5/29</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>新增表情</li>
+                  <li>新增動物line amiibo查詢 範例: #041</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.9.5</div>
                 <div class="card-header-date">2020/5/27</div>
               </div>
