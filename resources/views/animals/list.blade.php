@@ -143,6 +143,9 @@
                 <div class="card-list-info" v-else>
                   @{{ list.race }}
                 </div>
+                <div class="card-list-info">
+                  amiibo: @{{ list.amiibo }}
+                </div>
                 <div class="card-list-btn">
                   <ul class="user-save-btn">
                     <li>

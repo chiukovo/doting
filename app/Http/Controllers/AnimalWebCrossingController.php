@@ -122,6 +122,17 @@ class AnimalWebCrossingController extends Controller
     			//encode id and like current
     			$result = computedMainData($result, 'animal', $type);
 
+                //format amiibo
+                foreach ($result as $key => $value) {
+                    if ($value->amiibo != '') {
+                        $value->amiibo = mb_substr($value->amiibo, 0, 3);
+                    } else {
+                        $value->amiibo = '-';
+                    }
+
+                    $result[$key] = $value;
+                }
+
     			return $result;
     		}
 
@@ -180,6 +191,17 @@ class AnimalWebCrossingController extends Controller
 
     	//encode id and like current
     	$lists['data'] = computedMainData($lists['data'], 'animal', $type);
+
+        //format amiibo
+        foreach ($lists['data'] as $key => $value) {
+            if ($value->amiibo != '') {
+                $value->amiibo = mb_substr($value->amiibo, 0, 3);
+            } else {
+                $value->amiibo = '-';
+            }
+
+            $lists['data'][$key] = $value;
+        }
 
     	return $lists['data'];
     }
