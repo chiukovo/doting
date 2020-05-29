@@ -27,7 +27,7 @@
               <h2 class="post-title">{{ $detail->name }}</h2>
             </div>
             <div class="row my-4">
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
                 <div class="post-photo post-animal">
                   <img class="img-fluid" src="/animal/{{ $detail->name }}.png" alt="{{ $detail->name }}">
                 </div>
