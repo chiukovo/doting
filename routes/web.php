@@ -94,6 +94,11 @@ Route::get('/art/list', 'ArtController@list')->name('art');
 Route::get('/art/detail', 'ArtController@detail');
 Route::post('/art/search', 'ArtController@getArtSearch');
 
+//表情
+Route::get('/expression/list', 'ExpressionController@list')->name('expression');
+Route::post('/expression/search', 'ExpressionController@getSearch');
+Route::get('/expression/getAllType', 'ExpressionController@getAllType');
+
 //魚
 Route::get('/fish/list', 'FishController@list')->name('fish');
 Route::get('/fish/detail', 'FishController@detail');

@@ -111,6 +111,7 @@
                 </ul>
               </li>
               <li><a href="/statistics">搜尋排行榜</a></li>
+              <li><a href="/expression/list">表情</a></li>
               @if(!$isLogin)
                 <li><a href="{{ lingLoginUrl() }}">Sign In <i class="icon icon-signin"></i></a></li>
               @else

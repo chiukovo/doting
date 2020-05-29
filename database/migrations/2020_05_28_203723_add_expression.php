@@ -20,7 +20,7 @@ class AddExpression extends Migration
             $table->string('jp_name', 150);
             $table->string('img_name', 150);
             $table->string('from', 150);
-            $table->string('source', 200)->default('[]');
+            $table->string('source', 200);
         });
     }
 

@@ -72,8 +72,8 @@ if (!function_exists('allLikeTypeTarget')) {
     function allLikeTypeTarget()
     {
         return [
-        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk'],
-        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk'],
+        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk', 'expression'],
+        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk', 'expression'],
         	'target' => ['like', 'track'],
         ];
     }
@@ -165,6 +165,7 @@ if (!function_exists('computedCount')) {
             case 'art':
             case 'diy':
             case 'kk':
+            case 'expression':
                 $countAll = DB::table($likeType)->count();
 
                 $likeCount = DB::table($likeType)->whereIn('id', $likeIds)->count();
@@ -302,7 +303,7 @@ if (!function_exists('getCountItems')) {
     function getCountItems($target)
     {
     	$result = [];
-    	$types = ['fish', 'insect', 'fossil', 'art', 'diy', 'apparel', 'furniture', 'plant', 'kk'];
+    	$types = ['fish', 'insect', 'fossil', 'art', 'diy', 'apparel', 'furniture', 'plant', 'kk', 'expression'];
 
     	foreach ($types as $type) {
 	    	foreach ($target as $checkType => $detail) {
@@ -361,6 +362,11 @@ if (!function_exists('getCountItems')) {
 							$name = '唱片';
 							$imgUrl = '/kk/Hypno_K.K..png';
 							$href = '/kk/list?target=';
+							break;
+						case 'expression':
+							$name = '表情';
+							$imgUrl = '/expression/Mischief.png';
+							$href = '/expression/list?target=';
 							break;
 					}
 
