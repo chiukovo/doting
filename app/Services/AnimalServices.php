@@ -580,9 +580,10 @@ class AnimalServices
     	    ->orWhere('en_name', 'like', '%' . $message . '%')
     	    ->orWhere('jp_name', 'like', '%' . $message . '%')
     	    ->orWhere('personality', 'like', '%' . $message . '%')
+            ->orWhere('amiibo', 'like', '%' . $message . '%')
             ->orWhere('say', $message)
     	    ->orWhere('bd_m', $message)
-    	    ->orWhere('bd', $message);
+            ->orWhere('bd', $message);
 
         if ($type == 'npc') {
             $dbAnimal = $dbAnimal->where('info', '!=', '');
@@ -650,6 +651,12 @@ class AnimalServices
         $item->say = $item->say != '' ? $item->say : '-';
         $item->sex = $item->sex != '' ? $item->sex : '-';
         $item->target = $item->target != '' ? $item->target : '-';
+
+        if ($item->amiibo != '') {
+            $item->amiibo = mb_substr($item->amiibo, 0, 3);
+        } else {
+            $item->amiibo = '-';
+        }
 
         //npc
         if ($item->info != '') {
@@ -807,6 +814,27 @@ class AnimalServices
         $box[] = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::BASELINE)
             ->setContents($box5Inline);
+
+
+        //box6
+        $box6Inline = [];
+        $box6Inline[] = TextComponentBuilder::builder()
+            ->setText('amiibo編號')
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#aaaaaa')
+            ->setFlex(1);
+
+        
+        $box6Inline[] = TextComponentBuilder::builder()
+            ->setText($item->amiibo)
+            ->setSize(ComponentFontSize::XS)
+            ->setColor('#444444')
+            ->setWrap(true)
+            ->setFlex(2);
+
+        $box[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::BASELINE)
+            ->setContents($box6Inline);
 
         $texts = TextComponentBuilder::builder()
             ->setText($item->name . ' ' . ucfirst($item->en_name) . ' ' . $item->jp_name)
