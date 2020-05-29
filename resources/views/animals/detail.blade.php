@@ -129,6 +129,12 @@
                         <span>{{ $detail->motto }}</span>
                       </div>
                     </div>
+                    <div class="post-info-group">
+                      <div class="post-info-item">
+                        <label>amiibo</label>
+                        <span>{{ $detail->amiibo }}</span>
+                      </div>
+                    </div>
                     @endif
                     @if($detail->kk != '')
                     <div class="post-info-group">
