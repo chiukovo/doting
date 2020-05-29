@@ -1174,7 +1174,9 @@ ul.user-save-btn {
 }
 
 .list-custom {
-  li {
+  .list-group-item {
+    display: flex;
+    align-items: center;
     padding: .5rem 0;
   }
   .list-custom-label {
@@ -1183,6 +1185,48 @@ ul.user-save-btn {
     border-radius: .85rem;
     padding: .2rem .75rem;
     margin-right: .5rem;
+    white-space: nowrap;
+  }
+}
+
+.dish {
+  .dish-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      flex: 1;
+      padding: .5rem;
+    }
+    .dish-list-item {
+      padding: .5rem;
+      .form-control {
+        border: 0;
+        border-bottom: 1px solid $gray-200;
+        border-radius: 0;
+        padding: .3rem .1rem;
+      }
+    }
+    .item-label {
+      color: $gray-500;
+    }
+    .price {
+      display: block;
+      border-bottom: 1px solid $gray-200;
+      padding: .3rem .1rem;
+      &:before {
+        content: '$';
+        padding-right: .25rem;
+      }
+    }
+  }
+  .item-group {
+    .dish-list-item {
+      + .dish-list-item {
+        margin-top: .5rem;
+      }
+    }
   }
 }
 
@@ -1221,6 +1265,9 @@ audio {
 }
 .rounded {
   border-radius: .25rem !important;
+}
+.test-sm {
+  font-size: 12px;
 }
 .badge-light {
   border: 1px solid $gray-200;
@@ -1364,8 +1411,16 @@ a.link {
 .card-header {
   background-color: $gray-100;
   border: 1px solid $gray-200;
+  + .card-body {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
 }
 .card-body {
+  border: 1px solid $gray-200;
+}
+.card-footer {
+  background-color: $gray-100;
   border: 1px solid $gray-200;
 }
 .card-group {
@@ -1427,9 +1482,6 @@ a.link {
 }
 // <691px
 @include media-breakpoint-down(sm) {
-  .analysis-fixed {
-    margin-bottom: 120px;
-  }
   .header {
     position: fixed;
     z-index: 1090;
@@ -1513,6 +1565,21 @@ a.link {
   .analysis-tag {
     > div:first-child {
       margin-bottom: .5rem;
+    }
+  }
+  .analysis-fixed {
+    margin-bottom: 120px;
+  }
+  .dish {
+    background-color: $gray-100;
+    .dish-list {
+      flex-wrap: wrap;
+      li {
+        flex: 1 0 50%;
+        .item-group {
+          background-color: #fff;
+        }
+      }
     }
   }
 }
