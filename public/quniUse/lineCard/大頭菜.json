@@ -1,0 +1,324 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "我的大頭菜",
+        "weight": "bold",
+        "size": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "xs"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "星期日(5/24)大頭菜購買價格：91",
+        "size": "xs",
+        "color": "#aaaaaa",
+        "wrap": true
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xxl",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "上午",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "一",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "decoration": "none",
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "二",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "三",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "四",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "五",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "六",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "text": " "
+              },
+              {
+                "type": "text",
+                "text": "90",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "56",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "606",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "28",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "71",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "92",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xxl",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "下午",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "一",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "decoration": "none",
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "二",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "三",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "四",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "五",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "六",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "flex": 1,
+                "align": "center"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "text": " "
+              },
+              {
+                "type": "text",
+                "text": "90",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "56",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "606",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "28",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "71",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "92",
+                "size": "xs",
+                "color": "#444444",
+                "flex": 1,
+                "align": "center"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "lg"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "本週菜價紀錄：5/24 ~ 5/30",
+        "size": "xs",
+        "color": "#aaaaaa",
+        "wrap": true
+      }
+    ]
+  },
+  "styles": {
+    "footer": {
+      "separator": true
+    }
+  }
+}
