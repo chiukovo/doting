@@ -31,7 +31,9 @@ class ArtServices
     	$other = [];
     	$notFound = notFoundData();
 
-        $art = DB::table('art')->where('name', 'like', '%' . $message . '%');
+        $art = DB::table('art')
+            ->where('name', 'like', '%' . $message . '%')
+            ->orWhere('cn_name', 'like', '%' . $message . '%');
 
         if ($page != '') {
             $art = $art

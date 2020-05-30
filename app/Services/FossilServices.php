@@ -33,6 +33,7 @@ class FossilServices
 
         $result = DB::table('fossil')
             ->where('name', 'like', '%' . $message . '%')
+            ->orWhere('cn_name', 'like', '%' . $message . '%')
             ->orderBy('sell', 'desc')
             ->get()
             ->toArray();

@@ -81,6 +81,7 @@ class ItemsServices
         $items->where(function($q) use ($message) {
           $q->where('name', 'like', '%' . $message . '%')
             ->orWhere('jp_name', 'like', '%' . $message . '%')
+            ->orWhere('cn_name', 'like', '%' . $message . '%')
             ->orWhere('color', 'like', '%' . $message . '%');
         });
 

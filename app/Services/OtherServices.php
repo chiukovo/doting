@@ -108,7 +108,9 @@ class OtherServices
     	}
 
     	//找蟲
-        $insect = DB::table('insect')->where('name', 'like', '%' . $message . '%');
+        $insect = DB::table('insect')
+            ->where('name', 'like', '%' . $message . '%')
+            ->orWhere('cn_name', 'like', '%' . $message . '%');
 
         //check target
         if ($target != '') {
@@ -149,7 +151,9 @@ class OtherServices
         }
 
         //找魚
-        $fish = DB::table('fish')->where('name', 'like', '%' . $message . '%');
+        $fish = DB::table('fish')
+            ->where('name', 'like', '%' . $message . '%')
+            ->orWhere('cn_name', 'like', '%' . $message . '%');
 
         //check target
         if ($target != '') {

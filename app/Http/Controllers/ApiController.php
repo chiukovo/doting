@@ -12,49 +12,38 @@ class ApiController extends Controller
 {
     public function transData()
     {
-        $ranges = range(1, 51);
-        $items = DB::table('items_new')
-            ->get()
-            ->toArray();
+        $dbName = 'items_new';
+        //DB DATA
+        $dbData = DB::table($dbName)->orderBy('id', 'desc')->get()->toArray();
+        $dbData = array_chunk($dbData, 100);
 
-        foreach ($ranges as $range) {
-            //讀翻譯檔案
-            $html = \File::get(public_path() . '/trans/' . $range . '.html');
-            $ql = QueryList::html($html);
-            $trans = $ql->rules([
-                'en_name' => ['td:eq(2)', 'text'],
-                'en_real_name' => ['td:eq(3)', 'text'],
-                'name' => ['td:eq(14)', 'text'],
-            ])
-            ->range('.grid-container tr')
-            ->queryData();
-
-            $transAll[] = $trans;
-        }
-
-        foreach ($items as $target) {
-            //翻譯
-            $name = '';
-
-            $explode = explode('&', $target->color);
-
-            foreach ($transAll as $trans) {
-                foreach ($trans as $tran) {
-                    if (strtolower($tran['en_real_name']) == strtolower($target->color)) {
-                        $name = $tran['name'];
-                    }
-                }
+        foreach ($dbData as $data) {
+            $nameData = [];
+            foreach ($data as $detail) {
+                $nameData[$detail->id] = $detail->name;
             }
 
-            if ($name == '') {
-                continue;
-            }
+            //get
+            $url = 'https://api.zhconvert.org/convert?converter=Simplified&text=' . json_encode($nameData, JSON_UNESCAPED_UNICODE);
 
-            DB::table('items_new')
-                ->where('id', $target->id)
-                ->update([
-                    'color' => $name,
-                ]);
+            $target = Curl::to($url)->asJson()->get();
+
+            if (!isset($target->data)) {
+                dd($target, $url);
+            }
+            $target = $target->data->text;
+
+            $decodes = json_decode($target, true);
+
+            foreach ($decodes as $id => $decode) {
+                DB::table($dbName)
+                    ->where('id', $id)
+                    ->update([
+                        'cn_name' => $decode,
+                    ]);
+
+                echo 'update ' . $decode . '</br>';
+            }
         }
     }
 
