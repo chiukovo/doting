@@ -67,7 +67,7 @@ class ItemsServices
         ];
     }
 
-    public static function getDataByMessage($message, $page = '', $type = '')
+    public static function getDataByMessage($message, $page = '', $type = '', $category = [])
     {
     	$message = strtolower($message);
     	$notFound = notFoundData();
@@ -91,6 +91,10 @@ class ItemsServices
             $items = $items->whereNotIn('category', self::getFurnitureAllType());
         } else if ($type == 'plant') {
             $items = $items->where('category', '植物');
+        }
+
+        if (!empty($category) && is_array($category)) {
+            $items->whereIn('category', $category);
         }
 
         if ($page != '') {

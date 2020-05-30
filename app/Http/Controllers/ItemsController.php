@@ -32,7 +32,7 @@ class ItemsController extends Controller
         $target = $request->input('target', '');
 
         if ($text != '') {
-            $result = ItemsServices::getDataByMessage($text, $page, $type);
+            $result = ItemsServices::getDataByMessage($text, $page, $type, $category);
 
             if (is_array($result)) {
                 //encode id and like current
