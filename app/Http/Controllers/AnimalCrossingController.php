@@ -406,11 +406,11 @@ class AnimalCrossingController extends Controller
         }
 
         if ($text == '找女朋友' || $text == '找男朋友' || $text == '找老婆' || $text == '找老公') {
-            return '醒醒吧你只有左右手 哇耶';
+            return '找不到捏 不要灰心總有一天會找到的 123 加油加油加油 哇耶';
         }
 
         if ($text == '找妹妹') {
-            return '醒醒吧你根本沒有妹妹 哇耶';
+            return '你....沒有....妹妹 哇耶';
         }
 
         if ($text == '豆丁笨蛋') {
