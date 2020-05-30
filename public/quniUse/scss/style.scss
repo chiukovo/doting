@@ -1269,6 +1269,18 @@ audio {
 .test-sm {
   font-size: 12px;
 }
+.icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: $gray-900;
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  &.icon-close {
+    mask-image: url('../image/close-outline.svg');
+  }
+}
 .badge-light {
   border: 1px solid $gray-200;
   &.current {
