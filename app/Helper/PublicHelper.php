@@ -406,6 +406,8 @@ if (!function_exists('isWebLogin')) {
 
             if (!is_null($user)) {
               return true;
+            } else {
+				Log::error('---------no user: ' . $lineId . '-------------');
             }
   		}
 
