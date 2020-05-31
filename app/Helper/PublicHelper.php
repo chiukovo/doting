@@ -17,6 +17,22 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('getCaiFormat')) {
+
+    function getCaiFormat()
+    {
+    	$result = [];
+    	//菜
+    	$cai = ['星期日', '週一', '週二', '週三', '週四', '週五', '週六'];
+
+    	foreach ($cai as $key => $value) {
+    		$result[] = [$value, '', ''];
+    	}
+
+    	return $result;
+    }
+}
+
 if (!function_exists('testMyAnimals')) {
 
     function testMyAnimals()

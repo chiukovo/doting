@@ -162,6 +162,87 @@
         <div class="col-12 col-md-10  col-lg-8">
           <div class="user-wrap">
             <div class="user-header">
+              <h4>大頭菜</h4>
+              <small v-if="info.island_name != ''">Residents of @{{ info.island_name }}</small>
+              <small v-else>Residents of My</small>
+            </div>
+            <div class="user-body">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label>本週菜價紀錄: 5/24 ~ 5/30</label>
+                    <button class="btn btn-sm btn-default" v-if="!is_edit_cai" @click="is_edit_cai = !is_edit_cai">編輯</button>
+                    <div class="button-group" v-else>
+                      <button class="btn btn-sm btn-default">清除記錄</button>
+                      <button class="btn btn-sm btn-primary" @click="is_edit_cai = !is_edit_cai">儲存</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body rounded p-0" v-if="caiData.length > 0">
+                  <div class="dish">
+                    <div class="dish-header">
+                      <ul class="dish-list">
+                        <li>
+                          <div class="item-group">
+                            <div class="dish-list-item">
+                              <label class="item-label">
+                                @{{ caiData[0][0] }} <small>(5/24)</small> 大頭菜購買價格
+                              </label>
+                              <div class="item-body">
+                                <input type="number" class="form-control" placeholder="$" v-if="is_edit_cai" v-model="caiData[0][1]">
+                                <span class="price" v-else>@{{ caiData[0][1] }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <ul class="dish-list">
+                      <li v-for="(cai, key) in caiData" v-if="key != 0">
+                        <div class="item-group">
+                          <div class="dish-list-item" v-for="(dt, num) in cai" v-if="num != 0">
+                            <label class="item-label" v-if="num == 1">@{{ caiData[key][0] }}上午</label>
+                            <label class="item-label" v-else>@{{ caiData[key][0] }}下午</label>
+                            <div class="item-body">
+                              <input type="number" class="form-control" placeholder="$" v-if="is_edit_cai" v-model="caiData[key][num]">
+                              <span class="price" v-else>@{{ caiData[key][num] }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-footer bg-white">
+                  <h5 class="mb-0">菜價趨勢： 波型</h5>
+                </div>
+                <ul class="list-group list-group-flush list-custom test-sm mt-3">
+                  <li class="list-group-item">
+                    <label class="list-custom-label">波型</label>
+                    <span>賣價隨機，最大值0.9 ~ 1.4倍</span>
+                  </li>
+                  <li class="list-group-item">
+                    <label class="list-custom-label">遞減型</label>
+                    <span>價格只會越來越低 (絕對會賠)</span>
+                  </li>
+                  <li class="list-group-item">
+                    <label class="list-custom-label">3期型</label>
+                    <span>價格遞減，發生「變調」後，2期的價格為1.4倍以上，會在第3期出現頂峰，<mark>賣價2 ~ 6倍 (即$180 ～ $660之間) </mark></span>
+                  </li>
+                  <li class="list-group-item">
+                    <label class="list-custom-label">4期型</label>
+                    <span>價格遞減，發生「變調」後，2期的價格不到1.4倍，會在第4期出現頂峰，賣價1.4~2倍</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-md-center mb-5">
+        <div class="col-12 col-md-10  col-lg-8">
+          <div class="user-wrap">
+            <div class="user-header">
               <h4 v-if="info.island_name != ''">@{{ info.island_name }}的島民</h4>
               <h4 v-else>我的島民</h4>
               <small v-if="info.island_name != ''">Residents of @{{ info.island_name }}</small>
@@ -259,6 +340,7 @@
     el: '#app',
     data: {
       is_edit: false,
+      is_edit_cai: false,
       info: [],
       itemsData: [],
       animalLike: [],
@@ -267,10 +349,29 @@
       options: {
         blocks: [4, 4, 4],
         delimiter: '-'
-      }
+      },
+      caiData: [],
+      sourceCaiData: [],
+      trend: 0,
     },
     mounted() {
       this.getUserInfo()
+    },
+    watch: {
+      caiData: {
+        handler(newVal, oldVal) {
+          //計算大頭菜波型
+          let result = 0
+          let target1 = parseInt(newVal[0][1])
+          let target2 = parseInt(newVal[1][1])
+
+          if (!isNaN(target1) && !isNaN(target2)) {
+            result = (target2 / target1) * 100
+          }
+
+          console.log(result, target1, target2)
+        },
+      },
     },
     methods: {
       isMobile(){
@@ -295,6 +396,8 @@
             this.animalLike = result.animalInfo.like
             this.animalTrack = result.animalInfo.track
             this.compatibleUrl = result.compatibleUrl
+            this.caiData = result.caiData
+            this.sourceCaiData = JSON.parse(JSON.stringify(this.caiData))
           }
         })
       },
@@ -320,7 +423,7 @@
       },
       goHref(href, target) {
         location.href = href + target
-      }
+      },
     }
   })
 </script>

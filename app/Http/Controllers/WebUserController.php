@@ -103,6 +103,7 @@ class WebUserController extends Controller
     		'itemsData' => $countItems,
     		'animalInfo' => $countData['animalInfo'],
             'compatibleUrl' => $compatibleUrl,
+            'caiData' => getCaiFormat(),
     	];
     }
 
