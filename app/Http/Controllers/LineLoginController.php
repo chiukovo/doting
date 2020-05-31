@@ -28,22 +28,26 @@ class LineLoginController extends Controller
             $returnUrl = '';
 
             if ($code == '' || $state == '') {
+                Log::error('params error');
                 return 'params error';
             }
 
             try {
                 $returnUrl = decrypt($state);
             } catch (DecryptException $e) {
+                Log::error('decode error: ' . $state);
                 return 'decode error';
             }
 
             if ($returnUrl == '') {
+                Log::error('auth error');
                 return 'auth error';
             }
 
             $response = LineLoginServices::getLineToken($code);
 
             if (isset($response->error)) {
+                Log::error('token error code: ' . $code);
                 return 'token error';
             }
 
