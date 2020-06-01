@@ -75,6 +75,10 @@ class KKController extends Controller
             ->where('img_name', $name)
             ->first();
 
+        if (is_null($detail)) {
+            return redirect('kk/list');
+        }
+        
         if ($detail->file_name != '') {
             //format
             $detail->file_name = str_replace(".", "", $detail->file_name);
@@ -87,10 +91,6 @@ class KKController extends Controller
         $token = encrypt($detail->id);
         //encode id and like current
         $result = computedMainData([$detail], $type, $type);
-
-        if (is_null($detail)) {
-            return redirect('kk/list');
-        }
 
         return view('kk.detail', [
             'type' => $type,
