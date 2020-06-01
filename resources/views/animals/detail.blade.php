@@ -173,6 +173,7 @@
               </div>
             </div>
             @endif
+            @include('layouts.ads')
             @if($detail->amiibo != '')
             <div class="card">
               <div class="card-header">Amiibo Card</div>
