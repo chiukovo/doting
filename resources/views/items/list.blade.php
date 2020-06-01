@@ -121,7 +121,7 @@
                   <img class="img-fluid" :src="'/itemsNew/' + list.img_name + '.png?v=' + version" :alt="list.name">
                 </div>
                 <div class="card-list-title">@{{ list.name }}<br>@{{ list.jp_name }}</div>
-                <div class="card-list-info" v-if="list.buy != null">
+                <div class="card-list-info" v-if="list.buy != null && list.buy != ''">
                   <h5 class="text-danger font-weight-bold m-1">$@{{ formatPrice(list.buy) }}</h5>
                 </div>
                 <div class="card-list-info" v-else>
