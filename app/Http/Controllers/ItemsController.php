@@ -80,6 +80,7 @@ class ItemsController extends Controller
         }
 
         $lists = $lists->select()
+            ->orderBy('id', 'desc')
             ->paginate(30)
             ->toArray();
 
