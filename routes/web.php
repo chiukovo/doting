@@ -138,6 +138,7 @@ Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');
 	Route::get('/user/info', 'WebUserController@info');
 	Route::post('/user/save', 'WebUserController@editInfo');
+	Route::post('/user/cai/save', 'WebUserController@editCai');
 });
 
 //爬蟲

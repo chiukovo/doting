@@ -17,6 +17,26 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('getCaiDate')) {
+
+    /**
+     * @return []
+     */
+    function getCaiDate()
+    {
+    	$date = date('Y-m-d');
+    	$first = 0; //start 周日
+    	$w = date('w', strtotime($date));
+    	$start = date('Y-m-d',strtotime("$date -".($w ? $w - $first : 6).' days'));
+    	$end = date('Y-m-d', strtotime("$start + 6 days"));
+
+    	return [
+    		'start' => $start,
+    		'end' => $end,
+    	];
+    }
+}
+
 if (!function_exists('getCaiFormat')) {
 
     function getCaiFormat()

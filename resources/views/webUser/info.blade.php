@@ -162,7 +162,8 @@
         <div class="col-12 col-md-10  col-lg-8">
           <div class="user-wrap">
             <div class="user-header">
-              <h4>大頭菜</h4>
+              <h4 v-if="info.island_name != ''">@{{ info.island_name }}的大頭菜</h4>
+              <h4 v-else>我的大頭菜</h4>
               <small v-if="info.island_name != ''">Residents of @{{ info.island_name }}</small>
               <small v-else>Residents of My</small>
             </div>
@@ -170,11 +171,23 @@
               <div class="card">
                 <div class="card-header">
                   <div class="d-flex justify-content-between align-items-center">
-                    <label>本週菜價紀錄: 5/24 ~ 5/30</label>
+                    <label>
+                      菜價紀錄:
+                      <select class="form-control form-control-sm" v-if="historyCai.length > 0" style="    display: inline-block; width: 180px;" @change="changeCaiDate" v-model="changeStart">
+                        <option :value="cai.start" v-for="cai in historyCai">@{{ cai.start }} ~ @{{ cai.end}}</option>
+                      </select>
+                      <span v-else>@{{ start }} ~ @{{ end }}</span>
+                      <span class="text-danger" v-if="hasMoney">
+                        (有發財機會 請好好把握 ٩(●˙▿˙●)۶…⋆ฺ)
+                      </span>
+                      <span class="text-danger" v-if="noMoney">
+                        (絕對虧錢啊啊啊啊 இдஇ)
+                      </span>
+                    </label>
                     <button class="btn btn-sm btn-default" v-if="!is_edit_cai" @click="is_edit_cai = !is_edit_cai">編輯</button>
                     <div class="button-group" v-else>
-                      <button class="btn btn-sm btn-default">清除記錄</button>
-                      <button class="btn btn-sm btn-primary" @click="is_edit_cai = !is_edit_cai">儲存</button>
+                      <button class="btn btn-sm btn-default" @click="clearCai">還原</button>
+                      <button class="btn btn-sm btn-primary" @click="saveUserCai">儲存</button>
                     </div>
                   </div>
                 </div>
@@ -186,7 +199,7 @@
                           <div class="item-group">
                             <div class="dish-list-item">
                               <label class="item-label">
-                                @{{ caiData[0][0] }} <small>(5/24)</small> 大頭菜購買價格
+                                @{{ caiData[0][0] }} <small>(@{{ start }})</small> 大頭菜購買價格
                               </label>
                               <div class="item-body">
                                 <input type="number" class="form-control" placeholder="$" v-if="is_edit_cai" v-model="caiData[0][1]">
@@ -214,7 +227,7 @@
                   </div>
                 </div>
                 <div class="card-footer bg-white">
-                  <h5 class="mb-0">菜價趨勢： 波型</h5>
+                  <h5 class="mb-0">菜價趨勢： <b>@{{ caiResult }}</b></h5>
                 </div>
                 <ul class="list-group list-group-flush list-custom test-sm mt-3">
                   <li class="list-group-item">
@@ -351,8 +364,15 @@
         delimiter: '-'
       },
       caiData: [],
+      historyCai: [],
+      caiResult: '-',
       sourceCaiData: [],
       trend: 0,
+      start: '',
+      changeStart: '',
+      end: '',
+      hasMoney: false,
+      noMoney: false,
     },
     mounted() {
       this.getUserInfo()
@@ -361,19 +381,82 @@
       caiData: {
         handler(newVal, oldVal) {
           //計算大頭菜波型
-          let result = 0
+          let number = 0
           let target1 = parseInt(newVal[0][1])
           let target2 = parseInt(newVal[1][1])
+          this.hasMoney = false
+          this.noMoney = false
 
           if (!isNaN(target1) && !isNaN(target2)) {
-            result = (target2 / target1) * 100
-          }
+            number = target2 / target1
 
-          console.log(result, target1, target2)
+            if (number >= 0.9) {
+              this.caiResult = this.check21(target1, newVal)
+            }
+
+            if (number < 0.9 && number >= 0.85) {
+              this.caiResult = this.check3(target1, newVal)
+            }
+
+            if (number < 0.85 && number >= 0.8) {
+              this.caiResult = '第四期型'
+            }
+
+            if (number < 0.8 && number >= 0.6) {
+              this.caiResult = '第四期型(機率較高)or波型'
+            }
+
+            if (number < 0.6) {
+              this.caiResult = '第四期型'
+            }
+          } else {
+            this.caiResult = '-'
+          }
         },
       },
     },
     methods: {
+      changeCaiDate() {
+        this.getUserInfo()
+      },
+      check21(base, target) {
+        //周一下午
+        let target1 = parseInt(target[1][2])
+        //周二上午
+        let target2 = parseInt(target[2][1])
+
+        if (!isNaN(target1) && !isNaN(target2)) {
+          let check1 = base * 0.8 <= target1 ? 1 : 0
+          let check2 = base * 1.4 >= target2 ? 1 : 0
+
+          if (check1 || check2) {
+            return '波型'
+          }
+
+          if (!check1 && !check2) {
+            return '第四期型'
+          }
+        } else {
+          return '第四期型or波型(機率較高)'
+        }
+      },
+      check3(base, target) {
+        //周四下午
+        let target4 = parseInt(target[4][2])
+
+        if (!isNaN(target4)) {
+          if (target4 >= base) {
+            this.hasMoney = true
+            return '第四期型or第三期型'
+          } else {
+            this.noMoney = true
+            return '遞減型'
+          }
+        }
+
+        this.hasMoney = true
+        return '第四期型or第三期型or遞減型'
+      },
       isMobile(){
         let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
         return flag;
@@ -383,6 +466,9 @@
       },
       getUserInfo() {
         axios.get('/user/info', {
+          params: {
+            changeStart: this.changeStart
+          }
          }).then((response) => {
           const result = response.data
 
@@ -397,9 +483,28 @@
             this.animalTrack = result.animalInfo.track
             this.compatibleUrl = result.compatibleUrl
             this.caiData = result.caiData
+            this.historyCai = result.historyCai
+            this.start = result.start
+            this.changeStart = result.start
+            this.end = result.end
             this.sourceCaiData = JSON.parse(JSON.stringify(this.caiData))
           }
         })
+      },
+      clearCai() {
+        this.caiData = this.sourceCaiData
+      },
+      saveUserCai() {
+        axios.post('/user/cai/save', {
+          caiData: this.caiData,
+          caiResult: this.caiResult,
+          start: this.start,
+          end: this.end,
+         }).then((response) => {
+
+        })
+
+         this.is_edit_cai = !this.is_edit_cai
       },
       saveUserInfo() {
         axios.post('/user/save', {
