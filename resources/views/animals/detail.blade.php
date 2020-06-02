@@ -129,13 +129,13 @@
                         <span>{{ $detail->motto }}</span>
                       </div>
                     </div>
+                    @endif
                     <div class="post-info-group">
                       <div class="post-info-item">
                         <label>amiibo</label>
                         <span>{{ $detail->amiiboCard }}</span>
                       </div>
                     </div>
-                    @endif
                     @if($detail->kk != '')
                     <div class="post-info-group">
                       <div class="post-info-item">
@@ -173,7 +173,6 @@
               </div>
             </div>
             @endif
-            @include('layouts.ads')
             @if($detail->amiibo != '')
             <div class="card">
               <div class="card-header">Amiibo Card</div>
@@ -184,6 +183,7 @@
               </div>
             </div>
             @endif
+            @include('layouts.ads')
             @if(!empty($sameRaceArray))
             <div class="card">
               <div class="card-header">{{ $detail->name }}的族人</div>

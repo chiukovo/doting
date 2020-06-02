@@ -10,6 +10,54 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function getAmiibo()
+    {
+        $result = Curl::to('https://animal-crossing.com/amiibo/assets/JSON/series14_en.json')->asJson()->get();
+        $result = $result->series14;
+
+        $dbData = DB::table('animal')->orderBy('id', 'desc')->get()->toArray();
+
+        foreach ($result as $data) {
+            $target = '';
+
+            foreach ($dbData as $dt) {
+                if (strtolower($dt->en_name) == strtolower($data->name)) {
+                    $target = $dt;
+                }
+            }
+
+            if ($target == '') {
+                echo 'none: ' . $data->name . '</br>';
+            } else {
+                if ($dt->amiibo != '') {
+                    continue;
+                }
+
+                $url = 'https://animal-crossing.com/amiibo/assets/img/cards/';
+                $img = $url . $data->image;
+
+                $headers = get_headers($img);
+                $code = substr($headers[0], 9, 3);
+                $number = str_pad($data->id, 3, '0',STR_PAD_LEFT);
+                $name = $number . '_' . $data->name;
+
+                if ($code == 200) {
+                    $content = file_get_contents($img);
+                    Storage::disk('animalCard')->put($name . '.png', $content);
+
+                    //insert
+                    DB::table('animal')
+                        ->where('id', $target->id)
+                        ->update([
+                            'amiibo' => $name,
+                        ]);
+
+                    echo 'update ' . $target->id . '</br>';
+                }
+            }
+        }
+    }
+
     public function transData()
     {
         $dbName = 'items_new';
