@@ -17,6 +17,8 @@ class WebUserController extends Controller
     {
     	//user info
     	$lineId = getUserData('lineId');
+        $request = $request->input();
+        $changeStart = isset($request['changeStart']) ? $request['changeStart'] : '';
 
     	//判斷是否有資料
     	$user = DB::table('web_user')
@@ -96,6 +98,48 @@ class WebUserController extends Controller
         if ($nameStr != '') {
             $compatibleUrl = env('APP_URL') . '/animals/compatible?name=' . $nameStr;
         }
+        //find user all cai
+        $historyCai = DB::table('user_cai')
+            ->where('line_id', $lineId)
+            ->get(['start', 'end'])
+            ->toArray();
+
+        //find cai data
+        $dates = getCaiDate();
+        $start = $dates['start'];
+        $end = $dates['end'];
+
+        if ($changeStart != '') {
+            $start = $changeStart;
+            $end = date('Y-m-d', strtotime("$start + 6 days"));
+        }
+
+        $userCai = DB::table('user_cai')
+            ->where('line_id', $lineId)
+            ->where('start', $start)
+            ->where('end', $end)
+            ->first(['cai']);
+
+        $caiData = getCaiFormat();
+
+        if (!is_null($userCai)) {
+            $checkCai = json_decode($userCai->cai);
+
+            if (is_array($checkCai) && !empty($checkCai)) {
+                //檢查是否正確格式
+                $check = true;
+
+                foreach ($checkCai as $cai) {
+                    if (count($cai) != 3) {
+                        $check = false;
+                    }
+                }
+
+                if ($check) {
+                    $caiData = json_decode($userCai->cai);
+                }
+            }
+        }
 
     	return [
     		'code' => 1,
@@ -103,7 +147,91 @@ class WebUserController extends Controller
     		'itemsData' => $countItems,
     		'animalInfo' => $countData['animalInfo'],
             'compatibleUrl' => $compatibleUrl,
+            'start' => $start,
+            'end' => $end,
+            'caiData' => $caiData,
+            'historyCai' => $historyCai,
     	];
+    }
+
+    public function editCai(Request $request)
+    {
+        //user info
+        $lineId = getUserData('lineId');
+        $postData = $request->input();
+        $caiData = isset($postData['caiData']) ? $postData['caiData'] : [];
+        $caiResult = isset($postData['caiResult']) ? $postData['caiResult'] : '';
+        $start = isset($request['start']) ? $request['start'] : '';
+        $end = isset($request['end']) ? $request['end'] : '';
+
+        if ($lineId == '') {
+            return [
+                'code' => -1,
+                'msg' => 'need login',
+            ];
+        }
+
+        if (!is_array($caiData) || empty($caiData) || $caiResult == '') {
+            return [
+                'code' => -2,
+                'msg' => '非正確參數'
+            ];
+        }
+
+        //檢查是否正確格式
+        foreach ($caiData as $cai) {
+            if (count($cai) != 3) {
+                return [
+                    'code' => -3,
+                    'msg' => '非正確格式'
+                ];
+            }
+        }
+
+        if ($start == '' || $end == '') {
+            $dates = getCaiDate();
+            $start = $dates['start'];
+            $end = $dates['start'];
+        }
+
+        //find
+        $userCai = DB::table('user_cai')
+            ->where('line_id', $lineId)
+            ->where('start', $start)
+            ->where('end', $end)
+            ->first();
+
+        try {
+            if (is_null($userCai)) {
+                DB::table('user_cai')->insert([
+                    'line_id' => $lineId,
+                    'start' => $start,
+                    'end' => $end,
+                    'result' => $caiResult,
+                    'cai' => json_encode($caiData, JSON_UNESCAPED_UNICODE),
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            } else {
+                DB::table('user_cai')
+                ->where('id', $userCai->id)
+                ->update([
+                    'line_id' => $lineId,
+                    'result' => $caiResult,
+                    'cai' => json_encode($caiData, JSON_UNESCAPED_UNICODE),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+            }
+        } catch (Exception $e) {
+            return [
+                'code' => -99,
+                'msg' => 'error'
+            ];
+        }
+
+        return [
+            'code' => 1,
+            'msg' => 'success',
+        ];
     }
 
     public function editInfo(Request $request)

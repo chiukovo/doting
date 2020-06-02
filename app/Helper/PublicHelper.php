@@ -17,6 +17,42 @@ if (!function_exists('testHelper')) {
     }
 }
 
+if (!function_exists('getCaiDate')) {
+
+    /**
+     * @return []
+     */
+    function getCaiDate()
+    {
+    	$date = date('Y-m-d');
+    	$first = 0; //start 周日
+    	$w = date('w', strtotime($date));
+    	$start = date('Y-m-d',strtotime("$date -".($w ? $w - $first : 6).' days'));
+    	$end = date('Y-m-d', strtotime("$start + 6 days"));
+
+    	return [
+    		'start' => $start,
+    		'end' => $end,
+    	];
+    }
+}
+
+if (!function_exists('getCaiFormat')) {
+
+    function getCaiFormat()
+    {
+    	$result = [];
+    	//菜
+    	$cai = ['星期日', '週一', '週二', '週三', '週四', '週五', '週六'];
+
+    	foreach ($cai as $key => $value) {
+    		$result[] = [$value, '', ''];
+    	}
+
+    	return $result;
+    }
+}
+
 if (!function_exists('testMyAnimals')) {
 
     function testMyAnimals()
