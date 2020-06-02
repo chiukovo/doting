@@ -34,6 +34,50 @@ use Curl, DB, File;
 
 class AnimalServices
 {
+    public static function myCai($lineId)
+    {
+        $text = '查無本週大頭菜資訊' . "\n";
+        $text .= '需先登入->到使用者設定 哇耶' . "\n";
+        $text .= "\n";
+        $text .= 'https://doting.tw/user' . "\n";
+
+        //find cai data
+        $dates = getCaiDate();
+        $start = $dates['start'];
+        $end = $dates['end'];
+
+        $userCai = DB::table('user_cai')
+            ->where('line_id', $lineId)
+            ->where('start', $start)
+            ->where('end', $end)
+            ->first(['cai']);
+
+        if (is_null($userCai)) {
+            return $text;
+        }
+
+        $caiData = getCaiFormat();
+
+        if (!is_null($userCai)) {
+            $checkCai = json_decode($userCai->cai);
+
+            if (is_array($checkCai) && !empty($checkCai)) {
+                //檢查是否正確格式
+                $check = true;
+
+                foreach ($checkCai as $cai) {
+                    if (count($cai) != 3) {
+                        $check = false;
+                    }
+                }
+
+                if ($check) {
+                    $caiData = json_decode($userCai->cai);
+                }
+            }
+        }
+    }
+
     public static function myPassport($lineId)
     {
         $text = '查無護照資訊 (護照為必填)' . "\n";

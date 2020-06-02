@@ -172,7 +172,7 @@ class AnimalCrossingController extends Controller
         }
 
         if (is_array($dataArray)) {
-            if ($text == '我的島民' || $text == '我的護照') {
+            if ($text == '我的島民' || $text == '我的護照' || $text == '我的大頭菜') {
                 $this->notFound = false;
 
                 return $dataArray;
@@ -463,6 +463,11 @@ class AnimalCrossingController extends Controller
         //我的護照
         if ($text == '我的護照') {
             return AnimalServices::myPassport($this->userId);
+        }
+
+        //我的大頭菜
+        if ($text == '我的大頭菜') {
+            return AnimalServices::myCai($this->userId);
         }
 
         //惡搞

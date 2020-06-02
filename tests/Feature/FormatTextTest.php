@@ -68,7 +68,7 @@ class FormatTextTest extends TestCase
     public function testOther()
     {
         $class = App::make('App\Http\Controllers\AnimalCrossingController');
-        $texts = ['$黑魚', '$金', '$南4月 魚', '$北5月 蟲', '$全5月 魚'];
+        $texts = ['$金', '$南4月 魚', '$北5月 蟲', '$全5月 魚'];
 
         foreach ($texts as $text) {
             $result = $class->getSendBuilder($text);
