@@ -50,7 +50,7 @@ class AnimalServices
             ->where('line_id', $lineId)
             ->where('start', $start)
             ->where('end', $end)
-            ->first(['cai']);
+            ->first(['start', 'end', 'cai', 'result']);
 
         if (is_null($userCai)) {
             return $text;
@@ -76,6 +76,194 @@ class AnimalServices
                 }
             }
         }
+
+        $user = DB::table('web_user')
+            ->where('line_id', $lineId)
+            ->first([
+                'nick_name',
+            ]);
+
+        if (is_null($user)) {
+            return $text;
+        }
+
+        //星期日
+        $date = date_create($start);
+        $startFormat = date_format($date,"m/d");
+
+        $date = date_create($end);
+        $endFormat = date_format($date,"m/d");
+
+        $outBox = [];
+        //1
+        $title = $user->nick_name == '' ? '我的大頭菜' : $user->nick_name . '的大頭菜';
+        $outBox[] = TextComponentBuilder::builder()
+            ->setText($title)
+            ->setWeight(ComponentFontWeight::BOLD)
+            ->setSize(ComponentFontSize::LG);
+
+        $target = is_null($caiData[0][1]) ? '-' : $caiData[0][1];
+        $str = '星期日(' . $startFormat . ')大頭菜購買價格: ' . $target;
+        $outBox[] = TextComponentBuilder::builder()
+            ->setColor('#aaaaaa')
+            ->setText($str)
+            ->setSize(ComponentFontSize::XS);
+
+        //line
+        $outBox[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::XS);
+
+        $outBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setContents($spacer);
+        //line end
+
+        //mid box
+        $ranges = ['一', '二', '三', '四', '五', '六'];
+        $midBox = [];
+
+        //上午
+        $inlineTexts = [];
+        $inlineTexts[] = TextComponentBuilder::builder()
+            ->setText('上午')
+            ->setColor('#aaaaaa')
+            ->setFlex(1)
+            ->setSize(ComponentFontSize::XS);
+
+        foreach ($ranges as $range) {
+            $inlineTexts[] = TextComponentBuilder::builder()
+                ->setText($range)
+                ->setColor('#aaaaaa')
+                ->setFlex(1)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS);
+        }
+
+        $inlineBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::HORIZONTAL)
+            ->setContents($inlineTexts);
+
+        $inlineTexts = [];
+        $inlineTexts[] = TextComponentBuilder::builder()
+            ->setText(' ')
+            ->setColor('#444444')
+            ->setFlex(1)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS);
+
+        foreach ($ranges as $key => $range) {
+            $target = is_null($caiData[$key + 1][1]) ? ' ' : $caiData[$key + 1][1];
+            $inlineTexts[] = TextComponentBuilder::builder()
+                ->setText($target)
+                ->setColor('#444444')
+                ->setFlex(1)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS);
+        }
+
+        $inlineBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::HORIZONTAL)
+            ->setContents($inlineTexts);
+
+        $outBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentSpacing::XXL)
+            ->setContents($inlineBox);
+
+        //下午
+        $inlineBox = [];
+        $inlineTexts = [];
+        $inlineTexts[] = TextComponentBuilder::builder()
+            ->setText('下午')
+            ->setColor('#aaaaaa')
+            ->setFlex(1)
+            ->setSize(ComponentFontSize::XS);
+
+        foreach ($ranges as $range) {
+            $inlineTexts[] = TextComponentBuilder::builder()
+                ->setText($range)
+                ->setColor('#aaaaaa')
+                ->setFlex(1)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS);
+        }
+
+        $inlineBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::HORIZONTAL)
+            ->setContents($inlineTexts);
+
+        $inlineTexts = [];
+        $inlineTexts[] = TextComponentBuilder::builder()
+            ->setText(' ')
+            ->setColor('#444444')
+            ->setFlex(1)
+            ->setAlign('center')
+            ->setSize(ComponentFontSize::XS);
+
+        foreach ($ranges as $key => $range) {
+            $target = is_null($caiData[$key + 1][2]) ? ' ' : $caiData[$key + 1][2];
+            $inlineTexts[] = TextComponentBuilder::builder()
+                ->setText($target)
+                ->setColor('#444444')
+                ->setFlex(1)
+                ->setAlign('center')
+                ->setSize(ComponentFontSize::XS);
+        }
+
+        $inlineBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::HORIZONTAL)
+            ->setContents($inlineTexts);
+
+        $outBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setSpacing(ComponentSpacing::SM)
+            ->setMargin(ComponentSpacing::XXL)
+            ->setContents($inlineBox);
+
+        //line
+        $outBox[] = SeparatorComponentBuilder::builder()
+            ->setMargin(ComponentMargin::MD);
+
+        $spacer[] = SpacerComponentBuilder::builder()
+            ->setSize(ComponentFontSize::LG);
+
+        $outBox[] = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setContents($spacer);
+        //line end
+
+        $week = '本週菜價紀錄:' . $startFormat . '~' . $endFormat;
+        $outBox[] = TextComponentBuilder::builder()
+            ->setText($week)
+            ->setColor('#aaaaaa')
+            ->setSize(ComponentFontSize::XS);
+
+        $outBox[] = TextComponentBuilder::builder()
+            ->setText('菜價趨勢：' . $userCai->result)
+            ->setColor('#aaaaaa')
+            ->setSize(ComponentFontSize::XS);
+
+        $result = BoxComponentBuilder::builder()
+            ->setLayout(ComponentLayout::VERTICAL)
+            ->setContents($outBox);
+
+        $all = BubbleContainerBuilder::builder()
+            ->setSize('kilo')
+            ->setHero(null)
+            ->setBody($result);
+
+        $multipleMessageBuilder = new MultiMessageBuilder();
+        $target = new CarouselContainerBuilder([$all]);
+        $msg = FlexMessageBuilder::builder()
+            ->setAltText('豆丁森友會圖鑑 d(`･∀･)b')
+            ->setContents($target);
+        $multipleMessageBuilder->add($msg);
+
+        return [$multipleMessageBuilder];
     }
 
     public static function myPassport($lineId)
