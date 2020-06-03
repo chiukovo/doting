@@ -100,6 +100,7 @@ class AnimalServices
         $outBox[] = TextComponentBuilder::builder()
             ->setText($title)
             ->setWeight(ComponentFontWeight::BOLD)
+            ->setWrap(true)
             ->setSize(ComponentFontSize::LG);
 
         $target = is_null($caiData[0][1]) ? '-' : $caiData[0][1];
@@ -245,6 +246,7 @@ class AnimalServices
         $outBox[] = TextComponentBuilder::builder()
             ->setText('菜價趨勢：' . $userCai->result)
             ->setColor('#aaaaaa')
+            ->setWrap(true)
             ->setSize(ComponentFontSize::XS);
 
         $result = BoxComponentBuilder::builder()
