@@ -246,15 +246,33 @@ class AnimalServices
         $outBox[] = TextComponentBuilder::builder()
             ->setText('菜價趨勢：' . $userCai->result)
             ->setColor('#aaaaaa')
+            ->setWeight(ComponentFontWeight::BOLD)
             ->setWrap(true)
             ->setSize(ComponentFontSize::XS);
+
+        //判斷發財
+        if (preg_match("/第三期/i", $userCai->result)) {
+            $outBox[] = TextComponentBuilder::builder()
+                ->setText('如果是第三期型: 有發財機會 請好好把握 ٩(●˙▿˙●)۶…⋆ฺ')
+                ->setColor('#aaaaaa')
+                ->setWrap(true)
+                ->setSize(ComponentFontSize::XS);
+        }
+
+        //判斷漏財
+        if (preg_match("/遞減型/i", $userCai->result)) {
+            $outBox[] = TextComponentBuilder::builder()
+                ->setText('如果是遞減型: 絕對虧錢啊啊啊啊 இдஇ')
+                ->setColor('#aaaaaa')
+                ->setWrap(true)
+                ->setSize(ComponentFontSize::XS);
+        }
 
         $result = BoxComponentBuilder::builder()
             ->setLayout(ComponentLayout::VERTICAL)
             ->setContents($outBox);
 
         $all = BubbleContainerBuilder::builder()
-            ->setSize('kilo')
             ->setHero(null)
             ->setBody($result);
 
