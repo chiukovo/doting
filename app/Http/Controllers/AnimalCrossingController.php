@@ -401,6 +401,10 @@ class AnimalCrossingController extends Controller
             return '哇耶 { @❛ꈊ❛@ }';
         }
 
+        if ($text == '歐文') {
+            return '帥哥';
+        }
+
         if ($text == '我的居民') {
             return '你是不是要查 【我的島民】 哇耶 ಠ_ಠ?';
         }
