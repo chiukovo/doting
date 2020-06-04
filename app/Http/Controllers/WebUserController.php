@@ -23,7 +23,8 @@ class WebUserController extends Controller
     {
         $users = DB::table('web_user')
             ->where('open_user_data', 1)
-            ->get([
+            ->select([
+                'passport',
                 'picture_url',
                 'open_picture',
                 'island_name',
@@ -32,8 +33,32 @@ class WebUserController extends Controller
                 'info',
                 'flower',
                 'position',
-                'created_at'
-            ]);
+                'created_at as date'
+            ])
+            ->paginate(30)
+            ->toArray();
+
+        $format = [];
+
+        foreach ($users['data'] as $key => $user) {
+            $user->date = date("Y/m/d", strtotime($user->date));
+            $user->fruit_name = fruitName($user->fruit);
+            $user->position_name = positionName($user->position);
+
+            if (!$user->open_picture) {
+                $user->picture_url = '';
+            }
+
+            $last = substr($user->island_name, -1);
+
+            if ($last != '島') {
+                $user->island_name = $user->island_name . '島';
+            }
+
+            $format[] = $user;
+        }
+
+        return $format;
     }
 
     public function index(Request $request)

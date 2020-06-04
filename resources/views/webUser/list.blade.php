@@ -29,25 +29,41 @@
             <div class="col text-right">
               <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已按讚:@{{ likeCount }}
               </button>
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'noLike' ? 'current' : ''" @click="searchTarget('noLike')">未按讚:@{{ noLikeCount }}
-              </button>
             </div>
           </div>
           <!-- style: list -->
           <ul class="card-list" v-if="!isList">
             <li v-for="list in lists">
               <div class="card-list-item">
-                <div class="card-list-img" @click="goDetail(list)">
-
+                <div class="card-list-img">
+                  <img :src="list.picture_url">
                 </div>
-                <div class="card-list-title">@{{ list.cn_name }}</div>
+                <div class="card-list-title">@{{ list.nick_name }}</div>
+                <div class="card-list-info" v-if="list.passport != ''">
+                  SW-@{{ list.passport }}
+                </div>
+                <div class="card-list-info" v-else>
+                  -
+                </div>
+                <div class="card-list-info">
+                  島名: @{{ list.island_name }}
+                </div>
+                <div class="card-list-info">
+                  島花: @{{ list.flower }}
+                </div>
+                <div class="card-list-info">
+                  特產: @{{ list.fruit_name }}
+                </div>
+                <div class="card-list-info">
+                  所屬半球: @{{ list.position_name }}
+                </div>
+                <div class="card-list-info">
+                  自介: @{{ list.info }}
+                </div>
                 <div class="card-list-btn">
                   <ul class="user-save-btn">
                     <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>追蹤</button>
-                    </li>
-                    <li>
-                      <button class="btn btn-outline-success" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'current' : ''"><i class="fas fa-heart"></i>擁有</button>
+                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>讚</button>
                     </li>
                   </ul>
                 </div>
