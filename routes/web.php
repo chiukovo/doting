@@ -134,6 +134,10 @@ Route::get('/line/login/callback', 'LineLoginController@callback');
 Route::post('/toggleLike', 'LikeController@toggleLike');
 Route::get('/like/count', 'LikeController@getCount');
 
+//交友區
+Route::get('/friend/list', 'WebUserController@friendList');
+Route::post('/friend/search', 'WebUserController@friendSearch');
+
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');
 	Route::get('/user/info', 'WebUserController@info');

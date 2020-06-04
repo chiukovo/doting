@@ -8,6 +8,34 @@ use DB, Session;
 
 class WebUserController extends Controller
 {
+    public function friendList(Request $request)
+    {
+        $text = $request->input('text', '');
+        $target = $request->input('target', '');
+
+        return view('webUser.list', [
+            'text' => $text,
+            'target' => $target,
+        ]);
+    }
+
+    public function friendSearch(Request $request)
+    {
+        $users = DB::table('web_user')
+            ->where('open_user_data', 1)
+            ->get([
+                'picture_url',
+                'open_picture',
+                'island_name',
+                'nick_name',
+                'fruit',
+                'info',
+                'flower',
+                'position',
+                'created_at'
+            ]);
+    }
+
     public function index(Request $request)
     {
         return view('webUser.info');
