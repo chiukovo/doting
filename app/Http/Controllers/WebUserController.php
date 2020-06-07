@@ -194,6 +194,21 @@ class WebUserController extends Controller
             }
         }
 
+        $needAdd = true;
+
+        foreach ($historyCai as $cai) {
+            if ($cai->start == $start) {
+                $needAdd = false;
+            }
+        }
+
+        if ($needAdd) {
+            $historyCai[] = (object) [
+                'start' => $start,
+                'end' => $end,
+            ];
+        }
+
     	return [
     		'code' => 1,
     		'data' => $user,
