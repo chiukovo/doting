@@ -27,7 +27,13 @@ if (!function_exists('getCaiDate')) {
     	$date = date('Y-m-d');
     	$first = 0; //start 周日
     	$w = date('w', strtotime($date));
-    	$start = date('Y-m-d',strtotime("$date -".($w ? $w - $first : 6).' days'));
+
+    	if ($w == 0) {
+    		$start = $date;
+    	} else {
+    		$start = date('Y-m-d',strtotime("$date -".($w ? $w - $first : 6).' days'));
+    	}
+
     	$end = date('Y-m-d', strtotime("$start + 6 days"));
 
     	return [
