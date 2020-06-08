@@ -22,6 +22,23 @@
               </div>
               <ul class="passport-info col-12 col-sm-8" v-if="!is_edit">
                 <li>
+                  <div class="passport-info-item">
+                    <div class="label">是否公開</div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="openData" :checked="info.open_user_data" disabled>
+                      <label class="form-check-label" for="openData">護照</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="openPicture" :checked="info.open_picture" disabled>
+                      <label class="form-check-label" for="openPicture">照片</label>
+                    </div>
+                  </div>
+                  <div class="passport-info-tip">
+                    <span>護照公開: 豆丁交友區公開護照 <br> 照片公開: 豆丁交友區公開照片</span>
+                  </div>
+                  <button class="btn btn-sm btn-default btn-outline-secondary" @click="is_edit = true">編輯</button>
+                </li>
+                <li>
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
                     <div class="data" v-if="info.passport != ''">
@@ -31,7 +48,6 @@
                       尚未填寫 哇耶
                     </div>
                   </div>
-                  <button class="btn btn-sm btn-default btn-outline-secondary" @click="is_edit = true">編輯</button>
                 </li>
                 <li>
                   <div class="passport-info-item-group">
@@ -79,13 +95,29 @@
               </ul>
               <ul class="passport-info col-12 col-sm-8" v-else>
                 <li>
+                  <div class="passport-info-item">
+                    <div class="label">是否公開</div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="openData" v-model="info.open_user_data">
+                      <label class="form-check-label" for="openData">護照</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="openPicture" v-model="info.open_picture">
+                      <label class="form-check-label" for="openPicture">照片</label>
+                    </div>
+                  </div>
+                  <div class="passport-info-tip">
+                    <span>護照公開: 豆丁交友區公開護照 <br> 照片公開: 豆丁交友區公開照片</span>
+                  </div>
+                  <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
+                </li>
+                <li>
                   <div class="passport-info-item passport-sw">
                     <div class="label">護照號碼</div>
                     <div class="data">
                       <span>SW-</span><cleave class="form-control form-control-sm" v-model="info.passport" :options="options" style="width: 120px;display: unset;"></cleave>
                     </div>
                   </div>
-                  <button class="btn btn-sm btn-primary" @click="saveUserInfo">儲存</button>
                 </li>
                 <li>
                   <div class="passport-info-item-group">

@@ -85,6 +85,8 @@ class WebUserController extends Controller
                 'info',
                 'flower',
     	    	'position',
+                'open_picture',
+                'open_user_data',
     	    	'created_at'
     	    ]);
 
@@ -313,6 +315,8 @@ class WebUserController extends Controller
     	$position = isset($postData['info']['position']) ? $postData['info']['position'] : '';
         $nickName = isset($postData['info']['nick_name']) ? $postData['info']['nick_name'] : '';
         $flower = isset($postData['info']['flower']) ? $postData['info']['flower'] : '';
+        $openPicture = isset($postData['info']['open_picture']) ? $postData['info']['open_picture'] : 0;
+        $openUserData = isset($postData['info']['open_user_data']) ? $postData['info']['open_user_data'] : 0;
 
     	//判斷字串長度
     	if (strlen($islandName) > 40 || strlen($info) > 40 || strlen($nickName) > 40 || strlen($flower) > 40) {
@@ -322,7 +326,10 @@ class WebUserController extends Controller
     		];
     	}
 
-    	if (!is_numeric($fruit) || !is_numeric($position)) {
+        $openPicture = $openPicture ? true : false;
+        $openUserData = $openUserData ? true : false;
+
+    	if (!is_numeric($fruit) || !is_numeric($position) || !is_bool($openPicture) || !is_bool($openUserData)) {
     		return [
     			'code' => -2,
     			'msg' => '非正確參數'
@@ -364,6 +371,8 @@ class WebUserController extends Controller
     	    	'fruit' => $fruit,
                 'info' => $info,
                 'flower' => $flower,
+                'open_picture' => $openPicture,
+                'open_user_data' => $openUserData,
     	    ]);
 
     	$user = session('web');
