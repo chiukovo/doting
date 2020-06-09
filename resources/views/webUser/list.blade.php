@@ -35,32 +35,31 @@
             </div>
           </div>
           <div v-masonry class="row">
-            <div v-masonry-tile class="col-12 col-sm-6 col-lg-4" v-for="list in lists" v-if="!isList">
-              <div class="card friends-card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
-                  <div class="friends-card-img col-md-4">
-                    <img class="card-img" :src="list.picture_url">
-                  </div>
-                  <div class="friends-card-info col-md-8">
-                    <div class="card-body">
-                      <h6>@{{ list.nick_name }}</h6>
-                      <h6>SW-@{{ list.passport }}</h6>
-                      <p class="card-text">
-                        島名：@{{ list.island_name }}<br>
-                        特產：@{{ list.fruit_name }}<br>
-                        島花：@{{ list.flower }}<br>
-                        所屬半球：@{{ list.position_name }}<br>
-                        自介：@{{ list.info }}<br>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+            <div v-masonry-tile class="col-12 col-sm-6 col-lg-4" v-for="list in lists" v-if="!isList && checkShow(list)">
+              <div class="card friends-card mb-3">
                 <div class="row no-gutters">
                   <div class="col">
                     <div class="card-body p-2 bg-light">
                       <div class="d-flex justify-content-between">
-                        <a href="#" class="card-link text-muted"><i class="fab fa-gratipay"></i> <span>0人</span></a>
+                        <h5 class="card-link">SW-@{{ list.passport }}</h5>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row no-gutters">
+                  <div class="friends-card-img col-md-4">
+                    <img :src="list.picture_url">
+                  </div>
+                  <div class="friends-card-info col-md-8">
+                    <div class="card-body">
+                      <h5><b>@{{ list.nick_name }}</b></h5>
+                      <h6>@{{ list.island_name }}</h6>
+                      <p class="card-text">
+                        <hr>
+                        @{{ list.fruit_name }} / @{{ list.position_name }}<br>
+                        島花：@{{ list.flower }}<br>
+                        自介：@{{ list.info }}<br>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -193,6 +192,13 @@
 
            this.loading = false
          })
+      },
+      checkShow(list) {
+        if (list.nick_name != '' && list.passport != null && list.passport != '') {
+          return true
+        }
+
+        return false
       },
       clearAll() {
         this.searchData = {
