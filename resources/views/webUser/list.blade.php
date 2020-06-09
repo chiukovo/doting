@@ -1,6 +1,9 @@
 @extends('layouts.web')
 @section('title', '豆丁交友區')
 @section('content')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-masonry@0.10.12/dist/vue-masonry-plugin.js"></script>
 <div id="app" class="content-wrap" v-cloak>
   <div class="container">
     <h2 class="content-title">豆丁交友區</h2>
@@ -31,45 +34,39 @@
               </button>
             </div>
           </div>
-          <!-- style: list -->
-          <ul class="card-list" v-if="!isList">
-            <li v-for="list in lists">
-              <div class="card-list-item">
-                <div class="card-list-img">
-                  <img :src="list.picture_url">
+          <div v-masonry class="row">
+            <div v-masonry-tile class="col-12 col-sm-6 col-lg-4" v-for="list in lists" v-if="!isList">
+              <div class="card friends-card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                  <div class="friends-card-img col-md-4">
+                    <img class="card-img" :src="list.picture_url">
+                  </div>
+                  <div class="friends-card-info col-md-8">
+                    <div class="card-body">
+                      <h6>@{{ list.nick_name }}</h6>
+                      <h6>SW-@{{ list.passport }}</h6>
+                      <p class="card-text">
+                        島名：@{{ list.island_name }}<br>
+                        特產：@{{ list.fruit_name }}<br>
+                        島花：@{{ list.flower }}<br>
+                        所屬半球：@{{ list.position_name }}<br>
+                        自介：@{{ list.info }}<br>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-list-title">@{{ list.nick_name }}</div>
-                <div class="card-list-info" v-if="list.passport != ''">
-                  SW-@{{ list.passport }}
-                </div>
-                <div class="card-list-info" v-else>
-                  -
-                </div>
-                <div class="card-list-info">
-                  島名: @{{ list.island_name }}
-                </div>
-                <div class="card-list-info">
-                  島花: @{{ list.flower }}
-                </div>
-                <div class="card-list-info">
-                  特產: @{{ list.fruit_name }}
-                </div>
-                <div class="card-list-info">
-                  所屬半球: @{{ list.position_name }}
-                </div>
-                <div class="card-list-info">
-                  自介: @{{ list.info }}
-                </div>
-                <div class="card-list-btn">
-                  <ul class="user-save-btn">
-                    <li>
-                      <button class="btn btn-outline-danger" @click.prevent.stop="toggleLike('track', list)" :class="list.track ? 'current' : ''"><i class="fas fa-bookmark"></i>讚</button>
-                    </li>
-                  </ul>
+                <div class="row no-gutters">
+                  <div class="col">
+                    <div class="card-body p-2 bg-light">
+                      <div class="d-flex justify-content-between">
+                        <a href="#" class="card-link text-muted"><i class="fab fa-gratipay"></i> <span>0人</span></a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
           <infinite-loading :identifier="infiniteId" @infinite="search">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
@@ -89,7 +86,8 @@
 </div>
 
 <script>
-  Vue.use(GoTop);
+  Vue.use(window['vue-masonry-plugin'].VueMasonryPlugin)
+  Vue.use(GoTop)
   new Vue({
     el: '#app',
     data: {
