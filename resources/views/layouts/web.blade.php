@@ -126,7 +126,7 @@
                       {{ getUserData('displayName') }}
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                      <a class="dropdown-item" href="/user">收藏資訊</a>
+                      <a class="dropdown-item" href="/user">我的資訊</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="/logout">登出</a>
                     </div>
