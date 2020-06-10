@@ -48,7 +48,9 @@ class WebUserController extends Controller
             }
         }
 
-        $users = $users->select([
+        $users = $users
+            ->orderBy('updated_at', 'desc')
+            ->select([
                 'id',
                 'passport',
                 'picture_url',
