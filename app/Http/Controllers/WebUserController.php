@@ -78,7 +78,7 @@ class WebUserController extends Controller
                 $user->picture_url = '/image/empty.jpg';
             }
 
-            $last = substr($user->island_name, -1);
+            $last = mb_substr($user->island_name, -1);
 
             if ($last != '島') {
                 $user->island_name = $user->island_name . '島';
