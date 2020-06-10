@@ -41,7 +41,7 @@
                   <div class="col">
                     <div class="card-body p-2 bg-light">
                       <div class="d-flex justify-content-between">
-                        <h5 class="card-link">SW-@{{ list.passport }}</h5>
+                        <h5 class="card-link m-0">SW-@{{ list.passport }}</h5>
                       </div>
                     </div>
                   </div>
@@ -64,14 +64,12 @@
                     <div class="card-body">
                       <h5><b>@{{ list.nick_name }}</b></h5>
                       <h6>@{{ list.island_name }}</h6>
-                      <p class="card-text">
-                        <hr class="m-1">
-                        @{{ list.fruit_name }} / @{{ list.position_name }}<br>
-                        <hr class="m-1">
-                        島花：@{{ list.flower }}<br>
-                        <hr class="m-1">
-                        自介：@{{ list.info }}<br>
-                      </p>
+                      <hr class="m-1">
+                      @{{ list.fruit_name }} / @{{ list.position_name }}<br>
+                      <hr class="m-1">
+                      島花：@{{ list.flower }}<br>
+                      <hr class="m-1">
+                      自介：@{{ list.info }}<br>
                     </div>
                   </div>
                 </div>
