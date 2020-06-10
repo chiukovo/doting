@@ -29,8 +29,8 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col text-right">
-              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已按讚:@{{ likeCount }}
+            <div class="col text-right mb-2">
+              <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已按讚: @{{ likeCount }}
               </button>
             </div>
           </div>
@@ -48,16 +48,28 @@
                 </div>
                 <div class="row no-gutters">
                   <div class="friends-card-img col-md-4">
-                    <img :src="list.picture_url">
+                    <div class="row">
+                      <div class="col">
+                        <img :src="list.picture_url">
+                        <div class="text-center m-1">
+                          <a href="#" class="card-link" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'text-danger' : 'text-secondary'">
+                            <i class="fab fa-gratipay"></i>
+                            <span>@{{ list.likeCount }}人</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="friends-card-info col-md-8">
                     <div class="card-body">
                       <h5><b>@{{ list.nick_name }}</b></h5>
                       <h6>@{{ list.island_name }}</h6>
                       <p class="card-text">
-                        <hr>
+                        <hr class="m-1">
                         @{{ list.fruit_name }} / @{{ list.position_name }}<br>
+                        <hr class="m-1">
                         島花：@{{ list.flower }}<br>
+                        <hr class="m-1">
                         自介：@{{ list.info }}<br>
                       </p>
                     </div>
@@ -72,7 +84,7 @@
           </infinite-loading>
           <div class="card not-found">
             <div class="card-body text-center" v-show="lists.length == 0 && !loading">
-              找不到捏 哇耶...(¬_¬) 
+              沒人分享捏 哇耶...(¬_¬) 
             </div>
           </div>
           @include('layouts.ads2')
@@ -159,12 +171,15 @@
 
             if (!list[target]) {
               prex = '取消'
+              list.likeCount = list.likeCount - 1
+            } else {
+              list.likeCount = list.likeCount + 1
             }
 
             if (target == 'track') {
               message = '已' + prex + '追蹤'
             } else if (target == 'like') {
-              message = '已' + prex + '擁有'
+              message = '已' + prex + '按讚'
             }
 
             $('#hint-message .message').text(message)
@@ -176,6 +191,7 @@
       },
       search($state) {
         this.loading = true
+
         axios.post('/friend/search', {
            page: this.page,
            text: this.searchData.text,
@@ -185,9 +201,13 @@
            if (response.data.length) {
              this.page += 1;
              this.lists.push(...response.data);
-             $state.loaded();
+             if(typeof $state != "undefined") {
+              $state.loaded()
+             }
            } else {
-             $state.complete();
+            if(typeof $state != "undefined") {
+              $state.complete();
+            }
            }
 
            this.loading = false
@@ -211,6 +231,8 @@
         this.page = 1;
         this.lists = [];
         this.infiniteId += 1;
+
+        this.search()
       }
     }
   })

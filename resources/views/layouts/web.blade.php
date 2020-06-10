@@ -111,7 +111,7 @@
                   <li><a href="https://reurl.cc/9ER9ya" target="_blank">意見回饋(回應)</a></li>
                 </ul>
               </li>
-              <li><a href="/statistics">搜尋排行榜</a></li>
+              <li><a href="/friend/list">豆丁交友區</a></li>
               @if(!$isLogin)
                 <li><a href="{{ lingLoginUrl() }}">Sign In <i class="icon icon-signin"></i></a></li>
               @else

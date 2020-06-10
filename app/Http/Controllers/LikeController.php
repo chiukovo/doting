@@ -65,8 +65,22 @@ class LikeController extends Controller
 
     	if ($like) {
     		Redis::hdel($lineId, $id . '_' . $likeType . '_' . $type . '_' . $likeTarget);
+
+            //-好友
+            if ($type == 'friend') {
+                DB::table('web_user')
+                    ->where('id', $id)
+                    ->decrement('like');
+            }
     	} else {
     		Redis::hSet($lineId, $id . '_' . $likeType . '_' . $type . '_' . $likeTarget, $likeTarget);
+
+            //+好友
+            if ($type == 'friend') {
+                DB::table('web_user')
+                    ->where('id', $id)
+                    ->increment('like');
+            }
     	}
 
     	return [

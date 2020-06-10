@@ -135,8 +135,8 @@ Route::post('/toggleLike', 'LikeController@toggleLike');
 Route::get('/like/count', 'LikeController@getCount');
 
 //交友區
-/*Route::get('/friend/list', 'WebUserController@friendList');
-Route::post('/friend/search', 'WebUserController@friendSearch');*/
+Route::get('/friend/list', 'WebUserController@friendList');
+Route::post('/friend/search', 'WebUserController@friendSearch');
 
 Route::group(['middleware' => ['webAuth']], function() {
 	Route::get('/user', 'WebUserController@index');

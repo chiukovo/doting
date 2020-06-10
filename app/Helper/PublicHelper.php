@@ -114,8 +114,8 @@ if (!function_exists('allLikeTypeTarget')) {
     function allLikeTypeTarget()
     {
         return [
-        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk', 'expression'],
-        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk', 'expression'],
+        	'type' => ['animal', 'npc', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'apparel', 'furniture', 'plant', 'kk', 'expression', 'friend'],
+        	'likeType' => ['animal', 'fish', 'insect', 'fossil', 'art', 'museum', 'diy', 'items', 'kk', 'expression', 'friend'],
         	'target' => ['like', 'track'],
         ];
     }

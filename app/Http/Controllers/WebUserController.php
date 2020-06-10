@@ -21,9 +21,35 @@ class WebUserController extends Controller
 
     public function friendSearch(Request $request)
     {
+        $type = 'friend';
+        $target = $request->input('target', '');
+        $text = $request->input('text', '');
+
         $users = DB::table('web_user')
             ->where('open_user_data', 1)
-            ->select([
+            ->whereNotNull('nick_name')
+            ->whereNotNull('passport');
+
+        if ($text != '') {
+            $users->where(function($q) use ($text) {
+              $q->where('nick_name', 'like', '%' . $text . '%')
+                ->orWhere('island_name', 'like', '%' . $text . '%');
+            });
+        }
+
+        //check target
+        if ($target != '') {
+            $getCount = computedCount($type, $type, true);
+
+            switch ($target) {
+                case 'like':
+                    $users->whereIn('id', $getCount['likeIds']);
+                    break;
+            }
+        }
+
+        $users = $users->select([
+                'id',
                 'passport',
                 'picture_url',
                 'open_picture',
@@ -31,6 +57,7 @@ class WebUserController extends Controller
                 'nick_name',
                 'fruit',
                 'info',
+                'like as likeCount',
                 'flower',
                 'position',
                 'created_at as date'
@@ -46,7 +73,7 @@ class WebUserController extends Controller
             $user->position_name = positionName($user->position);
 
             if (!$user->open_picture) {
-                $user->picture_url = '';
+                $user->picture_url = '/image/empty.jpg';
             }
 
             $last = substr($user->island_name, -1);
@@ -57,6 +84,10 @@ class WebUserController extends Controller
 
             $format[] = $user;
         }
+
+
+        //encode id and like current
+        $format = computedMainData($format, $type, $type);
 
         return $format;
     }

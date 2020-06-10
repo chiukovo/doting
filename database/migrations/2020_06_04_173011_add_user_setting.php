@@ -15,7 +15,8 @@ class AddUserSetting extends Migration
     {
         Schema::table('web_user', function ($table) {
             $table->integer('open_user_data')->default(0)->after('info');
-            $table->integer('open_picture')->default(0)->after('info');
+            $table->integer('open_picture')->default(0)->after('open_user_data');
+            $table->integer('like')->default(0)->after('open_picture');
         });
     }
 
@@ -29,6 +30,7 @@ class AddUserSetting extends Migration
         Schema::table('web_user', function ($table) {
             $table->dropColumn('open_user_data');
             $table->dropColumn('open_picture');
+            $table->dropColumn('like');
         });
     }
 }
