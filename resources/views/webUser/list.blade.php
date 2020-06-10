@@ -29,6 +29,9 @@
       <div class="row">
         <div class="col">
           <div class="row">
+            <div class="col text-left mb-2">
+              點選登入->我的資訊並 <span class="text-danger">公開護照</span> 即可曝光跟大家交朋友摟^_^
+            </div>
             <div class="col text-right mb-2">
               <button class="badge badge-pill badge-light py-2 px-2 mt-1" :class="searchData.target == 'like' ? 'current' : ''" @click="searchTarget('like')">已按讚: @{{ likeCount }}
               </button>

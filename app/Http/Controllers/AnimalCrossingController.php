@@ -428,6 +428,13 @@ class AnimalCrossingController extends Controller
             return $returnText;
         }
 
+        if ($text == '豆丁交友區') {
+            $returnText = '豆丁交友區 哇耶 (´・ω・`)' . "\n";
+            $returnText .= 'https://doting.tw/friend/list';
+
+            return $returnText;
+        }
+
         if ($text == '動物相容性分析') {
             $returnText = '動物相容性分析 哇耶 (´・ω・`)' . "\n";
             $returnText .= 'https://doting.tw/animals/compatible';
