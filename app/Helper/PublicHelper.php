@@ -1352,11 +1352,11 @@ if (!function_exists('notFoundData')) {
     	}
 
     	$target = $msg->msg . "\n";
-    	$target .= "\n";
+    	/*$target .= "\n";
     	$target .= '偷偷跟你們說新指令' . "\n";
     	$target .= '我的大頭菜' . "\n";
     	$target .= '我的島民' . "\n";
-    	$target .= '我的護照';
+    	$target .= '我的護照';*/
 
     	return $target;
     }
