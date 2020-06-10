@@ -55,7 +55,7 @@
                       <div class="col">
                         <img :src="list.picture_url">
                         <div class="text-center m-1">
-                          <a href="#" class="card-link" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'text-danger' : 'text-secondary'">
+                          <a href="#" class="card-link" @click.prevent.stop="toggleLike('like', list)" :class="list.like ? 'text-danger' : 'text-dark'">
                             <i class="fab fa-gratipay"></i>
                             <span>@{{ list.likeCount }}人</span>
                           </a>
