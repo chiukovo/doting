@@ -671,7 +671,7 @@ class AnimalServices
                 $str .= $result->field4 . "\n";
                 $str .= $result->field5 . "\n";
                 $str .= "\n";
-                $str .= $result->field6 . "\n";
+                $str .= $result->field6;
 
                 $message = new TextMessageBuilder($str);
                 $multipleMessageBuilder->add($message);

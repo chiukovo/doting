@@ -1351,10 +1351,10 @@ if (!function_exists('notFoundData')) {
     		return '';
     	}
 
-    	$target = $msg->msg . "\n";
-    	$target .= "\n";
+    	$target = $msg->msg;
+    	/*$target .= "\n";
     	$target .= '偷偷跟你們說新指令' . "\n";
-    	$target .= '豆丁交友區';
+    	$target .= '豆丁交友區';*/
 
     	return $target;
     }
