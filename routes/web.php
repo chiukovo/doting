@@ -168,4 +168,5 @@ Route::get('/getArtwork', 'ApiController@getArtwork');
 Route::get('/getFossil', 'ApiController@getFossil');
 Route::get('/getPlant', 'ApiController@getPlant');
 Route::get('/getKK', 'ApiController@getKK');
-Route::get('/transData', 'ApiController@transData');*/
+Route::get('/transData', 'ApiController@transData');
+Route::get('/updateItems', 'ApiController@updateItems');*/

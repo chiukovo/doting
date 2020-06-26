@@ -10,6 +10,142 @@ use Curl, Log, Storage, DB, Url;
 
 class ApiController extends Controller
 {
+    public function updateItems()
+    {
+        $ranges = range(1, 51);
+        $result = Curl::to('https://api.nookplaza.net/items?category=Equippables')->asJson()->get();
+        $result = $result->results;
+        $transAll = [];
+
+        $datas = DB::table('items_new')
+            ->get()
+            ->toArray();
+
+        foreach ($ranges as $range) {
+            //讀翻譯檔案
+            $html = \File::get(public_path() . '/trans/' . $range . '.html');
+            $ql = QueryList::html($html);
+            $trans = $ql->rules([
+                'en_name' => ['td:eq(2)', 'text'],
+                'jp_name' => ['td:eq(14)', 'text'],
+                'name' => ['td:eq(13)', 'text'],
+            ])
+            ->range('.grid-container tr')
+            ->queryData();
+
+            $transAll[] = $trans;
+        }
+
+
+        foreach ($result as $target) {
+            //翻譯
+            $name = '';
+            $jpName = '';
+            $insert = [];
+
+            foreach ($transAll as $trans) {
+                foreach ($trans as $tran) {
+                    if (strtolower($tran['en_name']) == strtolower($target->name)) {
+                        $name = $tran['name'];
+                    }
+                }
+            }
+
+            if ($name != '') {
+                foreach ($datas as $data) {
+                    if ($data->name == $name) {
+                        continue;
+                    }
+                }
+
+                $size = '';
+
+                if (isset($target->content->size)) {
+                    $sizeData = $target->content->size;
+                    $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
+                }
+
+                $insert = [
+                    'en_name' => strtolower($target->name),
+                    'jp_name' => $jpName,
+                    'name' => $name,
+                    'buy' => isset($target->content->buy) ? $target->content->buy : 0,
+                    'sell' => $target->content->sell,
+                    'is_diy' => $target->content->dIY,
+                    'customize' => isset($target->content->customize) ? $target->content->customize : false,
+                    'catalog' => isset($target->content->catalog) ? $target->content->catalog : false,
+                    'category' => $target->category,
+                    'size' => $size,
+                    'type' => 1,
+                ];
+
+                if (empty($target->variations)) {
+                    if (isset($target->content->bodyColor)) {
+                        $insert['color'] = $target->content->bodyColor;
+                    }
+
+                    if (isset($target->content->curtainColor)) {
+                        $insert['color'] = $target->content->curtainColor;
+                    }
+
+                    $img = $target->content->image;
+                    $insert['img_name'] = '';
+                    $fileIsset = false;
+
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+
+                    if ($code == 200) {
+                        $insert['img_name'] = $name;
+                        $fileIsset = is_file(public_path('itemsNew/' .  $insert['img_name'] . '.png'));
+
+                        if (!$fileIsset) {
+                            $content = file_get_contents($img);
+                            Storage::disk('itemsNew')->put($insert['img_name'] . '.png', $content);
+                        }
+                    }
+
+                    if (!$fileIsset) {
+                        //insert
+                        DB::table('items_new')->insert($insert);
+
+                        echo 'insert: ' . $name . '<br>';
+                    }
+
+                    continue;
+                }
+
+                foreach ($target->variations as $key => $detail) {
+                    $insert['color'] = $detail->content->bodyColor;
+                    $img = $detail->content->image;
+                    $insert['img_name'] = '';
+                    $fileIsset = false;
+
+                    $headers = get_headers($img);
+                    $code = substr($headers[0], 9, 3);
+                    $code = substr($headers[0], 9, 3);
+
+                    if ($code == 200) {
+                        $insert['img_name'] = $name . '_' . $key;
+                        $fileIsset = is_file(public_path('itemsNew/' .  $insert['img_name'] . '.png'));
+
+                        if (!$fileIsset) {
+                            $content = file_get_contents($img);
+                            Storage::disk('itemsNew')->put($insert['img_name'] . '.png', $content);
+                        }
+                    }
+
+                    if (!$fileIsset) {
+                        //insert
+                        DB::table('items_new')->insert($insert);
+
+                        echo 'insert: ' . $name . '<br>';
+                    }
+                }
+            }
+        }
+    }
+
     public function getAmiibo()
     {
         $result = Curl::to('https://animal-crossing.com/amiibo/assets/JSON/series14_en.json')->asJson()->get();
