@@ -22,6 +22,17 @@
             </div>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
+                <div class="card-header-title">更新 v4.1.0</div>
+                <div class="card-header-date">2020/7/6</div>
+              </div>
+              <div class="card-body">
+                <ul class="list-decimal">
+                  <li>新增各式海洋生物 DIY 傢具</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="card-header-title">更新 v3.9.7</div>
                 <div class="card-header-date">2020/5/29</div>
               </div>

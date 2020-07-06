@@ -147,7 +147,7 @@ class FishController extends Controller
         }
 
         $fish = $fish->select()
-            ->orderBy('sell', 'desc')
+            ->orderBy('id', 'desc')
             ->paginate(30)
             ->toArray();
 

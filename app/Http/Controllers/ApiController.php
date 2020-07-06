@@ -12,9 +12,10 @@ class ApiController extends Controller
 {
     public function updateItems()
     {
-        $ranges = range(1, 51);
-        $result = Curl::to('https://api.nookplaza.net/items?category=Equippables')->asJson()->get();
+        $ranges = range(1, 49);
+        $result = Curl::to('https://api.nookplaza.net/items?category=Clothing')->asJson()->get();
         $result = $result->results;
+        $result = array_reverse($result);
         $transAll = [];
 
         $datas = DB::table('items_new')
@@ -42,6 +43,10 @@ class ApiController extends Controller
             $name = '';
             $jpName = '';
             $insert = [];
+
+            if ($target->category == 'Art') {
+                continue;
+            }
 
             foreach ($transAll as $trans) {
                 foreach ($trans as $tran) {
@@ -305,10 +310,15 @@ class ApiController extends Controller
 
     public function getMuseum()
     {
-        $ranges = range(1, 51);
+        $ranges = range(1, 49);
         $result = Curl::to('https://api.nookplaza.net/items?category=Museum')->asJson()->get();
         $result = $result->results;
+        $result = array_reverse($result);
         $transAll = [];
+
+        $datas = DB::table('fish')
+            ->get()
+            ->toArray();
 
         foreach ($ranges as $range) {
             //讀翻譯檔案
@@ -329,7 +339,7 @@ class ApiController extends Controller
             //翻譯
             $name = '';
 
-            if ($target->category != 'Fossils') {
+            if ($target->category != 'Sea Creatures') {
                 continue;
             }
 
@@ -345,15 +355,33 @@ class ApiController extends Controller
                 continue;
             }
 
+            foreach ($datas as $data) {
+                if ($data->name == $name) {
+                    continue;
+                }
+            }
+
             $img = $target->content->image;
             $fileIsset = false;
 
             $headers = get_headers($img);
             $code = substr($headers[0], 9, 3);
 
+            $insert = [
+                'name' => $name,
+                'sell' => $target->content->sell,
+                'shadow' => $target->content->shadow,
+                'time' => $target->content->spawnRates,
+            ];
+
             if ($code == 200) {
                 $content = file_get_contents($img);
-                Storage::disk('fossil')->put($name . '.png', $content);
+                Storage::disk('other')->put($name . '.png', $content);
+
+                //insert
+                DB::table('fish')->insert($insert);
+
+                echo 'insert: ' . $name . '<br>';
             }
         }
     }
@@ -395,10 +423,15 @@ class ApiController extends Controller
 
     public function getRecipes()
     {
-        $ranges = range(1, 51);
+        $ranges = range(1, 49);
         $result = Curl::to('https://api.nookplaza.net/items?category=Recipes')->asJson()->get();
         $result = $result->results;
+        $result = array_reverse($result);
         $transAll = [];
+
+        $datas = DB::table('diy')
+            ->get()
+            ->toArray();
 
         foreach ($ranges as $range) {
             //讀翻譯檔案
@@ -416,10 +449,11 @@ class ApiController extends Controller
         }
 
         foreach ($result as $target) {
-            $materials = [];
+            $materialsStr = '';
             //翻譯
             $name = '';
             $jpName = '';
+            $isset = false;
 
             foreach ($transAll as $trans) {
                 foreach ($trans as $tran) {
@@ -435,17 +469,24 @@ class ApiController extends Controller
                         if (strtolower($tran['en_name']) == strtolower($value->itemName)) {
                             $itemName = $tran['name'];
 
-                            $materials[] = [
-                                'count' => $value->count,
-                                'itemName' => $itemName,
-                            ];
+                            $materialsStr .= $itemName . '*' . $value->count . ' ';
                         }
                     }
                 }
             }
 
             if ($name == '') {
-                dd($target);
+                continue;
+            }
+
+            foreach ($datas as $data) {
+                if ($data->name == $name) {
+                    $isset = true;
+                }
+            }
+
+            if ($isset) {
+                continue;
             }
 
             $img = $target->content->itemImage;
@@ -453,13 +494,6 @@ class ApiController extends Controller
 
             $headers = get_headers($img);
             $code = substr($headers[0], 9, 3);
-            $size = '';
-
-            if (isset($target->content->size)) {
-                $sizeData = $target->content->size;
-                $size = (int)$sizeData->cols . 'x' . (int)$sizeData->rows;
-            }
-
 
             if ($code == 200) {
                 $fileIsset = is_file(public_path('diy/' .  $name . '.png'));
@@ -469,24 +503,16 @@ class ApiController extends Controller
                     Storage::disk('diy')->put($name . '.png', $content);
 
                     //insert
-                    DB::table('diy_new')->insert([
+                    DB::table('diy')->insert([
                         'name' => $name,
-                        'en_name' => $target->name,
-                        'jp_name' => $jpName,
-                        'sell' => $target->content->sell,
-                        'size' => $size,
-                        'note' => $target->content->sourceNotes,
                         'type' => $target->content->itemCategory,
-                        'get' => json_encode($target->content->obtainedFrom, JSON_UNESCAPED_UNICODE),
-                        'diy' => json_encode($materials, JSON_UNESCAPED_UNICODE),
+                        'diy' => $materialsStr,
                         'img_name' => $name,
                     ]);
 
                     echo 'insert: ' . $name . '<br>';
                 }
             }
-
-            
         }
     }
 

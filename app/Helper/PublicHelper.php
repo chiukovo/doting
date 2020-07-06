@@ -1352,9 +1352,9 @@ if (!function_exists('notFoundData')) {
     	}
 
     	$target = $msg->msg;
-    	/*$target .= "\n";
-    	$target .= '偷偷跟你們說新指令' . "\n";
-    	$target .= '豆丁交友區';*/
+    	$target .= "\n";
+    	$target .= '偷偷跟你們說' . "\n";
+    	$target .= '已更新各式海洋生物 DIY 服飾 傢具 哇耶';
 
     	return $target;
     }

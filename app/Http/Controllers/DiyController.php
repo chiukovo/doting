@@ -54,6 +54,7 @@ class DiyController extends Controller
         }
 
         $diy = $diy->select()
+            ->orderBy('id', 'desc')
             ->paginate(30)
             ->toArray();
 
