@@ -141,6 +141,7 @@
     <div class="content">
       @yield('content')
     </div>
+    @include('layouts.ads')
     <footer class="footer">
       <div class="copyright">
         copyright © 豆丁森友會 - LINE ID: @875uxytu
