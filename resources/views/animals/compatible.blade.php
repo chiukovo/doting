@@ -338,6 +338,10 @@
           </div>
         </div>
       </div>
+      <!--ads-->
+      <div class="text-center">
+        @include('layouts.ads2')
+      </div>
     </section>
   </div>
   <go-top
