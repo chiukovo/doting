@@ -252,7 +252,7 @@
       </div>
       <div class="post-card" v-show="analysis.length > 0">
         <a class="collapse-analysis" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="true">分數判定基準<ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down outline"></ion-icon></a>
-        <div class="collapse" id="collapse3">
+        <div class="collapse" id="collapse3" :class="analysis.length > 0 ? 'show' :''">
           <div class="card my-3">
             <div class="card-header">分數算法</div>
             <div class="card-body">
